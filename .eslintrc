@@ -1,3 +1,16 @@
 {
-  "extends": "@antfu"
+  "extends": "@antfu",
+  "rules": {
+    "vue/max-attributes-per-line": [
+      "error",
+      {
+        "singleline": {
+          "max": 3
+        },
+        "multiline": {
+          "max": 3
+        }
+      }
+    ],
+  },
 }
