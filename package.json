@@ -24,6 +24,9 @@
     "vue-query": "^1.25.2"
   },
   "dependencies": {
-    "@prisma/client": "^4.2.0"
+    "@css-render/vue3-ssr": "^0.15.10",
+    "@prisma/client": "^4.2.0",
+    "@vuestic/nuxt": "^1.0.4",
+    "naive-ui": "^2.32.1"
   }
 }

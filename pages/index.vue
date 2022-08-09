@@ -1,5 +1,28 @@
 <script lang="ts" setup>
+import type { Prisma } from '@prisma/client'
+import { useUserCreate, useUsers } from '~/composables/api/user'
+
 const router = useRouter()
+
+const userData: Prisma.UserCreateInput = reactive({
+  name: '',
+  username: '',
+})
+
+const { data: users, isLoading } = useUsers()
+const { mutate: addUser, isLoading: isAddLoading } = useUserCreate()
+
+const onUserCreate = () => {
+  if (!userData.name || !userData.username)
+    return
+
+  addUser(userData, {
+    onSuccess: () => {
+      userData.name = ''
+      userData.username = ''
+    },
+  })
+}
 </script>
 
 <template>
@@ -9,23 +32,53 @@ const router = useRouter()
     gap-8
     items-center
   >
-    <p text-2xl font-bold>
-      Ovo je moj homepage
-    </p>
-    <button
+    <h1>Ovo je moj homepage</h1>
+
+    <VaButton @click="router.push({ name: 'help' })">
+      help
+      <i i-carbon-arrow-down block />
+    </VaButton>
+
+    <h1>
+      Users
+    </h1>
+
+    <div space-y-4>
+      <h2>Add user</h2>
+      <form
+        flex
+        gap-4
+        items-center
+        @submit.prevent="onUserCreate"
+      >
+        <VaInput v-model="userData.name" placeholder="Name" />
+        <VaInput v-model="userData.username" placeholder="Username" />
+        <VaButton flat type="submit" :loading="isAddLoading">
+          Add user
+        </VaButton>
+      </form>
+    </div>
+
+    <div v-if="isLoading">
+      <p>loading...</p>
+    </div>
+    <ul
+      v-else-if="users?.length"
       flex
-      gap-2
-      items-center
-      px-4
-      py-2
-      class="bg-green-300/40 hover:bg-green-300/90 dark:bg-red-600/40 dark:hover:bg-red-600/90 rounded cursor-pointer"
-      @click="router.push({ name: 'help' })"
+      flex-col
+      gap-4
+      mb-12
     >
-      get some help
-      <i
-        i-carbon-arrow-right
-        block
-      />
-    </button>
+      <li
+        v-for="user in users"
+        :key="user.id"
+        flex
+        flex-col
+        gap-1
+      >
+        <span text="green-400 xs" font="bold">@{{ user.username }}</span>
+        {{ user.name }}
+      </li>
+    </ul>
   </div>
 </template>
