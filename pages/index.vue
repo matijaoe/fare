@@ -1,9 +1,6 @@
 <script lang="ts" setup>
 import type { Prisma } from '@prisma/client'
-import { NAlert, NButton, NInput } from 'naive-ui'
 import { useUserCreate, useUsers } from '~/composables/api/user'
-
-const router = useRouter()
 
 const userData: Prisma.UserCreateInput = reactive({
   name: '',
@@ -38,7 +35,9 @@ const onUserCreate = () => {
     <h1>Ovo je moj homepage</h1>
 
     <n-space>
-      <n-tag>Real Love</n-tag>
+      <n-tag size="large">
+        Real Love
+      </n-tag>
       <n-tag type="success">
         Yes It Is
       </n-tag>
@@ -68,8 +67,8 @@ const onUserCreate = () => {
         gap-8
       >
         Honey disconnect the phone
-        <NButton type="primary" ml-auto>
-          hey mum
+        <NButton type="primary" ml-auto @click="navigateTo('/help')">
+          help
         </NButton>
       </div>
     </NAlert>
@@ -82,10 +81,10 @@ const onUserCreate = () => {
         items-center
         @submit.prevent="onUserCreate"
       >
-        <NInput v-model:value="userData.name" placeholder="Name" size="large" />
+        <NInput v-model:value="userData.name" placeholder="Name" />
         <NInput v-model:value="userData.username" placeholder="Username" />
         <NInput v-model:value="userData.email" type="email" placeholder="Email" />
-        <NButton attr-type="submit" :bordered="true" :loading="isAddLoading">
+        <NButton attr-type="submit" :loading="isAddLoading">
           Add user
         </NButton>
       </form>
