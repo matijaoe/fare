@@ -10,9 +10,8 @@ export const useUserCreate = () => {
       body,
     }),
   {
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries('users')
     },
-  },
-  )
+  })
 }

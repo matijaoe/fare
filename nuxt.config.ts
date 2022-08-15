@@ -1,4 +1,7 @@
 import { defineNuxtConfig } from 'nuxt'
+import Components from 'unplugin-vue-components/vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineNuxtConfig({
   modules: [
@@ -8,6 +11,16 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@vuestic/nuxt',
   ],
+  vuestic: {
+    config: {
+      components: {
+        VaButton: {
+          rounded: false,
+          outline: false
+        },
+      },
+    },
+  },
   experimental: {
     reactivityTransform: true,
     viteNode: false,
@@ -15,7 +28,7 @@ export default defineNuxtConfig({
   unocss: {
     uno: true,
     attributify: true,
-    preflight: true,
+    preflight: false,
   },
   colorMode: {
     classSuffix: '',
@@ -30,23 +43,16 @@ export default defineNuxtConfig({
       }
     },
   },
-  build: {
-    transpile:
-      process.env.NODE_ENV === 'production'
-        ? [
-            'naive-ui',
-            'vueuc',
-            '@css-render/vue3-ssr',
-            '@juggle/resize-observer',
-          ]
-        : ['@juggle/resize-observer'],
-  },
   vite: {
-    optimizeDeps: {
-      include:
-        process.env.NODE_ENV === 'development'
-          ? ['naive-ui', 'vueuc', 'date-fns-tz/esm/formatInTimeZone']
-          : [],
-    },
+    plugins: [
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+      }),
+      Components({
+        resolvers: [
+          ElementPlusResolver(),
+        ],
+      }),
+    ],
   },
 })

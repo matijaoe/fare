@@ -1,25 +1,26 @@
 <script lang="ts" setup>
 import type { Prisma } from '@prisma/client'
 import { useUserCreate, useUsers } from '~/composables/api/user'
-
 const router = useRouter()
 
 const userData: Prisma.UserCreateInput = reactive({
   name: '',
   username: '',
+  email: '',
 })
 
 const { data: users, isLoading } = useUsers()
 const { mutate: addUser, isLoading: isAddLoading } = useUserCreate()
 
 const onUserCreate = () => {
-  if (!userData.name || !userData.username)
+  if (!userData.name || !userData.username || !userData.email)
     return
 
   addUser(userData, {
     onSuccess: () => {
       userData.name = ''
       userData.username = ''
+      userData.email = ''
     },
   })
 }
@@ -34,7 +35,7 @@ const onUserCreate = () => {
   >
     <h1>Ovo je moj homepage</h1>
 
-    <VaButton @click="router.push({ name: 'help' })">
+    <VaButton :rounded="false" outline @click="router.push({ name: 'help' })">
       help
       <i i-carbon-arrow-down block />
     </VaButton>
@@ -44,7 +45,7 @@ const onUserCreate = () => {
     </h1>
 
     <div space-y-4>
-      <h2>Add user</h2>
+      <h2>Add users</h2>
       <form
         flex
         gap-4
@@ -53,6 +54,7 @@ const onUserCreate = () => {
       >
         <VaInput v-model="userData.name" placeholder="Name" />
         <VaInput v-model="userData.username" placeholder="Username" />
+        <VaInput v-model="userData.email" type="email" placeholder="Email" />
         <VaButton flat type="submit" :loading="isAddLoading">
           Add user
         </VaButton>
