@@ -1,7 +1,4 @@
 import { defineNuxtConfig } from 'nuxt'
-import Components from 'unplugin-vue-components/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineNuxtConfig({
   modules: [
@@ -9,18 +6,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
-    '@vuestic/nuxt',
   ],
-  vuestic: {
-    config: {
-      components: {
-        VaButton: {
-          rounded: false,
-          outline: false
-        },
-      },
-    },
-  },
   experimental: {
     reactivityTransform: true,
     viteNode: false,
@@ -43,16 +29,5 @@ export default defineNuxtConfig({
       }
     },
   },
-  vite: {
-    plugins: [
-      AutoImport({
-        resolvers: [ElementPlusResolver()],
-      }),
-      Components({
-        resolvers: [
-          ElementPlusResolver(),
-        ],
-      }),
-    ],
-  },
+  vite: { },
 })

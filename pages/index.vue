@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { Prisma } from '@prisma/client'
+import { NAlert, NButton, NInput } from 'naive-ui'
 import { useUserCreate, useUsers } from '~/composables/api/user'
+
 const router = useRouter()
 
 const userData: Prisma.UserCreateInput = reactive({
@@ -35,14 +37,42 @@ const onUserCreate = () => {
   >
     <h1>Ovo je moj homepage</h1>
 
-    <VaButton :rounded="false" outline @click="router.push({ name: 'help' })">
-      help
-      <i i-carbon-arrow-down block />
-    </VaButton>
+    <n-space>
+      <n-tag>Real Love</n-tag>
+      <n-tag type="success">
+        Yes It Is
+      </n-tag>
+      <n-tag type="warning">
+        I'm Down
+      </n-tag>
+      <n-tag type="error">
+        Yesterday
+      </n-tag>
+      <n-tag type="info">
+        I'm Looking Through You
+      </n-tag>
+    </n-space>
 
     <h1>
       Users
     </h1>
+
+    <NAlert
+      title="Warning Text"
+      type="success"
+      w-xl
+    >
+      <div
+        flex
+        flex-col
+        gap-8
+      >
+        Honey disconnect the phone
+        <NButton type="primary" ml-auto>
+          hey mum
+        </NButton>
+      </div>
+    </NAlert>
 
     <div space-y-4>
       <h2>Add users</h2>
@@ -52,35 +82,38 @@ const onUserCreate = () => {
         items-center
         @submit.prevent="onUserCreate"
       >
-        <VaInput v-model="userData.name" placeholder="Name" />
-        <VaInput v-model="userData.username" placeholder="Username" />
-        <VaInput v-model="userData.email" type="email" placeholder="Email" />
-        <VaButton flat type="submit" :loading="isAddLoading">
+        <NInput v-model:value="userData.name" placeholder="Name" size="large" />
+        <NInput v-model:value="userData.username" placeholder="Username" />
+        <NInput v-model:value="userData.email" type="email" placeholder="Email" />
+        <NButton attr-type="submit" :bordered="true" :loading="isAddLoading">
           Add user
-        </VaButton>
+        </NButton>
       </form>
     </div>
 
     <div v-if="isLoading">
       <p>loading...</p>
     </div>
-    <ul
+    <n-list
       v-else-if="users?.length"
       flex
       flex-col
       gap-4
       mb-12
     >
-      <li
+      <n-list-item
         v-for="user in users"
         :key="user.id"
-        flex
-        flex-col
-        gap-1
       >
-        <span text="green-400 xs" font="bold">@{{ user.username }}</span>
-        {{ user.name }}
-      </li>
-    </ul>
+        <div
+          flex
+          flex-col
+          gap-1
+        >
+          <span text="green-400 xs" font="bold">@{{ user.username }}</span>
+          {{ user.name }}
+        </div>
+      </n-list-item>
+    </n-list>
   </div>
 </template>
