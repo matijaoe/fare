@@ -1,8 +1,9 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { set } from '@vueuse/core'
 
-export const useSidebar = defineStore('user', () => {
+export const useSidebar = defineStore('sidebar', () => {
   const isOpen = ref(false)
+
   const toggle = () => set(isOpen, !isOpen.value)
   const open = () => set(isOpen, true)
   const close = () => set(isOpen, false)

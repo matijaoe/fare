@@ -1,10 +1,5 @@
 <script lang="ts" setup>
-import type { NavItemModel } from '~~/models/nav'
 import { useSidebar } from '~/store/sidebar'
-
-const emit = defineEmits<{
-  (e: 'close'): void
-}>()
 
 const sidebar = useSidebar()
 const { smDown, smUp } = useBreakpoints()
@@ -12,7 +7,6 @@ const { smDown, smUp } = useBreakpoints()
 
 <template>
   <div
-    v-if="sidebar.isOpen || smUp"
     absolute
     inset-0
     h-screen

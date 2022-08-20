@@ -1,20 +1,26 @@
 <script lang="ts" setup>
+import { useSidebar } from '~/store/sidebar'
 
+const sidebar = useSidebar()
 </script>
 
 <template>
-  <div
-    bg="stone-1"
-    text="stone-9"
-    min-h="screen"
-  >
-    <LayoutHeader />
-    <LayoutSidebar />
+  <div>
+    <LayoutSidebar
+      :class="[sidebar.isOpen ? 'block sm:block' : 'hidden sm:block']"
+    />
     <div
-      p-4
-      ml-280px
+      h-screen
+      ml="0 sm:280px"
+      mt="55px sm:0"
+      overflow-y-auto
     >
-      <main>
+      <LayoutHeader
+        class="block sm:hidden"
+      />
+      <main
+        p-4
+      >
         <slot />
       </main>
     </div>
