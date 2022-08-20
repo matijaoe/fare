@@ -57,7 +57,7 @@ const childIndent = computed(() => {
       <div
         w-full
         py-3
-        flex="~ gap-3"
+        flex="~ gap-4"
         :class="[childLevel ? childIndent : 'pl-7']"
         items-center
       >

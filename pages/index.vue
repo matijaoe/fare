@@ -33,7 +33,7 @@
           block
           icon="i-tabler-bluetooth-off"
         >
-          disconnect
+          Disconnect
         </FButton>
       </div>
 
@@ -163,6 +163,36 @@
             </FButton>
           </div>
         </div>
+      </div>
+      <div
+        flex
+        gap-4
+        items-center
+        mt-8
+      >
+        <FButton
+          variant="primary"
+          icon="i-tabler-cookie"
+          icon-only
+          size="lg"
+        />
+        <FButton
+          variant="success"
+          icon="i-tabler-cookie"
+          icon-only
+          circle
+          size="lg"
+        />
+        <FButton
+          variant="secondary"
+          icon="i-tabler-id"
+          circle
+          size="lg"
+          icon-placement="right"
+          casing="none"
+        >
+          ID
+        </FButton>
       </div>
     </div>
   </div>
