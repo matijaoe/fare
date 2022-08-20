@@ -4,12 +4,9 @@ const sidebar = useSidebar()
 </script>
 
 <template>
-  <div>
-    {{ $route.name }}
+  <div flex items-center gap-3>
     <Icon i-ph-airplane-fill />
-    <button @click="sidebar.open">
-      open sidebarfds
-    </button>
+    Home
   </div>
 </template>
 

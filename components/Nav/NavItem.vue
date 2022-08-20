@@ -2,6 +2,8 @@
 import { set } from '@vueuse/core'
 import type { NavItemModel } from '~/models/nav'
 
+import { useSidebar } from '~/store/sidebar'
+
 type Props = {
   item: NavItemModel
   childLevel?: 1 | 2
@@ -9,12 +11,15 @@ type Props = {
 
 const { item, childLevel } = defineProps<Props>()
 
+const sidebar = useSidebar()
+
 const route = useRoute()
 const isParentRoute = computed(() => route.fullPath.startsWith(`/${item.route.name}`))
 const isActiveRoute = computed(() => route.name === item.route.name!)
 
-const isOpen = ref(!!item?.children?.length || false)
+const isOpen = ref(false)
 const toggleChildren = () => set(isOpen, !isOpen.value)
+const hasChildren = computed(() => !!item?.children?.length)
 
 watch(route, () => {
   // close all other indents on route change
@@ -47,7 +52,7 @@ const childIndent = computed(() => {
       border="y-2 y-transparent"
       exact-active-class="bg-stone-2/40 text-stone-9 !border-stone-3"
       class="text-stone-8 text-sm hover:(bg-stone-2/55 text-stone-9)"
-      @click="isActiveRoute ? toggleChildren() : null"
+      @click="isActiveRoute && hasChildren ? toggleChildren() : sidebar.close()"
     >
       <div
         w-full
@@ -60,7 +65,7 @@ const childIndent = computed(() => {
         <p>{{ item.label }}</p>
       </div>
       <button
-        v-if="item.children"
+        v-if="hasChildren"
         p-1
         mr-5
         grid

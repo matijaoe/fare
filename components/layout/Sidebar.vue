@@ -8,83 +8,13 @@ const emit = defineEmits<{
 
 const sidebar = useSidebar()
 const { smDown, smUp } = useBreakpoints()
-
-const navItems = ref<NavItemModel[]>([
-  {
-    label: 'Dashboard',
-    icon: 'i-tabler-home',
-    route: {
-      name: 'index',
-    },
-  },
-  {
-    label: 'Expenses',
-    icon: 'i-tabler-receipt',
-    route: {
-      name: 'expenses',
-    },
-    children: [
-      {
-        label: 'Income',
-        icon: 'i-tabler-arrows-transfer-up',
-        route: {
-          name: 'expenses-income',
-        },
-      },
-      {
-        label: 'Transfers',
-        icon: 'i-tabler-arrows-transfer-down',
-        route: {
-          name: 'expenses-transfers',
-        },
-      },
-
-    ],
-  },
-  {
-    label: 'Net worth',
-    icon: 'i-tabler-businessplan',
-    route: {
-      name: 'net-worth',
-    },
-  },
-  {
-    label: 'Accounts',
-    icon: 'i-tabler-wallet',
-    route: {
-      name: 'accounts',
-    },
-  },
-  {
-    label: 'FI',
-    icon: 'i-tabler-flame',
-    route: {
-      name: 'fi',
-    },
-  },
-  {
-    label: 'Progress',
-    icon: 'i-tabler-chart-area-line',
-    route: {
-      name: 'progress',
-    },
-    children: [
-      {
-        label: 'Coast FIRE',
-        icon: 'i-tabler-chart-area-line',
-        route: {
-          name: 'progress-fire',
-        },
-      },
-    ],
-  },
-])
 </script>
 
 <template>
   <div
     v-if="sidebar.isOpen || smUp"
-    fixed
+    absolute
+    inset-0
     h-screen
     w="screen sm:280px"
     py-4
@@ -106,9 +36,8 @@ const navItems = ref<NavItemModel[]>([
       </NuxtLink>
       <button
         v-if="smDown"
-        flex
-        items-center
-        justify-center
+        grid
+        content-center
         p-2
         class="translate-x-2"
       >
@@ -119,6 +48,6 @@ const navItems = ref<NavItemModel[]>([
         />
       </button>
     </div>
-    <NavList :items="navItems" />
+    <NavList />
   </div>
 </template>
