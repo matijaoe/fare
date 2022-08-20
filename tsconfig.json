@@ -3,7 +3,8 @@
   "compilerOptions": {
     "strict": true,
     "types": [
-      "element-plus/global"
+      "element-plus/global",
+      "vite/runtime",
     ]
   }
 }

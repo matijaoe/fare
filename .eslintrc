@@ -12,6 +12,9 @@
         }
       }
     ],
-    "no-console": "warn"
+    "no-console": "warn",
+    "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
+    "@typescript-eslint/brace-style": ["warn", "1tbs", { "allowSingleLine": false }],
+    "curly": ["warn", "multi-line"]
   }
 }

@@ -14,3 +14,18 @@ useHead({
     <NuxtPage />
   </NuxtLayout>
 </template>
+
+<style>
+html, body , #__nuxt{
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: "Jetbrains Mono";
+  font-weight: 500;
+}
+
+/* html.dark {
+  background: #100800;
+  color: FFFAF6;
+} */
+</style>

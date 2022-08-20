@@ -1,9 +1,17 @@
 <template>
-  <main class="py-20 px-10 text-center">
-    <slot />
-    <Footer />
-    <div class="mt-5 mx-auto text-center opacity-25 text-sm">
-      [Default Layout]
+  <div
+    bg="stone-1"
+    text="stone-9"
+    min-h="screen"
+  >
+    <LayoutSidebar />
+    <div
+      p-4
+      ml-280px
+    >
+      <main>
+        <slot />
+      </main>
     </div>
-  </main>
+  </div>
 </template>
