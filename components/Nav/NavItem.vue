@@ -51,17 +51,17 @@ const childIndent = computed(() => {
       items-center
       border="y-2 y-transparent"
       exact-active-class="bg-stone-2/40 text-stone-9 !border-stone-3"
-      class="text-stone-8 text-sm hover:(bg-stone-2/55 text-stone-9)"
+      class="text-stone-8 text-lg sm:text-sm hover:(bg-stone-2/55 text-stone-9)"
       @click="isActiveRoute && hasChildren ? toggleChildren() : sidebar.close()"
     >
       <div
         w-full
         py-3
-        flex="~ gap-4"
+        flex="~ gap-5 sm:gap-4"
         :class="[childLevel ? childIndent : 'pl-7']"
         items-center
       >
-        <Icon :class="item.icon" text="base" />
+        <Icon :class="item.icon" text="xl sm:base" />
         <p>{{ item.label }}</p>
       </div>
       <button

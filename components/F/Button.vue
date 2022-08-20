@@ -83,7 +83,10 @@ const disabledStyle = computed(() => ({
 const slots = useSlots()
 
 const isSlot = (name: 'left' | 'right') => {
-  return (!slots.icon && !props.iconOnly) && ((props.icon && props.iconPlacement === name) || slots[name])
+  const iconOnly = (props.icon && props.iconOnly) || slots.icon
+  const usingSlot = slots[name]
+  const usingProps = props.icon && props.iconPlacement === name
+  return !iconOnly && (usingProps || usingSlot)
 }
 </script>
 
@@ -116,6 +119,3 @@ const isSlot = (name: 'left' | 'right') => {
   </button>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
