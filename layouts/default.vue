@@ -19,7 +19,6 @@ watch(width, (val: number, prevVal: number) => {
     <LayoutSidebar />
     <div
       h-screen
-      mt="50px"
       overflow-y-auto
       :class="[{
         'sm:ml-280px': sidebar.isOpen,
@@ -27,8 +26,10 @@ watch(width, (val: number, prevVal: number) => {
     >
       <LayoutHeader />
       <main
+        overflow-y-auto
         p-8
         max-w="1440px"
+        mt="50px"
         mx-auto
       >
         <slot />

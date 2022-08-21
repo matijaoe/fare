@@ -2,13 +2,27 @@
 </script>
 
 <template>
-  <div>
+  <div
+    flex
+    flex-col
+    gap-6
+  >
     <div flex items-center gap-3>
-      <Icon i-ph-airplane-fill />
-      <h1>Home</h1>
+      <Icon i-tabler-plane />
+      <h1>Dashboard</h1>
+    </div>
+    <div flex="~ col sm:row gap-2">
+      <FCard>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab, vero iure harum eaque molestias et hic eius exercitationem dolor cupiditate! Labore provident dicta at ab accusantium. Dicta sint iste minus.
+      </FCard>
+      <FCard filled="light">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque fugiat officia dolorem enim dignissimos voluptatibus, sit accusamus cum? Adipisci repellendus optio corporis harum accusantium magnam similique et voluptatibus alias laboriosam?
+      </FCard>
+      <FCard filled="dark">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Id dolores tempora ad nobis culpa doloribus? Doloremque sit explicabo ducimus quaerat, fuga aliquam tempora provident hic libero atque repudiandae dolore! Possimus?
+      </FCard>
     </div>
     <div
-      mt-8
       flex
       flex-col
       gap-2

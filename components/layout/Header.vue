@@ -13,8 +13,8 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
     top-0
     z-100
     flex
-    items-center
     justify-between
+    h-50px
     bg="stone-1"
     border="b-2 stone-3"
     :class="[
@@ -24,32 +24,48 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
     <NuxtLink
       v-if="handledSidebar"
       pl-4
+      flex
+      items-center
+      justify-center
       to="/"
     >
       <FLogo />
     </NuxtLink>
     <div
-      border="focus:stone-2"
-      p="x-5"
-      flex
-      items-center
-      gap-4
       flex-1
+      flex
+      relative
       :class="[{
         'border-l-2 border-stone-3 ml-5': handledSidebar,
       }]"
     >
-      <Icon i-tabler-search />
-      <p text="stone-8/30" font="normal">
-        Search
-      </p>
+      <input
+        type="text"
+        h-full
+        w-full
+        placeholder="Search"
+        border="focus:stone-2"
+        p="x-5 l-13"
+        flex
+        items-center
+        gap-4
+        class="placeholder-stone-4/65 placeholder-shown:font-normal bg-stone-1 hover:not-focus:(bg-stone-2/40 placeholder-stone-4) focus:bg-white"
+        outline="none focus:none"
+      >
+      <Icon
+        i-tabler-search
+        absolute
+        text="stone-8"
+        pos="top-50% left-5"
+        class="-translate-y-50%"
+      />
     </div>
     <button
       ml-auto
       grid
       content-center
       p="y-2.5 x-3"
-      bg="hover:stone-2/55"
+      bg="hover:stone-2/40"
       border="l-2 stone-3"
 
       @click="sidebar.toggle()"

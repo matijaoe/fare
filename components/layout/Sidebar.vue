@@ -24,7 +24,7 @@ const { smDown } = useBreakpoints()
       items-center
       justify-between
       mt-2
-      mb-5
+      mb-6
       px-8
     >
       <NuxtLink to="/">
@@ -45,20 +45,7 @@ const { smDown } = useBreakpoints()
       </button>
     </div>
 
-    <div
-      border="y-2 transparent focus:stone-2"
-      p="y-2.5 x-7"
-      flex
-      items-center
-      gap-4
-    >
-      <Icon i-tabler-search />
-      <p text="stone-8/50" font="normal">
-        Search
-      </p>
-    </div>
-
-    <NavList mt-3 flex-1 />
+    <NavList flex-1 />
 
     <NavControls />
   </div>
