@@ -1,9 +1,39 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const loading = ref(false)
+</script>
 
 <template>
   <div>
-    {{ $route.name }}
+    <h1>
+      {{ $route.name }}
+    </h1>
+    <div
+      mt-8
+      flex
+      items-center
+      gap-3
+    >
+      <FButton
+        :loading="loading"
+        @click="loading = true"
+      >
+        Add expense
+      </FButton>
+      <FButton
+        variant="danger"
+        uppercase
+        @click="loading = false"
+      >
+        stop
+      </FButton>
+      <FButton
+        icon="i-tabler-hand-stop"
+        circle
+        icon-only
+        variant="secondary"
+        :loading="loading"
+        @click="loading = false"
+      />
+    </div>
   </div>
 </template>
-
-<style scoped></style>

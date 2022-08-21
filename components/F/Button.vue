@@ -48,14 +48,12 @@ const variantStyle = computed(() => {
 const sizeStyle = computed(() => {
   const { iconOnly: icon, size } = props
   switch (size) {
-    case 'xs':
-      return ` ${icon ? 'p-0.4' : 'py-0.4 px-1'} text-[0.6rem] gap-1 font-bold`
     case 'sm':
-      return `${icon ? 'p-1' : 'py-1 px-2.5'} text-xs gap-1 font-bold`
+      return `${icon ? 'p-1.3' : 'py-1 px-2.5'} text-xs gap-1`
     case 'md':
-      return `${icon ? 'p-1.5 ' : 'py-1.5 px-4'} text-sm gap-2 font-bold`
+      return `${icon ? 'p-2' : 'py-1.5 px-4'} text-sm gap-2`
     case 'lg':
-      return `${icon ? 'p-2.5 ' : 'py-2.5 px-7'} text-base gap-3 font-bold`
+      return `${icon ? 'p-3.2' : 'py-2.5 px-7'} text-base gap-3`
   }
 })
 
@@ -76,8 +74,8 @@ const casingStyle = computed(() => {
 })
 
 const disabledStyle = computed(() => ({
-  'opacity-45': props.disabled && !props.loading,
-  'opacity-75': props.loading,
+  'opacity-45 cursor-not-allowed': props.disabled && !props.loading,
+  'opacity-75 cursor-wait': props.loading,
 }))
 
 const slots = useSlots()
@@ -97,8 +95,8 @@ const isSlot = (name: 'left' | 'right') => {
     justify-center
     items-center
     text="center"
+    font="medium"
     :disabled="loading || disabled"
-    class="disabled:(cursor-not-allowed)"
     :class="[variantStyle, sizeStyle, widthStyle, radiusStyle, casingStyle, disabledStyle, theme.textCasing]"
   >
     <slot v-if="loading" name="loading">
@@ -107,7 +105,7 @@ const isSlot = (name: 'left' | 'right') => {
     <slot v-else-if="isSlot('left')" name="left">
       <Icon :class="icon" />
     </slot>
-    <slot v-if="$slots.icon || (icon && iconOnly)" name="icon">
+    <slot v-if="$slots.icon || (icon && iconOnly) && !loading" name="icon">
       <Icon :class="icon" />
     </slot>
     <slot v-else>

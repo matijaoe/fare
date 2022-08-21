@@ -19,7 +19,9 @@ const sidebar = useSidebar()
         class="block sm:hidden"
       />
       <main
-        p-4
+        p-8
+        max-w="1440px"
+        mx-auto
       >
         <slot />
       </main>

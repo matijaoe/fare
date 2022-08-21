@@ -1,6 +1,6 @@
 <template>
   <div
-    text="3xl"
+    text="3xl stone-8"
     font-black
     flex
     items-center

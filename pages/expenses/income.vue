@@ -5,5 +5,3 @@
     {{ $route.name }}
   </div>
 </template>
-
-<style scoped></style>

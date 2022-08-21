@@ -12,7 +12,7 @@ useHead({
 <template>
   <div
     bg="stone-1"
-    text="stone-9"
+    text="stone-9 lg"
     min-h="screen"
   >
     <NuxtLayout>
@@ -26,7 +26,7 @@ html, body , #__nuxt{
   height: 100vh;
   margin: 0;
   padding: 0;
-  font-family: "Jetbrains Mono";
+  font-family: "Iosevka Nerd Font", "Jetbrains Mono";
   font-weight: 500;
 }
 

@@ -123,46 +123,6 @@
             apply
           </FButton>
         </div>
-
-        <div
-          flex
-          flex-col
-          gap-2
-          items-start
-        >
-          <!-- xtra small -->
-          <div
-            flex
-            flex-col
-            gap-2
-            items-start
-          >
-            <h1 mt-4>
-              XSmall
-            </h1>
-            <FButton variant="primary" size="xs">
-              play
-            </FButton>
-            <FButton variant="secondary" size="xs">
-              calculate
-            </FButton>
-            <FButton variant="subtle" size="xs">
-              export
-            </FButton>
-            <FButton variant="outline" size="xs" icon="i-tabler-clipboard">
-              copy
-            </FButton>
-            <FButton variant="danger" size="xs">
-              discard
-            </FButton>
-            <FButton variant="warning" size="xs">
-              warning
-            </FButton>
-            <FButton variant="success" size="xs">
-              apply
-            </FButton>
-          </div>
-        </div>
       </div>
       <div
         flex
@@ -197,4 +157,3 @@
     </div>
   </div>
 </template>
-

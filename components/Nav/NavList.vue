@@ -70,6 +70,20 @@ const items = ref<NavItemModel[]>([
       },
     ],
   },
+  {
+    label: 'Tools',
+    icon: 'i-tabler-tools',
+    route: {
+      name: 'tools',
+    },
+  },
+  {
+    label: 'Resources',
+    icon: 'i-tabler-books',
+    route: {
+      name: 'resources',
+    },
+  },
 ])
 </script>
 
