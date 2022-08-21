@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTheme } from '~/store/theme'
-import type { ButtonSize, ButtonVariant, TextCasing } from '~/models/theme'
+import type { ButtonSize, ButtonVariant } from '~/models/theme'
 
 type Props = {
   label?: string
@@ -13,18 +13,16 @@ type Props = {
   disabled?: boolean
   iconOnly?: boolean
   circle?: boolean
-  casing?: TextCasing
 }
 
-const theme = useTheme()
-
-// eslint-disable-next-line vue/define-macros-order
 const props = withDefaults(defineProps<Props>(), {
   variant: 'primary',
   size: 'md',
   iconPlacement: 'left',
   radius: 'square',
 })
+
+const theme = useTheme()
 
 const variantStyle = computed(() => {
   switch (props.variant) {
@@ -59,19 +57,6 @@ const sizeStyle = computed(() => {
 
 const widthStyle = computed(() => props.block ? 'w-full' : 'w-auto')
 const radiusStyle = computed(() => props.circle ? 'rounded-full' : 'rounded-sm')
-const casingStyle = computed(() => {
-  switch (theme.textCasing || props.casing) {
-    case 'uppercase':
-      return 'uppercase'
-    case 'lowercase':
-      return 'lowercase'
-    case 'capitalize':
-      return 'capitalize'
-    case 'none':
-    default:
-      return ''
-  }
-})
 
 const disabledStyle = computed(() => ({
   'opacity-45 cursor-not-allowed': props.disabled && !props.loading,
@@ -97,7 +82,7 @@ const isSlot = (name: 'left' | 'right') => {
     text="center"
     font="medium"
     :disabled="loading || disabled"
-    :class="[variantStyle, sizeStyle, widthStyle, radiusStyle, casingStyle, disabledStyle, theme.textCasing]"
+    :class="[variantStyle, sizeStyle, widthStyle, radiusStyle, disabledStyle, theme.textCasing]"
   >
     <slot v-if="loading" name="loading">
       <Icon class="i-tabler-loader-2 animate-spin" />

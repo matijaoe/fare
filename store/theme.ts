@@ -2,7 +2,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { TextCasing } from '~~/models/theme'
 
 export const useTheme = defineStore('theme', () => {
-  const textCasing = ref<TextCasing>('none')
+  const textCasing = ref<TextCasing>('')
 
   return {
     textCasing,

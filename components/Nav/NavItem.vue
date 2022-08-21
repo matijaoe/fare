@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { set } from '@vueuse/core'
 import type { NavItemModel } from '~/models/nav'
-
+import { appBreakpoints } from '~~/composables/breakpoints'
 import { useSidebar } from '~/store/sidebar'
 
 type Props = {
@@ -12,6 +12,7 @@ type Props = {
 const { item, childLevel } = defineProps<Props>()
 
 const sidebar = useSidebar()
+const { smDown } = useBreakpoints()
 
 const route = useRoute()
 const isParentRoute = computed(() => route.fullPath.startsWith(`/${item.route.name}`))
@@ -40,6 +41,10 @@ const childIndent = computed(() => {
       return 'pl-7'
   }
 })
+
+const handleNavClick = () => {
+  return isActiveRoute.value && hasChildren.value ? toggleChildren() : smDown.value ? sidebar.close() : ''
+}
 </script>
 
 <template>
@@ -52,7 +57,7 @@ const childIndent = computed(() => {
       border="y-2 y-transparent"
       exact-active-class="bg-stone-2/40 text-stone-9 !border-stone-3"
       class="text-stone-8 text-lg sm:text-base hover:(bg-stone-2/55 text-stone-9)"
-      @click="isActiveRoute && hasChildren ? toggleChildren() : sidebar.close()"
+      @click="handleNavClick"
     >
       <div
         w-full

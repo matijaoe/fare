@@ -1,6 +1,7 @@
-import { breakpointsTailwind, useBreakpoints as useVueUseBreakpoints } from '@vueuse/core'
+import { useBreakpoints as useVueUseBreakpoints } from '@vueuse/core'
 
-export const iaBreakpoints = {
+// TODO: put them in uno config
+export const appBreakpoints = {
   'xs': 375,
   // => @media (min-width: 375px) { ... }
 
@@ -21,7 +22,7 @@ export const iaBreakpoints = {
 }
 
 export const useBreakpoints = () => {
-  const breakpoints = useVueUseBreakpoints(breakpointsTailwind)
+  const breakpoints = useVueUseBreakpoints(appBreakpoints)
 
   // less than, non-including
   const down = {

@@ -25,7 +25,7 @@
           icon="i-tabler-play"
           icon-placement="right"
         >
-          play
+          Play
         </FButton>
         <FButton
           variant="secondary"
@@ -53,32 +53,32 @@
             Medium
           </h1>
           <FButton variant="primary" icon="i-tabler-cookie">
-            eat
+            Eat
           </FButton>
           <FButton
             variant="secondary"
             icon="i-tabler-edit"
             icon-placement="right"
           >
-            edit
+            Edit
           </FButton>
           <FButton variant="subtle">
             <template #left>
               <Icon i-tabler-archive />
             </template>
-            archive
+            Archive
           </FButton>
           <FButton variant="outline" icon="i-tabler-info-circle">
-            info
+            Info
           </FButton>
           <FButton variant="danger">
-            discard
+            Discard
           </FButton>
           <FButton variant="warning" icon="i-tabler-error-404">
-            warning
+            Warning
           </FButton>
           <FButton variant="success">
-            apply
+            Apply
           </FButton>
         </div>
 
@@ -93,13 +93,13 @@
             Small
           </h1>
           <FButton variant="primary" size="sm" loading>
-            play
+            Play
           </FButton>
           <FButton variant="secondary" size="sm" loading>
-            calculate
+            Calculate
           </FButton>
           <FButton variant="subtle" size="sm" loading>
-            export
+            Export
           </FButton>
           <FButton
             variant="outline"
@@ -107,20 +107,20 @@
             loading
             icon="i-tabler-clipboard"
           >
-            copy
+            Copy
           </FButton>
           <FButton
             variant="danger"
             size="sm"
             loading
           >
-            discard
+            Discard
           </FButton>
           <FButton variant="warning" size="sm" loading>
-            warning
+            Warning
           </FButton>
           <FButton variant="success" size="sm" loading>
-            apply
+            Apply
           </FButton>
         </div>
       </div>

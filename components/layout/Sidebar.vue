@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { useSidebar } from '~/store/sidebar'
-
 const sidebar = useSidebar()
-const { smDown, smUp } = useBreakpoints()
+const { smDown } = useBreakpoints()
 </script>
 
 <template>
@@ -12,10 +11,13 @@ const { smDown, smUp } = useBreakpoints()
     h-screen
     w="screen sm:280px"
     py-4
-    overflow="scroll"
+    overflow-y="auto"
     border="r-0 sm:r-2 stone-3"
     bg="stone-1"
     z-1000
+    :class="{ '!hidden': !sidebar.isOpen }"
+    flex
+    flex-col
   >
     <div
       flex
@@ -26,7 +28,7 @@ const { smDown, smUp } = useBreakpoints()
       px-8
     >
       <NuxtLink to="/">
-        <NavLogo />
+        <FLogo size="lg" />
       </NuxtLink>
       <button
         v-if="smDown"
@@ -38,10 +40,26 @@ const { smDown, smUp } = useBreakpoints()
         <Icon
           i-tabler-x
           text="2xl"
-          @click="sidebar.close"
+          @click="sidebar.close()"
         />
       </button>
     </div>
-    <NavList />
+
+    <div
+      border="y-2 transparent focus:stone-2"
+      p="y-2.5 x-7"
+      flex
+      items-center
+      gap-4
+    >
+      <Icon i-tabler-search />
+      <p text="stone-8/50" font="normal">
+        Search
+      </p>
+    </div>
+
+    <NavList mt-3 flex-1 />
+
+    <NavControls />
   </div>
 </template>

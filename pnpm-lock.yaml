@@ -17,6 +17,7 @@ specifiers:
   pinia: ^2.0.18
   prisma: ^4.2.1
   typescript: ^4.7.4
+  vite-plugin-fonts: ^0.6.0
   vue-query: ^1.25.2
 
 dependencies:
@@ -38,6 +39,7 @@ devDependencies:
   pinia: 2.0.18_typescript@4.7.4
   prisma: 4.2.1
   typescript: 4.7.4
+  vite-plugin-fonts: 0.6.0
   vue-query: 1.25.2
 
 packages:
@@ -7084,6 +7086,14 @@ packages:
       vscode-languageserver: 7.0.0
       vscode-languageserver-textdocument: 1.0.5
       vscode-uri: 3.0.3
+    dev: true
+
+  /vite-plugin-fonts/0.6.0:
+    resolution: {integrity: sha512-dV6nnLEju8k5EmvlBH6egxkVZ+rgc5zWsJr9+cNRXBMEDnpRGHcZPI260UEDNg2yB99wSTNER2eduEvZFbMIGw==}
+    peerDependencies:
+      vite: ^2.0.0 || ^3.0.0
+    dependencies:
+      fast-glob: 3.2.11
     dev: true
 
   /vite/3.0.7:

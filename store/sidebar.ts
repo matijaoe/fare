@@ -1,8 +1,11 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { set } from '@vueuse/core'
+import { useBreakpoints } from '~~/composables/breakpoints'
 
 export const useSidebar = defineStore('sidebar', () => {
-  const isOpen = ref(false)
+  const { smDown } = useBreakpoints()
+
+  const isOpen = ref(!smDown.value)
 
   const toggle = () => set(isOpen, !isOpen.value)
   const open = () => set(isOpen, true)

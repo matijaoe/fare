@@ -2,38 +2,57 @@
 import { useSidebar } from '~/store/sidebar'
 
 const sidebar = useSidebar()
+const { smDown } = $(useBreakpoints())
+
+const handledSidebar = computed(() => smDown || !sidebar.isOpen)
 </script>
 
 <template>
   <header
-    w-full
     fixed
     top-0
     z-100
-    p="y-1 x-4"
-    px-4
-    py-1
     flex
     items-center
     justify-between
     bg="stone-1"
     border="b-2 stone-3"
+    :class="[
+      sidebar.isOpen ? 'sm:(w-[calc(100vw-280px)])' : 'w-screen',
+    ]"
   >
     <NuxtLink
+      v-if="handledSidebar"
+      pl-4
       to="/"
-      class="text-xl"
-      font-black
+    >
+      <FLogo />
+    </NuxtLink>
+    <div
+      border="focus:stone-2"
+      p="x-5"
       flex
       items-center
+      gap-4
+      flex-1
+      :class="[{
+        'border-l-2 border-stone-3 ml-5': handledSidebar,
+      }]"
     >
-      FI<Icon i-ph-lightning-duotone text="lg stone-9" />RE
-    </NuxtLink>
+      <Icon i-tabler-search />
+      <p text="stone-8/30" font="normal">
+        Search
+      </p>
+    </div>
     <button
+      ml-auto
       grid
       content-center
-      p-2
-      class="translate-x-2"
-      @click="sidebar.open()"
+      p="y-2.5 x-3"
+      bg="hover:stone-2/55"
+      border="l-2 stone-3"
+
+      @click="sidebar.toggle()"
     >
       <Icon i-tabler-menu-2 text="2xl" />
     </button>

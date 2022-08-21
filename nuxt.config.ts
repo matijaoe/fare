@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from 'nuxt'
+import Fonts from 'vite-plugin-fonts'
 
 export default defineNuxtConfig({
   modules: [
@@ -30,5 +31,11 @@ export default defineNuxtConfig({
       }
     },
   },
-  vite: { },
+  vite: {
+    plugins: [
+      Fonts({
+
+      }),
+    ],
+  },
 })
