@@ -27,19 +27,19 @@ const theme = useTheme()
 const variantStyle = computed(() => {
   switch (props.variant) {
     case 'primary':
-      return 'bg-stone-9 text-stone-1 hover:not-disabled:(bg-stone-8)'
+      return 'bg-stone-9 text-stone-1 hover:not-disabled:(bg-stone-8) focus:not-disabled:(bg-stone-8)'
     case 'secondary':
-      return 'bg-stone-2 text-stone-9 hover:not-disabled:(bg-stone-3/75)'
+      return 'bg-stone-2 text-stone-9 hover:not-disabled:(bg-stone-3/75) focus:not-disabled:(bg-stone-3/75)'
     case 'subtle':
-      return 'bg-transparent text-stone-9 hover:not-disabled:(bg-stone-2/75)'
+      return 'bg-transparent text-stone-9 hover:not-disabled:(bg-stone-2/75) focus:not-disabled:(bg-stone-2/75)'
     case 'outline':
-      return 'bg-transparent text-stone-9 !border-current hover:not-disabled:(bg-stone-2)'
+      return 'bg-transparent text-stone-9 !border-current hover:not-disabled:(bg-stone-2) focus:not-disabled:(bg-stone-2)'
     case 'danger':
-      return 'bg-red-5/85 text-stone-9 !border-current hover:not-disabled:(bg-red-5/95)'
+      return 'bg-red-5/85 text-stone-9 !border-current hover:not-disabled:(bg-red-5/95) focus:not-disabled:(bg-red-5/95)'
     case 'warning':
-      return 'bg-amber-5/85 text-stone-9 !border-current hover:not-disabled:(bg-amber-5/95)'
+      return 'bg-amber-5/85 text-stone-9 !border-current hover:not-disabled:(bg-amber-5/95) focus:not-disabled:(bg-amber-5/95)'
     case 'success':
-      return 'bg-green-5/85 text-stone-9 !border-current hover:not-disabled:(bg-green-5/95)'
+      return 'bg-green-5/85 text-stone-9 !border-current hover:not-disabled:(bg-green-5/95) focus:not-disabled:(bg-green-5/95)'
   }
 })
 
@@ -49,9 +49,9 @@ const sizeStyle = computed(() => {
     case 'sm':
       return `${icon ? 'p-1.3' : 'py-1 px-2.5'} text-xs gap-1`
     case 'md':
-      return `${icon ? 'p-2' : 'py-1.5 px-4'} text-sm gap-2`
+      return `${icon ? 'p-2.5' : 'py-2.25 px-4'} text-sm gap-2`
     case 'lg':
-      return `${icon ? 'p-3.2' : 'py-2.5 px-7'} text-base gap-3`
+      return `${icon ? 'p-3.45' : 'py-2.75 px-7'} text-base gap-3`
   }
 })
 
@@ -83,6 +83,7 @@ const isSlot = (name: 'left' | 'right') => {
     font="medium"
     :disabled="loading || disabled"
     :class="[variantStyle, sizeStyle, widthStyle, radiusStyle, disabledStyle, theme.textCasing]"
+    outline="none"
   >
     <slot v-if="loading" name="loading">
       <Icon class="i-tabler-loader-2 animate-spin" />

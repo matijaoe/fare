@@ -44,7 +44,6 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
         h-full
         w-full
         placeholder="Search"
-        border="focus:stone-2"
         p="x-5 l-13"
         flex
         items-center
