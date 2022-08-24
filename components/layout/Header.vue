@@ -48,7 +48,7 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
         flex
         items-center
         gap-4
-        class="placeholder-stone-4/65 placeholder-shown:font-normal bg-stone-1 hover:not-focus:(bg-stone-2/40 placeholder-stone-4) focus:bg-white"
+        class="placeholder-stone-4/65 placeholder-shown:font-normal bg-stone-1"
         outline="none focus:none"
       >
       <Icon

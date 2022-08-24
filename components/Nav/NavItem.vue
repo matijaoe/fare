@@ -55,8 +55,9 @@ const handleNavClick = () => {
       flex="~ gap-2"
       items-center
       border="y-2 y-transparent"
-      exact-active-class="bg-stone-2/40 text-stone-9 !border-stone-3"
-      class="text-stone-8 text-lg sm:text-base hover:(bg-stone-2/55 text-stone-9)"
+      exact-active-class="!bg-stone-2/60 text-stone-9"
+      class="text-stone-8 text-lg sm:text-base hover:(bg-stone-2/50 text-stone-9) focus:(bg-stone-2/50 text-stone-9 !border-stone-3)"
+      outline="none"
       @click="handleNavClick"
     >
       <div

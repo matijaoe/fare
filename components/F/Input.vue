@@ -4,6 +4,7 @@ type Props = {
   icon?: string
   iconPlacement?: 'left' | 'right'
   loading?: boolean
+  placeholder?: string
 }
 const props = withDefaults(defineProps<Props>(), {
   type: 'text',
@@ -19,7 +20,7 @@ const isSlot = (name: 'left' | 'right') => {
 }
 
 const paddingStyle = computed(() => {
-  const { icon, iconPlacement, loading } = props
+  const { iconPlacement, loading } = props
   const cn = []
 
   const pl = '!pl-11.5'
@@ -48,18 +49,18 @@ const paddingStyle = computed(() => {
   >
     <input
       :type="type"
-      h="41px"
+      :placeholder="placeholder"
+      :readonly="loading"
       w-full
-      placeholder="Search"
-      border="1.5 transparent focus:stone-8 rounded-sm"
-      text="sm"
-      flex
-      items-center
-      gap-4
+      h="41px"
       p="y-2.5 x-4"
       bg="stone-2"
-      class="leading-5 placeholder-stone-5/60 placeholder-shown:font-normal"
+      text="sm"
+      border="1.5 transparent focus:stone-8 rounded-sm"
+      flex="~ gap-4"
+      items-center
       outline="none focus:none"
+      class="leading-5 placeholder-stone-5/60 placeholder-shown:font-normal"
       :class="[paddingStyle]"
     >
 
