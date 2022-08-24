@@ -45,10 +45,10 @@ const paddingStyle = computed(() => {
 const stateStyle = computed(() => {
   const { invalid, positive } = props
   if (invalid) {
-    return 'not-focus:(bg-red-50 dark:bg-red-9/50) not-focus:border-red-6'
+    return 'not-focus:(bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-9))'
   }
   if (positive) {
-    return 'not-focus:(bg-emerald-50 dark:bg-emerald-9/50) not-focus:border-emerald-6'
+    return 'not-focus:(bg-emerald-1/50 border-emerald-6 dark:bg-emerald-9/25 dark:(bg-emerald-9/25 border-emerald-9))'
   }
   return ''
 })
@@ -56,10 +56,10 @@ const stateStyle = computed(() => {
 const stateIconStyle = computed(() => {
   const { invalid, positive, disabled } = props
   if (invalid) {
-    return 'not-focus:text-red-6'
+    return 'not-focus:(text-red-6 dark:(text-red-7))'
   }
   if (positive) {
-    return 'not-focus:text-emerald-6'
+    return 'not-focus:(text-emerald-6 dark:(text-emerald-7))'
   }
   if (disabled) {
     return 'text-stone-3 dark:text-stone-7'
