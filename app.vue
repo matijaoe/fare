@@ -7,6 +7,8 @@ useHead({
     },
   ],
 })
+
+useShortcuts()
 </script>
 
 <template>

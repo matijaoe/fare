@@ -7,7 +7,7 @@ const props = defineProps<{
 const backgroundStyle = computed(() =>
   props.filled
     ? 'bg-stone-2 dark:bg-stone-8 border-transparent'
-    : 'bg-transparent border-base',
+    : 'bg-transparent border-stone-2 dark:border-stone-8',
 )
 </script>
 
