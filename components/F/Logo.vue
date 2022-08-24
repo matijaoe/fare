@@ -25,16 +25,15 @@ const sizeStyle = computed(() => {
 
 <template>
   <div
-    text="stone-8"
     font-black
     flex
     items-center
+    class="color-base-lighter"
     :class="[sizeStyle.text]"
   >
     FI
     <Icon
       i-ph-lightning-duotone
-      text="stone-9"
       :class="[sizeStyle.icon]"
     />
     RE

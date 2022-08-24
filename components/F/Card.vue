@@ -6,14 +6,14 @@ const props = defineProps<{
 
 const backgroundStyle = computed(() =>
   props.filled
-    ? 'bg-stone-2'
+    ? 'bg-stone-2 dark:bg-stone-8'
     : 'bg-transparent',
 )
 </script>
 
 <template>
   <article
-    border="rounded-sm 2 stone-2"
+    border="rounded-sm 2 base"
     :class="[
       paddingless ? 'p-0' : 'p-4',
       backgroundStyle,

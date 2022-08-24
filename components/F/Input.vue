@@ -45,10 +45,10 @@ const paddingStyle = computed(() => {
 const stateStyle = computed(() => {
   const { invalid, positive } = props
   if (invalid) {
-    return 'not-focus:bg-red-50 not-focus:border-red-6'
+    return 'not-focus:(bg-red-50 dark:bg-red-9/50) not-focus:border-red-6'
   }
   if (positive) {
-    return 'not-focus:bg-emerald-50 not-focus:border-emerald-6'
+    return 'not-focus:(bg-emerald-50 dark:bg-emerald-9/50) not-focus:border-emerald-6'
   }
   return ''
 })
@@ -62,9 +62,9 @@ const stateIconStyle = computed(() => {
     return 'not-focus:text-emerald-6'
   }
   if (disabled) {
-    return 'text-stone-3'
+    return 'text-stone-3 dark:text-stone-7'
   }
-  return ''
+  return 'color-base'
 })
 </script>
 
@@ -86,7 +86,7 @@ const stateIconStyle = computed(() => {
       flex="~ gap-4"
       items-center
       outline="none focus:none"
-      class="peer bg-stone-2/75 stone-2/60 border-transparent disabled:(bg-stone-1 border-stone-3 opacity-50) focus:(bg-stone-2/50 border-stone-8) leading-5 placeholder-stone-5/60 placeholder-shown:font-normal"
+      class="peer bg-stone-2/75 dark:bg-stone-8 border-transparent disabled:(bg-stone-1 dark:bg-stone-9/50 border-stone-3 dark:border-stone-7 opacity-50) focus:(bg-stone-2/50 dark:bg-stone-8 border-stone-8 dark:border-stone-3) leading-5 placeholder-stone-5/60 placeholder-shown:font-normal"
       :class="[
         paddingStyle, stateStyle]"
     >

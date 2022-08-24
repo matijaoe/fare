@@ -11,9 +11,9 @@ const { smDown } = useBreakpoints()
     h-screen
     w="screen sm:270px"
     py-4
+    bg="base"
     overflow-y="auto"
-    border="r-0 sm:r-2 stone-3 none"
-    bg="stone-1"
+    border="r-0 sm:r-2 base"
     z-1000
     :class="{ '!hidden': !sidebar.isOpen }"
     flex

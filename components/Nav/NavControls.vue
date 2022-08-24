@@ -1,17 +1,6 @@
 <script setup lang="ts">
 const { smDown } = useBreakpoints()
-
-const icons = [
-  {
-    icon: 'i-tabler-moon',
-  },
-  {
-    icon: 'i-tabler-settings',
-  },
-  {
-    icon: 'i-tabler-logout',
-  },
-]
+const { isDark, toggleDark } = useColorscheme()
 </script>
 
 <template>
@@ -31,8 +20,6 @@ const icons = [
       >
     </button>
     <FButton
-      v-for="{ icon } in icons"
-      :key="icon"
       variant="secondary"
       size="lg"
       circle
@@ -40,9 +27,38 @@ const icons = [
         '!p-4': smDown,
       }"
       icon-only
+      @click="toggleDark()"
     >
       <template #icon>
-        <Icon :class="icon" text="xl sm:base" />
+        <Icon :class="isDark ? 'i-tabler-sun' : 'i-tabler-moon'" text="xl sm:base" />
+      </template>
+    </FButton>
+    <FButton
+      variant="secondary"
+      size="lg"
+      circle
+      :class="{
+        '!p-4': smDown,
+      }"
+      icon-only
+      @click="toggleDark()"
+    >
+      <template #icon>
+        <Icon class="i-tabler-settings" text="xl sm:base" />
+      </template>
+    </FButton>
+    <FButton
+      variant="secondary"
+      size="lg"
+      circle
+      :class="{
+        '!p-4': smDown,
+      }"
+      icon-only
+      @click="toggleDark()"
+    >
+      <template #icon>
+        <Icon class="i-tabler-logout" text="xl sm:base" />
       </template>
     </FButton>
   </div>

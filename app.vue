@@ -11,11 +11,9 @@ useHead({
 
 <template>
   <div
-    bg="stone-50"
-    text="stone-9"
     h="screen"
     overflow="hidden"
-    font="medium"
+    class="bg-base color-base"
   >
     <NuxtLayout>
       <NuxtPage />
@@ -27,7 +25,6 @@ useHead({
 html,
 body,
 #__nuxt {
-  background: #fafaf9; /*  stone-50 */
   font-family: "Iosevka Nerd Font", "Jetbrains Mono";
 }
 </style>

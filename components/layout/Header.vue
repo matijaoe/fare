@@ -15,8 +15,9 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
     flex
     justify-between
     h-50px
-    bg="stone-1"
-    border="b-2 stone-3"
+    bg="base"
+    border="b-2 base"
+    class="color-base-lighter"
     :class="[
       sidebar.isOpen ? 'sm:(w-[calc(100vw-270px)])' : 'w-screen',
     ]"
@@ -36,7 +37,7 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
       flex
       relative
       :class="[{
-        'border-l-2 border-stone-3 ml-5': handledSidebar,
+        'border-l-2 border-base ml-5': handledSidebar,
       }]"
     >
       <input
@@ -48,13 +49,12 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
         flex
         items-center
         gap-4
-        class="placeholder-stone-4/65 placeholder-shown:font-normal bg-transparent"
+        class="color-base placeholder-stone-4/65 placeholder-shown:font-normal bg-transparent"
         outline="none focus:none"
       >
       <Icon
         i-tabler-search
         absolute
-        text="stone-8"
         pos="top-50% left-5"
         class="-translate-y-50%"
       />
@@ -64,8 +64,8 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
       grid
       content-center
       p="y-2.5 x-3"
-      bg="hover:stone-2/40"
-      border="l-2 stone-3"
+      bg="hover:stone-2/40 dark:hover:stone-8"
+      border="l-2 base"
 
       @click="sidebar.toggle()"
     >
