@@ -1,19 +1,14 @@
 <script lang="ts" setup>
 const props = defineProps<{
   paddingless?: boolean
-  filled?: 'light' | 'dark'
+  filled?: boolean
 }>()
 
-const backgroundStyle = computed(() => {
-  const { filled } = props
-  if (filled === 'light') {
-    return 'bg-white'
-  }
-  if (filled === 'dark') {
-    return 'bg-stone-2'
-  }
-  return 'bg-transparent'
-})
+const backgroundStyle = computed(() =>
+  props.filled
+    ? 'bg-stone-2'
+    : 'bg-transparent',
+)
 </script>
 
 <template>

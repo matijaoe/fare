@@ -18,7 +18,7 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
     bg="stone-1"
     border="b-2 stone-3"
     :class="[
-      sidebar.isOpen ? 'sm:(w-[calc(100vw-280px)])' : 'w-screen',
+      sidebar.isOpen ? 'sm:(w-[calc(100vw-270px)])' : 'w-screen',
     ]"
   >
     <NuxtLink
@@ -48,7 +48,7 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
         flex
         items-center
         gap-4
-        class="placeholder-stone-4/65 placeholder-shown:font-normal bg-stone-1"
+        class="placeholder-stone-4/65 placeholder-shown:font-normal bg-transparent"
         outline="none focus:none"
       >
       <Icon

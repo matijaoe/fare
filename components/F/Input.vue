@@ -5,6 +5,9 @@ type Props = {
   iconPlacement?: 'left' | 'right'
   loading?: boolean
   placeholder?: string
+  invalid?: boolean
+  positive?: boolean
+  disabled?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
   type: 'text',
@@ -33,12 +36,35 @@ const paddingStyle = computed(() => {
   } else if (iconPlacement === 'right' || slots.right) {
     cn.push(pr)
   }
-
   if (loading && iconPlacement !== 'right' && slots.right) {
     cn.push(pr)
   }
-
   return cn
+})
+
+const stateStyle = computed(() => {
+  const { invalid, positive } = props
+  if (invalid) {
+    return 'not-focus:bg-red-50 not-focus:border-red-6'
+  }
+  if (positive) {
+    return 'not-focus:bg-emerald-50 not-focus:border-emerald-6'
+  }
+  return ''
+})
+
+const stateIconStyle = computed(() => {
+  const { invalid, positive, disabled } = props
+  if (invalid) {
+    return 'not-focus:text-red-6'
+  }
+  if (positive) {
+    return 'not-focus:text-emerald-6'
+  }
+  if (disabled) {
+    return 'text-stone-3'
+  }
+  return ''
 })
 </script>
 
@@ -51,17 +77,18 @@ const paddingStyle = computed(() => {
       :type="type"
       :placeholder="placeholder"
       :readonly="loading"
+      :disabled="disabled"
       w-full
       h="41px"
       p="y-2.5 x-4"
-      bg="stone-2"
-      text="sm"
-      border="1.5 transparent focus:stone-8 rounded-sm"
+      text="base"
+      border="1.5 rounded-sm"
       flex="~ gap-4"
       items-center
       outline="none focus:none"
-      class="leading-5 placeholder-stone-5/60 placeholder-shown:font-normal"
-      :class="[paddingStyle]"
+      class="peer bg-stone-2/75 stone-2/60 border-transparent disabled:(bg-stone-1 border-stone-3 opacity-50) focus:(bg-stone-2/50 border-stone-8) leading-5 placeholder-stone-5/60 placeholder-shown:font-normal"
+      :class="[
+        paddingStyle, stateStyle]"
     >
 
     <div
@@ -74,7 +101,7 @@ const paddingStyle = computed(() => {
       items-center
     >
       <slot name="left">
-        <Icon :class="icon" />
+        <Icon :class="[icon, stateIconStyle]" />
       </slot>
     </div>
     <div
@@ -83,6 +110,7 @@ const paddingStyle = computed(() => {
       text="stone-8"
       pos="top-50% right-4"
       class="-translate-y-50%"
+      :class="stateIconStyle"
       flex
       items-center
     >
@@ -90,7 +118,7 @@ const paddingStyle = computed(() => {
         <Icon class="i-tabler-loader-2 animate-spin" />
       </slot>
       <slot v-else name="right">
-        <Icon :class="icon" />
+        <Icon :class="[icon, stateIconStyle]" />
       </slot>
     </div>
   </div>

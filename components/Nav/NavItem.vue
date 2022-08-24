@@ -34,11 +34,11 @@ watch(route, () => {
 const childIndent = computed(() => {
   switch (childLevel) {
     case 1:
-      return 'pl-14'
+      return 'pl-13'
     case 2:
-      return 'pl-21'
+      return 'pl-20'
     default:
-      return 'pl-7'
+      return 'pl-6'
   }
 })
 
@@ -55,16 +55,16 @@ const handleNavClick = () => {
       flex="~ gap-2"
       items-center
       border="y-2 y-transparent"
-      exact-active-class="!bg-stone-2/60 text-stone-9"
+      exact-active-class="!bg-stone-2/80 text-stone-9"
       class="text-stone-8 text-lg sm:text-base hover:(bg-stone-2/50 text-stone-9) focus:(bg-stone-2/50 text-stone-9 !border-stone-3)"
       outline="none"
       @click="handleNavClick"
     >
       <div
         w-full
-        p="y-2.5"
+        p="y-2"
         flex="~ gap-5 sm:gap-4"
-        :class="[childLevel ? childIndent : 'pl-7']"
+        :class="[childLevel ? childIndent : 'pl-6']"
         items-center
       >
         <Icon :class="item.icon" text="xl sm:base" />

@@ -8,8 +8,8 @@ const toggleLoading = useToggle(loading)
   <div>
     {{ $route.name }}
     <div flex flex-col gap-3>
-      <FInput icon="i-tabler-id" icon-placement="left" :loading="loading" />
       <div flex gap-2 items-center>
+        <FInput icon="i-tabler-id" icon-placement="left" :loading="loading" />
         <PasswordField :loading="loading" flex-1 />
         <FButton
           variant="primary"
@@ -18,6 +18,29 @@ const toggleLoading = useToggle(loading)
           test
         </FButton>
       </div>
+      <FInput
+        icon="i-tabler-id"
+        icon-placement="left"
+        :loading="loading"
+        disabled
+      />
+      <FInput
+        icon="i-tabler-id"
+        icon-placement="left"
+        :loading="loading"
+      />
+      <FInput
+        icon="i-tabler-check"
+        icon-placement="left"
+        :loading="loading"
+        positive
+      />
+      <FInput
+        icon="i-tabler-id"
+        icon-placement="left"
+        :loading="loading"
+        invalid
+      />
     </div>
   </div>
 </template>

@@ -15,10 +15,7 @@
       <FCard>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab, vero iure harum eaque molestias et hic eius exercitationem dolor cupiditate! Labore provident dicta at ab accusantium. Dicta sint iste minus.
       </FCard>
-      <FCard filled="light">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque fugiat officia dolorem enim dignissimos voluptatibus, sit accusamus cum? Adipisci repellendus optio corporis harum accusantium magnam similique et voluptatibus alias laboriosam?
-      </FCard>
-      <FCard filled="dark">
+      <FCard filled>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Id dolores tempora ad nobis culpa doloribus? Doloremque sit explicabo ducimus quaerat, fuga aliquam tempora provident hic libero atque repudiandae dolore! Possimus?
       </FCard>
     </div>

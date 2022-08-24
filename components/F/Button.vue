@@ -27,7 +27,7 @@ const theme = useTheme()
 const variantStyle = computed(() => {
   switch (props.variant) {
     case 'primary':
-      return 'bg-stone-9 text-stone-1 hover:not-disabled:(bg-stone-8) focus:not-disabled:(bg-stone-8)'
+      return 'bg-stone-9 text-stone-50 hover:not-disabled:(bg-stone-8) focus:not-disabled:(bg-stone-8)'
     case 'secondary':
       return 'bg-stone-2 text-stone-9 hover:not-disabled:(bg-stone-3/75) focus:not-disabled:(bg-stone-3/75)'
     case 'subtle':

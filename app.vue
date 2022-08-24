@@ -11,7 +11,7 @@ useHead({
 
 <template>
   <div
-    bg="stone-1"
+    bg="stone-50"
     text="stone-9"
     h="screen"
     overflow="hidden"
@@ -27,7 +27,7 @@ useHead({
 html,
 body,
 #__nuxt {
-  background: #F5F5F4; /*  stone-1 */
+  background: #fafaf9; /*  stone-50 */
   font-family: "Iosevka Nerd Font", "Jetbrains Mono";
 }
 </style>

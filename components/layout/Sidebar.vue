@@ -9,10 +9,10 @@ const { smDown } = useBreakpoints()
     absolute
     inset-0
     h-screen
-    w="screen sm:280px"
+    w="screen sm:270px"
     py-4
     overflow-y="auto"
-    border="r-0 sm:r-2 stone-3"
+    border="r-0 sm:r-2 stone-3 none"
     bg="stone-1"
     z-1000
     :class="{ '!hidden': !sidebar.isOpen }"

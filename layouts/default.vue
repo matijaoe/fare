@@ -21,7 +21,7 @@ watch(width, (val: number, prevVal: number) => {
       h-screen
       overflow-y-auto
       :class="[{
-        'sm:ml-280px': sidebar.isOpen,
+        'sm:ml-270px': sidebar.isOpen,
       }]"
     >
       <LayoutHeader />
