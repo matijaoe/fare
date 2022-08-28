@@ -9,41 +9,58 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
+enum LedgerEntryType {
+  Income
+  Expense
+  Transfer
+}
+
+model LedgerCategory {
+  id    String  @id @default(cuid())
+  name  String  @unique
+  color String?
+  icon  String?
+
+  ledger Ledger[]
+}
+
+model Ledger {
+  id            String          @id @default(cuid())
+  type          LedgerEntryType
+  name          String
+  description   String
+  amount        Float
+  currency      String?         @default("EUR")
+  date          DateTime        @default(now())
+  userId        String
+  categoryId    String
+  fromAccountId String
+  toAccountId   String?
+
+  user        User           @relation(fields: [userId], references: [id])
+  category    LedgerCategory @relation(fields: [categoryId], references: [id])
+  fromAccount Account        @relation("paymentFromAccount", fields: [fromAccountId], references: [id])
+  toAccount   Account?       @relation("paymentToAccount", fields: [toAccountId], references: [id])
+}
+
+model Account {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  color  String?
+  userId String
+
+  user User @relation(fields: [userId], references: [id])
+
+  paymentFromAccount Ledger[] @relation("paymentFromAccount")
+  paymentToAccount   Ledger[] @relation("paymentToAccount")
+}
+
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   name      String
-  username  String   @unique
   email     String   @unique
-  bio       String?  @db.LongText @default("")
   createdAt DateTime @default(now())
-  Review    Review[]
-}
 
-model Book {
-  id     Int      @id @default(autoincrement())
-  title  String
-  author String
-  isbn   String   @unique
-  Review Review[]
-}
-
-enum Rating {
-  ONE   @map("1")
-  TWO   @map("2")
-  THREE @map("3")
-  FOUR  @map("4")
-  FIVE  @map("5")
-}
-
-model Review {
-  id        Int      @id @default(autoincrement())
-  book      Book     @relation(fields: [bookId], references: [id])
-  userId    Int
-  rating    Rating
-  comment   String   @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user   User @relation(fields: [userId], references: [id])
-  bookId Int
+  ledger  Ledger[]
+  Account Account[]
 }

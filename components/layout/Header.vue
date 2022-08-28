@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { useSidebar } from '~/store/sidebar'
 
 const sidebar = useSidebar()

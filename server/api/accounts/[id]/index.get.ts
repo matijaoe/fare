@@ -1,19 +1,19 @@
 import { StatusCodes } from 'http-status-codes'
+import { prisma } from '~/prisma'
 import { useErrorRes, useRes } from '~~/composables/api'
-import { prisma } from '~~/prisma'
 
 export default defineEventHandler(async (event) => {
   const { id } = event.context.params
 
   try {
-    const user = await prisma.user.findFirst({
+    const user = await prisma.account.findFirst({
       where: {
         id,
       },
     })
 
     if (!user) {
-      return useRes(event, StatusCodes.NOT_FOUND, 'User not found')
+      return useRes(event, StatusCodes.NOT_FOUND, 'Account not found')
     }
 
     return user

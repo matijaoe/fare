@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { useSidebar } from '~/store/sidebar'
 import { appBreakpoints } from '~~/composables/breakpoints'
-const sidebar = useSidebar()
 
+const sidebar = useSidebar()
 const { width } = useWindowSize()
 
 watch(width, (val: number, prevVal: number) => {
@@ -31,6 +31,7 @@ watch(width, (val: number, prevVal: number) => {
         max-w="1440px"
         mt="50px"
         mx-auto
+        class="h-[calc(100vh-50px)]"
       >
         <slot />
       </main>

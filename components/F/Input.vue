@@ -23,20 +23,18 @@ const isSlot = (name: 'left' | 'right') => {
 }
 
 const paddingStyle = computed(() => {
-  const { iconPlacement, loading } = props
+  const { icon, iconPlacement, loading } = props
   const cn = []
 
   const pl = '!pl-11.5'
   const pr = '!pr-11.5'
 
-  //   TODO: how to get slots
-  console.log('slots.right :>> ', slots.right)
-  if (iconPlacement === 'left' || slots.left) {
+  if ((icon && iconPlacement === 'left') || slots.left) {
     cn.push(pl)
-  } else if (iconPlacement === 'right' || slots.right) {
+  } else if ((icon && iconPlacement === 'right') || slots.right) {
     cn.push(pr)
   }
-  if (loading && iconPlacement !== 'right' && slots.right) {
+  if (loading && !(iconPlacement !== 'right' && slots.right)) {
     cn.push(pr)
   }
   return cn
@@ -45,10 +43,10 @@ const paddingStyle = computed(() => {
 const stateStyle = computed(() => {
   const { invalid, positive } = props
   if (invalid) {
-    return 'not-focus:(bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-9))'
+    return 'not-focus:(bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-8))'
   }
   if (positive) {
-    return 'not-focus:(bg-emerald-1/50 border-emerald-6 dark:bg-emerald-9/25 dark:(bg-emerald-9/25 border-emerald-9))'
+    return 'not-focus:(bg-emerald-1/50 border-emerald-6 dark:bg-emerald-9/25 dark:(bg-emerald-9/25 border-emerald-8))'
   }
   return ''
 })
@@ -86,7 +84,7 @@ const stateIconStyle = computed(() => {
       flex="~ gap-4"
       items-center
       outline="none focus:none"
-      class="peer bg-stone-2/75 dark:bg-stone-8 border-transparent disabled:(bg-stone-1 dark:bg-stone-9/50 border-stone-3 dark:border-stone-7 opacity-50) focus:(bg-stone-2/50 dark:bg-stone-8 border-stone-8 dark:border-stone-3) leading-5 placeholder-stone-5/60 placeholder-shown:font-normal"
+      class="peer bg-stone-2 dark:bg-stone-8 border-transparent disabled:(bg-stone-1 dark:bg-stone-9/50 border-stone-3 dark:border-stone-7 opacity-50) focus:(bg-stone-2/75 dark:bg-stone-8 border-stone-8 dark:border-stone-3) leading-5 placeholder-stone-5/60 placeholder-shown:font-normal"
       :class="[
         paddingStyle, stateStyle]"
     >

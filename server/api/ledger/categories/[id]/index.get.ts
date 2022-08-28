@@ -6,17 +6,20 @@ export default defineEventHandler(async (event) => {
   const { id } = event.context.params
 
   try {
-    const user = await prisma.user.findFirst({
+    const category = await prisma.ledgerCategory.findFirst({
       where: {
         id,
       },
+      include: {
+        ledger: true,
+      },
     })
 
-    if (!user) {
-      return useRes(event, StatusCodes.NOT_FOUND, 'User not found')
+    if (!category) {
+      return useRes(event, StatusCodes.NOT_FOUND, 'Category not found')
     }
 
-    return user
+    return category
   } catch (err: any) {
     console.error(err)
     return useErrorRes(event, err)

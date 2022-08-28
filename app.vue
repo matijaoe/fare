@@ -2,9 +2,8 @@
 useHead({
   title: 'Vitesse Nuxt 3',
   link: [
-    {
-      rel: 'icon', type: 'image/png', href: '/nuxt.png',
-    },
+    { rel: 'icon', type: 'image/png', href: '/nuxt.png' },
+    { src: 'https://unpkg.com/flowbite@1.5.2/dist/datepicker.js"' },
   ],
 })
 
