@@ -1,10 +1,11 @@
-import { LedgerEntryType } from '@prisma/client'
+import { sendInternalError } from '~~/composables/api'
 import { prisma } from '~~/prisma'
 
-export default defineEventHandler(() => {
-  return prisma.ledger.findMany({
-    where: {
-      type: LedgerEntryType.Expense,
-    },
-  })
+export default defineEventHandler((event) => {
+  try {
+    return prisma.account.findMany()
+  } catch (err) {
+    console.error(err)
+    sendInternalError(event, err)
+  }
 })

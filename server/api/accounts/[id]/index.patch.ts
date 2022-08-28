@@ -1,5 +1,5 @@
 import { prisma } from '~/prisma'
-import { useErrorRes } from '~~/composables/api'
+import { sendInternalError } from '~~/composables/api'
 
 export default defineEventHandler(async (event) => {
   const { id } = event.context.params
@@ -7,15 +7,13 @@ export default defineEventHandler(async (event) => {
 
   try {
     const account = await prisma.account.update({
-      where: {
-        id,
-      },
+      where: { id },
       data,
     })
 
     return account
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error(err)
-    return useErrorRes(event, err)
+    sendInternalError(event, err)
   }
 })

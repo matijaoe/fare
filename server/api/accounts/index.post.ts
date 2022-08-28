@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import { setResStatus, useErrorRes } from '~~/composables/api'
+import { sendInternalError, setResStatus } from '~~/composables/api'
 import { prisma } from '~~/prisma'
 
 export default defineEventHandler(async (event) => {
@@ -13,6 +13,6 @@ export default defineEventHandler(async (event) => {
     return account
   } catch (err: unknown) {
     console.error(err)
-    return useErrorRes(event, err)
+    sendInternalError(event, err)
   }
 })

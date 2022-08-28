@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import { useErrorRes, useRes } from '~~/composables/api'
+import { sendCustomError, sendInternalError } from '~~/composables/api'
 import { prisma } from '~~/prisma'
 
 export default defineEventHandler(async (event) => {
@@ -13,12 +13,12 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!user) {
-      return useRes(event, StatusCodes.NOT_FOUND, 'User not found')
+      sendCustomError(event, StatusCodes.NOT_FOUND, 'User not found')
     }
 
     return user
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error(err)
-    return useErrorRes(event, err)
+    sendInternalError(event, err)
   }
 })

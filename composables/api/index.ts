@@ -1,32 +1,42 @@
 import type { CompatibilityEvent } from 'h3'
-import { H3Response } from 'h3'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
 
-export const useRes = (
-  { res }: CompatibilityEvent,
+export const sendCustomError = (
+  event: CompatibilityEvent,
   statusCode: StatusCodes,
   message?: string,
   additionalData?: object,
 ) => {
-  res.statusCode = statusCode
-  return {
-    message: message ?? getReasonPhrase(statusCode),
-    ...additionalData,
-  }
+  const error = createError({
+    statusCode,
+    statusMessage: getReasonPhrase(statusCode),
+    message,
+    data: {
+      message,
+      ...additionalData,
+    },
+  })
+  sendError(event, error)
 }
 
-export const useErrorRes = (
+// TODO: create global server routes error interceptors
+export const sendInternalError = (
   event: CompatibilityEvent,
-  error: any,
-  additionalData?: object,
+  originalError: any,
 ) => {
-  const msg = error?.meta?.cause ?? error?.message
-  return useRes(
-    event,
-    StatusCodes.INTERNAL_SERVER_ERROR,
-    msg,
-    { error, ...additionalData },
-  )
+  const message = originalError?.meta?.cause ?? originalError?.message
+  const statusCode = StatusCodes.INTERNAL_SERVER_ERROR
+
+  const error = createError({
+    statusCode,
+    statusMessage: getReasonPhrase(statusCode),
+    message,
+    data: {
+      message,
+      originalError,
+    },
+  })
+  sendError(event, error)
 }
 
 export const setResStatus = (
