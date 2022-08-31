@@ -11,7 +11,6 @@ export default defineEventHandler((event) => {
         category: true,
         fromAccount: true,
         toAccount: true,
-        s,
       },
       orderBy: {
         date: 'desc',

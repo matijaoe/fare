@@ -15,7 +15,7 @@ generator docs {
 
 generator erd {
   provider = "prisma-erd-generator"
-  theme = "forest"
+  theme    = "forest"
 }
 
 enum LedgerEntryType {
@@ -43,12 +43,12 @@ model Ledger {
   date          DateTime        @default(now())
   userId        String
   categoryId    String
-  fromAccountId String
+  fromAccountId String?
   toAccountId   String?
 
   user        User           @relation(fields: [userId], references: [id])
   category    LedgerCategory @relation(fields: [categoryId], references: [id])
-  fromAccount Account        @relation("paymentFromAccount", fields: [fromAccountId], references: [id])
+  fromAccount Account?       @relation("paymentFromAccount", fields: [fromAccountId], references: [id])
   toAccount   Account?       @relation("paymentToAccount", fields: [toAccountId], references: [id])
 }
 
@@ -70,6 +70,6 @@ model User {
   email     String   @unique
   createdAt DateTime @default(now())
 
-  ledger  Ledger[]
+  ledger   Ledger[]
   accounts Account[]
 }

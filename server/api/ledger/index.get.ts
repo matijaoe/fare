@@ -1,3 +1,4 @@
+import { sendInternalError } from '~~/composables/api'
 import { prisma } from '~~/prisma'
 
 export default defineEventHandler((event) => {
@@ -6,12 +7,25 @@ export default defineEventHandler((event) => {
   const startDate = new Date(start)
   const endDate = new Date(end)
 
-  return prisma.ledger.findMany({
-    where: {
-      date: {
-        gte: startDate,
-        lte: endDate,
+  try {
+    return prisma.ledger.findMany({
+      where: {
+        date: {
+          gte: startDate,
+          lte: endDate,
+        },
       },
-    },
-  })
+      include: {
+        category: true,
+        fromAccount: true,
+        toAccount: true,
+      },
+      orderBy: {
+        date: 'desc',
+      },
+    })
+  } catch (err) {
+    console.error(err)
+    sendInternalError(event, err)
+  }
 })
