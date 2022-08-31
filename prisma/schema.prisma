@@ -9,6 +9,15 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
+generator docs {
+  provider = "node node_modules/prisma-docs-generator"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+  theme = "forest"
+}
+
 enum LedgerEntryType {
   Income
   Expense
@@ -62,5 +71,5 @@ model User {
   createdAt DateTime @default(now())
 
   ledger  Ledger[]
-  Account Account[]
+  accounts Account[]
 }
