@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 type Props = {
+  modelValue?: string
   type?: string
   icon?: string
   iconPlacement?: 'left' | 'right'
@@ -12,11 +13,21 @@ type Props = {
   hint?: string
   error?: string
 }
+
+type Emits = {
+  (e: 'input', value?: string): void
+  (e: 'focus'): void
+  (e: 'blur'): void
+  (e: 'update:modelValue', value?: string): void
+}
+
 const props = withDefaults(defineProps<Props>(), {
   type: 'text',
   size: 'md',
   iconPlacement: 'left',
 })
+
+const emit = defineEmits<Emits>()
 
 const slots = useSlots()
 const isSlot = (name: 'left' | 'right') => {
@@ -67,6 +78,17 @@ const stateIconStyle = computed(() => {
   }
   return 'color-base-lighter'
 })
+
+const value = computed({
+  get: () => props.modelValue ?? '',
+  set: (val: string) => emit('update:modelValue', val),
+})
+
+const emits = {
+  input: (e: Event) => emit('input', (e.target as HTMLInputElement).value),
+  focus: () => emit('focus'),
+  blur: () => emit('blur'),
+}
 </script>
 
 <template>
@@ -82,11 +104,9 @@ const stateIconStyle = computed(() => {
         {{ label }}
       </slot>
     </div>
-    <div
-      flex
-      relative
-    >
+    <div relative>
       <input
+        v-model="value"
         :type="type"
         :placeholder="placeholder"
         :readonly="loading"
@@ -101,6 +121,7 @@ const stateIconStyle = computed(() => {
         outline="none focus:none"
         class="peer bg-stone-2 dark:bg-stone-8 border-transparent disabled:(bg-stone-1 dark:bg-stone-9/50 border-stone-3 dark:border-stone-7 opacity-50) focus:(bg-stone-2/75 dark:bg-stone-8 border-stone-8 dark:border-stone-3) leading-5 placeholder-stone-5/60 placeholder-shown:font-normal"
         :class="[paddingStyle, stateStyle]"
+        v-on="emits"
       >
 
       <div

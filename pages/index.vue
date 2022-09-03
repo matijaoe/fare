@@ -1,12 +1,18 @@
 <script lang="ts" setup>
 const loading = ref(false)
 const toggleLoading = useToggle(loading)
+
+const address = ref('bestovje')
+
+const testerFn = (type: 'blur' | 'change' | 'input' | 'focus') => {
+  console.log(type)
+}
 </script>
 
 <template>
   <div flex flex-col gap-3>
     <div flex items-center gap-3>
-      <I con i-tabler-plane />
+      <Icon i-tabler-plane />
       <h1>Dashboard</h1>
     </div>
     <div flex="~ col sm:row gap-2">
@@ -28,6 +34,7 @@ const toggleLoading = useToggle(loading)
         </FButton>
       </div>
       <FInput
+        v-model="address"
         icon="i-tabler-id"
         icon-placement="left"
         :loading="loading"
@@ -35,11 +42,15 @@ const toggleLoading = useToggle(loading)
       />
       <div flex gap-3>
         <FInput
+          v-model="address"
           hint="napravi kajgod"
           label="Address"
           icon="i-tabler-id"
           icon-placement="left"
           :loading="loading"
+          @blur="testerFn('blur')"
+          @focus="testerFn('focus')"
+          @input="testerFn('input')"
         />
         <FInput
           icon="i-tabler-check"
@@ -90,14 +101,20 @@ const toggleLoading = useToggle(loading)
         Large
       </h1>
       <!-- Large -->
-      <div flex gap-2 w-full>
+      <div
+        flex
+        gap-2
+        w-full
+        flex-wrap
+      >
         <FButton
           variant="primary"
           size="lg"
           icon="i-tabler-play"
           icon-placement="right"
+          @click="address = 'krapina'"
         >
-          Play
+          change address
         </FButton>
         <FButton
           variant="secondary"
