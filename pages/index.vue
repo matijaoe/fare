@@ -6,7 +6,7 @@ const toggleLoading = useToggle(loading)
 <template>
   <div flex flex-col gap-3>
     <div flex items-center gap-3>
-      <Icon i-tabler-plane />
+      <I con i-tabler-plane />
       <h1>Dashboard</h1>
     </div>
     <div flex="~ col sm:row gap-2">
@@ -35,22 +35,49 @@ const toggleLoading = useToggle(loading)
       />
       <div flex gap-3>
         <FInput
+          hint="napravi kajgod"
+          label="Address"
           icon="i-tabler-id"
           icon-placement="left"
           :loading="loading"
         />
         <FInput
           icon="i-tabler-check"
+          label="Address"
           icon-placement="left"
           :loading="loading"
           positive
-        />
+        >
+          <template #label>
+            <div flex items-center gap-1>
+              <Icon i-tabler-alarm /> labela
+            </div>
+          </template>
+          <template #hint>
+            <div flex items-center gap-1>
+              ovo je moj hint <Icon i-tabler-check />
+            </div>
+          </template>
+        </FInput>
         <FInput
           icon="i-tabler-id"
+          label="Address"
           icon-placement="left"
           :loading="loading"
           invalid
-        />
+          error="This is required"
+        >
+          <template #label>
+            <div
+              flex
+              items-center
+              gap-1
+              capitalize
+            >
+              <Icon i-tabler-alarm /> labela
+            </div>
+          </template>
+        </FInput>
       </div>
     </div>
     <div

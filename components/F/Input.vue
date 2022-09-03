@@ -8,6 +8,9 @@ type Props = {
   invalid?: boolean
   positive?: boolean
   disabled?: boolean
+  label?: string
+  hint?: string
+  error?: string
 }
 const props = withDefaults(defineProps<Props>(), {
   type: 'text',
@@ -54,69 +57,91 @@ const stateStyle = computed(() => {
 const stateIconStyle = computed(() => {
   const { invalid, positive, disabled } = props
   if (invalid) {
-    return 'not-focus:(text-red-6 dark:(text-red-7))'
+    return 'not-focus:(text-red-6)'
   }
   if (positive) {
-    return 'not-focus:(text-emerald-6 dark:(text-emerald-7))'
+    return 'not-focus:(text-emerald-6)'
   }
   if (disabled) {
     return 'text-stone-3 dark:text-stone-7'
   }
-  return 'color-base'
+  return 'color-base-lighter'
 })
 </script>
 
 <template>
-  <div
-    flex
-    relative
-  >
-    <input
-      :type="type"
-      :placeholder="placeholder"
-      :readonly="loading"
-      :disabled="disabled"
-      w-full
-      h="41px"
-      p="y-2.5 x-4"
-      text="base"
-      border="1.5 rounded-sm"
-      flex="~ gap-4"
-      items-center
-      outline="none focus:none"
-      class="peer bg-stone-2 dark:bg-stone-8 border-transparent disabled:(bg-stone-1 dark:bg-stone-9/50 border-stone-3 dark:border-stone-7 opacity-50) focus:(bg-stone-2/75 dark:bg-stone-8 border-stone-8 dark:border-stone-3) leading-5 placeholder-stone-5/60 placeholder-shown:font-normal"
-      :class="[
-        paddingStyle, stateStyle]"
-    >
-
+  <div flex="~ col gap-0.75">
     <div
-      v-if="isSlot('left')"
-      absolute
-      text="stone-8"
-      pos="top-50% left-4"
-      class="-translate-y-50%"
-      flex
-      items-center
+      v-if="label || $slots.label"
+      uppercase
+      font-bold
+      text="sm"
+      class="color-base-lighter"
     >
-      <slot name="left">
-        <Icon :class="[icon, stateIconStyle]" />
+      <slot name="label">
+        {{ label }}
       </slot>
     </div>
     <div
-      v-if="loading || isSlot('right')"
-      absolute
-      text="stone-8"
-      pos="top-50% right-4"
-      class="-translate-y-50%"
-      :class="stateIconStyle"
       flex
-      items-center
+      relative
     >
-      <slot v-if="loading" name="loading">
-        <Icon class="i-tabler-loader-2 animate-spin" />
+      <input
+        :type="type"
+        :placeholder="placeholder"
+        :readonly="loading"
+        :disabled="disabled"
+        w-full
+        h="41px"
+        p="y-2.5 x-4"
+        text="base"
+        border="1.5 rounded-sm"
+        flex="~ gap-4"
+        items-center
+        outline="none focus:none"
+        class="peer bg-stone-2 dark:bg-stone-8 border-transparent disabled:(bg-stone-1 dark:bg-stone-9/50 border-stone-3 dark:border-stone-7 opacity-50) focus:(bg-stone-2/75 dark:bg-stone-8 border-stone-8 dark:border-stone-3) leading-5 placeholder-stone-5/60 placeholder-shown:font-normal"
+        :class="[paddingStyle, stateStyle]"
+      >
+
+      <div
+        v-if="isSlot('left')"
+        absolute
+        text="stone-8"
+        pos="top-50% left-4"
+        class="-translate-y-50%"
+        flex
+        items-center
+      >
+        <slot name="left">
+          <Icon :class="[icon, stateIconStyle]" />
+        </slot>
+      </div>
+      <div
+        v-if="loading || isSlot('right')"
+        absolute
+        text="stone-8"
+        pos="top-50% right-4"
+        class="-translate-y-50%"
+        :class="stateIconStyle"
+        flex
+        items-center
+      >
+        <slot v-if="loading" name="loading">
+          <Icon class="i-tabler-loader-2 animate-spin" />
+        </slot>
+        <slot v-else name="right">
+          <Icon :class="[icon, stateIconStyle]" />
+        </slot>
+      </div>
+    </div>
+    <div v-if="error || $slots.error" text="xs red-6">
+      <slot name="error">
+        {{ error }}
       </slot>
-      <slot v-else name="right">
-        <Icon :class="[icon, stateIconStyle]" />
+    </div>
+    <div v-else-if="hint || $slots.hint" text="xs stone-4 dark:stone-5">
+      <slot name="hint">
+        {{ hint }}
       </slot>
     </div>
   </div>
