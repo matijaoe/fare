@@ -1,5 +1,25 @@
 <script lang="ts" setup>
+import type { SelectItem } from '~~/models/ui/select'
+
 const loading = ref(false)
+
+const people = [
+  { id: 1, name: 'Durward Reynolds', disabled: false },
+  { id: 2, name: 'Kenton Towne', disabled: false },
+  { id: 3, name: 'Therese Wunsch Ani Stazija', disabled: false },
+  { id: 4, name: 'Benedict Kessler', disabled: true },
+  { id: 5, name: 'Katelyn Rohan', disabled: false },
+]
+const peopleOptions = $(computed(() => {
+  return people.map((person: any) => {
+    return {
+      value: person.id,
+      label: person.name,
+      disabled: person.disabled,
+    }
+  })
+}))
+const selectedPerson = ref<SelectItem | null>()
 </script>
 
 <template>
@@ -17,7 +37,7 @@ const loading = ref(false)
         :loading="loading"
         @click="loading = true"
       >
-        Add expense
+        Add
       </FButton>
       <FButton
         variant="danger"
@@ -34,7 +54,10 @@ const loading = ref(false)
         :loading="loading"
         @click="loading = false"
       />
+      <FSelectField
+        v-model="selectedPerson"
+        :items="peopleOptions"
+      />
     </div>
-    <FSelectField />
   </div>
 </template>

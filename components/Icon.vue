@@ -7,5 +7,6 @@ defineProps<{
 <template>
   <i
     :class="[icon]"
+    aria-hidden="true"
   />
 </template>

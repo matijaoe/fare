@@ -26,20 +26,21 @@ const theme = useTheme()
 
 const variantStyle = computed(() => {
   switch (props.variant) {
+    // TODO: focus states with outlines
     case 'primary':
-      return 'bg-stone-9 text-stone-2 hover:not-disabled:(bg-stone-8) focus:not-disabled:(bg-stone-8) dark:(bg-stone-2 text-stone-8 hover:not-disabled:(bg-stone-1) focus:not-disabled:(bg-stone-1))'
+      return 'bg-stone-9 text-stone-2 hover:not-disabled:(bg-stone-8) focus-visible:not-disabled:(bg-stone-8) dark:(bg-stone-2 text-stone-8 hover:not-disabled:(bg-stone-1) focus-visible:not-disabled:(bg-stone-1))'
     case 'secondary':
-      return 'bg-stone-2 text-stone-9 hover:not-disabled:(bg-stone-3/75) focus:not-disabled:(bg-stone-3/75) dark:(bg-stone-8 text-stone-2 hover:not-disabled:(bg-stone-7) focus:not-disabled:(bg-stone-7))'
+      return 'bg-stone-2 text-stone-9 hover:not-disabled:(bg-stone-3/75) focus-visible:not-disabled:(bg-stone-3/75) dark:(bg-stone-8 text-stone-2 hover:not-disabled:(bg-stone-7) focus-visible:not-disabled:(bg-stone-7))'
     case 'subtle':
-      return 'bg-transparent text-stone-9 hover:not-disabled:(bg-stone-2/75) focus:not-disabled:(bg-stone-2/75) dark:(text-stone-2 hover:not-disabled:(bg-stone-8) focus:not-disabled:(bg-stone-8))'
+      return 'bg-transparent text-stone-9 hover:not-disabled:(bg-stone-2/75) focus-visible:not-disabled:(bg-stone-2/75) dark:(text-stone-2 hover:not-disabled:(bg-stone-8) focus-visible:not-disabled:(bg-stone-8))'
     case 'outline':
-      return 'bg-transparent text-stone-9 !border-current hover:not-disabled:(bg-stone-2) focus:not-disabled:(bg-stone-2) dark:(text-stone-2 !border-stone-7 hover:not-disabled:(bg-stone-8 text-stone-2) focus:not-disabled:(bg-stone-8 text-stone-2))'
+      return 'bg-transparent text-stone-9 !border-current hover:not-disabled:(bg-stone-2) focus-visible:not-disabled:(bg-stone-2) dark:(text-stone-2 !border-stone-7 hover:not-disabled:(bg-stone-8 text-stone-2) focus-visible:not-disabled:(bg-stone-8 text-stone-2))'
     case 'danger':
-      return 'bg-red-4 text-stone-9 !border-current hover:not-disabled:(bg-red-4/90) focus:not-disabled:(bg-red-4/95) dark:(bg-red-5 !border-transparent hover:not-disabled:(bg-red-4) focus:not-disabled:(bg-red-4))'
+      return 'bg-red-4 text-stone-9 !border-current hover:not-disabled:(bg-red-4/90) focus-visible:not-disabled:(bg-red-4/95) dark:(bg-red-5 !border-transparent hover:not-disabled:(bg-red-4) focus-visible:not-disabled:(bg-red-4))'
     case 'warning':
-      return 'bg-amber-4 text-stone-9 !border-current hover:not-disabled:(bg-amber-4/90) focus:not-disabled:(bg-amber-4/95) dark:(bg-amber-5 !border-transparent hover:not-disabled:(bg-amber-4) focus:not-disabled:(bg-amber-5))'
+      return 'bg-amber-4 text-stone-9 !border-current hover:not-disabled:(bg-amber-4/90) focus-visible:not-disabled:(bg-amber-4/95) dark:(bg-amber-5 !border-transparent hover:not-disabled:(bg-amber-4) focus-visible:not-disabled:(bg-amber-5))'
     case 'success':
-      return 'bg-green-4 text-stone-9 !border-current hover:not-disabled:(bg-green-4/9) focus:not-disabled:(bg-green-4/95) dark:(bg-green-5 !border-transparent hover:not-disabled:(bg-green-4) focus:not-disabled:(bg-green-4))'
+      return 'bg-green-4 text-stone-9 !border-current hover:not-disabled:(bg-green-4/9) focus-visible:not-disabled:(bg-green-4/95) dark:(bg-green-5 !border-transparent hover:not-disabled:(bg-green-4) focus-visible:not-disabled:(bg-green-4))'
   }
 })
 
