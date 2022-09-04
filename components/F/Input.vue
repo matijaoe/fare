@@ -140,7 +140,6 @@ const emits = {
       <div
         v-if="loading || isSlot('right')"
         absolute
-        text="stone-8"
         pos="top-50% right-4"
         class="-translate-y-50%"
         :class="stateIconStyle"

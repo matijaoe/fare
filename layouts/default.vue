@@ -25,16 +25,20 @@ watch(width, (val: number, prevVal: number) => {
       }]"
     >
       <LayoutHeader />
-      <main
-        overflow-y-auto
-        p-8
-        max-w="1440px"
+      <div
         mt="50px"
-        mx-auto
-        class="h-[calc(100vh-50px)]"
+        overflow-y-auto
+        h="[calc(100vh-50px)]"
       >
-        <slot />
-      </main>
+        <main
+          h="full"
+          p-8
+          max-w="1440px"
+          mx-auto
+        >
+          <slot />
+        </main>
+      </div>
     </div>
   </div>
 </template>
