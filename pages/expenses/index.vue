@@ -8,7 +8,7 @@ const loading = ref(false)
       {{ $route.name }}
     </h1>
     <div
-      mt-8
+      my-8
       flex
       items-center
       gap-3
@@ -35,5 +35,6 @@ const loading = ref(false)
         @click="loading = false"
       />
     </div>
+    <FSelectField />
   </div>
 </template>

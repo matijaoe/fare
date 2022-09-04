@@ -4,7 +4,7 @@ const toggleLoading = useToggle(loading)
 
 const address = ref('bestovje')
 
-const testerFn = (type: 'blur' | 'change' | 'input' | 'focus') => {
+const testerFn = (type: 'blur' | 'input' | 'focus') => {
   console.log(type)
 }
 </script>

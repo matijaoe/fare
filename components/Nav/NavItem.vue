@@ -67,7 +67,7 @@ const handleNavClick = () => {
         :class="[childLevel ? childIndent : 'pl-6']"
         items-center
       >
-        <Icon :class="item.icon" text="xl sm:base" />
+        <Icon :icon="item.icon" text="xl sm:base" />
         <p>{{ item.label }}</p>
       </div>
       <button

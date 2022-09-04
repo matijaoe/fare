@@ -86,19 +86,19 @@ const isSlot = (name: 'left' | 'right') => {
     outline="none"
   >
     <slot v-if="loading" name="loading">
-      <Icon class="i-tabler-loader-2 animate-spin" />
+      <Icon icon="i-tabler-loader-2" class="animate-spin" />
     </slot>
     <slot v-else-if="isSlot('left')" name="left">
-      <Icon :class="icon" />
+      <Icon :icon="icon" />
     </slot>
     <slot v-if="$slots.icon || (icon && iconOnly) && !loading" name="icon">
-      <Icon :class="icon" />
+      <Icon :icon="icon" />
     </slot>
     <slot v-else>
       {{ label }}
     </slot>
     <slot v-if="isSlot('right')" name="right">
-      <Icon :class="icon" />
+      <Icon :icon="icon" />
     </slot>
   </button>
 </template>

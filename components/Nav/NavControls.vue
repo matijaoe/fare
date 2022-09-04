@@ -30,7 +30,7 @@ const { isDark, toggleDark } = useColorscheme()
       @click="toggleDark()"
     >
       <template #icon>
-        <Icon :class="isDark ? 'i-tabler-sun' : 'i-tabler-moon'" text="xl sm:base" />
+        <Icon :icon="isDark ? 'i-tabler-sun' : 'i-tabler-moon'" text="xl sm:base" />
       </template>
     </FButton>
     <FButton
@@ -44,7 +44,7 @@ const { isDark, toggleDark } = useColorscheme()
       @click="toggleDark()"
     >
       <template #icon>
-        <Icon class="i-tabler-settings" text="xl sm:base" />
+        <Icon i-tabler-settings text="xl sm:base" />
       </template>
     </FButton>
     <FButton
@@ -58,7 +58,7 @@ const { isDark, toggleDark } = useColorscheme()
       @click="toggleDark()"
     >
       <template #icon>
-        <Icon class="i-tabler-logout" text="xl sm:base" />
+        <Icon i-tabler-logout text="xl sm:base" />
       </template>
     </FButton>
   </div>

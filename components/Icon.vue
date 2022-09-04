@@ -1,7 +1,11 @@
 <script setup lang="ts">
-
+defineProps<{
+  icon?: string
+}>()
 </script>
 
 <template>
-  <i class="inline-block" />
+  <i
+    :class="[icon]"
+  />
 </template>
