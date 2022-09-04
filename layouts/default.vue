@@ -31,10 +31,10 @@ watch(width, (val: number, prevVal: number) => {
         h="[calc(100vh-50px)]"
       >
         <main
-          h="full"
           p-8
-          max-w="1440px"
           mx-auto
+          max-w="1440px"
+          min-h="[calc(100vh-50px)]"
         >
           <slot />
         </main>
