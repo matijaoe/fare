@@ -76,12 +76,12 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
           class="text-stone-4"
           @click.stop="clearSelected"
         >
-          <Icon i-tabler-x />
+          <Icon name="tabler:x" />
         </button>
         <Icon
           v-else
           class="pointer-events-none"
-          :icon="open ? 'i-tabler-chevron-up' : 'i-tabler-chevron-down'"
+          :name="open ? 'tabler:chevron-up' : 'tabler:chevron-down'"
           text="color-base"
         />
       </span>
@@ -133,7 +133,7 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
                 pos="absolute inset-y-0 right-0"
                 class="flex items-center"
               >
-                <Icon i-tabler-check />
+                <Icon name="tabler:check" />
               </span>
             </slot>
           </li>

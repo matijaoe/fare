@@ -12,7 +12,7 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
 <template>
   <div flex flex-col gap-3>
     <div flex items-center gap-3>
-      <Icon i-tabler-plane />
+      <Icon name="tabler:plane" />
       <h1>Dashboard</h1>
     </div>
     <div flex="~ col sm:row gap-2">
@@ -35,7 +35,7 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
       </div>
       <FInput
         v-model="address"
-        icon="i-tabler-id"
+        icon="tabler:id"
         icon-placement="left"
         :loading="loading"
         disabled
@@ -45,7 +45,7 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
           v-model="address"
           hint="napravi kajgod"
           label="Address"
-          icon="i-tabler-id"
+          icon="tabler:id"
           icon-placement="left"
           :loading="loading"
           @blur="testerFn('blur')"
@@ -53,7 +53,7 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
           @input="testerFn('input')"
         />
         <FInput
-          icon="i-tabler-check"
+          icon="tabler:check"
           label="Address"
           icon-placement="left"
           :loading="loading"
@@ -61,17 +61,17 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
         >
           <template #label>
             <div flex items-center gap-1>
-              <Icon i-tabler-alarm /> labela
+              <Icon name="tabler:alarm" /> labela
             </div>
           </template>
           <template #hint>
             <div flex items-center gap-1>
-              ovo je moj hint <Icon i-tabler-check />
+              ovo je moj hint <Icon name="tabler:check" />
             </div>
           </template>
         </FInput>
         <FInput
-          icon="i-tabler-id"
+          icon="tabler:id"
           label="Address"
           icon-placement="left"
           :loading="loading"
@@ -85,7 +85,7 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
               gap-1
               capitalize
             >
-              <Icon i-tabler-alarm /> labela
+              <Icon name="tabler:alarm" /> labela
             </div>
           </template>
         </FInput>
@@ -110,7 +110,7 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
         <FButton
           variant="primary"
           size="lg"
-          icon="i-tabler-play"
+          icon="tabler:play"
           icon-placement="right"
           @click="address = 'krapina'"
         >
@@ -120,7 +120,7 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
           variant="secondary"
           size="lg"
           block
-          icon="i-tabler-bluetooth-off"
+          icon="tabler:bluetooth-off"
         >
           Disconnect
         </FButton>
@@ -128,7 +128,7 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
           variant="outline"
           size="lg"
           block
-          icon="i-tabler-calendar"
+          icon="tabler:calendar"
         >
           Schedule
         </FButton>
@@ -149,29 +149,29 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
           <h1 mt-4>
             Medium
           </h1>
-          <FButton variant="primary" icon="i-tabler-cookie">
+          <FButton variant="primary" icon="tabler:cookie">
             Eat
           </FButton>
           <FButton
             variant="secondary"
-            icon="i-tabler-edit"
+            icon="tabler:edit"
             icon-placement="right"
           >
             Edit
           </FButton>
           <FButton variant="subtle">
             <template #left>
-              <Icon i-tabler-archive />
+              <Icon name="tabler:archive" />
             </template>
             Archive
           </FButton>
-          <FButton variant="outline" icon="i-tabler-info-circle">
+          <FButton variant="outline" icon="tabler:info-circle">
             Info
           </FButton>
           <FButton variant="danger">
             Discard
           </FButton>
-          <FButton variant="warning" icon="i-tabler-error-404">
+          <FButton variant="warning" icon="tabler:error-404">
             Warning
           </FButton>
           <FButton variant="success">
@@ -202,7 +202,7 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
             variant="outline"
             size="sm"
             loading
-            icon="i-tabler-clipboard"
+            icon="tabler:clipboard"
           >
             Copy
           </FButton>
@@ -229,20 +229,20 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
       >
         <FButton
           variant="primary"
-          icon="i-tabler-cookie"
+          icon="tabler:cookie"
           icon-only
           size="lg"
         />
         <FButton
           variant="success"
-          icon="i-tabler-cookie"
+          icon="tabler:cookie"
           icon-only
           circle
           size="lg"
         />
         <FButton
           variant="secondary"
-          icon="i-tabler-id"
+          icon="tabler:id"
           circle
           size="lg"
           icon-placement="right"

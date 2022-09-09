@@ -133,7 +133,7 @@ const emits = {
         items-center
       >
         <slot name="left">
-          <Icon :icon="icon" :class="[stateIconStyle]" />
+          <Icon :name="icon" :class="[stateIconStyle]" />
         </slot>
       </div>
       <div
@@ -146,10 +146,10 @@ const emits = {
         items-center
       >
         <slot v-if="loading" name="loading">
-          <Icon i-tabler-loader-2 class="animate-spin" />
+          <Icon name="tabler:loader-2" class="animate-spin" />
         </slot>
         <slot v-else name="right">
-          <Icon :icon="icon" :class="[stateIconStyle]" />
+          <Icon :name="icon" :class="[stateIconStyle]" />
         </slot>
       </div>
     </div>

@@ -28,7 +28,7 @@ const toggleVisible = useToggle(visible)
         content-center
         @click="toggleVisible()"
       >
-        <Icon :icon="visible ? 'i-tabler-eye-off' : 'i-tabler-eye'" />
+        <Icon :name="visible ? 'tabler:eye-off' : 'tabler:eye'" />
       </button>
     </template>
   </FInput>

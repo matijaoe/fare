@@ -4,28 +4,28 @@ import type { NavItemModel } from '~~/models/nav'
 const items = ref<NavItemModel[]>([
   {
     label: 'Dashboard',
-    icon: 'i-tabler-home',
+    icon: 'tabler:home',
     route: {
       name: 'index',
     },
   },
   {
     label: 'Expenses',
-    icon: 'i-tabler-receipt',
+    icon: 'tabler:receipt',
     route: {
       name: 'expenses',
     },
     children: [
       {
         label: 'Income',
-        icon: 'i-tabler-arrows-transfer-up',
+        icon: 'tabler:arrows-transfer-up',
         route: {
           name: 'expenses-income',
         },
       },
       {
         label: 'Transfers',
-        icon: 'i-tabler-arrows-transfer-down',
+        icon: 'tabler:arrows-transfer-down',
         route: {
           name: 'expenses-transfers',
         },
@@ -35,35 +35,35 @@ const items = ref<NavItemModel[]>([
   },
   {
     label: 'Net worth',
-    icon: 'i-tabler-businessplan',
+    icon: 'tabler:businessplan',
     route: {
       name: 'net-worth',
     },
   },
   {
     label: 'Accounts',
-    icon: 'i-tabler-wallet',
+    icon: 'tabler:wallet',
     route: {
       name: 'accounts',
     },
   },
   {
     label: 'FI',
-    icon: 'i-tabler-flame',
+    icon: 'tabler:flame',
     route: {
       name: 'fi',
     },
   },
   {
     label: 'Progress',
-    icon: 'i-tabler-chart-area-line',
+    icon: 'tabler:chart-area-line',
     route: {
       name: 'progress',
     },
     children: [
       {
         label: 'Coast FIRE',
-        icon: 'i-tabler-chart-area-line',
+        icon: 'tabler:chart-area-line',
         route: {
           name: 'progress-fire',
         },
@@ -72,14 +72,14 @@ const items = ref<NavItemModel[]>([
   },
   {
     label: 'Tools',
-    icon: 'i-tabler-tools',
+    icon: 'tabler:tools',
     route: {
       name: 'tools',
     },
   },
   {
     label: 'Resources',
-    icon: 'i-tabler-books',
+    icon: 'tabler:books',
     route: {
       name: 'resources',
     },

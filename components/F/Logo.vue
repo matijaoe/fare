@@ -33,7 +33,7 @@ const sizeStyle = computed(() => {
   >
     FI
     <Icon
-      i-ph-lightning-duotone
+      name="ph:lightning-duotone"
       :class="[sizeStyle.icon]"
     />
     RE

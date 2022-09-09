@@ -47,7 +47,7 @@ const selectedPerson = ref<SelectItem | null>()
         stop
       </FButton>
       <FButton
-        icon="i-tabler-hand-stop"
+        icon="tabler:hand-stop"
         circle
         icon-only
         variant="secondary"

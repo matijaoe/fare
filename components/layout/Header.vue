@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { useSidebar } from '~/store/sidebar'
 
 const sidebar = useSidebar()
@@ -54,7 +53,7 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
         outline="none focus:none"
       >
       <Icon
-        i-tabler-search
+        name="tabler:search"
         absolute
         pos="top-50% left-5"
         class="-translate-y-50%"
@@ -70,7 +69,7 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
 
       @click="sidebar.toggle()"
     >
-      <Icon i-tabler-menu-2 text="2xl" />
+      <Icon name="tabler:menu-2" text="2xl" />
     </button>
   </header>
 </template>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useSidebar } from '~/store/sidebar'
+
 const sidebar = useSidebar()
 const { smDown } = useBreakpoints()
 </script>
@@ -38,7 +39,7 @@ const { smDown } = useBreakpoints()
         class="translate-x-2"
       >
         <Icon
-          i-tabler-x
+          name="tabler:x"
           text="2xl"
           @click="sidebar.close()"
         />

@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
+    'nuxt-icon',
   ],
   experimental: {
     reactivityTransform: true,
@@ -33,9 +34,7 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [
-      Fonts({
-
-      }),
+      Fonts({}),
     ],
   },
 })

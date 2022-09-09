@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { set } from '@vueuse/core'
 import type { NavItemModel } from '~/models/nav'
-import { appBreakpoints } from '~~/composables/breakpoints'
 import { useSidebar } from '~/store/sidebar'
 
 type Props = {
@@ -12,21 +11,21 @@ type Props = {
 const { item, childLevel } = defineProps<Props>()
 
 const sidebar = useSidebar()
-const { smDown } = useBreakpoints()
+const { smDown } = $(useBreakpoints())
 
 const route = useRoute()
-const isParentRoute = computed(() => route.fullPath.startsWith(`/${item.route.name}`))
-const isActiveRoute = computed(() => route.name === item.route.name!)
+const isParentRoute = $computed(() => route.fullPath.startsWith(`/${item.route.name}`))
+const isActiveRoute = $computed(() => route.name === item.route.name!)
 
 const isOpen = ref(false)
 const toggleChildren = () => set(isOpen, !isOpen.value)
-const hasChildren = computed(() => !!item?.children?.length)
+const hasChildren = $computed(() => !!item?.children?.length)
 
 watch(route, () => {
   // close all other indents on route change
-  if (!isActiveRoute.value && !isParentRoute.value) {
+  if (!isActiveRoute && !isParentRoute) {
     set(isOpen, false)
-  } else if (isActiveRoute.value) {
+  } else if (isActiveRoute) {
     set(isOpen, true)
   }
 })
@@ -43,7 +42,7 @@ const childIndent = computed(() => {
 })
 
 const handleNavClick = () => {
-  return isActiveRoute.value && hasChildren.value ? toggleChildren() : smDown.value ? sidebar.close() : ''
+  return isActiveRoute && hasChildren ? toggleChildren() : smDown ? sidebar.close() : ''
 }
 </script>
 
@@ -67,7 +66,7 @@ const handleNavClick = () => {
         :class="[childLevel ? childIndent : 'pl-6']"
         items-center
       >
-        <Icon :icon="item.icon" text="xl sm:base" />
+        <Icon :name="item.icon" text="xl sm:base" />
         <p>{{ item.label }}</p>
       </div>
       <button
@@ -79,7 +78,7 @@ const handleNavClick = () => {
         class="hover:bg-stone-2/50 rounded-full"
       >
         <Icon
-          :class="isOpen ? 'i-tabler-chevron-up' : 'i-tabler-chevron-down'"
+          :name="isOpen ? 'tabler:chevron-up' : 'tabler:chevron-down'"
           text="base"
         />
       </button>
