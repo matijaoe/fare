@@ -3,6 +3,7 @@ const loading = ref(false)
 const toggleLoading = useToggle(loading)
 
 const address = ref('bestovje')
+const pw = ref('hunter32')
 
 const testerFn = (type: 'blur' | 'input' | 'focus') => {
   console.log(type)
@@ -25,7 +26,7 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
     </div>
     <div flex flex-col gap-3>
       <div flex gap-2 items-center>
-        <FPasswordField :loading="loading" flex-1 />
+        <FPasswordField v-model="pw" :loading="loading" flex-1 />
         <FButton
           variant="primary"
           @click="toggleLoading()"
