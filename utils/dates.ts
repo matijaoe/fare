@@ -1,4 +1,4 @@
-const locale = 'en-US'
+import { locale } from '.'
 
 export const formatDate = (date: Date | string, options?: Intl.DateTimeFormatOptions) => {
   return Intl.DateTimeFormat(locale, { dateStyle: 'full', ...options }).format(new Date(date))

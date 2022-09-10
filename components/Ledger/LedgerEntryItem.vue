@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Ledger } from '@prisma/client'
 import { set } from '@vueuse/core'
-import { formatTimeAgo } from '@/utils/dates'
+import { formatCurrency, formatTimeAgo } from '@/utils'
 
 type Props = {
   item: Ledger
@@ -24,34 +24,40 @@ const formatDate = (date: Date | string, options?: Intl.DateTimeFormatOptions) =
 }
 
 const formattedDate = computed(() => isDateFormat('relative') ? formatTimeAgo(item.date) : formatDate(item.date))
+const formatedAmount = computed(() => formatCurrency(item.amount))
 </script>
 
 <template>
   <FCard>
-    <div flex flex-col gap-2>
+    <div flex flex-col gap-4>
       <div
         flex
         justify-between
         w-full
       >
-        <div font="bold" text-2xl>
-          ${{ item.amount }}
+        <div flex gap-2>
+          <FBadge icon="tabler:pizza">
+            food
+          </FBadge>
+          <FBadge type="solid" color="red">
+            work
+          </FBadge>
         </div>
         <button @click="switchDateFormatType">
           <div
             text="sm"
-            opacity-25
+            opacity-40
           >
             {{ formattedDate }}
           </div>
         </button>
       </div>
-      <div>{{ item.description }}</div>
-      <div flex gap-2>
-        <FBadge icon="tabler:pizza">
-          food
-        </FBadge>
-        <FBadge>work</FBadge>
+      <div text-2xl>
+        {{ item.name }}
+      </div>
+
+      <div font="bold" text-3xl>
+        {{ formatedAmount }}
       </div>
     </div>
   </FCard>

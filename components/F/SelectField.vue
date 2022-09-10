@@ -51,7 +51,7 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
       h="41px"
       p="y-2.5 x-4 r-12"
       text="base"
-      border="1.5"
+      border="2"
       flex="~ gap-4"
       items-center
       outline="none focus:none"

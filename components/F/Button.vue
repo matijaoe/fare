@@ -34,13 +34,13 @@ const variantStyle = computed(() => {
     case 'subtle':
       return 'bg-transparent text-zinc-9 hover:not-disabled:(bg-zinc-2/75) focus-visible:not-disabled:(bg-zinc-2/75) dark:(text-zinc-2 hover:not-disabled:(bg-zinc-8) focus-visible:not-disabled:(bg-zinc-8))'
     case 'outline':
-      return 'bg-transparent text-zinc-9 !border-current hover:not-disabled:(bg-zinc-2) focus-visible:not-disabled:(bg-zinc-2) dark:(text-zinc-2 !border-zinc-7 hover:not-disabled:(bg-zinc-8 text-zinc-2) focus-visible:not-disabled:(bg-zinc-8 text-zinc-2))'
+      return 'bg-transparent text-zinc-9 !border-zinc-3 hover:not-disabled:(bg-zinc-2) focus-visible:not-disabled:(bg-zinc-2) dark:(text-zinc-2 !border-zinc-7 hover:not-disabled:(bg-zinc-8 text-zinc-2) focus-visible:not-disabled:(bg-zinc-8 text-zinc-2))'
     case 'danger':
-      return 'bg-red-4 text-zinc-9 !border-current hover:not-disabled:(bg-red-4/90) focus-visible:not-disabled:(bg-red-4/95) dark:(bg-red-5 !border-transparent hover:not-disabled:(bg-red-4) focus-visible:not-disabled:(bg-red-4))'
+      return 'bg-red-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-120) focus-visible:not-disabled:(bg-red-4/95) dark:(bg-red-5 filter-saturate-80 !border-transparent hover:not-disabled:(bg-red-5 filter-saturate-95) focus-visible:not-disabled:(bg-red-4))'
     case 'warning':
-      return 'bg-amber-4 text-zinc-9 !border-current hover:not-disabled:(bg-amber-4/90) focus-visible:not-disabled:(bg-amber-4/95) dark:(bg-amber-5 !border-transparent hover:not-disabled:(bg-amber-4) focus-visible:not-disabled:(bg-amber-5))'
+      return 'bg-amber-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-120) focus-visible:not-disabled:(bg-amber-4/95) dark:(bg-amber-5 filter-saturate-80 !border-transparent hover:not-disabled:(bg-amber-5 filter-saturate-95) focus-visible:not-disabled:(bg-amber-5))'
     case 'success':
-      return 'bg-green-4 text-zinc-9 !border-current hover:not-disabled:(bg-green-4/9) focus-visible:not-disabled:(bg-green-4/95) dark:(bg-green-5 !border-transparent hover:not-disabled:(bg-green-4) focus-visible:not-disabled:(bg-green-4))'
+      return 'bg-green-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-120) focus-visible:not-disabled:(bg-green-4/95) dark:(bg-green-5 filter-saturate-80 !border-transparent hover:not-disabled:(bg-green-5 filter-saturate-95) focus-visible:not-disabled:(bg-green-4))'
   }
 })
 
@@ -76,7 +76,7 @@ const isSlot = (name: 'left' | 'right') => {
 
 <template>
   <button
-    border="1.5 transparent"
+    border="2 transparent"
     flex
     justify-center
     items-center

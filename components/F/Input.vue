@@ -57,27 +57,29 @@ const paddingStyle = computed(() => {
 const stateStyle = computed(() => {
   const { invalid, positive } = props
   if (invalid) {
-    return 'not-focus:(bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-8))'
+    return 'bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-5/60)) focus:(bg-zinc-1 dark:bg-zinc-8)'
   }
   if (positive) {
-    return 'not-focus:(bg-emerald-1/50 border-emerald-6 dark:bg-emerald-9/25 dark:(bg-emerald-9/25 border-emerald-8))'
+    return 'bg-green-1/50 border-green-6 dark:(bg-green-9/25 border-green-5/60) focus:(bg-zinc-1 dark:bg-zinc-8)'
   }
-  return ''
+  return 'bg-zinc-2 dark:bg-zinc-8 border-transparent focus:(bg-zinc-1 dark:bg-zinc-8 border-zinc-8/50 dark:border-zinc-5)'
 })
 
 const stateIconStyle = computed(() => {
   const { invalid, positive, disabled } = props
   if (invalid) {
-    return 'not-focus:(text-red-6)'
+    return 'not-focus:(text-red-5)'
   }
   if (positive) {
-    return 'not-focus:(text-emerald-6)'
+    return 'not-focus:(text-green-5)'
   }
   if (disabled) {
     return 'text-zinc-3 dark:text-zinc-7'
   }
   return 'color-base-lighter'
 })
+
+const disabledStyle = computed(() => 'disabled:(bg-zinc-1 dark:bg-zinc-9/50 border-zinc-3 dark:border-zinc-7 opacity-50 cursor-not-allowed)')
 
 const value = computed({
   get: () => props.modelValue ?? '',
@@ -115,12 +117,12 @@ const emits = {
         h="41px"
         p="y-2.5 x-4"
         text="base"
-        border="1.5 rounded-sm"
+        border="2 rounded-sm"
         flex="~ gap-4"
         items-center
         outline="none focus:none"
-        class="bg-zinc-2 dark:bg-zinc-8 border-transparent disabled:(bg-zinc-1 dark:bg-zinc-9/50 border-zinc-3 dark:border-zinc-7 opacity-50) focus:(bg-zinc-2/75 dark:bg-zinc-8 border-zinc-8 dark:border-zinc-3) leading-5 placeholder-zinc-5/60 placeholder-shown:font-normal"
-        :class="[paddingStyle, stateStyle]"
+        class="leading-5 placeholder-zinc-5/60 placeholder-shown:font-normal"
+        :class="[disabledStyle, paddingStyle, stateStyle]"
         v-on="emits"
       >
       <div
@@ -153,7 +155,7 @@ const emits = {
         </slot>
       </div>
     </div>
-    <div v-if="error || $slots.error" text="xs red-6">
+    <div v-if="error || $slots.error" text="xs red-5">
       <slot name="error">
         {{ error }}
       </slot>

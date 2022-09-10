@@ -2,7 +2,22 @@
 </script>
 
 <template>
-  <LayoutPageWrapper title="Expense tracker" subtitle="Track every penny" icon="tabler:receipt">
+  <LayoutPageWrapper>
+    <div
+      grid
+      grid-cols-3
+      w-full
+      mb-8
+    >
+      <div>fd</div>
+      <p flex="center" font="bold" text="2xl">
+        September
+      </p>
+      <div text="right">
+        fd
+      </div>
+    </div>
+
     <div grid grid-cols-3 gap-4>
       <FCard
         flex
