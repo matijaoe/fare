@@ -9,12 +9,11 @@ import {
 } from 'unocss'
 
 export default defineConfig({
-
   shortcuts: {
-    'border-base': 'border-stone-3 dark:border-stone-8',
-    'bg-base': 'bg-stone-50 dark:bg-stone-9',
-    'color-base': 'text-stone-9 dark:text-stone-3',
-    'color-base-lighter': 'text-stone-8 dark:text-stone-3/90',
+    'border-base': 'border-zinc-2 dark:border-zinc-8',
+    'bg-base': 'bg-zinc-50 dark:bg-zinc-9',
+    'color-base': 'text-zinc-9 dark:text-zinc-3',
+    'color-base-lighter': 'text-zinc-8 dark:text-zinc-3/90',
     'flex-center': 'flex items-center justify-center',
     'max-w-base': 'max-w-1440px',
   },
@@ -27,13 +26,7 @@ export default defineConfig({
     presetUno(),
     presetAttributify(),
     presetTypography(),
-    presetWebFonts({
-      fonts: {
-        sans: 'DM Sans',
-        serif: 'DM Serif Display',
-        mono: 'DM Mono',
-      },
-    }),
+    presetWebFonts({ }),
   ],
   transformers: [
     transformerDirectives(),

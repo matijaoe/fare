@@ -54,8 +54,8 @@ const handleNavClick = () => {
       flex="~ gap-2"
       items-center
       border="y-2 y-transparent"
-      exact-active-class="!bg-stone-2/40 dark:!bg-stone-8 !color-base !border-base"
-      class="color-base-lighter text-lg sm:text-base hover:(bg-stone-2/50 dark:bg-stone-8 color-base-lighter) focus:(bg-stone-2/50 dark:bg-stone-8 color-base)"
+      exact-active-class="!bg-zinc-2/40 dark:!bg-zinc-8 !color-base !border-base"
+      class="color-base-lighter text-lg sm:text-base hover:(bg-zinc-2/50 dark:bg-zinc-8 color-base-lighter) focus:(bg-zinc-2/50 dark:bg-zinc-8 color-base)"
       outline="none"
       @click="handleNavClick"
     >
@@ -75,7 +75,7 @@ const handleNavClick = () => {
         mr-5
         grid
         content-center
-        class="hover:bg-stone-2/50 rounded-full"
+        class="hover:bg-zinc-2/50 rounded-full"
       >
         <Icon
           :name="isOpen ? 'tabler:chevron-up' : 'tabler:chevron-down'"

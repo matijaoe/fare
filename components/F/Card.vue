@@ -6,8 +6,8 @@ const props = defineProps<{
 
 const backgroundStyle = computed(() =>
   props.filled
-    ? 'bg-stone-2 dark:bg-stone-8 border-transparent'
-    : 'bg-transparent border-stone-2 dark:border-stone-8',
+    ? 'bg-zinc-1 dark:bg-zinc-9'
+    : 'bg-transparent border-zinc-2 dark:border-zinc-8',
 )
 </script>
 

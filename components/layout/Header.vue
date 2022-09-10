@@ -49,7 +49,7 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
         flex
         items-center
         gap-4
-        class="color-base placeholder-stone-4/65 placeholder-shown:font-normal bg-transparent"
+        class="color-base placeholder-zinc-4/65 placeholder-shown:font-normal bg-transparent"
         outline="none focus:none"
       >
       <Icon
@@ -64,7 +64,7 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
       grid
       content-center
       p="y-2.5 x-3"
-      bg="hover:stone-2/40 dark:hover:stone-8"
+      bg="hover:zinc-2/40 dark:hover:zinc-8"
       border="l-2 base"
 
       @click="sidebar.toggle()"

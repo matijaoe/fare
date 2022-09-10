@@ -8,7 +8,7 @@
       <Icon name="tabler:plane" />
       <h1>Dashboard</h1>
     </div>
-    <ChartDemo />
-    <!-- <Demo /> -->
+    <!-- <ChartDemo /> -->
+    <Demo />
   </div>
 </template>

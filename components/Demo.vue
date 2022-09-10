@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { SelectItem } from '~~/models/ui'
+
 const loading = ref(false)
 const toggleLoading = useToggle(loading)
 
@@ -8,6 +10,24 @@ const pw = ref('hunter32')
 const testerFn = (type: 'blur' | 'input' | 'focus') => {
   console.log(type)
 }
+
+const people = [
+  { id: 1, name: 'Durward Reynolds', disabled: false },
+  { id: 2, name: 'Kenton Towne', disabled: false },
+  { id: 3, name: 'Therese Wunsch Ani Stazija', disabled: false },
+  { id: 4, name: 'Benedict Kessler', disabled: true },
+  { id: 5, name: 'Katelyn Rohan', disabled: false },
+]
+const peopleOptions = $(computed(() => {
+  return people.map((person: any) => {
+    return {
+      value: person.id,
+      label: person.name,
+      disabled: person.disabled,
+    }
+  })
+}))
+const selectedPerson = ref<SelectItem | null>()
 </script>
 
 <template>
@@ -20,6 +40,10 @@ const testerFn = (type: 'blur' | 'input' | 'focus') => {
     </FCard>
   </div>
   <div flex flex-col gap-3>
+    <FSelectField
+      v-model="selectedPerson"
+      :items="peopleOptions"
+    />
     <div flex gap-2 items-center>
       <FPasswordField v-model="pw" :loading="loading" flex-1 />
       <FButton

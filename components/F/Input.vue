@@ -74,7 +74,7 @@ const stateIconStyle = computed(() => {
     return 'not-focus:(text-emerald-6)'
   }
   if (disabled) {
-    return 'text-stone-3 dark:text-stone-7'
+    return 'text-zinc-3 dark:text-zinc-7'
   }
   return 'color-base-lighter'
 })
@@ -119,14 +119,14 @@ const emits = {
         flex="~ gap-4"
         items-center
         outline="none focus:none"
-        class="bg-stone-2 dark:bg-stone-8 border-transparent disabled:(bg-stone-1 dark:bg-stone-9/50 border-stone-3 dark:border-stone-7 opacity-50) focus:(bg-stone-2/75 dark:bg-stone-8 border-stone-8 dark:border-stone-3) leading-5 placeholder-stone-5/60 placeholder-shown:font-normal"
+        class="bg-zinc-2 dark:bg-zinc-8 border-transparent disabled:(bg-zinc-1 dark:bg-zinc-9/50 border-zinc-3 dark:border-zinc-7 opacity-50) focus:(bg-zinc-2/75 dark:bg-zinc-8 border-zinc-8 dark:border-zinc-3) leading-5 placeholder-zinc-5/60 placeholder-shown:font-normal"
         :class="[paddingStyle, stateStyle]"
         v-on="emits"
       >
       <div
         v-if="isSlot('left')"
         absolute
-        text="stone-8"
+        text="zinc-8"
         pos="top-50% left-4"
         class="-translate-y-50%"
         flex
@@ -158,7 +158,7 @@ const emits = {
         {{ error }}
       </slot>
     </div>
-    <div v-else-if="hint || $slots.hint" text="xs stone-4 dark:stone-5">
+    <div v-else-if="hint || $slots.hint" text="xs zinc-4 dark:zinc-5">
       <slot name="hint">
         {{ hint }}
       </slot>
