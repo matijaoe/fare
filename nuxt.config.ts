@@ -32,9 +32,15 @@ export default defineNuxtConfig({
       }
     },
   },
+  vue: {
+    compilerOptions: {
+      comments: false,
+    },
+  },
   vite: {
     plugins: [
       Fonts({}),
+
     ],
   },
 })

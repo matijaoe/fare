@@ -32,8 +32,10 @@
   "dependencies": {
     "@headlessui/vue": "^1.7.0",
     "@prisma/client": "^4.3.1",
+    "chart.js": "^3.9.1",
     "flowbite-datepicker": "^1.2.2",
     "http-status-codes": "^2.2.0",
-    "prisma-docs-generator": "^0.5.0"
+    "prisma-docs-generator": "^0.5.0",
+    "vue-chartjs": "^4.1.1"
   }
 }
