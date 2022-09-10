@@ -3,9 +3,9 @@ import { set } from '@vueuse/core'
 import { useBreakpoints } from '~~/composables/breakpoints'
 
 export const useSidebar = defineStore('sidebar', () => {
-  const { smDown } = useBreakpoints()
+  const { mdDown } = useBreakpoints()
 
-  const isOpen = ref(!smDown.value)
+  const isOpen = ref(!mdDown.value)
 
   const toggle = () => set(isOpen, !isOpen.value)
   const open = () => set(isOpen, true)

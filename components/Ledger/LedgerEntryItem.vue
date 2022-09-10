@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { Ledger } from '@prisma/client'
+import type { Account, Ledger, LedgerCategory } from '@prisma/client'
 import { set } from '@vueuse/core'
 import { formatCurrency, formatTimeAgo } from '@/utils'
 
 type Props = {
-  item: Ledger
+  item: Ledger & { category?: LedgerCategory } & { fromAccount?: Account; toAccount?: Account }
 }
 
 const { item } = defineProps<Props>()
@@ -20,7 +20,7 @@ const switchDateFormatType = () => {
 }
 
 const formatDate = (date: Date | string, options?: Intl.DateTimeFormatOptions) => {
-  return Intl.DateTimeFormat('en-US', { dateStyle: 'full', ...options }).format(new Date(date))
+  return Intl.DateTimeFormat('en-US', { dateStyle: 'medium', ...options }).format(new Date(date))
 }
 
 const formattedDate = computed(() => isDateFormat('relative') ? formatTimeAgo(item.date) : formatDate(item.date))
@@ -28,22 +28,49 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
 </script>
 
 <template>
-  <FCard>
-    <div flex flex-col gap-4>
+  <FCard white relative>
+    <div
+      flex
+      gap-2
+      pos="absolute top--3 left-3"
+    >
+      <FBadge
+        v-if="item.category"
+        type="solid"
+        :color="item.category.color"
+        rounded
+      >
+        {{ item.category.name }}
+      </FBadge>
+      <div
+        flex
+        items-center
+        gap-2
+      >
+        <FBadge
+          v-if="item.fromAccount"
+          type="dot"
+          :color="item.fromAccount.color"
+          rounded
+        >
+          {{ item.fromAccount.name }}
+        </FBadge>
+      </div>
+    </div>
+    <div
+      flex
+      flex-col
+      gap-4
+    >
       <div
         flex
         justify-between
-        w-full
+        items-start
       >
-        <div flex gap-2>
-          <FBadge icon="tabler:pizza">
-            food
-          </FBadge>
-          <FBadge type="solid" color="red">
-            work
-          </FBadge>
-        </div>
-        <button @click="switchDateFormatType">
+        <!-- <div text-2xl truncate>
+          {{ item.name }}
+        </div> -->
+        <button ml-auto @click="switchDateFormatType">
           <div
             text="sm"
             opacity-40
@@ -52,12 +79,19 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
           </div>
         </button>
       </div>
-      <div text-2xl>
-        {{ item.name }}
-      </div>
+      <div
+        flex
+        justify-between
+        items-center
+        gap-6
+      >
+        <div text-2xl truncate>
+          {{ item.name }}
+        </div>
 
-      <div font="bold" text-3xl>
-        {{ formatedAmount }}
+        <div font="bold" text-3xl>
+          {{ formatedAmount }}
+        </div>
       </div>
     </div>
   </FCard>

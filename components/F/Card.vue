@@ -5,11 +5,14 @@ const props = defineProps<{
   white?: boolean
 }>()
 
-const backgroundStyle = computed(() =>
-  props.filled
+const backgroundStyle = computed(() => {
+  if (props.white) {
+    return 'bg-white'
+  }
+  return props.filled
     ? 'bg-zinc-2 dark:bg-zinc-8 border-transparent'
-    : 'bg-transparent border-zinc-2 dark:border-zinc-8',
-)
+    : 'bg-transparent border-zinc-2 dark:border-zinc-8'
+})
 </script>
 
 <template>

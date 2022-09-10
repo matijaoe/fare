@@ -9,16 +9,12 @@ const { data: entries } = useLedgerEntries({
 </script>
 
 <template>
-  <div>
-    <div space-y-2>
-      <LedgerEntryItem v-for="entry in expenses" :key="entry.id" :item="entry" />
-      <LedgerEntryItem
-        v-for="entry in entries"
-        :key="entry.id"
-        :item="entry"
-        filled
-      />
-    </div>
+  <div
+    flex
+    flex-col
+    gap-6
+  >
+    <LedgerEntryItem v-for="entry in expenses" :key="entry.id" :item="entry" />
   </div>
 </template>
 

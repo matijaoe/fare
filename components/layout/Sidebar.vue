@@ -2,7 +2,7 @@
 import { useSidebar } from '~/store/sidebar'
 
 const sidebar = useSidebar()
-const { smDown } = useBreakpoints()
+const { mdDown } = useBreakpoints()
 </script>
 
 <template>
@@ -10,11 +10,11 @@ const { smDown } = useBreakpoints()
     absolute
     inset-0
     h-screen
-    w="screen sm:270px"
+    w="screen md:270px"
     py-4
     bg="base"
     overflow-y="auto"
-    border="r-0 sm:r-2 base"
+    border="r-0 md:r-2 base"
     z-1000
     :class="{ '!hidden': !sidebar.isOpen }"
     flex
@@ -32,7 +32,7 @@ const { smDown } = useBreakpoints()
         <FLogo size="lg" />
       </NuxtLink>
       <button
-        v-if="smDown"
+        v-if="mdDown"
         grid
         content-center
         p-2
@@ -48,6 +48,6 @@ const { smDown } = useBreakpoints()
 
     <NavList flex-1 />
 
-    <NavControls />
+    <NavControls max-w="fit" mx-auto />
   </div>
 </template>

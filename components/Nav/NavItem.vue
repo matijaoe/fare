@@ -11,7 +11,7 @@ type Props = {
 const { item, childLevel } = defineProps<Props>()
 
 const sidebar = useSidebar()
-const { smDown } = $(useBreakpoints())
+const { mdDown } = $(useBreakpoints())
 
 const route = useRoute()
 const isParentRoute = $computed(() => route.fullPath.startsWith(`/${item.route.name}`))
@@ -42,7 +42,7 @@ const childIndent = computed(() => {
 })
 
 const handleNavClick = () => {
-  return isActiveRoute && hasChildren ? toggleChildren() : smDown ? sidebar.close() : ''
+  return isActiveRoute && hasChildren ? toggleChildren() : mdDown ? sidebar.close() : ''
 }
 </script>
 
