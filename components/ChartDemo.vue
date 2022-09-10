@@ -1,39 +1,39 @@
 <script setup lang="ts">
+const tension = 0.5
+
+const skipped = (ctx: any, value: any) => ctx.p0.skip || ctx.p1.skip ? value : undefined
+const down = (ctx: any, value: any) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined
+
 const chartData = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
   datasets: [
     {
-      label: 'Income',
-      backgroundColor: '#f87979',
-      data: [10, 20, 10, 15, 24, 28, 4, 12, 14, 16, 15, 12, 20],
-    },
-    {
-      label: 'Expenses',
-      backgroundColor: '#bada',
-      data: [16, 15, 12, 20, 10, 20, 10, 15, 24, 28, 4, 12, 14],
+      label: 'Expense',
+      data: [65, 59, NaN, 48, 56, 57, 40],
+      borderColor: 'rgb(75, 192, 192)',
+      segment: {
+        borderColor: (ctx: any) => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
+        borderDash: (ctx: any) => skipped(ctx, [6, 6]),
+      },
+      spanGaps: true,
+      tension,
     },
   ],
 }
+
+const chartOptions = { responsive: true }
 </script>
 
 <template>
   <ClientOnly>
     <div max-w-lg w-full mx-auto>
-      <!-- <bar-chart
-        :chart-options="{
-          responsive: true,
-        }"
+      <bar-chart
+        :chart-options="chartOptions"
         :chart-data="chartData"
-      /> -->
+      />
       <line-chart
         :chart-data="chartData"
-        :plugins="{
-          legend: { positition: 'botttom' },
-          title: {
-            display: true,
-            text: 'Chart.js Line Chart',
-          },
-        }"
+        :chart-options="chartOptions"
       />
     </div>
   </ClientOnly>

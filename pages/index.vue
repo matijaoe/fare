@@ -9,6 +9,6 @@
       <h1>Dashboard</h1>
     </div>
     <ChartDemo />
-    <Demo />
+    <!-- <Demo /> -->
   </div>
 </template>

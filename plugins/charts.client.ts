@@ -1,4 +1,4 @@
-import { Bar, Line } from 'vue-chartjs'
+import { Bar, Doughnut, Line } from 'vue-chartjs'
 import {
   BarElement,
   CategoryScale,
@@ -22,4 +22,5 @@ ChartJS.register(
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component('bar-chart', Bar)
   nuxtApp.vueApp.component('line-chart', Line)
+  nuxtApp.vueApp.component('doughnut-chart', Doughnut)
 })
