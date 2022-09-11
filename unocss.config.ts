@@ -21,6 +21,11 @@ export default defineConfig({
     maxWidth: {
       default: '1440px',
     },
+    fontFamily: {
+      display: ['Staatliches, sans-serif'],
+      sans: ['Lack, sans-serif'],
+      mono: ['Iosevka Nerd Font, JetBrains Mono, monospace'],
+    },
   },
   presets: [
     presetUno(),

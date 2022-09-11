@@ -51,7 +51,6 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
           v-if="item.fromAccount"
           type="dot"
           :color="item.fromAccount.color"
-          rounded
         >
           {{ item.fromAccount.name }}
         </FBadge>
@@ -85,11 +84,11 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
         items-center
         gap-6
       >
-        <div text-2xl truncate>
+        <div text-2xl truncate font="display">
           {{ item.name }}
         </div>
 
-        <div font="bold" text-3xl>
+        <div font="display" text-3xl>
           {{ formatedAmount }}
         </div>
       </div>

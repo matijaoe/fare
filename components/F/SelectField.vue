@@ -56,7 +56,7 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
       items-center
       outline="none focus:none"
       class="bg-zinc-2 dark:bg-zinc-8 border-transparent disabled:(bg-zinc-1 dark:bg-zinc-9/50 border-zinc-3 dark:border-zinc-7 opacity-50) focus-visible:(border-zinc-8 dark:border-zinc-3) leading-5"
-      :class="[open ? 'border-rounded-t-sm' : 'border-rounded-sm', selectClass]"
+      :class="[open ? 'border-rounded-t-md' : 'border-rounded-md', selectClass]"
     >
       <span v-if="selectedItem" class="block truncate"> {{ selectedItem?.label || '' }}</span>
       <span v-else>
@@ -100,7 +100,7 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
         :class="[widthStyle]"
         py-1
         outline="none focus:none"
-        border="2 t-0 rounded-b-sm zinc-2 dark:zinc-8"
+        border="2 t-0 rounded-b-md zinc-2 dark:zinc-8"
       >
         <ListboxOption
           v-for="item in items"

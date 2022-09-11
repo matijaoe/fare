@@ -71,7 +71,8 @@ const formattedDate = computed(() =>
         justify-center
         text-xl
         uppercase
-        class="!py-10"
+        class="!py-20"
+        white
       >
         Income
       </FCard>
@@ -80,7 +81,7 @@ const formattedDate = computed(() =>
         justify-center
         text-xl
         uppercase
-        class="!py-10"
+        class="!py-20"
         filled
       >
         Expense
@@ -90,7 +91,7 @@ const formattedDate = computed(() =>
         justify-center
         text-xl
         uppercase
-        class="!py-10"
+        class="!py-20"
       >
         Transfer
       </FCard>
@@ -99,7 +100,7 @@ const formattedDate = computed(() =>
       w-full
       flex="~ col lg:row"
       justify-between
-      gap-4
+      gap-8
       mt-8
     >
       <div

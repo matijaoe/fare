@@ -12,7 +12,7 @@ const { data: entries } = useLedgerEntries({
   <div
     flex
     flex-col
-    gap-6
+    gap-8
   >
     <LedgerEntryItem v-for="entry in expenses" :key="entry.id" :item="entry" />
   </div>

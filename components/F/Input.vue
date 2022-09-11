@@ -57,12 +57,12 @@ const paddingStyle = computed(() => {
 const stateStyle = computed(() => {
   const { invalid, positive } = props
   if (invalid) {
-    return 'bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-5/60)) focus:(bg-zinc-1 dark:bg-zinc-8)'
+    return 'bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-5/60))'
   }
   if (positive) {
-    return 'bg-green-1/50 border-green-6 dark:(bg-green-9/25 border-green-5/60) focus:(bg-zinc-1 dark:bg-zinc-8)'
+    return 'bg-green-1/50 border-green-6 dark:(bg-green-9/25 border-green-5/60)'
   }
-  return 'bg-zinc-2 dark:bg-zinc-8 border-transparent focus:(bg-zinc-1 dark:bg-zinc-8 border-zinc-8/50 dark:border-zinc-5)'
+  return 'bg-zinc-2 dark:bg-zinc-8 border-transparent focus:(border-zinc-8 dark:border-zinc-4)'
 })
 
 const stateIconStyle = computed(() => {
@@ -117,7 +117,7 @@ const emits = {
         h="41px"
         p="y-2.5 x-4"
         text="base"
-        border="2 rounded-sm"
+        border="2 rounded-md"
         flex="~ gap-4"
         items-center
         outline="none focus:none"

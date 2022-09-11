@@ -183,7 +183,7 @@ const radiusClass = computed(() => {
   if (props.rounded) {
     return 'rounded-full'
   }
-  return 'rounded-sm'
+  return 'rounded-md'
 })
 const sharedClasses = 'filter-saturate-70'
 </script>

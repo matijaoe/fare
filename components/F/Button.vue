@@ -28,7 +28,7 @@ const variantStyle = computed(() => {
   switch (props.variant) {
     // TODO: focus states with outlines
     case 'primary':
-      return 'bg-zinc-9 text-zinc-2 hover:not-disabled:(bg-zinc-8) focus-visible:not-disabled:(bg-zinc-8) dark:(bg-zinc-2 text-zinc-8 hover:not-disabled:(bg-zinc-1) focus-visible:not-disabled:(bg-zinc-1))'
+      return 'bg-zinc-9 text-zinc-2 hover:not-disabled:(bg-zinc-8) focus-visible:not-disabled:(bg-zinc-8) dark:(bg-zinc-3 text-zinc-8 hover:not-disabled:(bg-zinc-2) focus-visible:not-disabled:(bg-zinc-1))'
     case 'secondary':
       return 'bg-zinc-2 text-zinc-9 hover:not-disabled:(bg-zinc-3/75) focus-visible:not-disabled:(bg-zinc-3/75) dark:(bg-zinc-8 text-zinc-2 hover:not-disabled:(bg-zinc-7) focus-visible:not-disabled:(bg-zinc-7))'
     case 'subtle':
@@ -48,7 +48,7 @@ const sizeStyle = computed(() => {
   const { iconOnly: icon, size } = props
   switch (size) {
     case 'sm':
-      return `${icon ? 'p-1.3' : 'py-1 px-2.5'} text-xs gap-1`
+      return `${icon ? 'p-1.3' : 'py-1.25 px-2.5'} text-xs gap-1`
     case 'md':
       return `${icon ? 'p-2.5' : 'py-2.25 px-4'} text-sm gap-2`
     case 'lg':
@@ -57,7 +57,7 @@ const sizeStyle = computed(() => {
 })
 
 const widthStyle = computed(() => props.block ? 'w-full' : 'w-auto')
-const radiusStyle = computed(() => props.circle ? 'rounded-full' : 'rounded-sm')
+const radiusStyle = computed(() => props.circle ? 'rounded-full' : 'rounded-md')
 
 const disabledStyle = computed(() => ({
   'opacity-45 cursor-not-allowed': props.disabled && !props.loading,

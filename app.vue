@@ -12,6 +12,7 @@ useShortcuts()
 
 <template>
   <div
+    font="mono"
     h="screen"
     overflow="hidden"
     class="bg-base color-base"
@@ -23,9 +24,5 @@ useShortcuts()
 </template>
 
 <style>
-html,
-body,
-#__nuxt {
-  font-family: "Iosevka Nerd Font", "Jetbrains Mono";
-}
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
 </style>
