@@ -16,15 +16,21 @@ watch(width, (val: number, prevVal: number) => {
 
 <template>
   <div>
-    <LayoutSidebar />
+    <LayoutSidebar
+      w="screen md:260px"
+    />
     <div
       h-screen
       overflow-y-auto
       :class="[{
-        'md:ml-270px': sidebar.isOpen,
+        'md:ml-260px': sidebar.isOpen,
       }]"
     >
-      <LayoutHeader />
+      <LayoutHeader
+        :class="[
+          sidebar.isOpen ? 'sm:(w-[calc(100vw-260px)])' : 'w-screen',
+        ]"
+      />
       <div
         mt="50px"
         overflow-y-auto

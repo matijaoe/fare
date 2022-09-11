@@ -196,7 +196,7 @@ const sharedClasses = 'filter-saturate-70'
       p="x-2 y-0.5"
       uppercase
       font-bold
-      border="2 transparent"
+      border="1 transparent"
       flex
       gap-1
       items-center
@@ -217,7 +217,7 @@ const sharedClasses = 'filter-saturate-70'
       p="x-1.5 y-0.5"
       uppercase
       font-medium
-      border="2 base"
+      border="1 base"
       flex
       gap-1
       items-center

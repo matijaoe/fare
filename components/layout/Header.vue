@@ -18,9 +18,6 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
     bg="base"
     border="b-2 base"
     class="color-base-lighter"
-    :class="[
-      sidebar.isOpen ? 'sm:(w-[calc(100vw-270px)])' : 'w-screen',
-    ]"
   >
     <NuxtLink
       v-if="handledSidebar"
@@ -64,7 +61,7 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
       grid
       content-center
       p="y-2.5 x-3"
-      bg="hover:zinc-2/40 dark:hover:zinc-8"
+      bg="hover:zinc-1 hover:dark:zinc-8"
       border="l-2 base"
 
       @click="sidebar.toggle()"

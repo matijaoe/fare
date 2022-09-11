@@ -10,12 +10,12 @@ const { isDark, toggleDark } = useColorscheme()
     grid="sm:~ sm:cols-4 sm:gap-3"
     flex="~ gap-5 wrap"
     class="justify-center items-center sm:justify-items-center"
-    px-5
+    px-3
   >
     <button>
       <img
         src="https://source.boringavatars.com/marble/50"
-        w="52.6px sm:47.2px"
+        w="60px sm:50.8px"
         aspect-square
       >
     </button>

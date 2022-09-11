@@ -94,7 +94,7 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
     >
       <ListboxOptions
         z-100
-        bg="zinc-50 dark:zinc-9"
+        bg="base"
         w-full
         absolute
         :class="[widthStyle]"

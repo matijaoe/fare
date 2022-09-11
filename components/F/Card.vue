@@ -7,17 +7,17 @@ const props = defineProps<{
 
 const backgroundStyle = computed(() => {
   if (props.white) {
-    return 'bg-white dark:(bg-zinc-8 border-zinc-9) shadow-[7px_8px_0_#E4E4E7] shadow-[7px_8px_0_#E4E4E7] dark:(shadow-[7px_8px_0_#27272a])'
+    return 'bg-white dark:(bg-zinc-8 border-zinc-9)'
   }
   return props.filled
-    ? 'bg-zinc-2 dark:bg-zinc-8 border-zinc-3 dark:border-zinc-9 shadow-[7px_8px_0_#d4d4d8] dark:(shadow-[7px_8px_0_#27272a])'
-    : 'bg-transparent border-zinc-2 dark:border-zinc-8 shadow-[7px_8px_0_#E4E4E7] dark:(shadow-[7px_8px_0_#27272a])'
+    ? 'bg-zinc-2 dark:bg-zinc-8 border-transparent'
+    : 'bg-transparent border-zinc-2 dark:border-zinc-8'
 })
 </script>
 
 <template>
   <article
-    border="rounded-md 2"
+    border="rounded-lg 1"
     class="transition-shadow"
     :class="[
       paddingless ? 'p-0' : 'p-5',

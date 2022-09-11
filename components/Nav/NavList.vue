@@ -88,7 +88,7 @@ const items = ref<NavItemModel[]>([
 </script>
 
 <template>
-  <ul>
+  <ul px-3>
     <NavItem v-for="item in items" :key="item.label" :item="item">
       <ul v-if="item.children">
         <NavItem

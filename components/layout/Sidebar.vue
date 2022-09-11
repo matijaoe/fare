@@ -10,9 +10,8 @@ const { mdDown } = useBreakpoints()
     absolute
     inset-0
     h-screen
-    w="screen md:270px"
     py-4
-    bg="base"
+    bg="zinc-50 dark:zinc-9"
     overflow-y="auto"
     border="r-0 md:r-2 base"
     z-1000

@@ -36,6 +36,7 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
     >
       <FBadge
         v-if="item.category"
+        cursor="pointer"
         type="solid"
         :color="item.category.color"
         rounded
@@ -49,6 +50,7 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
       >
         <FBadge
           v-if="item.fromAccount"
+          cursor="pointer"
           type="dot"
           :color="item.fromAccount.color"
         >
