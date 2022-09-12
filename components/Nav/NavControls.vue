@@ -41,7 +41,6 @@ const { isDark, toggleDark } = useColorscheme()
         '!p-4': smDown,
       }"
       icon-only
-      @click="toggleDark()"
     >
       <template #icon>
         <Icon name="tabler:settings" text="xl sm:base" />
@@ -55,7 +54,6 @@ const { isDark, toggleDark } = useColorscheme()
         '!p-4': smDown,
       }"
       icon-only
-      @click="toggleDark()"
     >
       <template #icon>
         <Icon name="tabler:logout" text="xl sm:base" />

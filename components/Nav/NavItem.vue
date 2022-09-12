@@ -30,14 +30,14 @@ watch(route, () => {
   }
 })
 
-const childIndent = computed(() => {
+const indentStyle = computed(() => {
   switch (childLevel) {
     case 1:
       return 'pl-10'
     case 2:
       return 'pl-16'
     default:
-      return 'pl-4'
+      return 'pl-6'
   }
 })
 
@@ -53,7 +53,6 @@ const handleNavClick = () => {
       :to="item.route"
       flex="~ gap-2"
       items-center
-      rounded-md
       border="y-1 y-transparent"
       exact-active-class="!bg-zinc-2/80 dark:!bg-zinc-8 !color-base"
       class="color-base-lighter text-lg sm:text-base hover:(bg-zinc-2/50 dark:bg-zinc-8 color-base-lighter) focus:(bg-zinc-2/50 dark:bg-zinc-8 color-base)"
@@ -64,7 +63,7 @@ const handleNavClick = () => {
         w-full
         p="y-2"
         flex="~ gap-5 sm:gap-4"
-        :class="[childLevel ? childIndent : 'pl-4']"
+        :class="[indentStyle]"
         items-center
       >
         <Icon :name="item.icon" text="xl sm:base" />

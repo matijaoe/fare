@@ -1,9 +1,8 @@
 <script setup>
 useHead({
-  title: 'Vitesse Nuxt 3',
+  title: 'FIRE',
   link: [
     { rel: 'icon', type: 'image/png', href: '/nuxt.png' },
-    { src: 'https://unpkg.com/flowbite@1.5.2/dist/datepicker.js"' },
   ],
 })
 
