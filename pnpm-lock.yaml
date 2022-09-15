@@ -23,7 +23,6 @@ specifiers:
   prisma-docs-generator: ^0.5.0
   prisma-erd-generator: ^1.2.0
   typescript: ^4.8.3
-  vite-plugin-fonts: ^0.6.0
   vue-chartjs: ^4.1.1
   vue-query: ^1.26.0
 
@@ -53,7 +52,6 @@ devDependencies:
   prisma: 4.3.1
   prisma-erd-generator: 1.2.0_prisma@4.3.1
   typescript: 4.8.3
-  vite-plugin-fonts: 0.6.0
   vue-query: 1.26.0
 
 packages:
@@ -7817,14 +7815,6 @@ packages:
       vscode-languageserver: 7.0.0
       vscode-languageserver-textdocument: 1.0.7
       vscode-uri: 3.0.3
-    dev: true
-
-  /vite-plugin-fonts/0.6.0:
-    resolution: {integrity: sha512-dV6nnLEju8k5EmvlBH6egxkVZ+rgc5zWsJr9+cNRXBMEDnpRGHcZPI260UEDNg2yB99wSTNER2eduEvZFbMIGw==}
-    peerDependencies:
-      vite: ^2.0.0 || ^3.0.0
-    dependencies:
-      fast-glob: 3.2.11
     dev: true
 
   /vite/3.1.1:

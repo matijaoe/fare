@@ -21,17 +21,28 @@ export default defineConfig({
     maxWidth: {
       default: '1440px',
     },
-    fontFamily: {
-      display: ['Staatliches, sans-serif'],
-      sans: ['Inter, sans-serif'],
-      mono: ['Iosevka Nerd Font, JetBrains Mono, monospace'],
-    },
   },
   presets: [
     presetUno(),
     presetAttributify(),
     presetTypography(),
-    presetWebFonts({ }),
+    presetWebFonts({
+      provider: 'google', // default provider
+      fonts: {
+        sans: 'Cabin',
+        mono: [
+          {
+            name: 'Iosevka Nerd Font',
+            provider: 'none',
+          },
+          {
+            name: 'Inconsolata',
+            provider: 'google',
+          },
+        ],
+        display: 'Staatliches',
+      },
+    }),
   ],
   transformers: [
     transformerDirectives(),

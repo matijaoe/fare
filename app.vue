@@ -21,7 +21,3 @@ useShortcuts()
     </NuxtLayout>
   </div>
 </template>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
-</style>

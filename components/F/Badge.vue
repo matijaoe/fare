@@ -189,7 +189,7 @@ const sharedClasses = 'filter-saturate-70'
 </script>
 
 <template>
-  <div>
+  <div font="mono">
     <div
       v-if="type === 'solid'"
       text="11px"
