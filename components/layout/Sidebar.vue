@@ -14,10 +14,8 @@ const { mdDown } = useBreakpoints()
     bg="zinc-50 dark:zinc-9"
     overflow-y="auto"
     border="r-0 md:r-2 base"
-    z-1000
+    flex="~ col"
     :class="{ '!hidden': !sidebar.isOpen }"
-    flex
-    flex-col
   >
     <div
       flex

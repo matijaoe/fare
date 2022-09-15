@@ -11,7 +11,6 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
   <header
     fixed
     top-0
-    z-100
     flex
     justify-between
     h-50px

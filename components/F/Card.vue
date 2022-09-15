@@ -7,7 +7,7 @@ const props = defineProps<{
 
 const backgroundStyle = computed(() => {
   if (props.white) {
-    return 'bg-white dark:(bg-zinc-8 border-zinc-9)'
+    return 'bg-white dark:(bg-zinc-8 border-transparent)'
   }
   return props.filled
     ? 'bg-zinc-2 dark:bg-zinc-8 border-transparent'
@@ -17,8 +17,8 @@ const backgroundStyle = computed(() => {
 
 <template>
   <article
-    border="rounded-lg 1"
-    class="transition-shadow"
+    border="rounded-md 1"
+    class="transition-shadow text-color-base"
     :class="[
       paddingless ? 'p-0' : 'p-5',
       backgroundStyle,
