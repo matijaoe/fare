@@ -11,7 +11,7 @@ useShortcuts()
 
 <template>
   <div
-    font="mono"
+    font="sans"
     h="screen"
     overflow="hidden"
     class="bg-base color-base"

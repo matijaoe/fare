@@ -50,7 +50,11 @@ const emits = {
         content-center
         @click="toggleVisible()"
       >
-        <Icon :name="visible ? 'tabler:eye-off' : 'tabler:eye'" />
+        <Icon v-show="visible" name="tabler:eye-off" />
+        <Icon
+          v-show="!visible"
+          name="tabler:eye"
+        />
       </button>
     </template>
   </FInput>

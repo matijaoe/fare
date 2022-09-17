@@ -4,7 +4,12 @@ import { set } from '@vueuse/core'
 import { formatCurrency, formatTimeAgo } from '@/utils'
 
 type Props = {
-  item: Ledger & { category?: LedgerCategory } & { fromAccount?: Account; toAccount?: Account }
+  item: Ledger &
+  { category?: LedgerCategory } &
+  {
+    fromAccount?: { account: Account }
+    toAccount?: { account: Account }
+  }
 }
 
 const { item } = defineProps<Props>()
@@ -16,7 +21,14 @@ const dateFormatType = ref<DateFormatType>('normal')
 const isDateFormat = (type: DateFormatType) => dateFormatType.value === type
 
 const switchDateFormatType = () => {
-  set(dateFormatType, isDateFormat('relative') ? 'normal' : 'relative')
+  if (isDateFormat('relative')) {
+    set(dateFormatType, 'normal')
+  } else {
+    set(dateFormatType, 'relative')
+    setTimeout(() => {
+      set(dateFormatType, 'normal')
+    }, 2500)
+  }
 }
 
 const formatDate = (date: Date | string, options?: Intl.DateTimeFormatOptions) => {
@@ -32,12 +44,13 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
     <div
       flex
       gap-2
-      pos="absolute top--3 left-3"
+      pos="absolute top--2.75 left-3"
     >
       <FBadge
         v-if="item.category"
         cursor="pointer"
         type="solid"
+        :icon="item.category.icon"
         :color="item.category.color"
         rounded
       >
@@ -52,9 +65,10 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
           v-if="item.fromAccount"
           cursor="pointer"
           type="dot"
-          :color="item.fromAccount.color"
+          :icon="item.fromAccount.account.icon"
+          :color="item.fromAccount.account.color"
         >
-          {{ item.fromAccount.name }}
+          {{ item.fromAccount.account.name }}
         </FBadge>
       </div>
     </div>
@@ -68,13 +82,14 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
         justify-between
         items-start
       >
-        <!-- <div text-2xl truncate>
-          {{ item.name }}
-        </div> -->
-        <button ml-auto @click="switchDateFormatType">
+        <button
+          ml-auto
+          :title="formatTimeAgo(item.date)"
+          @click="switchDateFormatType"
+        >
           <div
-            text="sm"
-            opacity-40
+            font="thin"
+            text="sm zinc-4 dark:zind-5"
           >
             {{ formattedDate }}
           </div>
@@ -86,8 +101,20 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
         items-center
         gap-6
       >
-        <div text-2xl truncate font="display">
-          {{ item.name }}
+        <div text="left">
+          <div text-2xl truncate font="display">
+            {{ item.name }}
+          </div>
+          <div
+            v-if="item.description"
+            text-xs
+            truncate
+            font="thin"
+            text="zinc-4 dark:zind-5"
+            mt="1"
+          >
+            {{ item.description }}
+          </div>
         </div>
 
         <div font="display" text-3xl>

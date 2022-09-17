@@ -28,6 +28,7 @@ const sizeStyle = computed(() => {
     font-black
     flex
     items-center
+    font="mono"
     class="color-base-lighter"
     :class="[sizeStyle.text]"
   >

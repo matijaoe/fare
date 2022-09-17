@@ -9,8 +9,28 @@ export default defineEventHandler((event) => {
       },
       include: {
         category: true,
-        fromAccount: true,
-        toAccount: true,
+        fromAccount: {
+          include: {
+            account: {
+              select: {
+                name: true,
+                color: true,
+                icon: true,
+              },
+            },
+          },
+        },
+        toAccount: {
+          include: {
+            account: {
+              select: {
+                name: true,
+                color: true,
+                icon: true,
+              },
+            },
+          },
+        },
       },
       orderBy: {
         date: 'desc',

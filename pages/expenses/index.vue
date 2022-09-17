@@ -34,7 +34,7 @@ const formattedDate = computed(() =>
         icon="tabler:arrow-left"
         @click="setPreviousMonth"
       />
-      <div flex="center gap-2" text="2xl">
+      <div flex="center gap-2" text="xl">
         <Icon name="tabler:calendar" class="opacity-80" />
         <p font="medium">
           {{ formattedDate }}
@@ -50,7 +50,7 @@ const formattedDate = computed(() =>
           icon-only
           circle
           size="lg"
-          variant="outline"
+          variant="primary"
           icon="tabler:calendar"
           @click="setToToday"
         />

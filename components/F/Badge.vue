@@ -13,43 +13,43 @@ const props = withDefaults(defineProps<Props>(), {
 const colorSolidBg = computed(() => {
   switch (props.color) {
     case 'red':
-      return 'bg-red-100'
+      return 'bg-red-100 dark:(bg-red-400 filter-saturate-40)'
     case 'orange':
-      return 'bg-orange-100'
+      return 'bg-orange-100 dark:(bg-orange-400 filter-saturate-40)'
     case 'amber':
-      return 'bg-amber-100'
+      return 'bg-amber-100 dark:(bg-amber-400 filter-saturate-40)'
     case 'yellow':
-      return 'bg-yellow-100'
+      return 'bg-yellow-100 dark:(bg-yellow-400 filter-saturate-40)'
     case 'lime':
-      return 'bg-lime-100'
+      return 'bg-lime-100 dark:(bg-lime-400 filter-saturate-40)'
     case 'green':
-      return 'bg-green-100'
+      return 'bg-green-100 dark:(bg-green-400 filter-saturate-40)'
     case 'emerald':
-      return 'bg-emerald-100'
+      return 'bg-emerald-100 dark:(bg-emerald-400 filter-saturate-40)'
     case 'teal':
-      return 'bg-teal-100'
+      return 'bg-teal-100 dark:(bg-teal-400 filter-saturate-40)'
     case 'cyan':
-      return 'bg-cyan-100'
+      return 'bg-cyan-100 dark:(bg-cyan-400 filter-saturate-40)'
     case 'sky':
-      return 'bg-sky-100'
+      return 'bg-sky-100 dark:(bg-sky-400 filter-saturate-40)'
     case 'blue':
-      return 'bg-blue-100'
+      return 'bg-blue-100 dark:(bg-blue-400 filter-saturate-40)'
     case 'indigo':
-      return 'bg-indigo-100'
+      return 'bg-indigo-100 dark:(bg-indigo-400 filter-saturate-40)'
     case 'violet':
-      return 'bg-violet-100'
+      return 'bg-violet-100 dark:(bg-violet-400 filter-saturate-40)'
     case 'purple':
-      return 'bg-purple-100'
+      return 'bg-purple-100 dark:(bg-purple-400 filter-saturate-40)'
     case 'fuchsia':
-      return 'bg-fuchsia-100'
+      return 'bg-fuchsia-100 dark:(bg-fuchsia-400 filter-saturate-40)'
     case 'pink':
-      return 'bg-pink-100'
+      return 'bg-pink-100 dark:(bg-pink-400 filter-saturate-40)'
     case 'rose':
-      return 'bg-rose-100'
+      return 'bg-rose-100 dark:(bg-rose-400 filter-saturate-40)'
     case 'gray':
-      return 'bg-gray-100'
+      return 'bg-gray-100 dark:(bg-gray-400 filter-saturate-40)'
     default:
-      return 'bg-zinc-100'
+      return 'bg-zinc-100 dark:(bg-zinc-400 filter-saturate-40)'
   }
 })
 const colorSolidText = computed(() => {
@@ -189,30 +189,30 @@ const sharedClasses = 'filter-saturate-70'
 </script>
 
 <template>
-  <div font="mono">
+  <div font="display" text="xs">
     <div
       v-if="type === 'solid'"
-      text="11px"
       p="x-2 y-0.5"
       uppercase
-      font-bold
       border="1 transparent"
       flex
       gap-1
       items-center
+      justify-center
       class="leading-tight"
       :class="[radiusClass, sharedClasses, colorSolidBg, colorSolidText]"
     >
       <Icon
         v-if="icon"
+        text="10px"
         :name="icon"
-        :class="[colorDotText]"
+        :class="[colorSolidText]"
       />
       <slot />
     </div>
     <div
       v-else-if="type === 'dot'"
-      text="11px zinc-7 dark:zinc-4"
+      text="zinc-7 dark:zinc-4"
       bg="base"
       p="x-1.5 y-0.5"
       uppercase
@@ -221,11 +221,13 @@ const sharedClasses = 'filter-saturate-70'
       flex
       gap-1
       items-center
+      justify-center
       class="leading-tight"
       :class="[radiusClass, sharedClasses]"
     >
       <Icon
         v-if="icon"
+        text="10px"
         :name="icon"
         :class="[colorDotText]"
       />

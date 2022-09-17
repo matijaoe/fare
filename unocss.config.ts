@@ -11,7 +11,7 @@ import {
 export default defineConfig({
   shortcuts: {
     'border-base': 'border-zinc-2 dark:border-zinc-8',
-    'bg-base': 'bg-white dark:bg-zinc-9',
+    'bg-base': 'bg-zinc-50 dark:bg-zinc-9',
     'color-base': 'text-zinc-9 dark:text-zinc-3',
     'color-base-lighter': 'text-zinc-8 dark:text-zinc-3/90',
     'flex-center': 'flex items-center justify-center',
@@ -29,7 +29,7 @@ export default defineConfig({
     presetWebFonts({
       provider: 'google', // default provider
       fonts: {
-        sans: 'Cabin',
+        sans: 'Space Grotesk',
         mono: [
           {
             name: 'Iosevka Nerd Font',

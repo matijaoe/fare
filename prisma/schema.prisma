@@ -25,12 +25,17 @@ enum LedgerEntryType {
 }
 
 model LedgerCategory {
-  id    String  @id @default(cuid())
-  name  String  @unique
-  color String?
-  icon  String?
+  id     String  @id @default(cuid())
+  name   String
+  color  String?
+  icon   String?
+  userId String?
+
+  user User? @relation(fields: [userId], references: [id])
 
   ledger Ledger[]
+
+  @@unique([userId, name])
 }
 
 model Ledger {
@@ -48,20 +53,56 @@ model Ledger {
 
   user        User           @relation(fields: [userId], references: [id])
   category    LedgerCategory @relation(fields: [categoryId], references: [id])
-  fromAccount Account?       @relation("paymentFromAccount", fields: [fromAccountId], references: [id])
-  toAccount   Account?       @relation("paymentToAccount", fields: [toAccountId], references: [id])
+  fromAccount CashAccount?   @relation("paymentFromAccount", fields: [fromAccountId], references: [id])
+  toAccount   CashAccount?   @relation("paymentToAccount", fields: [toAccountId], references: [id])
 }
 
 model Account {
   id     String  @id @default(cuid())
-  name   String  @unique
-  color  String?
+  name   String
   userId String
+  color  String?
+  icon   String?
 
   user User @relation(fields: [userId], references: [id])
 
+  CashAccount       CashAccount?
+  InvestmentAccount InvestmentAccount?
+
+  @@unique([name, userId])
+}
+
+enum CashAccountType {
+  Cash
+  Savings
+}
+
+model CashAccount {
+  id        String @id @default(cuid())
+  accountId String @unique
+
+  account Account @relation(fields: [accountId], references: [id])
+
   paymentFromAccount Ledger[] @relation("paymentFromAccount")
   paymentToAccount   Ledger[] @relation("paymentToAccount")
+}
+
+enum InvestmentType {
+  Stock
+  Bond
+  ETF
+  Crypto
+  RealEstate
+  Other
+}
+
+model InvestmentAccount {
+  id                   String         @id @default(cuid())
+  accountId            String         @unique
+  expectedRateOfReturn Float?
+  type                 InvestmentType
+
+  account Account @relation(fields: [accountId], references: [id])
 }
 
 model User {
@@ -70,6 +111,7 @@ model User {
   email     String   @unique
   createdAt DateTime @default(now())
 
-  ledger   Ledger[]
-  accounts Account[]
+  ledger         Ledger[]
+  accounts       Account[]
+  LedgerCategory LedgerCategory[]
 }
