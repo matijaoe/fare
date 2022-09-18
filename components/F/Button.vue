@@ -36,11 +36,23 @@ const variantStyle = computed(() => {
     case 'outline':
       return 'bg-transparent text-zinc-9 !border-zinc-2 hover:not-disabled:(bg-zinc-1) focus-visible:not-disabled:(bg-zinc-1) dark:(text-zinc-2 !border-zinc-7 hover:not-disabled:(bg-zinc-8 text-zinc-2) focus-visible:not-disabled:(bg-zinc-8 text-zinc-2))'
     case 'danger':
-      return 'bg-red-4 filter-saturate-105 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-115) focus-visible:not-disabled:(bg-red-4/95) dark:(bg-red-5 filter-saturate-80 !border-transparent hover:not-disabled:(bg-red-5 filter-saturate-95) focus-visible:not-disabled:(bg-red-4))'
+      return 'bg-red-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-red-4/95) dark:(bg-red-5 filter-saturate-80 hover:not-disabled:(bg-red-5 filter-saturate-95) focus-visible:not-disabled:(bg-red-4))'
     case 'warning':
-      return 'bg-amber-4 filter-saturate-105 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-115) focus-visible:not-disabled:(bg-amber-4/95) dark:(bg-amber-5 filter-saturate-80 !border-transparent hover:not-disabled:(bg-amber-5 filter-saturate-95) focus-visible:not-disabled:(bg-amber-5))'
+      return 'bg-amber-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-amber-4/95) dark:(bg-amber-5 filter-saturate-80 hover:not-disabled:(bg-amber-5 filter-saturate-95) focus-visible:not-disabled:(bg-amber-5))'
     case 'success':
-      return 'bg-green-4 filter-saturate-105 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-115) focus-visible:not-disabled:(bg-green-4/95) dark:(bg-green-5 filter-saturate-80 !border-transparent hover:not-disabled:(bg-green-5 filter-saturate-95) focus-visible:not-disabled:(bg-green-4))'
+      return 'bg-green-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-green-4/95) dark:(bg-green-5 filter-saturate-80 hover:not-disabled:(bg-green-5 filter-saturate-95) focus-visible:not-disabled:(bg-green-4))'
+    case 'info':
+      return 'bg-sky-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-sky-4/95) dark:(bg-sky-5 filter-saturate-80 hover:not-disabled:(bg-sky-5 filter-saturate-95) focus-visible:not-disabled:(bg-sky-4))'
+    case 'teal':
+      return 'bg-teal-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-teal-4/95) dark:(bg-teal-5 filter-saturate-80 hover:not-disabled:(bg-teal-5 filter-saturate-95) focus-visible:not-disabled:(bg-teal-4))'
+    case 'lime':
+      return 'bg-lime-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-lime-4/95) dark:(bg-lime-5 filter-saturate-80 hover:not-disabled:(bg-lime-5 filter-saturate-95) focus-visible:not-disabled:(bg-lime-4))'
+    case 'rose':
+      return 'bg-rose-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-rose-4/95) dark:(bg-rose-5 filter-saturate-80 hover:not-disabled:(bg-rose-5 filter-saturate-95) focus-visible:not-disabled:(bg-rose-4))'
+    case 'zinc':
+      return 'bg-zinc-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-zinc-4/95) dark:(bg-zinc-5 filter-saturate-80 hover:not-disabled:(bg-zinc-5 filter-saturate-95) focus-visible:not-disabled:(bg-zinc-4))'
+    case 'custom':
+      return 'bg-[#5D8D7B] text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-zinc-4/95) dark:(bg-zinc-5 filter-saturate-80 hover:not-disabled:(bg-zinc-5 filter-saturate-95) focus-visible:not-disabled:(bg-zinc-4))'
   }
 })
 
@@ -53,6 +65,8 @@ const sizeStyle = computed(() => {
       return `${icon ? 'p-2.5' : 'py-2.25 px-4'} text-sm gap-2`
     case 'lg':
       return `${icon ? 'p-3.45' : 'py-2.75 px-7'} text-base gap-3`
+    case 'xl':
+      return `${icon ? 'p-4' : 'py-3.25 px-8'} text-2xl gap-3`
   }
 })
 

@@ -19,7 +19,7 @@ const hasEntries = computed(() => entries.value?.length)
     paddingless
     white
     flex="~ col"
-    divide="y-2 dashed zinc-2 dark:zinc-9 dark:dashed"
+    divide="y-2 dashed zinc-2 dark:zinc-9"
   >
     <LedgerEntryItemAlt
       v-for="entry in entries"

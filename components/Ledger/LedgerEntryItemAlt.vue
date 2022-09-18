@@ -88,8 +88,8 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
           @click="switchDateFormatType"
         >
           <div
-            font="thin"
-            text="xs zinc-4 dark:zind-5"
+            font="normal"
+            text="xs zinc-4 dark:zinc-4"
           >
             {{ formattedDate }}
           </div>
@@ -98,41 +98,35 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
     </div>
     <div
       flex
-      flex-col
-      gap-4
+      justify-between
+      items-end
+      gap-12
     >
       <div
-        flex
-        justify-between
-        items-end
-        gap-6
+        text="left"
+        truncate
       >
         <div
-          text="left"
+          text-2xl
           truncate
+          font="display"
         >
-          <div
-            text-2xl
-            truncate
-            font="display"
-          >
-            {{ item.name }}
-          </div>
-          <div
-            v-if="item.description"
-            text-xs
-            truncate
-            font="thin"
-            text="zinc-4 dark:zind-5"
-            mt="1"
-          >
-            {{ item.description }}
-          </div>
+          {{ item.name }}
         </div>
+        <div
+          v-if="item.description"
+          text-xs
+          truncate
+          font="normal"
+          text="zinc-4 dark:zinc-4"
+          mt="1"
+        >
+          {{ item.description }}
+        </div>
+      </div>
 
-        <div font="display" text-3xl>
-          {{ formatedAmount }}
-        </div>
+      <div font="display" text-3xl>
+        {{ formatedAmount }}
       </div>
     </div>
   </div>
