@@ -4,6 +4,8 @@ import dayjs from 'dayjs'
 
 const shownDate = ref(dayjs())
 
+const { smUp } = useBreakpoints()
+
 const setPreviousMonth = () => set(shownDate, shownDate.value.subtract(1, 'month'))
 const setToToday = () => set(shownDate, dayjs())
 const setNextMonth = () => set(shownDate, shownDate.value.add(1, 'month'))
@@ -12,16 +14,17 @@ const isLatestMonth = computed(() =>
   shownDate.value.isSame(dayjs(), 'month'),
 )
 
-const formattedDate = computed(() =>
-  shownDate.value.format('MMMM YYYY'),
-)
+const formattedDate = computed(() => {
+  const date = shownDate.value
+  const isCurrentYear = date.isSame(dayjs(), 'year')
+  return date.format(isCurrentYear ? 'MMMM' : 'MMMM YYYY')
+})
 </script>
 
 <template>
   <LayoutPageWrapper>
     <div
-      grid
-      grid-cols-3
+      grid="~ cols-[100px_1fr_100px]"
       w-full
       mb-8
     >
@@ -29,16 +32,25 @@ const formattedDate = computed(() =>
         class="justify-self-start"
         icon-only
         circle
-        size="lg"
+        size="md"
         variant="secondary"
         icon="tabler:arrow-left"
         @click="setPreviousMonth"
       />
-      <div flex="center gap-2" text="xl">
-        <Icon name="tabler:calendar" class="opacity-80" />
-        <p font="medium">
-          {{ formattedDate }}
-        </p>
+      <div flex="center" h-full>
+        <div
+          h-full
+          flex="center gap-2"
+          text="zinc-2 sm:base"
+          border="zinc-9 2 rounded-full"
+          bg-zinc-9
+          px-4
+        >
+          <Icon name="tabler:calendar" text="zinc-4" />
+          <p font="medium">
+            {{ formattedDate }}
+          </p>
+        </div>
       </div>
       <div
         v-if="!isLatestMonth"
@@ -49,7 +61,7 @@ const formattedDate = computed(() =>
         <FButton
           icon-only
           circle
-          size="lg"
+          size="md"
           variant="primary"
           icon="tabler:calendar"
           @click="setToToday"
@@ -57,7 +69,7 @@ const formattedDate = computed(() =>
         <FButton
           icon-only
           circle
-          size="lg"
+          size="md"
           variant="secondary"
           icon="tabler:arrow-right"
           @click="setNextMonth"
@@ -98,20 +110,22 @@ const formattedDate = computed(() =>
     </div>
     <div
       w-full
-      flex="~ col lg:row"
+      flex="~ col md:row"
       justify-between
       gap-8
       mt-8
     >
       <div
-        class="justify-self-end"
-        text="right"
-        max-w="full sm:md"
+        max-w="full sm:base md:lg lg:2xl"
         flex-1
       >
-        <LedgerEntriesList />
+        <LedgerEntriesList redesign />
       </div>
-      <div flex-1>
+      <div
+        text="right"
+        flex-1
+      >
+        <!-- <LedgerEntriesList /> -->
         Filters
       </div>
     </div>

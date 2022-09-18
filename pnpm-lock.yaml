@@ -50,7 +50,7 @@ devDependencies:
   nuxt-icon: 0.1.5
   pinia: 2.0.22_typescript@4.8.3
   prisma: 4.3.1
-  prisma-erd-generator: 1.2.0_prisma@4.3.1
+  prisma-erd-generator: 1.2.0_p4tzw2exxqtrjzqw4zwbo3774a
   typescript: 4.8.3
   vue-query: 1.26.0
 
@@ -4037,11 +4037,11 @@ packages:
   /flowbite-datepicker/1.2.2:
     resolution: {integrity: sha512-qOKDVtwkiOa0RrhD3sRtT45H8efAtyLiswuFIAV0UBhWSRYonzL0g1gAZwHiRRKtSmbET/8RQpQXlSEmAgadkg==}
     dependencies:
-      flowbite: 1.5.2
+      flowbite: 1.5.3
     dev: false
 
-  /flowbite/1.5.2:
-    resolution: {integrity: sha512-oSKhPkg0bYb4dZG4ypSh++dPrFM3IOSER6HOwJHYRFPW5u9PXL4AQFMQh7Kytgws2xrDQyl/zqefZmymeWt2IA==}
+  /flowbite/1.5.3:
+    resolution: {integrity: sha512-e2OHfndxTHtGMqcPqvqwg3gGLg57hmIDVgE/BazMDccgirQ0JEtirKnbZZ4WSOIEhNDgO9pJZuyC8rRlcMm6pQ==}
     dependencies:
       '@popperjs/core': 2.11.6
       mini-svg-data-uri: 1.4.4
@@ -6362,21 +6362,20 @@ packages:
       - supports-color
     dev: false
 
-  /prisma-erd-generator/1.2.0_prisma@4.3.1:
+  /prisma-erd-generator/1.2.0_p4tzw2exxqtrjzqw4zwbo3774a:
     resolution: {integrity: sha512-BILXdb32Ed8+VJZKVe7uiH9SDvMQ5iCqwiqavexiigwmdybjiceQpJAH2ObLIIKHD3AWDP9zFuzmB6APa1KEPQ==}
     engines: {node: '>=14'}
     hasBin: true
+    peerDependencies:
+      '@mermaid-js/mermaid-cli': ^9.1.6
+      '@prisma/client': ^4.0.0
     dependencies:
       '@mermaid-js/mermaid-cli': 9.1.6
       '@prisma/client': 4.3.1_prisma@4.3.1
       '@prisma/generator-helper': 4.3.1
       dotenv: 16.0.2
     transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - prisma
       - supports-color
-      - utf-8-validate
     dev: true
 
   /prisma/4.3.1:

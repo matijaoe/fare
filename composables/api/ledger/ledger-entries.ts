@@ -7,8 +7,5 @@ type TimeFrame = {
 }
 
 export const useLedgerEntries = (timeframe: TimeFrame) => useQuery('ledger-entries', () => $fetch<Ledger[]>('/api/ledger', {
-  method: 'GET',
-  params: {
-    ...timeframe,
-  },
+  params: timeframe,
 }))

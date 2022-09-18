@@ -40,43 +40,43 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
 </script>
 
 <template>
-  <FCard white relative>
-    <div
-      flex
-      gap-2
-      pos="absolute top--2.75 left-3"
-    >
-      <FBadge
-        v-if="item.category"
-        cursor="pointer"
-        type="solid"
-        :icon="item.category.icon"
-        :color="item.category.color"
-        rounded
-      >
-        {{ item.category.name }}
-      </FBadge>
+  <div
+    p-5
+    flex
+    flex-col
+    gap-4
+  >
+    <div flex items-center justify-between>
       <div
         flex
-        items-center
         gap-2
       >
         <FBadge
-          v-if="item.fromAccount"
+          v-if="item.category"
           cursor="pointer"
-          type="dot"
-          :icon="item.fromAccount.account.icon"
-          :color="item.fromAccount.account.color"
+          type="solid"
+          :icon="item.category.icon"
+          :color="item.category.color"
+          rounded
         >
-          {{ item.fromAccount.account.name }}
+          {{ item.category.name }}
         </FBadge>
+        <div
+          flex
+          items-center
+          gap-2
+        >
+          <FBadge
+            v-if="item.fromAccount"
+            cursor="pointer"
+            type="dot"
+            :icon="item.fromAccount.account.icon"
+            :color="item.fromAccount.account.color"
+          >
+            {{ item.fromAccount.account.name }}
+          </FBadge>
+        </div>
       </div>
-    </div>
-    <div
-      flex
-      flex-col
-      gap-4
-    >
       <div
         flex
         justify-between
@@ -89,23 +89,33 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
         >
           <div
             font="thin"
-            text="sm zinc-4 dark:zind-5"
+            text="xs zinc-4 dark:zind-5"
           >
             {{ formattedDate }}
           </div>
         </button>
       </div>
+    </div>
+    <div
+      flex
+      flex-col
+      gap-4
+    >
       <div
         flex
         justify-between
-        items-center
+        items-end
         gap-6
       >
         <div
           text="left"
           truncate
         >
-          <div text-2xl truncate font="display">
+          <div
+            text-2xl
+            truncate
+            font="display"
+          >
             {{ item.name }}
           </div>
           <div
@@ -125,6 +135,6 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
         </div>
       </div>
     </div>
-  </FCard>
+  </div>
 </template>
 

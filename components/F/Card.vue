@@ -17,7 +17,7 @@ const backgroundStyle = computed(() => {
 
 <template>
   <article
-    border="rounded-md 1"
+    border="rounded-md 2"
     class="transition-shadow text-color-base"
     :class="[
       paddingless ? 'p-0' : 'p-5',
