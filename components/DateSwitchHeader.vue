@@ -27,15 +27,18 @@ const formattedDate = computed(() => {
     w-full
     mb-8
   >
-    <FButton
-      class="justify-self-start"
-      icon-only
-      circle
-      size="lg"
-      variant="secondary"
-      icon="tabler:arrow-left"
-      @click="setPreviousMonth"
-    />
+    <div w-fit>
+      <FTooltip content="Previous month" placement="bottom">
+        <FButton
+          icon-only
+          circle
+          size="lg"
+          variant="secondary"
+          icon="tabler:arrow-left"
+          @click="setPreviousMonth"
+        />
+      </FTooltip>
+    </div>
     <div flex="center" h-full>
       <div
         h-full
@@ -57,22 +60,26 @@ const formattedDate = computed(() => {
       flex
       gap-3
     >
-      <FButton
-        icon-only
-        circle
-        size="lg"
-        variant="primary"
-        icon="tabler:calendar"
-        @click="setToToday"
-      />
-      <FButton
-        icon-only
-        circle
-        size="lg"
-        variant="secondary"
-        icon="tabler:arrow-right"
-        @click="setNextMonth"
-      />
+      <FTooltip content="Current month" placement="bottom">
+        <FButton
+          icon-only
+          circle
+          size="lg"
+          variant="primary"
+          icon="tabler:calendar"
+          @click="setToToday"
+        />
+      </FTooltip>
+      <FTooltip content="Next month" placement="bottom">
+        <FButton
+          icon-only
+          circle
+          size="lg"
+          variant="secondary"
+          icon="tabler:arrow-right"
+          @click="setNextMonth"
+        />
+      </FTooltip>
     </div>
   </div>
 </template>

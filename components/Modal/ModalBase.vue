@@ -45,7 +45,7 @@ const transitions = {
   enter: 'duration-300 ease-out',
   enterFrom: 'opacity-0',
   enterTo: 'opacity-100',
-  leave: 'duration-150 ease-in',
+  leave: 'duration-200 ease-in',
   leaveFrom: 'opacity-100',
   leaveTo: 'opacity-0',
 }
