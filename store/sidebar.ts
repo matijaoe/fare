@@ -5,7 +5,8 @@ import { useBreakpoints } from '~~/composables/breakpoints'
 export const useSidebar = defineStore('sidebar', () => {
   const { mdDown } = useBreakpoints()
 
-  const isOpen = ref(!mdDown.value)
+  // TODO: mobile check on server
+  const isOpen = ref(process.client ? !mdDown.value : true)
 
   const toggle = () => set(isOpen, !isOpen.value)
   const open = () => set(isOpen, true)

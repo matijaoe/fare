@@ -1,17 +1,7 @@
 <script lang="ts" setup>
 import { useSidebar } from '~/store/sidebar'
-import { appBreakpoints } from '~~/composables/breakpoints'
 
 const sidebar = useSidebar()
-const { width } = useWindowSize()
-
-watch(width, (val: number, prevVal: number) => {
-  if (val > appBreakpoints.sm && prevVal < appBreakpoints.sm) {
-    sidebar.open()
-  } else if (val < appBreakpoints.sm && prevVal > appBreakpoints.sm) {
-    sidebar.close()
-  }
-})
 
 const sidebarWidth = computed(() => 'w-screen md:w-260px')
 const headerWidth = computed(() => sidebar.isOpen ? 'sm:(w-[calc(100vw-260px)])' : 'w-screen')
