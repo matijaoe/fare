@@ -213,11 +213,11 @@ const sharedClasses = 'filter-saturate-70'
     <div
       v-else-if="type === 'dot'"
       text="zinc-7 dark:zinc-4"
-      bg="base"
       p="x-1.5 y-0.5"
+      bg="dark:zinc-9"
       uppercase
       font-medium
-      border="1 base"
+      border="1 base dark:transparent"
       flex
       gap-1
       items-center

@@ -21,9 +21,9 @@ type Props = {
 const props = withDefaults(defineProps<Props>(), {
   placement: 'top',
   trigger: 'mouseenter focus',
-  arrow: true,
+  arrow: false,
   hideOnClick: true,
-  offset: 16,
+  offset: 8,
   interactiveBorder: 10,
   interactiveDebounce: 1000,
   inertia: false,
@@ -47,7 +47,7 @@ useTippy(target, {
 </script>
 
 <template>
-  <div ref="target">
+  <div ref="target" w-fit>
     <slot />
   </div>
 </template>

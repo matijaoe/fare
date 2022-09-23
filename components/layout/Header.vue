@@ -13,10 +13,10 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
     top-0
     flex
     justify-between
+    items-center
     h-50px
-    bg="base"
-    border="b-2 base"
     class="color-base-lighter"
+    border="b-2 base"
   >
     <NuxtLink
       v-if="handledSidebar"
@@ -28,13 +28,31 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
     >
       <FLogo />
     </NuxtLink>
+
+    <div
+      flex
+      items-center
+      gap-2
+      h-full
+      pl="6"
+      font="mono"
+      :class="[{
+        'border-l-2 border-base ml-5': handledSidebar,
+      }]"
+    >
+      <span text="zinc-4 dark:zinc-5">Home</span>
+      <span text="zinc-4 dark:zinc-5">/</span>
+      <span>{{ $route.name }}</span>
+    </div>
+
     <div
       flex-1
       flex
       relative
-      :class="[{
-        'border-l-2 border-base ml-5': handledSidebar,
-      }]"
+      class="border-r-2 border-base ml-5"
+      ml-auto
+      max-w="xs"
+      h-full
     >
       <input
         type="text"
@@ -55,14 +73,12 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
         class="-translate-y-50%"
       />
     </div>
+
     <button
-      ml-auto
       grid
       content-center
       p="y-2.5 x-3"
       bg="hover:zinc-1 hover:dark:zinc-8"
-      border="l-2 base"
-
       @click="sidebar.toggle()"
     >
       <Icon name="tabler:menu-2" text="2xl" />

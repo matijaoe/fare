@@ -7,11 +7,9 @@ const opened = ref(false)
 <template>
   <div>
     {{ $route.name }}
-    <div>
-      <FTooltip content="Hi!">
-        <button>Tippy!</button>
-      </FTooltip>
-    </div>
+    <FTooltip content="Hi!" bg-red-500>
+      <button>Tippy!</button>
+    </FTooltip>
     <div>
       <button v-tippy="tippyyye">
         test
@@ -40,12 +38,12 @@ const opened = ref(false)
 
     <Popover
       v-slot="{ open }"
-      class="relative"
+      relative
       w-fit
       mt-8
     >
       <PopoverButton
-        :class="open ? '' : 'text-opacity-90'"
+        :class="{ 'text-opacity-90': open }"
         class="group inline-flex items-center rounded-md bg-orange-700 px-3 py-2 text-base font-medium text-white hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
       >
         <span>Solutions</span>

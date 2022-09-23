@@ -34,7 +34,7 @@ const variantStyle = computed(() => {
     case 'subtle':
       return 'bg-transparent text-zinc-9 hover:not-disabled:(bg-zinc-2/50) focus-visible:not-disabled:(bg-zinc-2/50) dark:(text-zinc-2 hover:not-disabled:(bg-zinc-8) focus-visible:not-disabled:(bg-zinc-8))'
     case 'outline':
-      return 'bg-transparent text-zinc-9 !border-zinc-2 hover:not-disabled:(bg-zinc-1) focus-visible:not-disabled:(bg-zinc-1) dark:(text-zinc-2 !border-zinc-7 hover:not-disabled:(bg-zinc-8 text-zinc-2) focus-visible:not-disabled:(bg-zinc-8 text-zinc-2))'
+      return 'bg-transparent text-zinc-9 !border-zinc-9 hover:not-disabled:(bg-zinc-2/50) focus-visible:not-disabled:(bg-zinc-1) dark:(text-zinc-2 !border-zinc-7 hover:not-disabled:(bg-zinc-8 text-zinc-2) focus-visible:not-disabled:(bg-zinc-8 text-zinc-2))'
     case 'danger':
       return 'bg-red-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-red-4/95) dark:(bg-red-5 filter-saturate-80 hover:not-disabled:(bg-red-5 filter-saturate-95) focus-visible:not-disabled:(bg-red-4))'
     case 'warning':
