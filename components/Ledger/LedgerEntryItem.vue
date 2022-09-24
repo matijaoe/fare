@@ -49,6 +49,7 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
     <div flex items-center justify-between>
       <div
         flex
+        items-center
         gap-2
       >
         <FBadge
@@ -76,6 +77,19 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
           >
             {{ item.fromAccount.account.name }}
           </FBadge>
+          <FBadge
+            v-if="item.toAccount"
+            cursor="pointer"
+            type="dot"
+            :icon="item.toAccount.account.icon"
+            :color="item.toAccount.account.color"
+            @click="navigateTo('/accounts')"
+          >
+            {{ item.toAccount.account.name }}
+          </FBadge>
+        </div>
+        <div uppercase font-bold text-sm>
+          {{ item.type }}
         </div>
       </div>
       <div

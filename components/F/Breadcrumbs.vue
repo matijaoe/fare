@@ -1,5 +1,10 @@
 <script setup lang="ts">
+import { useSidebar } from '~/store/sidebar'
 
+const sidebar = useSidebar()
+const { smDown } = $(useBreakpoints())
+
+const handledSidebar = computed(() => smDown || !sidebar.isOpen)
 </script>
 
 <template>

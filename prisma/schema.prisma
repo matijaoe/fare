@@ -47,12 +47,12 @@ model Ledger {
   currency      String?         @default("EUR")
   date          DateTime        @default(now())
   userId        String
-  categoryId    String
+  categoryId    String? 
   fromAccountId String?
   toAccountId   String?
 
   user        User           @relation(fields: [userId], references: [id])
-  category    LedgerCategory @relation(fields: [categoryId], references: [id])
+  category    LedgerCategory? @relation(fields: [categoryId], references: [id])
   fromAccount CashAccount?   @relation("paymentFromAccount", fields: [fromAccountId], references: [id])
   toAccount   CashAccount?   @relation("paymentToAccount", fields: [toAccountId], references: [id])
 }
@@ -68,6 +68,7 @@ model Account {
 
   CashAccount       CashAccount?
   InvestmentAccount InvestmentAccount?
+  AccountTimechart AccountTimechart[]
 
   @@unique([name, userId])
 }
@@ -103,6 +104,17 @@ model InvestmentAccount {
   type                 InvestmentType
 
   account Account @relation(fields: [accountId], references: [id])
+}
+
+
+model AccountTimechart {
+  accountId String
+  total     Float
+  date      DateTime
+
+  account Account @relation(fields: [accountId], references: [id])
+
+  @@unique([accountId, date])
 }
 
 model User {

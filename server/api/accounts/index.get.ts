@@ -7,15 +7,13 @@ export default defineEventHandler(async (event) => {
   const startDate = start ? new Date(start) : undefined
   const endDate = end ? new Date(end) : undefined
 
-  const whereAccount: Prisma.LedgerWhereInput = {
-    date: {
-      gte: startDate,
-      lte: endDate,
-    },
-  }
-
   const paymentAccountArgs: Prisma.LedgerFindManyArgs = {
-    where: whereAccount,
+    where: {
+      date: {
+        gte: startDate,
+        lte: endDate,
+      },
+    },
     orderBy: {
       date: 'desc',
     },
