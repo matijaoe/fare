@@ -1,3 +1,4 @@
+import type { Prisma } from '@prisma/client'
 import { sendInternalError } from '~~/composables/api'
 import { prisma } from '~~/prisma'
 
@@ -6,6 +7,18 @@ export default defineEventHandler((event) => {
 
   const startDate = new Date(start)
   const endDate = new Date(end)
+
+  const accountInclude: Prisma.CashAccountArgs = {
+    include: {
+      account: {
+        select: {
+          name: true,
+          color: true,
+          icon: true,
+        },
+      },
+    },
+  }
 
   try {
     return prisma.ledger.findMany({
@@ -17,28 +30,8 @@ export default defineEventHandler((event) => {
       },
       include: {
         category: true,
-        fromAccount: {
-          include: {
-            account: {
-              select: {
-                name: true,
-                color: true,
-                icon: true,
-              },
-            },
-          },
-        },
-        toAccount: {
-          include: {
-            account: {
-              select: {
-                name: true,
-                color: true,
-                icon: true,
-              },
-            },
-          },
-        },
+        fromAccount: accountInclude,
+        toAccount: accountInclude,
       },
       orderBy: {
         date: 'desc',

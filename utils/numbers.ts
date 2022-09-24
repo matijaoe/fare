@@ -7,3 +7,5 @@ export const formatCurrency = (amount: number, options?: Intl.NumberFormatOption
     ...options,
   }).format(amount)
 }
+
+export const sum = (...args: number[]): number => args.reduce((a, b) => a + b, 0)

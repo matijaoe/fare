@@ -45,7 +45,7 @@ const formattedDate = computed(() => {
         text="zinc-2 dark:zinc-8 base sm:lg"
         rounded-full
         p="l-5 r-6"
-        bg="zinc-8 dark:zinc-2"
+        bg="zinc-8 dark:zinc-3"
       >
         <Icon name="tabler:calendar" text="zinc-3 dark:zinc-7" />
         <p font="display" class="translate-y-0.2">

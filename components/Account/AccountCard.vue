@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import type { Account } from '@prisma/client'
+import type { Account, CashAccount, Ledger } from '@prisma/client'
+import { formatCurrency, sum } from '~~/utils'
 
 type Props = {
-  account: Account
+  account: Account & {
+    CashAccount: CashAccount & {
+      paymentFromAccount: Ledger[]
+      paymentToAccount: Ledger[]
+    }
+  }
 }
 
 const props = defineProps<Props>()
@@ -13,6 +19,21 @@ const {
   colorDotText,
   colorDotBg,
 } = useAppColors(props.account.color)
+
+const mapAmounts = (type: 'from' | 'to') => {
+  const { paymentFromAccount, paymentToAccount } = props.account.CashAccount
+  switch (type) {
+    case 'from':
+      return paymentFromAccount.map(p => p.amount)
+    case 'to':
+      return paymentToAccount.map(p => p.amount)
+  }
+}
+
+const incomeTotal = $computed(() => sum(...mapAmounts('from')))
+const expenseTotal = $computed(() => sum(...mapAmounts('to')))
+
+const cashflow = computed(() => incomeTotal - expenseTotal)
 </script>
 
 <template>
@@ -29,7 +50,6 @@ const {
         flex
         items-center
         gap-4
-        z-2
       >
         <div
           rounded-full
@@ -40,7 +60,6 @@ const {
           absolute
           top--4
           left--4
-          z-1
           class="transform origin-center scale-800 sm:scale-600 dark:opacity-25"
         />
         <Icon :name="account.icon" :class="[colorDotText]" z-2 />
@@ -64,7 +83,7 @@ const {
           €2478.23
         </div>
         <div text-sm mt-1 opacity-70>
-          -€150.45 this month
+          {{ formatCurrency(cashflow) }} this month
         </div>
       </div>
     </div>
@@ -86,7 +105,7 @@ const {
         w-full
         font="mono"
       >
-        €189.40
+        {{ formatCurrency(incomeTotal) }}
       </div>
       <div
         z-2
@@ -95,7 +114,7 @@ const {
         w-full
         font="mono"
       >
-        €324.95
+        {{ formatCurrency(expenseTotal) }}
       </div>
     </div>
   </FCard>
