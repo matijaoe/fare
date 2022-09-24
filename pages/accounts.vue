@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
-const { data: accounts } = useAccounts()
+const { data: cashAccounts } = useAccountsTotals()
 </script>
 
 <template>
@@ -42,14 +42,14 @@ const { data: accounts } = useAccounts()
 
     <LayoutSectionWrapper title="Cash accounts" subtitle="Actively tracked accounts" mt-3>
       <div
-        v-if="accounts?.length"
+        v-if="cashAccounts?.length"
         class="custom-grid"
         gap-3
       >
         <AccountCard
-          v-for="account in accounts"
+          v-for="account in cashAccounts"
           :key="account.id"
-          :account="account"
+          :cash-account="account"
         />
       </div>
     </LayoutSectionWrapper>

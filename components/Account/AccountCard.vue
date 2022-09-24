@@ -1,39 +1,19 @@
 <script setup lang="ts">
-import type { Account, CashAccount, Ledger } from '@prisma/client'
-import { formatCurrency, sum } from '~~/utils'
+import type { CashAccountWithTotals } from '~~/models/resources/account'
+import { formatCurrency } from '~~/utils'
 
 type Props = {
-  account: Account & {
-    CashAccount: CashAccount & {
-      paymentFromAccount: Ledger[]
-      paymentToAccount: Ledger[]
-    }
-  }
+  cashAccount: CashAccountWithTotals
 }
 
 const props = defineProps<Props>()
 
 const {
   colorSolidBg,
-  colorSolidText,
   colorDotText,
-  colorDotBg,
-} = useAppColors(props.account.color)
+} = useAppColors(props.cashAccount.account.color)
 
-const mapAmounts = (type: 'from' | 'to') => {
-  const { paymentFromAccount, paymentToAccount } = props.account.CashAccount
-  switch (type) {
-    case 'from':
-      return paymentFromAccount.map(p => p.amount)
-    case 'to':
-      return paymentToAccount.map(p => p.amount)
-  }
-}
-
-const incomeTotal = $computed(() => sum(...mapAmounts('from')))
-const expenseTotal = $computed(() => sum(...mapAmounts('to')))
-
-const cashflow = computed(() => incomeTotal - expenseTotal)
+const account = $computed(() => props.cashAccount.account)
 </script>
 
 <template>
@@ -80,10 +60,10 @@ const cashflow = computed(() => incomeTotal - expenseTotal)
         <div
           text="3xl"
         >
-          €2478.23
+          {{ formatCurrency(cashAccount.totals.balance) }}
         </div>
         <div text-sm mt-1 opacity-70>
-          {{ formatCurrency(cashflow) }} this month
+          {{ formatCurrency(cashAccount.totals.net, { signDisplay: 'always' }) }} this month
         </div>
       </div>
     </div>
@@ -105,7 +85,7 @@ const cashflow = computed(() => incomeTotal - expenseTotal)
         w-full
         font="mono"
       >
-        {{ formatCurrency(incomeTotal) }}
+        {{ formatCurrency(cashAccount.totals.income, { signDisplay: 'always' }) }}
       </div>
       <div
         z-2
@@ -114,7 +94,7 @@ const cashflow = computed(() => incomeTotal - expenseTotal)
         w-full
         font="mono"
       >
-        {{ formatCurrency(expenseTotal) }}
+        {{ formatCurrency(cashAccount.totals.expense, { signDisplay: 'always' }) }}
       </div>
     </div>
   </FCard>
