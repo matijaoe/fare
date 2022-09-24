@@ -9,7 +9,7 @@ defineProps<Props>()
 </script>
 
 <template>
-  <div flex flex-col gap-6>
+  <div flex flex-col gap-5>
     <div
       v-if="$slots.title || title"
     >
@@ -19,7 +19,7 @@ defineProps<Props>()
           items-center
           gap-3
           text-2xl
-          font-bold
+          font="sans bold"
           uppercase
         >
           <Icon v-if="icon" :name="icon" />
@@ -28,8 +28,7 @@ defineProps<Props>()
         <p
           v-if="subtitle"
           mt="1.5"
-          ml="1"
-          text="sm zinc-5 dark:zinc-4"
+          text="sm zinc-4 dark:zinc-5"
         >
           {{ subtitle }}
         </p>

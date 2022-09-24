@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 const props = withDefaults(defineProps<{
   size?: 'md' | 'lg'
+  minimal?: boolean
 }>(), {
   size: 'md',
 })
@@ -24,7 +25,13 @@ const sizeStyle = computed(() => {
 </script>
 
 <template>
+  <Icon
+    v-if="minimal"
+    name="ph:lightning-duotone"
+    :class="[sizeStyle.icon]"
+  />
   <div
+    v-else
     font-black
     flex
     items-center

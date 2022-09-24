@@ -6,7 +6,12 @@ export default defineEventHandler((event) => {
     return prisma.account.findMany({
       include: {
         user: true,
-        CashAccount: true,
+        CashAccount: {
+          include: {
+            paymentFromAccount: true,
+            paymentToAccount: true,
+          },
+        },
         InvestmentAccount: true,
       },
     })

@@ -23,7 +23,7 @@ const { mdDown } = useBreakpoints()
       justify-between
       mt-2
       mb-6
-      px-8
+      px-6
     >
       <NuxtLink to="/">
         <FLogo size="lg" />

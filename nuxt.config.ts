@@ -37,4 +37,10 @@ export default defineNuxtConfig({
   vite: {
     plugins: [],
   },
+  imports: {
+    dirs: [
+      'composables/**', // Scan all nested directories
+      'store/**', // Scan all nested directories
+    ],
+  },
 })

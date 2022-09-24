@@ -34,17 +34,17 @@ const items = ref<NavItemModel[]>([
     ],
   },
   {
-    label: 'Net worth',
-    icon: 'tabler:businessplan',
-    route: {
-      name: 'net-worth',
-    },
-  },
-  {
     label: 'Accounts',
     icon: 'tabler:wallet',
     route: {
       name: 'accounts',
+    },
+  },
+  {
+    label: 'Net worth',
+    icon: 'tabler:businessplan',
+    route: {
+      name: 'net-worth',
     },
   },
   {

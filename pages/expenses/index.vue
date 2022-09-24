@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  <LayoutPageWrapper pb-18>
+  <LayoutSectionWrapper pb-18>
     <div relative>
-      <DateSwitchHeader />
+      <DateSwitchHeader mb-6 />
 
       <div
         w-full
@@ -18,7 +18,7 @@
           max-w="full sm:base md:lg lg:2xl"
           flex-1
         >
-          <LedgerEntriesList redesign />
+          <LedgerEntriesList />
         </div>
         <div
           text="right"
@@ -64,5 +64,5 @@
         </FTooltip>
       </div>
     </div>
-  </LayoutPageWrapper>
+  </LayoutSectionWrapper>
 </template>

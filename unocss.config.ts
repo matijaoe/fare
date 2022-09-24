@@ -29,7 +29,7 @@ export default defineConfig({
     presetWebFonts({
       provider: 'google', // default provider
       fonts: {
-        sans: 'Space Grotesk',
+        sans: 'Dosis',
         mono: [
           {
             name: 'Iosevka Nerd Font',

@@ -1,42 +1,14 @@
 <script lang="ts" setup>
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
-const opened = ref(false)
+const { data: accounts } = useAccounts()
 </script>
 
 <template>
-  <div>
-    {{ $route.name }}
-    <FTooltip content="Hi!" bg-red-500>
-      <button>Tippy!</button>
-    </FTooltip>
-    <div>
-      <button v-tippy="tippyyye">
-        test
-      </button>
-    </div>
-    <div>
-      <FButton
-        type="button"
-        @click="opened = true"
-      >
-        Open dialog
-      </FButton>
-    </div>
+  <div flex flex-col gap-4>
+    <DateSwitchHeader />
 
-    <ModalBase
-      v-model="opened"
-      title="Enter your expenses"
-      description="Lorem, ipsum dolor sit amet consectetur adipisicing elit."
-      closable
-    >
-      <p>
-        Placeat dolor corrupti, tempore dicta doloremque atque illum et architecto vel sequi officiis sunt voluptate aperiam dolores non ipsum enim iusto aliquam!
-        Reprehenderit enim minima, labore unde reiciendis, nobis adipisci sunt magnam praesentium provident fuga. Incidunt, aspernatur expedita! Doloribus provident nobis tempora! Natus aspernatur aliquam exercitationem commodi earum porro? Odit, quisquam possimus!
-      </p>
-    </ModalBase>
-
-    <Popover
+    <!-- <Popover
       v-slot="{ open }"
       relative
       w-fit
@@ -66,6 +38,31 @@ const opened = ref(false)
           test
         </PopoverPanel>
       </transition>
-    </Popover>
+    </Popover> -->
+
+    <LayoutSectionWrapper title="Cash accounts" subtitle="Actively tracked accounts" mt-3>
+      <div
+        v-if="accounts?.length"
+        class="custom-grid"
+        gap-3
+      >
+        <AccountCard
+          v-for="account in accounts"
+          :key="account.id"
+          :account="account"
+        />
+      </div>
+    </LayoutSectionWrapper>
+
+    <LayoutSectionWrapper title="Investment accounts" mt-8>
+      kajgod
+    </LayoutSectionWrapper>
   </div>
 </template>
+
+<style scoped>
+.custom-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+</style>

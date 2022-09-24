@@ -25,7 +25,6 @@ const formattedDate = computed(() => {
   <div
     grid="~ cols-[100px_1fr_100px]"
     w-full
-    mb-8
   >
     <div w-fit>
       <FTooltip content="Previous month" placement="bottom">

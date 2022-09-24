@@ -40,43 +40,44 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
 </script>
 
 <template>
-  <FCard white relative>
-    <div
-      flex
-      gap-2
-      pos="absolute top--2.75 left-3"
-    >
-      <FBadge
-        v-if="item.category"
-        cursor="pointer"
-        type="solid"
-        :icon="item.category.icon"
-        :color="item.category.color"
-        rounded
-      >
-        {{ item.category.name }}
-      </FBadge>
+  <div
+    p-5
+    flex
+    flex-col
+    gap-4
+  >
+    <div flex items-center justify-between>
       <div
         flex
-        items-center
         gap-2
       >
         <FBadge
-          v-if="item.fromAccount"
+          v-if="item.category"
           cursor="pointer"
-          type="dot"
-          :icon="item.fromAccount.account.icon"
-          :color="item.fromAccount.account.color"
+          type="solid"
+          :icon="item.category.icon"
+          :color="item.category.color"
+          rounded
         >
-          {{ item.fromAccount.account.name }}
+          {{ item.category.name }}
         </FBadge>
+        <div
+          flex
+          items-center
+          gap-2
+        >
+          <FBadge
+            v-if="item.fromAccount"
+            cursor="pointer"
+            type="dot"
+            :icon="item.fromAccount.account.icon"
+            :color="item.fromAccount.account.color"
+            @click="navigateTo('/accounts')"
+          >
+            {{ item.fromAccount.account.name }}
+          </FBadge>
+        </div>
       </div>
-    </div>
-    <div
-      flex
-      flex-col
-      gap-4
-    >
       <div
         flex
         justify-between
@@ -88,43 +89,48 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
           @click="switchDateFormatType"
         >
           <div
-            font="thin"
-            text="sm zinc-4 dark:zind-5"
+            font="normal"
+            text="xs zinc-4 dark:zinc-4"
           >
             {{ formattedDate }}
           </div>
         </button>
       </div>
+    </div>
+    <div
+      flex
+      justify-between
+      items-end
+      gap-12
+    >
       <div
-        flex
-        justify-between
-        items-center
-        gap-6
+        text="left"
+        truncate
       >
         <div
-          text="left"
+          text-xl
           truncate
+          font="sans light"
+          uppercase
         >
-          <div text-2xl truncate font="display">
-            {{ item.name }}
-          </div>
-          <div
-            v-if="item.description"
-            text-xs
-            truncate
-            font="thin"
-            text="zinc-4 dark:zind-5"
-            mt="1"
-          >
-            {{ item.description }}
-          </div>
+          {{ item.name }}
         </div>
-
-        <div font="display" text-3xl>
-          {{ formatedAmount }}
+        <div
+          v-if="item.description"
+          text-xs
+          truncate
+          font="normal"
+          text="zinc-4 dark:zinc-4"
+          mt="1"
+        >
+          {{ item.description }}
         </div>
       </div>
+
+      <div font="display" text-3xl>
+        {{ formatedAmount }}
+      </div>
     </div>
-  </FCard>
+  </div>
 </template>
 

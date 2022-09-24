@@ -14,8 +14,8 @@ const mainContentDimensions = computed(() => 'max-w-default min-h-[calc(100vh-50
   <div>
     <LayoutSidebar :class="[sidebarWidth]" z-200 />
 
-    <div h-screen overflow-y-auto :class="{ 'md:ml-260px': sidebar.isOpen }">
-      <LayoutHeader :class="[headerWidth]" z-100 />
+    <div h-screen :class="{ 'md:ml-260px': sidebar.isOpen }">
+      <Header :class="[headerWidth]" z-100 />
 
       <div mt="50px" overflow-y-auto :class="[mainContentWrapperHeight]">
         <main p="4 md:(x-8 t-7 b-10)" mx-auto :class="[mainContentDimensions]">
