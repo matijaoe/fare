@@ -62,7 +62,7 @@ const account = $computed(() => props.cashAccount.account)
         >
           {{ formatCurrency(cashAccount.totals.balance) }}
         </div>
-        <div text-sm mt-1 opacity-70>
+        <div mt-1 text="sm zinc-4 dark:zinc-5">
           {{ formatCurrency(cashAccount.totals.net, { signDisplay: 'always' }) }} this month
         </div>
       </div>
@@ -84,8 +84,22 @@ const account = $computed(() => props.cashAccount.account)
         border="base dark:zinc-7 r-dashed r-1"
         w-full
         font="mono"
+        flex="~ col"
       >
-        {{ formatCurrency(cashAccount.totals.income, { signDisplay: 'always' }) }}
+        <div
+          flex="~ col"
+          translate-y="0.4"
+        >
+          <span
+            uppercase
+            font="sans semibold"
+            text="10px zinc-4 dark:zinc-5"
+            class="leading-tight"
+          >
+            Earned this month
+          </span>
+          {{ formatCurrency(cashAccount.totals.income, { signDisplay: 'always' }) }}
+        </div>
       </div>
       <div
         z-2
@@ -94,7 +108,20 @@ const account = $computed(() => props.cashAccount.account)
         w-full
         font="mono"
       >
-        {{ formatCurrency(cashAccount.totals.expense, { signDisplay: 'always' }) }}
+        <div
+          flex="~ col"
+          translate-y="0.4"
+        >
+          <span
+            uppercase
+            font="sans semibold"
+            text="10px zinc-4 dark:zinc-5"
+            class="leading-tight"
+          >
+            Spent this month
+          </span>
+          {{ formatCurrency(-cashAccount.totals.expense, { signDisplay: 'always' }) }}
+        </div>
       </div>
     </div>
   </FCard>

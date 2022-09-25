@@ -14,7 +14,6 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
     items-center
     gap-2
     h-full
-    pl="6"
     font="mono"
     :class="[{
       'border-l-2 border-base ml-5': handledSidebar,

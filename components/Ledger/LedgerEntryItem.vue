@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Account, Ledger, LedgerCategory } from '@prisma/client'
+import type { Account, Ledger, LedgerCategory, LedgerEntryType } from '@prisma/client'
 import { set } from '@vueuse/core'
 import { formatCurrency, formatTimeAgo } from '@/utils'
 
@@ -14,10 +14,10 @@ type Props = {
 
 const { item } = defineProps<Props>()
 
+const isType = (type: LedgerEntryType) => type === item.type
+
 type DateFormatType = 'relative' | 'normal'
-
 const dateFormatType = ref<DateFormatType>('normal')
-
 const isDateFormat = (type: DateFormatType) => dateFormatType.value === type
 
 const switchDateFormatType = () => {
@@ -50,7 +50,7 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
       <div
         flex
         items-center
-        gap-2
+        gap-3
       >
         <FBadge
           v-if="item.category"
@@ -65,7 +65,7 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
         <div
           flex
           items-center
-          gap-2
+          gap-1
         >
           <FBadge
             v-if="item.fromAccount"
@@ -77,6 +77,7 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
           >
             {{ item.fromAccount.account.name }}
           </FBadge>
+          <Icon v-if="isType('Transfer')" name="tabler:arrow-right" text-sm />
           <FBadge
             v-if="item.toAccount"
             cursor="pointer"
@@ -87,9 +88,8 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
           >
             {{ item.toAccount.account.name }}
           </FBadge>
-        </div>
-        <div uppercase font-bold text-sm>
-          {{ item.type }}
+          <Icon v-if="isType('Expense')" name="tabler:arrow-up-right" text="sm red-5" />
+          <Icon v-if="isType('Income')" name="tabler:arrow-down-left" text="sm emerald-5" />
         </div>
       </div>
       <div
@@ -141,7 +141,15 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
         </div>
       </div>
 
-      <div font="display" text-3xl>
+      <div
+        font="display"
+        text-3xl
+        flex
+        items-center
+        gap-1
+      >
+        <span v-if="isType('Expense')" text-red-5>-</span>
+        <span v-else-if="isType('Income')" text-emerald-5>+</span>
         {{ formatedAmount }}
       </div>
     </div>
