@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { InputHTMLAttributes } from 'vue'
+import type { TextareaHTMLAttributes } from 'vue'
 
 type Props = {
   modelValue?: string
@@ -14,7 +14,8 @@ type Props = {
   label?: string
   hint?: string
   error?: string
-  inputProps?: InputHTMLAttributes
+  rows?: number
+  textareaProps?: TextareaHTMLAttributes
 }
 
 type Emits = {
@@ -28,6 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
   type: 'text',
   size: 'md',
   iconPlacement: 'left',
+  rows: 4,
 })
 
 const emit = defineEmits<Emits>()
@@ -50,20 +52,6 @@ const isSlot = (name: 'left' | 'right') => {
   const usingProps = props.icon && props.iconPlacement === name
   return usingProps || usingSlot
 }
-
-const stateIconStyle = computed(() => {
-  const { invalid, positive, disabled } = props
-  if (invalid) {
-    return 'not-focus:(text-red-5)'
-  }
-  if (positive) {
-    return 'not-focus:(text-green-5)'
-  }
-  if (disabled) {
-    return 'text-zinc-3 dark:text-zinc-7'
-  }
-  return 'color-base-lighter'
-})
 
 const paddingStyle = computed(() => {
   const { icon, iconPlacement, loading } = props
@@ -94,6 +82,20 @@ const stateStyle = computed(() => {
   return 'bg-zinc-2 dark:bg-zinc-8 border-transparent focus:(border-zinc-8 dark:border-zinc-4) invalid:(bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-5/60) focus:(border-red-6 dark:border-red-5/60))'
 })
 
+const stateIconStyle = computed(() => {
+  const { invalid, positive, disabled } = props
+  if (invalid) {
+    return 'not-focus:(text-red-5)'
+  }
+  if (positive) {
+    return 'not-focus:(text-green-5)'
+  }
+  if (disabled) {
+    return 'text-zinc-3 dark:text-zinc-7'
+  }
+  return 'color-base-lighter'
+})
+
 const disabledStyle = computed(() => 'disabled:(bg-zinc-1 dark:bg-zinc-9/50 border-zinc-3 dark:border-zinc-7 opacity-50 cursor-not-allowed)')
 
 const value = computed({
@@ -115,11 +117,29 @@ const emits = {
     </template> -->
 
     <div relative>
+      <textarea
+        v-bind="props"
+        v-model="value"
+        :type="type"
+        :readonly="loading"
+        :disabled="disabled"
+        w-full
+        p="y-2.5 x-4"
+        text="base"
+        border="2 rounded-md"
+        flex="~ gap-4"
+        items-center
+        outline="none focus:none"
+        :rows="rows"
+        class="leading-5 placeholder-zinc-5/60 placeholder-shown:font-normal"
+        :class="[disabledStyle, paddingStyle, stateStyle]"
+        v-on="emits"
+      />
       <div
         v-if="isSlot('left')"
         absolute
         text="zinc-8"
-        pos="top-50% left-4"
+        pos="top-5.75 left-4"
         class="-translate-y-50%"
         flex
         items-center
@@ -128,31 +148,10 @@ const emits = {
           <Icon :name="icon" :class="[stateIconStyle]" />
         </slot>
       </div>
-
-      <input
-        v-bind="inputProps"
-        v-model="value"
-        :type="type"
-        :placeholder="placeholder"
-        :readonly="loading"
-        :disabled="disabled"
-        w-full
-        h="41px"
-        p="y-2.5 x-4"
-        text="base"
-        border="2 rounded-md"
-        flex="~ gap-4"
-        items-center
-        outline="none focus:none"
-        class="leading-5 placeholder-zinc-5/60 placeholder-shown:font-normal"
-        :class="[disabledStyle, paddingStyle, stateStyle]"
-        v-on="emits"
-      >
-
       <div
         v-if="loading || isSlot('right')"
         absolute
-        pos="top-50% right-4"
+        pos="top-5.75 right-4"
         class="-translate-y-50%"
         :class="stateIconStyle"
         flex
@@ -166,7 +165,7 @@ const emits = {
         </slot>
       </div>
     </div>
-    <!--
+<!-- 
     <template v-if="$slots.hint" #hint>
       <slot name="hint" />
     </template>

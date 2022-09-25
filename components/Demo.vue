@@ -50,8 +50,30 @@ const selectedPerson = ref<SelectItem | null>()
   >
     <FSelectField
       v-model="selectedPerson"
+      hint="Your favorite person"
+      icon="tabler:cookie"
+      label="Person"
       :items="peopleOptions"
     />
+    <FTextarea
+      label="Komentar"
+      hint="This is a hint"
+      icon="tabler:cookie"
+      icon-placement="left"
+      placeholder="Komentar"
+    />
+    <FTextarea
+      invalid
+      hint="test"
+      error="Error test"
+      icon="tabler:cookie"
+      icon-placement="left"
+      placeholder="Komentar"
+    >
+      <template #label>
+        Komentar #2
+      </template>
+    </FTextarea>
     <div flex gap-2 items-center>
       <FPasswordField v-model="pw" :loading="loading" flex-1 />
       <FButton

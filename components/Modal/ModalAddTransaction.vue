@@ -66,13 +66,14 @@ const form = reactive({
     >
       <FSelectField
         v-model="form.category"
+        icon="tabler:category"
         label="Category"
         placeholder="Pick a category"
         :items="categoryOptions"
         block
       />
       <FInput icon="tabler:text-size" label="Name" placeholder="Lunch" />
-      <FInput icon="tabler:align-left" label="Description" placeholder="Quinoa salad" />
+      <FTextarea icon="tabler:align-left" label="Description" placeholder="Quinoa salad" />
       <FInput
         icon="tabler:currency-euro"
         label="Amount"
