@@ -1,18 +1,8 @@
 <script setup lang="ts">
-import { set } from '@vueuse/core'
-
-const modalOpen = ref(false)
-const openModal = () => set(modalOpen, true)
-
-const modalConfig = computed(() => ({
-  title: 'Add new entry',
-  description: 'Add a new entry to your ledger',
-  closable: true,
-}))
+const modal = useNewTransactionModal()
 </script>
 
 <template>
-  <ModalBase v-model="modalOpen" v-bind="modalConfig" />
   <div
     flex
     gap-2
@@ -25,8 +15,8 @@ const modalConfig = computed(() => ({
         size="xl"
         circle
         variant="success"
-        class="!shadow-xl !filter-grayscale-60 !hover:filter-grayscale-0"
-        @click="openModal"
+        class="!shadow-xl"
+        @click="modal.launch('Income')"
       />
     </FTooltip>
     <FTooltip content="Expense">
@@ -35,9 +25,9 @@ const modalConfig = computed(() => ({
         icon="tabler:arrow-up-right"
         size="xl"
         circle
-        variant="teal"
-        class="!shadow-xl !filter-grayscale-40 !hover:filter-grayscale-0"
-        @click="openModal"
+        variant="primary"
+        class="!shadow-xl"
+        @click="modal.launch('Expense')"
       />
     </FTooltip>
     <FTooltip content="Transfer">
@@ -46,9 +36,9 @@ const modalConfig = computed(() => ({
         icon="tabler:arrows-exchange"
         size="xl"
         circle
-        variant="info"
-        class="!shadow-xl !filter-grayscale-80 !hover:filter-grayscale-0"
-        @click="openModal"
+        variant="indigo"
+        class="!shadow-xl"
+        @click="modal.launch('Transfer')"
       />
     </FTooltip>
   </div>

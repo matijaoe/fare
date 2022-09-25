@@ -37,6 +37,7 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
 </script>
 
 <template>
+  <!-- TODO: select label -->
   <Listbox
     v-slot="{ open }"
     v-model="selectedItem"

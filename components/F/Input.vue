@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { InputHTMLAttributes } from 'vue'
+
 type Props = {
   modelValue?: string
   type?: string
@@ -12,6 +14,7 @@ type Props = {
   label?: string
   hint?: string
   error?: string
+  inputProps: InputHTMLAttributes
 }
 
 type Emits = {
@@ -57,12 +60,12 @@ const paddingStyle = computed(() => {
 const stateStyle = computed(() => {
   const { invalid, positive } = props
   if (invalid) {
-    return 'bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-5/60))'
+    return 'bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-5/60)) focus:(border-red-6 dark:border-red-5/60)'
   }
   if (positive) {
-    return 'bg-green-1/50 border-green-6 dark:(bg-green-9/25 border-green-5/60)'
+    return 'bg-green-1/50 border-green-6 dark:(bg-green-9/25 border-green-5/60) focus:(border-green-6 dark:border-green-5/60)'
   }
-  return 'bg-zinc-2 dark:bg-zinc-8 border-transparent focus:(border-zinc-8 dark:border-zinc-4)'
+  return 'bg-zinc-2 dark:bg-zinc-8 border-transparent focus:(border-zinc-8 dark:border-zinc-4) invalid:(bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-5/60) focus:(border-red-6 dark:border-red-5/60))'
 })
 
 const stateIconStyle = computed(() => {
@@ -98,8 +101,8 @@ const emits = {
     <div
       v-if="label || $slots.label"
       uppercase
-      font-bold
-      text="sm"
+      font="sans"
+      text="xs"
       class="color-base-lighter"
     >
       <slot name="label">
@@ -108,6 +111,7 @@ const emits = {
     </div>
     <div relative>
       <input
+        v-bind="inputProps"
         v-model="value"
         :type="type"
         :placeholder="placeholder"

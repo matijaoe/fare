@@ -88,8 +88,6 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
           >
             {{ item.toAccount.account.name }}
           </FBadge>
-          <Icon v-if="isType('Expense')" name="tabler:arrow-up-right" text="sm red-5" />
-          <Icon v-if="isType('Income')" name="tabler:arrow-down-left" text="sm emerald-5" />
         </div>
       </div>
       <div
@@ -147,9 +145,13 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
         flex
         items-center
         gap-1
+        :class="{
+          'text-emerald-5': isType('Income'),
+          'text-indigo-5': isType('Transfer'),
+        }"
       >
-        <span v-if="isType('Expense')" text-red-5>-</span>
-        <span v-else-if="isType('Income')" text-emerald-5>+</span>
+        <span v-if="isType('Expense')">-</span>
+        <span v-else-if="isType('Income')">+</span>
         {{ formatedAmount }}
       </div>
     </div>

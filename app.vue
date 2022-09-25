@@ -10,6 +10,8 @@ useShortcuts()
 </script>
 
 <template>
+  <ModalGlobalModals />
+
   <div
     font="mono"
     h="screen"

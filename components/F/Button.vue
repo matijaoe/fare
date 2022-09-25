@@ -43,6 +43,8 @@ const variantStyle = computed(() => {
       return 'bg-green-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-green-4/95) dark:(bg-green-5 filter-saturate-80 hover:not-disabled:(bg-green-5 filter-saturate-95) focus-visible:not-disabled:(bg-green-4))'
     case 'info':
       return 'bg-sky-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-sky-4/95) dark:(bg-sky-5 filter-saturate-80 hover:not-disabled:(bg-sky-5 filter-saturate-95) focus-visible:not-disabled:(bg-sky-4))'
+    case 'indigo':
+      return 'bg-indigo-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-indigo-4/95) dark:(bg-indigo-5 filter-saturate-80 hover:not-disabled:(bg-indigo-5 filter-saturate-95) focus-visible:not-disabled:(bg-indigo-4))'
     case 'teal':
       return 'bg-teal-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-teal-4/95) dark:(bg-teal-5 filter-saturate-80 hover:not-disabled:(bg-teal-5 filter-saturate-95) focus-visible:not-disabled:(bg-teal-4))'
     case 'lime':
