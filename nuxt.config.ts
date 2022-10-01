@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     uno: true,
     attributify: true,
     preflight: true,
-    icons: true,
+    icons: false,
   },
   colorMode: {
     classSuffix: '',

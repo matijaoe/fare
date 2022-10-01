@@ -1,32 +1,22 @@
 import type { Prisma } from '@prisma/client'
-import { sendInternalError } from '~~/composables/api'
+import { useContextUserId, useTransactionDateRange } from '~~/composables/server'
 import { prisma } from '~~/prisma'
 
 export default defineEventHandler((event) => {
-  const { start, end } = useQuery(event) as { start: string; end: string }
-
-  const startDate = new Date(start)
-  const endDate = new Date(end)
+  const userId = useContextUserId(event)
+  const { dateQuery: date } = useTransactionDateRange(event)
 
   const accountInclude: Prisma.CashAccountArgs = {
     include: {
-      account: {
-        select: {
-          name: true,
-          color: true,
-          icon: true,
-        },
-      },
+      account: true,
     },
   }
 
   try {
-    return prisma.ledger.findMany({
+    return prisma.transaction.findMany({
       where: {
-        date: {
-          gte: startDate,
-          lte: endDate,
-        },
+        date,
+        userId,
       },
       include: {
         category: true,

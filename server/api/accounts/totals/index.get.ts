@@ -1,5 +1,5 @@
-import { LedgerEntryType } from '@prisma/client'
-import { sendInternalError } from '~~/composables/api'
+import { TransactionType } from '@prisma/client'
+import { sendInternalError } from '~~/composables/server'
 import type { AccountTotalType, CashAccountWithTotals, groupedAccount } from '~~/models/resources/account'
 import { prisma } from '~~/prisma'
 
@@ -8,7 +8,7 @@ const initalTotal = () => ({ income: 0, expense: 0, transferIn: 0, transferOut: 
 export default defineEventHandler(async (event) => {
   try {
     // Group by accounts and entry types
-    const groupByAccounts = await prisma.ledger.groupBy({
+    const groupByAccounts = await prisma.transaction.groupBy({
       by: ['fromAccountId', 'toAccountId', 'type'],
       _sum: {
         amount: true,
@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
         return totalsByAccount
       }
 
-      const isType = (type: LedgerEntryType) => curr.type === type
+      const isType = (type: TransactionType) => curr.type === type
 
       const setupInitialAccountValues = (key: string) => {
         if (!totalsByAccount[key]) {
@@ -48,12 +48,12 @@ export default defineEventHandler(async (event) => {
         totalsByAccount[key][type] += curr._sum.amount ?? 0
       }
 
-      if (isType(LedgerEntryType.Transfer) && fromAccount && toAccount && fromAccount !== toAccount) {
+      if (isType(TransactionType.Transfer) && fromAccount && toAccount && fromAccount !== toAccount) {
         addTransaction(fromAccount.id, 'transferOut')
         addTransaction(toAccount.id, 'transferIn')
-      } else if (isType(LedgerEntryType.Expense) && fromAccount && !toAccount) {
+      } else if (isType(TransactionType.Expense) && fromAccount && !toAccount) {
         addTransaction(fromAccount.id, 'expense')
-      } else if (isType(LedgerEntryType.Income) && toAccount && !fromAccount) {
+      } else if (isType(TransactionType.Income) && toAccount && !fromAccount) {
         addTransaction(toAccount.id, 'income')
       }
 

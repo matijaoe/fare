@@ -1,15 +1,14 @@
+import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { sendCustomError, sendInternalError } from '~~/composables/api'
+import { sendCustomError, sendInternalError, useParams } from '~~/composables/server'
 import { prisma } from '~~/prisma'
 
 export default defineEventHandler(async (event) => {
-  const { id } = event.context.params
+  const where = useParams<Prisma.UserWhereUniqueInput>(event)
 
   try {
     const user = await prisma.user.findFirst({
-      where: {
-        id,
-      },
+      where,
     })
 
     if (!user) {

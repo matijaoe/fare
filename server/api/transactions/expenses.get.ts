@@ -1,11 +1,12 @@
-import { sendInternalError } from '~~/composables/api'
+import { sendInternalError, useContextUserId } from '~~/composables/server'
 import { prisma } from '~~/prisma'
 
 export default defineEventHandler((event) => {
   try {
-    return prisma.ledger.findMany({
+    return prisma.transaction.findMany({
       where: {
         type: 'Expense',
+        userId: useContextUserId(event),
       },
       include: {
         category: true,

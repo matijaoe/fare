@@ -18,13 +18,7 @@ generator erd {
   theme    = "forest"
 }
 
-enum LedgerEntryType {
-  Income
-  Expense
-  Transfer
-}
-
-model LedgerCategory {
+model Category {
   id     String  @id @default(cuid())
   name   String
   color  String?
@@ -33,28 +27,34 @@ model LedgerCategory {
 
   user User? @relation(fields: [userId], references: [id])
 
-  ledger Ledger[]
+  transactions Transaction[]
 
   @@unique([userId, name])
 }
 
-model Ledger {
+enum TransactionType {
+  Income
+  Expense
+  Transfer
+}
+
+model Transaction {
   id            String          @id @default(cuid())
-  type          LedgerEntryType
+  type          TransactionType
   name          String
   description   String
   amount        Float
   currency      String?         @default("EUR")
   date          DateTime        @default(now())
   userId        String
-  categoryId    String? 
+  categoryId    String?
   fromAccountId String?
   toAccountId   String?
 
-  user        User           @relation(fields: [userId], references: [id])
-  category    LedgerCategory? @relation(fields: [categoryId], references: [id])
-  fromAccount CashAccount?   @relation("paymentFromAccount", fields: [fromAccountId], references: [id])
-  toAccount   CashAccount?   @relation("paymentToAccount", fields: [toAccountId], references: [id])
+  user        User         @relation(fields: [userId], references: [id])
+  category    Category?    @relation(fields: [categoryId], references: [id])
+  fromAccount CashAccount? @relation("paymentFromAccount", fields: [fromAccountId], references: [id])
+  toAccount   CashAccount? @relation("paymentToAccount", fields: [toAccountId], references: [id])
 }
 
 model Account {
@@ -68,7 +68,7 @@ model Account {
 
   CashAccount       CashAccount?
   InvestmentAccount InvestmentAccount?
-  AccountTimechart AccountTimechart[]
+  AccountTimechart  AccountTimechart[]
 
   @@unique([name, userId])
 }
@@ -84,8 +84,8 @@ model CashAccount {
 
   account Account @relation(fields: [accountId], references: [id])
 
-  paymentFromAccount Ledger[] @relation("paymentFromAccount")
-  paymentToAccount   Ledger[] @relation("paymentToAccount")
+  paymentFromAccount Transaction[] @relation("paymentFromAccount")
+  paymentToAccount   Transaction[] @relation("paymentToAccount")
 }
 
 enum InvestmentType {
@@ -106,7 +106,6 @@ model InvestmentAccount {
   account Account @relation(fields: [accountId], references: [id])
 }
 
-
 model AccountTimechart {
   accountId String
   total     Float
@@ -123,7 +122,7 @@ model User {
   email     String   @unique
   createdAt DateTime @default(now())
 
-  ledger         Ledger[]
-  accounts       Account[]
-  LedgerCategory LedgerCategory[]
+  transactions Transaction[]
+  accounts     Account[]
+  categories   Category[]
 }

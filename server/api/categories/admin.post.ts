@@ -1,16 +1,18 @@
+import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { sendInternalError, setResStatus } from '~~/composables/api'
+import { sendInternalError, setResStatus } from '~~/composables/server'
 import { prisma } from '~~/prisma'
 
 export default defineEventHandler(async (event) => {
+  const data = await useBody<Prisma.CategoryUncheckedCreateInput>(event)
+
   try {
-    const data = await useBody(event)
-    const category = await prisma.ledgerCategory.create({
+    const item = await prisma.category.create({
       data,
     })
 
     setResStatus(event, StatusCodes.CREATED)
-    return category
+    return item
   } catch (err: unknown) {
     console.error(err)
     sendInternalError(event, err)

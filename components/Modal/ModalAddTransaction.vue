@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LedgerEntryType } from '@prisma/client'
+import type { TransactionType } from '@prisma/client'
 import { useNewTransactionModal } from '~~/store/modal/add-transaction'
 
 const modal = useNewTransactionModal()
@@ -10,9 +10,9 @@ const modalConfig = computed(() => ({
   closable: true,
 }))
 
-const isType = (type: LedgerEntryType) => modal.transactionType === type
+const isType = (type: TransactionType) => modal.transactionType === type
 
-const setType = (type: LedgerEntryType) => {
+const setType = (type: TransactionType) => {
   modal.setTransactionType(type)
 }
 

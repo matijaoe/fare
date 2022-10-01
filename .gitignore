@@ -6,3 +6,4 @@ dist
 .env
 .vercel
 prisma/docs
+plan.md

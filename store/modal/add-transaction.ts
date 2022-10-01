@@ -1,10 +1,10 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { set } from '@vueuse/core'
-import { LedgerEntryType } from '@prisma/client'
+import type { TransactionType } from '@prisma/client'
 
 export const useNewTransactionModal = defineStore('modal-new-transaction', () => {
-  const transactionType = ref<LedgerEntryType>(LedgerEntryType.Expense)
-  const setTransactionType = (type: LedgerEntryType) => set(transactionType, type)
+  const transactionType = ref<TransactionType>()
+  const setTransactionType = (type: TransactionType) => set(transactionType, type)
 
   const open = ref(false)
   const opened = computed({
@@ -12,7 +12,7 @@ export const useNewTransactionModal = defineStore('modal-new-transaction', () =>
     set: value => set(open, value),
   })
 
-  const launch = (type?: LedgerEntryType) => {
+  const launch = (type?: TransactionType) => {
     if (type) {
       set(transactionType, type)
     }

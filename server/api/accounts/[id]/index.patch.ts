@@ -1,5 +1,5 @@
 import { prisma } from '~/prisma'
-import { sendInternalError } from '~~/composables/api'
+import { sendInternalError } from '~~/composables/server'
 
 export default defineEventHandler(async (event) => {
   const { id } = event.context.params

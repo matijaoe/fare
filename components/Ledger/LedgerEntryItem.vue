@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { Account, Ledger, LedgerCategory, LedgerEntryType } from '@prisma/client'
+import type { Account, Category, Lekdger, TransactionType } from '@prisma/client'
 import { set } from '@vueuse/core'
 import { formatCurrency, formatTimeAgo } from '@/utils'
 
 type Props = {
   item: Ledger &
-  { category?: LedgerCategory } &
+  { category?: Category } &
   {
     fromAccount?: { account: Account }
     toAccount?: { account: Account }
@@ -14,7 +14,7 @@ type Props = {
 
 const { item } = defineProps<Props>()
 
-const isType = (type: LedgerEntryType) => type === item.type
+const isType = (type: TransactionType) => type === item.type
 
 type DateFormatType = 'relative' | 'normal'
 const dateFormatType = ref<DateFormatType>('normal')
@@ -37,6 +37,8 @@ const formatDate = (date: Date | string, options?: Intl.DateTimeFormatOptions) =
 
 const formattedDate = computed(() => isDateFormat('relative') ? formatTimeAgo(item.date) : formatDate(item.date))
 const formatedAmount = computed(() => formatCurrency(item.amount))
+
+console.log('props.item :>> ', props.item)
 </script>
 
 <template>

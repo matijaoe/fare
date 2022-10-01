@@ -1,4 +1,4 @@
-import type { CompatibilityEvent } from 'h3'
+import type { CompatibilityEvent, H3Event } from 'h3'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
 
 export const sendCustomError = (
@@ -43,3 +43,17 @@ export const setResStatus = (
   { res }: CompatibilityEvent,
   statusCode: StatusCodes,
 ) => res.statusCode = statusCode
+
+export const useParams = <T>(event: H3Event) => {
+  return event.context.params as T
+}
+
+export const useContext = <T>(event: H3Event) => {
+  return event.context as T & { params: Record<string, any> }
+}
+
+export const useContextUserId = (event: H3Event) => {
+  return event.context.userId as string
+}
+
+export * from './transactions'

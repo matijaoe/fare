@@ -1,24 +1,22 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { sendInternalError, setResStatus } from '~~/composables/api'
+import { sendInternalError, setResStatus, useContextUserId } from '~~/composables/server'
 import { prisma } from '~~/prisma'
 
 export default defineEventHandler(async (event) => {
+  const userId = useContextUserId(event)
+  const body = await useBody<Prisma.CategoryUncheckedCreateInput>(event)
+
   try {
-    const data = await useBody(event) as Prisma.AccountCreateInput
-    const account = await prisma.cashAccount.create({
+    const item = await prisma.category.create({
       data: {
-        account: {
-          create: data,
-        },
-      },
-      include: {
-        account: true,
+        ...body,
+        userId,
       },
     })
 
     setResStatus(event, StatusCodes.CREATED)
-    return account
+    return item
   } catch (err: unknown) {
     console.error(err)
     sendInternalError(event, err)
