@@ -1,11 +1,39 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { set } from '@vueuse/core'
-import type { TransactionType } from '@prisma/client'
+import { get, set } from '@vueuse/core'
+import type { Prisma, TransactionType } from '@prisma/client'
 
-export const useNewTransactionModal = defineStore('modal-new-transaction', () => {
-  const transactionType = ref<TransactionType>()
-  const setTransactionType = (type: TransactionType) => set(transactionType, type)
+export const useAddTransactionModal = defineStore('modal-new-transaction', () => {
+  // Form
+  const { data: categories } = useCategories()
+  const { data: accounts } = useCashAccounts({ transactions: 'false' })
 
+  const categoryOptions = computed(() => get(categories)?.map(category => ({
+    ...category,
+    label: category.name,
+    value: category.id,
+  })) ?? [])
+
+  const fromAccountsOptions = computed(() => get(accounts)?.map(cashAccount => ({
+    ...cashAccount,
+    label: cashAccount.account.name,
+    value: cashAccount.id,
+  })) ?? [])
+
+  const form = reactive<Prisma.TransactionUncheckedCreateWithoutUserInput>({
+    type: 'Expense',
+    name: '',
+    description: '',
+    amount: 0,
+    date: new Date(),
+    categoryId: null,
+    fromAccountId: null,
+  })
+
+  const setType = (type: TransactionType) => form.type = type
+
+  const isType = (type: TransactionType) => form.type === type
+
+  // Modal
   const open = ref(false)
   const opened = computed({
     get: () => open.value,
@@ -14,7 +42,7 @@ export const useNewTransactionModal = defineStore('modal-new-transaction', () =>
 
   const launch = (type?: TransactionType) => {
     if (type) {
-      set(transactionType, type)
+      setType('Expense')
     }
     set(open, true)
   }
@@ -22,14 +50,20 @@ export const useNewTransactionModal = defineStore('modal-new-transaction', () =>
   const hide = () => set(open, false)
 
   return {
+    // Form
+    categoryOptions,
+    fromAccountsOptions,
+    form,
+    isType,
+    // modal
     opened,
     launch,
     hide,
-    transactionType,
-    setTransactionType,
+    setType,
+
   }
 })
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useNewTransactionModal, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useAddTransactionModal, import.meta.hot))
 }

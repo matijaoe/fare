@@ -12,6 +12,8 @@ export type CashAccountWithTotals = CashAccount & {
   totals: Record<AccountTotalType, number>
 }
 
+export type CashAccountWithAccount = CashAccount & { account: Account }
+
 export type CashAccountWithTotalsAndTransactions = CashAccount & {
   paymentFromAccount: Transaction
   paymentToAccount: Transaction

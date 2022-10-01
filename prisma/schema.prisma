@@ -42,7 +42,7 @@ model Transaction {
   id            String          @id @default(cuid())
   type          TransactionType
   name          String
-  description   String
+  description   String?
   amount        Float
   currency      String?         @default("EUR")
   date          DateTime        @default(now())

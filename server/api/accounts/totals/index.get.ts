@@ -1,4 +1,4 @@
-import { TransactionType } from '@prisma/client'
+import type { TransactionType } from '@prisma/client'
 import { sendInternalError } from '~~/composables/server'
 import type { AccountTotalType, CashAccountWithTotals, groupedAccount } from '~~/models/resources/account'
 import { prisma } from '~~/prisma'
@@ -48,12 +48,12 @@ export default defineEventHandler(async (event) => {
         totalsByAccount[key][type] += curr._sum.amount ?? 0
       }
 
-      if (isType(TransactionType.Transfer) && fromAccount && toAccount && fromAccount !== toAccount) {
+      if (isType('Transfer') && fromAccount && toAccount && fromAccount !== toAccount) {
         addTransaction(fromAccount.id, 'transferOut')
         addTransaction(toAccount.id, 'transferIn')
-      } else if (isType(TransactionType.Expense) && fromAccount && !toAccount) {
+      } else if (isType('Expense') && fromAccount && !toAccount) {
         addTransaction(fromAccount.id, 'expense')
-      } else if (isType(TransactionType.Income) && toAccount && !fromAccount) {
+      } else if (isType('Income') && toAccount && !fromAccount) {
         addTransaction(toAccount.id, 'income')
       }
 

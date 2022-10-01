@@ -1,7 +1,7 @@
 import type { Transaction } from '@prisma/client'
 import { useQuery } from 'vue-query'
-import type { CashAccountsQueryModel } from '~~/models/resources/account'
+import type { TimeFrame } from '~~/models/resources/account'
 
-export const useTransactions = (params: CashAccountsQueryModel) => useQuery('transactions', () => $fetch<Transaction[]>('/api/transactions', {
+export const useTransactions = (params: TimeFrame) => useQuery('transactions', () => $fetch<Transaction[]>('/api/transactions', {
   params,
 }))

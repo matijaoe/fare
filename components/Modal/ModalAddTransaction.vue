@@ -1,60 +1,25 @@
 <script setup lang="ts">
-import type { TransactionType } from '@prisma/client'
-import { useNewTransactionModal } from '~~/store/modal/add-transaction'
+import { TransactionType } from '@prisma/client'
 
-const modal = useNewTransactionModal()
+const modal = useAddTransactionModal()
 
 const modalConfig = computed(() => ({
   title: 'New transaction',
   description: 'Add a new transaction',
   closable: true,
 }))
-
-const isType = (type: TransactionType) => modal.transactionType === type
-
-const setType = (type: TransactionType) => {
-  modal.setTransactionType(type)
-}
-
-const { data: categories } = useCategories()
-const { data: cashAccounts } = useAccounts()
-
-const categoryOptions = computed(() => {
-  return categories.value?.map(category => ({
-    ...category,
-    label: category.name,
-    value: category.id,
-  })) ?? []
-})
-
-const form = reactive({
-  name: '',
-  description: '',
-  amount: 0,
-  date: new Date(),
-  category: null,
-})
-
-// label value, disalbled
-// {
-//         "id": "cl85t7mxp002277uuos3a2p73",
-//         "name": "Snacks",
-//         "color": "rose",
-//         "icon": "tabler:pizza",
-//         "userId": null
-//     },
 </script>
 
 <template>
   <ModalBase v-model="modal.opened" v-bind="modalConfig">
     <div flex gap-2>
-      <FButton :variant="isType('Income') ? 'primary' : 'outline'" @click="setType('Income')">
+      <FButton :variant="modal.isType('Income') ? 'primary' : 'outline'" @click="modal.setType('Income')">
         Income
       </FButton>
-      <FButton :variant="isType('Expense') ? 'primary' : 'outline'" @click="setType('Expense')">
+      <FButton :variant="modal.isType('Expense') ? 'primary' : 'outline'" @click="modal.setType('Expense')">
         Expense
       </FButton>
-      <FButton :variant="isType('Transfer') ? 'primary' : 'outline'" @click="setType('Transfer')">
+      <FButton :variant="modal.isType('Transfer') ? 'primary' : 'outline'" @click="modal.setType('Transfer')">
         Transfer
       </FButton>
     </div>
@@ -65,11 +30,19 @@ const form = reactive({
       gap-3
     >
       <FSelectField
-        v-model="form.category"
+        v-model="modal.form.fromAccount"
         icon="tabler:category"
+        label="From account"
+        placeholder="Pick an account"
+        :items="modal.fromAccountsOptions"
+        block
+      />
+      <FSelectField
+        v-model="modal.form.category"
+        icon="tabler:building-bank"
         label="Category"
         placeholder="Pick a category"
-        :items="categoryOptions"
+        :items="modal.categoryOptions"
         block
       />
       <FInput icon="tabler:text-size" label="Name" placeholder="Lunch" />
