@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!user) {
-      sendCustomError(event, StatusCodes.NOT_FOUND, 'Account not found')
+      return sendCustomError(event, StatusCodes.NOT_FOUND, 'Account not found')
     }
 
     return user

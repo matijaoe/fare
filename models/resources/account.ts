@@ -1,4 +1,11 @@
-import type { Account, CashAccount, Ledger, Prisma } from '@prisma/client'
+import type { Account, CashAccount, Prisma, Transaction } from '@prisma/client'
+
+export type TimeFrame = {
+  start?: string
+  end?: string
+}
+
+export type CashAccountsQueryModel = TimeFrame & { transactions?: 'true' | 'false' }
 
 export type CashAccountWithTotals = CashAccount & {
   account: Account
@@ -6,14 +13,15 @@ export type CashAccountWithTotals = CashAccount & {
 }
 
 export type CashAccountWithTotalsAndTransactions = CashAccount & {
-  paymentFromAccount: Ledger
-  paymentToAccount: Ledger
+  paymentFromAccount: Transaction
+  paymentToAccount: Transaction
 }
 
 export type AccountTotalType = 'income' | 'expense' | 'transferIn' | 'transferOut' | 'net' | 'transferNet' | 'balance'
 
-export type groupedAccount = (Prisma.PickArray<Prisma.LedgerGroupByOutputType, ('type' | 'fromAccountId' | 'toAccountId')[]> & {
+export type groupedAccount = (Prisma.PickArray<Prisma.TransactionGroupByOutputType, ('type' | 'fromAccountId' | 'toAccountId')[]> & {
   _sum: {
     amount: number | null
   }
 })
+

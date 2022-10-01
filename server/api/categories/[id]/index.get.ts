@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!item) {
-      sendCustomError(event, StatusCodes.NOT_FOUND, 'Category not found')
+      return sendCustomError(event, StatusCodes.NOT_FOUND, 'Category not found')
     }
 
     return item

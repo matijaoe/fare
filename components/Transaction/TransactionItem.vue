@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import type { Account, Category, Lekdger, TransactionType } from '@prisma/client'
+import type { TransactionType } from '@prisma/client'
 import { set } from '@vueuse/core'
 import { formatCurrency, formatTimeAgo } from '@/utils'
+import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources/transactions'
 
 type Props = {
-  item: Ledger &
-  { category?: Category } &
-  {
-    fromAccount?: { account: Account }
-    toAccount?: { account: Account }
-  }
+  item: TransactionWithCategoryAndCashAccount
 }
 
 const { item } = defineProps<Props>()
@@ -38,7 +34,7 @@ const formatDate = (date: Date | string, options?: Intl.DateTimeFormatOptions) =
 const formattedDate = computed(() => isDateFormat('relative') ? formatTimeAgo(item.date) : formatDate(item.date))
 const formatedAmount = computed(() => formatCurrency(item.amount))
 
-console.log('props.item :>> ', props.item)
+console.log('item :>> ', item)
 </script>
 
 <template>

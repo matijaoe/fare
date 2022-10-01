@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const data = await useBody<Prisma.TransactionUncheckedCreateInput>(event)
 
   if (!validEntryType(data)) {
-    sendCustomError(event, StatusCodes.BAD_REQUEST, 'Invalid entry type logic')
+    return sendCustomError(event, StatusCodes.BAD_REQUEST, 'Invalid entry type logic')
   }
 
   try {

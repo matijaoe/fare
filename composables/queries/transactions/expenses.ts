@@ -1,4 +1,4 @@
-import type { Ledger } from '@prisma/client'
 import { useQuery } from 'vue-query'
+import type { Transaction } from '@prisma/client'
 
-export const useExpenses = () => useQuery('ledger-entries', () => $fetch<Ledger[]>('/api/ledger/expenses'))
+export const useExpenses = () => useQuery('expenses', () => $fetch<Transaction[]>('/api/transactions/expenses'))

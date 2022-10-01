@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!user) {
-      sendCustomError(event, StatusCodes.NOT_FOUND, 'User not found')
+      return sendCustomError(event, StatusCodes.NOT_FOUND, 'User not found')
     }
 
     return user

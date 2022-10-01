@@ -5,8 +5,8 @@ import { useNewTransactionModal } from '~~/store/modal/add-transaction'
 const modal = useNewTransactionModal()
 
 const modalConfig = computed(() => ({
-  title: 'Add new entry',
-  description: 'Add a new entry to your ledger',
+  title: 'New transaction',
+  description: 'Add a new transaction',
   closable: true,
 }))
 

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useSidebar } from '~/store/sidebar'
-
 const sidebar = useSidebar()
 const { mdDown } = useBreakpoints()
 </script>

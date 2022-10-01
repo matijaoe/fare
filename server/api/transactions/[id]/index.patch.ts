@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!res.count) {
-      sendCustomError(event, StatusCodes.NOT_FOUND, 'Transaction not found')
+      return sendCustomError(event, StatusCodes.NOT_FOUND, 'Transaction not found')
     }
 
     return res
