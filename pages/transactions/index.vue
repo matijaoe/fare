@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-
+const transactionStore = useTransactionsStore()
 </script>
 
 <template>
@@ -23,7 +23,12 @@
         <div
           flex-1
         >
-          <FInput type="search" placeholder="Search" icon="tabler:search" />
+          <FInput
+            v-model="transactionStore.query"
+            type="search"
+            placeholder="Search"
+            icon="tabler:search"
+          />
         </div>
       </div>
 

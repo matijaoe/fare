@@ -75,7 +75,7 @@ const store = useDateRangeStore()
         />
       </FTooltip>
       <FTooltip
-        v-if="!store.isLatestMonth"
+        v-if="store.isAllTime || !store.isLatestMonth"
         content="Current month"
         placement="bottom"
       >
