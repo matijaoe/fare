@@ -1,24 +1,5 @@
 <script setup lang="ts">
-import { set } from '@vueuse/core'
-import dayjs from 'dayjs'
-
-const shownDate = ref(dayjs())
-
-const { smUp } = useBreakpoints()
-
-const setPreviousMonth = () => set(shownDate, shownDate.value.subtract(1, 'month'))
-const setToToday = () => set(shownDate, dayjs())
-const setNextMonth = () => set(shownDate, shownDate.value.add(1, 'month'))
-
-const isLatestMonth = computed(() =>
-  shownDate.value.isSame(dayjs(), 'month'),
-)
-
-const formattedDate = computed(() => {
-  const date = shownDate.value
-  const isCurrentYear = date.isSame(dayjs(), 'year')
-  return date.format(isCurrentYear ? 'MMMM' : 'MMMM YYYY')
-})
+const dateRange = useDateRangeStore()
 </script>
 
 <template>
@@ -34,7 +15,7 @@ const formattedDate = computed(() => {
           size="lg"
           variant="secondary"
           icon="tabler:arrow-left"
-          @click="setPreviousMonth"
+          @click="dateRange.setPreviousMonth"
         />
       </FTooltip>
     </div>
@@ -49,12 +30,12 @@ const formattedDate = computed(() => {
       >
         <Icon name="tabler:calendar" text="zinc-3 dark:zinc-7" />
         <p font="display" class="translate-y-0.2">
-          {{ formattedDate }}
+          {{ dateRange.formattedDate }}
         </p>
       </div>
     </div>
     <div
-      v-if="!isLatestMonth"
+      v-if="!dateRange.isLatestMonth"
       class="justify-self-end"
       flex
       gap-3
@@ -66,7 +47,7 @@ const formattedDate = computed(() => {
           size="lg"
           variant="primary"
           icon="tabler:calendar"
-          @click="setToToday"
+          @click="dateRange.setToToday"
         />
       </FTooltip>
       <FTooltip content="Next month" placement="bottom">
@@ -76,7 +57,7 @@ const formattedDate = computed(() => {
           size="lg"
           variant="secondary"
           icon="tabler:arrow-right"
-          @click="setNextMonth"
+          @click="dateRange.setNextMonth"
         />
       </FTooltip>
     </div>

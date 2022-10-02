@@ -69,6 +69,7 @@ const transitions = {
         flex-center
         z-1000
         p-4
+        overflow-y-auto
       >
         <!-- Container to center the panel -->
         <TransitionChild

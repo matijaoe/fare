@@ -1,6 +1,6 @@
-import { acceptHMRUpdate, defineStore } from 'pinia'
+import type { TransactionType } from '@prisma/client'
 import { get, set } from '@vueuse/core'
-import type { Prisma, TransactionType } from '@prisma/client'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const useAddTransactionModal = defineStore('modal-new-transaction', () => {
   // Form
@@ -19,14 +19,24 @@ export const useAddTransactionModal = defineStore('modal-new-transaction', () =>
     value: cashAccount.id,
   })) ?? [])
 
-  const form = reactive<Prisma.TransactionUncheckedCreateWithoutUserInput>({
+  const form = reactive({
     type: 'Expense',
     name: '',
     description: '',
     amount: 0,
     date: new Date(),
-    categoryId: null,
-    fromAccountId: null,
+    category: undefined,
+    fromAccount: undefined,
+  })
+
+  const mappedForm = computed(() => {
+    const { category, fromAccount, ...rest } = form
+    return {
+      // TODO: data isnt read, reworkt all of this
+      ...rest,
+      categoryId: category?.id,
+      fromAccountId: fromAccount?.id,
+    }
   })
 
   const setType = (type: TransactionType) => form.type = type
@@ -60,7 +70,7 @@ export const useAddTransactionModal = defineStore('modal-new-transaction', () =>
     launch,
     hide,
     setType,
-
+    mappedForm,
   }
 })
 

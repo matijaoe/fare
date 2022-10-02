@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     'nuxt-icon',
+    '@nathanchase/nuxt-dayjs-module',
   ],
   experimental: {
     reactivityTransform: true,
@@ -41,6 +42,14 @@ export default defineNuxtConfig({
     dirs: [
       'composables/**', // Scan all nested directories
       'store/**', // Scan all nested directories
+    ],
+  },
+  dayjs: {
+    plugins: [
+      'duration',
+      'relativeTime',
+      'advancedFormat',
+      'weekday',
     ],
   },
 })

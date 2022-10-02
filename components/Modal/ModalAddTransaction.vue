@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { TransactionType } from '@prisma/client'
-
 const modal = useAddTransactionModal()
+const { mutate: create } = useTransactionCreate()
 
 const modalConfig = computed(() => ({
   title: 'New transaction',
@@ -23,11 +22,12 @@ const modalConfig = computed(() => ({
         Transfer
       </FButton>
     </div>
-    <div
+    <form
       mt-4
       flex
       flex-col
       gap-3
+      @submit.prevent="create(modal.mappedForm)"
     >
       <FSelectField
         v-model="modal.form.fromAccount"
@@ -55,6 +55,10 @@ const modalConfig = computed(() => ({
         :input-props="{ min: 0.10, step: 0.01 }"
       />
       <FInput type="date" icon="tabler:calendar" label="Date" />
-    </div>
+      <FButton type="submit">
+        Add
+      </FButton>
+      <pre>{{ modal.mappedForm }}</pre>
+    </form>
   </ModalBase>
 </template>

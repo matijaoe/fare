@@ -30,11 +30,11 @@
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.3",
+    "@nathanchase/nuxt-dayjs-module": "^1.0.11",
     "@prisma/client": "^4.3.1",
     "@types/chart.js": "^2.9.37",
     "@types/chartjs": "^0.0.31",
     "chart.js": "^3.9.1",
-    "dayjs": "^1.11.5",
     "flowbite-datepicker": "^1.2.2",
     "http-status-codes": "^2.2.0",
     "prisma-docs-generator": "^0.5.0",

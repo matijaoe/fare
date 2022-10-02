@@ -4,14 +4,13 @@ import { useMutation, useQueryClient } from 'vue-query'
 export const useTransactionCreate = () => {
   const queryClient = useQueryClient()
 
-  return useMutation((body: Prisma.UserCreateInput) =>
+  return useMutation((body: Prisma.TransactionUncheckedCreateWithoutUserInput) =>
     $fetch<User>('/api/transactions', {
       method: 'POST',
       body,
     }),
   {
-    onSuccess: (kajgod: any) => {
-      console.log('entry create onSuccess :>> ', kajgod)
+    onSuccess: () => {
       queryClient.invalidateQueries('transactions')
     },
   })

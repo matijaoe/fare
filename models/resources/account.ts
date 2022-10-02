@@ -1,11 +1,11 @@
 import type { Account, CashAccount, Prisma, Transaction } from '@prisma/client'
 
-export type TimeFrame = {
+export type DateRange = {
   start?: string
   end?: string
 }
 
-export type CashAccountsQueryModel = TimeFrame & { transactions?: 'true' | 'false' }
+export type CashAccountsQueryModel = DateRange & { transactions?: 'true' | 'false' }
 
 export type CashAccountWithTotals = CashAccount & {
   account: Account
