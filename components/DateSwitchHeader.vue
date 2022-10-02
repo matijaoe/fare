@@ -8,17 +8,37 @@ const store = useDateRangeStore()
     grid="~ cols-[100px_1fr_100px]"
     w-full
   >
-    <div w-fit>
-      <FTooltip content="Previous month" placement="bottom">
-        <FButton
-          icon-only
-          circle
-          size="lg"
-          variant="secondary"
-          icon="tabler:arrow-left"
-          @click="store.setPreviousMonth"
-        />
-      </FTooltip>
+    <div
+      w-fit
+      flex
+      gap-3
+    >
+      <template v-if="!store.isAllTime">
+        <FTooltip content="Previous month" placement="bottom">
+          <FButton
+            icon-only
+            circle
+            size="lg"
+            variant="secondary"
+            icon="tabler:arrow-left"
+            @click="store.setPreviousMonth"
+          />
+        </FTooltip>
+        <FTooltip
+          v-if="!store.isLatestMonth"
+          content="Next month"
+          placement="bottom"
+        >
+          <FButton
+            icon-only
+            circle
+            size="lg"
+            variant="secondary"
+            icon="tabler:arrow-right"
+            @click="store.setNextMonth"
+          />
+        </FTooltip>
+      </template>
     </div>
     <div flex="center" h-full>
       <div
@@ -31,17 +51,34 @@ const store = useDateRangeStore()
       >
         <Icon name="tabler:calendar" text="zinc-3 dark:zinc-7" />
         <p font="display" class="translate-y-0.2">
-          {{ store.formattedDate }}
+          {{ store.isAllTime ? 'All time' : store.formattedDate }}
         </p>
       </div>
     </div>
     <div
-      v-if="!store.isLatestMonth"
       class="justify-self-end"
       flex
       gap-3
     >
-      <FTooltip content="Current month" placement="bottom">
+      <FTooltip
+        v-if="!store.isAllTime"
+        content="All time"
+        placement="bottom"
+      >
+        <FButton
+          icon-only
+          circle
+          size="lg"
+          variant="outline"
+          icon="tabler:timeline"
+          @click="store.setAllTime(true)"
+        />
+      </FTooltip>
+      <FTooltip
+        v-if="!store.isLatestMonth"
+        content="Current month"
+        placement="bottom"
+      >
         <FButton
           icon-only
           circle
@@ -49,16 +86,6 @@ const store = useDateRangeStore()
           variant="primary"
           icon="tabler:calendar"
           @click="store.setToToday"
-        />
-      </FTooltip>
-      <FTooltip content="Next month" placement="bottom">
-        <FButton
-          icon-only
-          circle
-          size="lg"
-          variant="secondary"
-          icon="tabler:arrow-right"
-          @click="store.setNextMonth"
         />
       </FTooltip>
     </div>

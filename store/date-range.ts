@@ -13,15 +13,22 @@ export const useDateRangeStore = defineStore('date-range', () => {
 
   const selectedMonth = ref<Date | number>(now)
 
+  const isAllTime = ref(false)
+  const toggleAllTime = useToggle(isAllTime)
+  const setAllTime = (value: boolean) => set(isAllTime, value)
+
   const setPreviousMonth = () => set(selectedMonth, subMonths(get(selectedMonth), 1))
   const setNextMonth = () => set(selectedMonth, addMonths(get(selectedMonth), 1))
-  const setToToday = () => set(selectedMonth, now)
+  const setToToday = () => {
+    set(selectedMonth, now)
+    setAllTime(false)
+  }
 
   const isLatestMonth = computed(() => isSameMonth(get(selectedMonth), now))
 
   const dateRange = computed(() => ({
-    start: format(startOfMonth(get(selectedMonth)), formatType.full),
-    end: format(endOfMonth(get(selectedMonth)), formatType.full),
+    start: !get(isAllTime) ? format(startOfMonth(get(selectedMonth)), formatType.full) : undefined,
+    end: !get(isAllTime) ? format(endOfMonth(get(selectedMonth)), formatType.full) : undefined,
   }))
 
   const formattedDate = computed(() => {
@@ -31,6 +38,9 @@ export const useDateRangeStore = defineStore('date-range', () => {
 
   return {
     selectedMonth,
+    isAllTime,
+    toggleAllTime,
+    setAllTime,
     setPreviousMonth,
     setToToday,
     setNextMonth,

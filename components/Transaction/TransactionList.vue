@@ -1,23 +1,40 @@
 <script setup lang="ts">
-// const store = useDateRangeDayjsStore()
 const store = useDateRangeStore()
 
-const { data: transactions } = useTransactions(toRef(store, 'dateRange'))
+const { data: transactions, pending } = useTransactions(toRef(store, 'dateRange'))
 </script>
 
 <template>
-  <FCard
-    v-if="transactions?.length"
-    paddingless
-    white
-    flex="~ col"
-    divide="y-2 dashed zinc-2 dark:zinc-9"
-  >
-    <TransactionItem
-      v-for="transaction in transactions"
-      :key="transaction.id"
-      :item="transaction"
-    />
-  </FCard>
+  <Transition>
+    <FCard
+      v-if="!pending"
+      paddingless
+      white
+      flex="~ col"
+      divide="y-2 dashed zinc-2 dark:zinc-9"
+    >
+      <template v-if="transactions?.length">
+        <TransactionItem
+          v-for="transaction in transactions"
+          :key="transaction.id"
+          :item="transaction"
+        />
+      </template>
+      <div
+        v-else
+        flex
+        gap-4
+        min-h-40
+        flex-center
+      >
+        <div flex gap-4 items-center>
+          <Icon name="tabler:cash-banknote-off" />
+          <p>
+            No transactions this month
+          </p>
+        </div>
+      </div>
+    </FCard>
+  </Transition>
 </template>
 
