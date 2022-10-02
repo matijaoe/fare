@@ -33,8 +33,6 @@ const formatDate = (date: Date | string, options?: Intl.DateTimeFormatOptions) =
 
 const formattedDate = computed(() => isDateFormat('relative') ? formatTimeAgo(item.date) : formatDate(item.date))
 const formatedAmount = computed(() => formatCurrency(item.amount))
-
-console.log('item :>> ', item)
 </script>
 
 <template>

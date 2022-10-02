@@ -1,15 +1,12 @@
 <script setup lang="ts">
-const { data: transactions } = useTransactions({
-  start: '2022-07-01',
-  end: '2022-09-30',
-})
+const store = useDateRangeStore()
 
-const hasTransactions = computed(() => transactions.value?.length)
+const { data: transactions } = useTransactions(toRef(store, 'dateRange'))
 </script>
 
 <template>
   <FCard
-    v-if="hasTransactions"
+    v-if="transactions?.length"
     paddingless
     white
     flex="~ col"

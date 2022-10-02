@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const dateRange = useDateRangeStore()
+const store = useDateRangeStore()
 </script>
 
 <template>
@@ -15,7 +15,7 @@ const dateRange = useDateRangeStore()
           size="lg"
           variant="secondary"
           icon="tabler:arrow-left"
-          @click="dateRange.setPreviousMonth"
+          @click="store.setPreviousMonth"
         />
       </FTooltip>
     </div>
@@ -30,12 +30,12 @@ const dateRange = useDateRangeStore()
       >
         <Icon name="tabler:calendar" text="zinc-3 dark:zinc-7" />
         <p font="display" class="translate-y-0.2">
-          {{ dateRange.formattedDate }}
+          {{ store.formattedDate }}
         </p>
       </div>
     </div>
     <div
-      v-if="!dateRange.isLatestMonth"
+      v-if="!store.isLatestMonth"
       class="justify-self-end"
       flex
       gap-3
@@ -47,7 +47,7 @@ const dateRange = useDateRangeStore()
           size="lg"
           variant="primary"
           icon="tabler:calendar"
-          @click="dateRange.setToToday"
+          @click="store.setToToday"
         />
       </FTooltip>
       <FTooltip content="Next month" placement="bottom">
@@ -57,7 +57,7 @@ const dateRange = useDateRangeStore()
           size="lg"
           variant="secondary"
           icon="tabler:arrow-right"
-          @click="dateRange.setNextMonth"
+          @click="store.setNextMonth"
         />
       </FTooltip>
     </div>
