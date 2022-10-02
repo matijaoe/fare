@@ -11,6 +11,7 @@ type Props = {
   block?: boolean
   loading?: boolean
   disabled?: boolean
+  keepStyleOnLoad?: boolean
   iconOnly?: boolean
   circle?: boolean
 }
@@ -77,7 +78,7 @@ const radiusStyle = computed(() => props.circle ? 'rounded-full' : 'rounded-md')
 
 const disabledStyle = computed(() => ({
   'opacity-45 cursor-not-allowed': props.disabled && !props.loading,
-  'opacity-75 cursor-wait': props.loading,
+  'opacity-75 cursor-wait': props.loading && !props.keepStyleOnLoad,
 }))
 
 const slots = useSlots()
@@ -93,9 +94,7 @@ const isSlot = (name: 'left' | 'right') => {
 <template>
   <button
     border="2 transparent"
-    flex
-    justify-center
-    items-center
+    flex-center
     text="center"
     font="medium"
     :disabled="loading || disabled"

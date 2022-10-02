@@ -4,19 +4,23 @@ import { get, set } from '@vueuse/core'
 import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources/transactions'
 
 export const useTransactionsStore = defineStore('transactions', () => {
-  const store = useDateRangeStore()
+  const rangeStore = useDateRangeStore()
 
-  const $transactions = ref<Transaction[]>([])
+  const storedTransactions = ref<Transaction[]>([])
+  const storeTransactions = (value: Transaction[]) => set(storedTransactions, value ?? [])
 
-  const hasTransactions = computed(() => get($transactions)?.length)
+  const fetchState = useTransactions(toRef(rangeStore, 'dateRange'))
 
-  const setTransactions = (value?: Transaction[] | null) => set($transactions, value ?? [])
+  watch(fetchState.data, (value) => {
+    storeTransactions(value ?? [])
+  }, { immediate: true })
 
+  // Filters
   const query = ref('')
   const setQuery = (value: string) => set(query, value)
   const clearQuery = () => set(query, '')
 
-  watch(() => store.dateRange, clearQuery)
+  watch(() => rangeStore.dateRange, clearQuery)
 
   const search = (transaction: TransactionWithCategoryAndCashAccount) => {
     const matchName = transaction.name.toLowerCase().includes(query.value.toLowerCase())
@@ -26,15 +30,23 @@ export const useTransactionsStore = defineStore('transactions', () => {
     return [matchName, matchDescription, matchCategory].some(Boolean)
   }
 
-  const transactions = computed(() => {
-    return $transactions.value.filter(search)
-  })
+  const filteredTransactions = computed(() => get(storedTransactions).filter(search))
+
+  const hasStoredTransactions = computed(() => get(storedTransactions)?.length)
+
+  const transactions = computed(() =>
+    get(hasStoredTransactions)
+      ? get(filteredTransactions)
+      : get(fetchState.data) ?? [],
+  )
+
+  const hasTransactions = computed(() => get(transactions)?.length)
 
   return {
-    $transactions,
-    transactions,
+    ...fetchState,
+    transactions: fetchState.data,
     hasTransactions,
-    setTransactions,
+    setTransactions: storeTransactions,
     // filters
     query,
     setQuery,

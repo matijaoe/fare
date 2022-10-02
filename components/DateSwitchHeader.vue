@@ -1,6 +1,17 @@
 <script setup lang="ts">
-// const store = useDateRangeDayjsStore()
-const store = useDateRangeStore()
+const {
+  isAllTime,
+  isLatestMonth,
+  setAllTime,
+  setNextMonth,
+  setPreviousMonth,
+  setToToday,
+  formattedDate,
+} = toRefs(useDateRangeStore())
+const {
+  pending,
+  refresh,
+} = toRefs(useTransactionsStore())
 </script>
 
 <template>
@@ -13,7 +24,7 @@ const store = useDateRangeStore()
       flex
       gap-3
     >
-      <template v-if="!store.isAllTime">
+      <template v-if="!isAllTime">
         <FTooltip content="Previous month" placement="bottom">
           <FButton
             icon-only
@@ -21,11 +32,11 @@ const store = useDateRangeStore()
             size="lg"
             variant="secondary"
             icon="tabler:arrow-left"
-            @click="store.setPreviousMonth"
+            @click="setPreviousMonth"
           />
         </FTooltip>
         <FTooltip
-          v-if="!store.isLatestMonth"
+          v-if="!isLatestMonth"
           content="Next month"
           placement="bottom"
         >
@@ -35,25 +46,26 @@ const store = useDateRangeStore()
             size="lg"
             variant="secondary"
             icon="tabler:arrow-right"
-            @click="store.setNextMonth"
+            @click="setNextMonth"
           />
         </FTooltip>
       </template>
     </div>
     <div flex="center" h-full>
-      <div
-        h-full
-        flex="center gap-2"
-        text="zinc-2 dark:zinc-8 base sm:lg"
-        rounded-full
-        p="l-5 r-6"
-        bg="zinc-8 dark:zinc-3"
+      <FButton
+        variant="primary"
+        circle
+        size="lg"
+        :icon="isAllTime ? 'tabler:timeline' : 'tabler:calendar'"
+        :loading="pending"
+        keep-style-on-load
+        min-w="!36"
+        @click="refresh"
       >
-        <Icon name="tabler:calendar" text="zinc-3 dark:zinc-7" />
         <p font="display" class="translate-y-0.2">
-          {{ store.isAllTime ? 'All time' : store.formattedDate }}
+          {{ isAllTime ? 'All time' : formattedDate }}
         </p>
-      </div>
+      </FButton>
     </div>
     <div
       class="justify-self-end"
@@ -61,7 +73,7 @@ const store = useDateRangeStore()
       gap-3
     >
       <FTooltip
-        v-if="!store.isAllTime"
+        v-if="!isAllTime"
         content="All time"
         placement="bottom"
       >
@@ -71,11 +83,11 @@ const store = useDateRangeStore()
           size="lg"
           variant="outline"
           icon="tabler:timeline"
-          @click="store.setAllTime(true)"
+          @click="setAllTime(true)"
         />
       </FTooltip>
       <FTooltip
-        v-if="store.isAllTime || !store.isLatestMonth"
+        v-if="isAllTime || !isLatestMonth"
         content="Current month"
         placement="bottom"
       >
@@ -85,7 +97,7 @@ const store = useDateRangeStore()
           size="lg"
           variant="primary"
           icon="tabler:calendar"
-          @click="store.setToToday"
+          @click="setToToday"
         />
       </FTooltip>
     </div>

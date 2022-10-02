@@ -1,31 +1,18 @@
 <script setup lang="ts">
-const store = useDateRangeStore()
-
-const { data: transactions, pending } = useTransactions(toRef(store, 'dateRange'))
-const transactionsStore = useTransactionsStore()
-
-const shownTransactions = computed(() => {
-  return transactionsStore.hasTransactions
-    ? transactionsStore.transactions
-    : transactions.value
-})
-
-watch(transactions, (value) => {
-  transactionsStore.setTransactions(value)
-}, { immediate: true })
+const trStore = useTransactionsStore()
 </script>
 
 <template>
+  <!-- v-auto-animate -->
   <FCard
-    v-auto-animate
     paddingless
     white
     flex="~ col"
     divide="y-2 dashed zinc-2 dark:zinc-9"
   >
-    <template v-if="shownTransactions?.length">
+    <template v-if="trStore.hasTransactions">
       <TransactionItem
-        v-for="transaction in shownTransactions"
+        v-for="transaction in trStore.transactions"
         :key="transaction.id"
         :item="transaction"
       />
@@ -38,7 +25,7 @@ watch(transactions, (value) => {
       flex-center
     >
       <div
-        v-if="pending"
+        v-if="trStore.pending"
         flex
         gap-4
         items-center
