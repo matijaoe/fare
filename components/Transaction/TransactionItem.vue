@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import type { TransactionType } from '@prisma/client'
-import { set } from '@vueuse/core'
-import { formatCurrency, formatTimeAgo } from '@/utils'
 import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources/transactions'
 
 type Props = {
@@ -10,29 +8,11 @@ type Props = {
 
 const { item } = defineProps<Props>()
 
-const isType = (type: TransactionType) => type === item.type
+const { isExpense, isTransfer, isIncome } = useTransactionData(item)
 
-type DateFormatType = 'relative' | 'normal'
-const dateFormatType = ref<DateFormatType>('normal')
-const isDateFormat = (type: DateFormatType) => dateFormatType.value === type
-
-const switchDateFormatType = () => {
-  if (isDateFormat('relative')) {
-    set(dateFormatType, 'normal')
-  } else {
-    set(dateFormatType, 'relative')
-    setTimeout(() => {
-      set(dateFormatType, 'normal')
-    }, 2500)
-  }
-}
-
-const formatDate = (date: Date | string, options?: Intl.DateTimeFormatOptions) => {
-  return Intl.DateTimeFormat('en-US', { dateStyle: 'medium', ...options }).format(new Date(date))
-}
-
-const formattedDate = computed(() => isDateFormat('relative') ? formatTimeAgo(item.date) : formatDate(item.date))
-const formatedAmount = computed(() => formatCurrency(item.amount))
+const timeAgo = useTimeAgo(item.date)
+const formattedDate = useDateFormat(item.date)
+const formatedAmount = useCurrencyFormat(item.amount)
 </script>
 
 <template>
@@ -73,7 +53,7 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
           >
             {{ item.fromAccount.account.name }}
           </FBadge>
-          <Icon v-if="isType('Transfer')" name="tabler:arrow-right" text-sm />
+          <Icon v-if="isTransfer" name="tabler:arrow-right" text-sm />
           <FBadge
             v-if="item.toAccount"
             cursor="pointer"
@@ -91,18 +71,15 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
         justify-between
         items-start
       >
-        <button
-          ml-auto
-          :title="formatTimeAgo(item.date)"
-          @click="switchDateFormatType"
-        >
+        <FTooltip :content="timeAgo" placement="right">
           <div
+            ml-auto
             font="normal"
             text="xs zinc-4 dark:zinc-4"
           >
             {{ formattedDate }}
           </div>
-        </button>
+        </FTooltip>
       </div>
     </div>
     <div
@@ -142,12 +119,12 @@ const formatedAmount = computed(() => formatCurrency(item.amount))
         items-center
         gap-1
         :class="{
-          'text-emerald-5': isType('Income'),
-          'text-indigo-5': isType('Transfer'),
+          'text-emerald-5': isIncome,
+          'text-indigo-5': isTransfer,
         }"
       >
-        <span v-if="isType('Expense')">-</span>
-        <span v-else-if="isType('Income')">+</span>
+        <span v-if="isExpense">-</span>
+        <span v-else-if="isIncome">+</span>
         {{ formatedAmount }}
       </div>
     </div>

@@ -40,7 +40,6 @@ export const useAddTransactionModal = defineStore('modal-new-transaction', () =>
   })
 
   const setType = (type: TransactionType) => form.type = type
-
   const isType = (type: TransactionType) => form.type === type
 
   // Modal

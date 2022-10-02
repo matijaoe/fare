@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { CashAccountWithTotals } from '~~/models/resources/account'
-import { formatCurrency } from '~~/utils'
 
 type Props = {
   cashAccount: CashAccountWithTotals
@@ -8,12 +7,15 @@ type Props = {
 
 const props = defineProps<Props>()
 
-const {
-  colorSolidBg,
-  colorDotText,
-} = useAppColors(props.cashAccount.account.color)
+const { colorSolidBg, colorDotText } = useAppColors(props.cashAccount.account.color)
 
 const account = $computed(() => props.cashAccount.account)
+const totals = $computed(() => props.cashAccount.totals)
+
+const formattedBalance = useCurrencyFormat(totals.balance)
+const formattedCashflow = useCurrencyFormat(totals.net, { signDisplay: 'always' })
+const formattedIncome = useCurrencyFormat(totals.income, { signDisplay: 'always' })
+const formattedExpense = useCurrencyFormat(-totals.expense, { signDisplay: 'always' })
 </script>
 
 <template>
@@ -60,10 +62,10 @@ const account = $computed(() => props.cashAccount.account)
         <div
           text="3xl"
         >
-          {{ formatCurrency(cashAccount.totals.balance) }}
+          {{ formattedBalance }}
         </div>
         <div mt-1 text="sm zinc-4 dark:zinc-5">
-          {{ formatCurrency(cashAccount.totals.net, { signDisplay: 'always' }) }} this month
+          {{ formattedCashflow }} this month
         </div>
       </div>
     </div>
@@ -98,7 +100,7 @@ const account = $computed(() => props.cashAccount.account)
           >
             Earned this month
           </span>
-          {{ formatCurrency(cashAccount.totals.income, { signDisplay: 'always' }) }}
+          {{ formattedIncome }}
         </div>
       </div>
       <div
@@ -120,7 +122,7 @@ const account = $computed(() => props.cashAccount.account)
           >
             Spent this month
           </span>
-          {{ formatCurrency(-cashAccount.totals.expense, { signDisplay: 'always' }) }}
+          {{ formattedExpense }}
         </div>
       </div>
     </div>

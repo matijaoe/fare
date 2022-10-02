@@ -1,34 +1,32 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { get, set } from '@vueuse/core'
-import dayjs from 'dayjs'
+import { addMonths, endOfMonth, format, isSameMonth, isThisYear, startOfMonth, subMonths } from 'date-fns'
 
 export const useDateRangeStore = defineStore('date-range', () => {
-  const today = () => dayjs()
+  const now = $(useNow())
+
   const formatType = {
-    full: 'YYYY-MM-DD',
-    monthYear: 'MMMM YYY',
+    full: 'yyyy-MM-dd',
+    monthYear: 'MMMM yyyy',
     month: 'MMMM',
   }
 
-  const selectedMonth = ref<dayjs.Dayjs | null>(today())
+  const selectedMonth = ref<Date | number>(now)
 
-  const setPreviousMonth = () => set(selectedMonth, get(selectedMonth)?.subtract(1, 'month'))
-  const setNextMonth = () => set(selectedMonth, get(selectedMonth)?.add(1, 'month'))
-  const setToToday = () => set(selectedMonth, today())
+  const setPreviousMonth = () => set(selectedMonth, subMonths(get(selectedMonth), 1))
+  const setNextMonth = () => set(selectedMonth, addMonths(get(selectedMonth), 1))
+  const setToToday = () => set(selectedMonth, now)
 
-  const isLatestMonth = computed(() =>
-    get(selectedMonth)?.isSame(today(), 'month'),
-  )
+  const isLatestMonth = computed(() => isSameMonth(get(selectedMonth), now))
 
   const dateRange = computed(() => ({
-    start: get(selectedMonth)?.startOf('month').format(formatType.full),
-    end: get(selectedMonth)?.endOf('month').format(formatType.full),
+    start: format(startOfMonth(get(selectedMonth)), formatType.full),
+    end: format(endOfMonth(get(selectedMonth)), formatType.full),
   }))
 
   const formattedDate = computed(() => {
     const date = get(selectedMonth)
-    const isCurrentYear = date?.isSame(dayjs(), 'year')
-    return date?.format(isCurrentYear ? formatType.month : formatType.monthYear)
+    return format(date, isThisYear(date) ? formatType.month : formatType.monthYear)
   })
 
   return {
