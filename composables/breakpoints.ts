@@ -3,22 +3,11 @@ import { useBreakpoints as useVueUseBreakpoints } from '@vueuse/core'
 // TODO: put them in uno config
 export const appBreakpoints = {
   'xs': 375,
-  // => @media (min-width: 375px) { ... }
-
   'sm': 640,
-  // => @media (min-width: 640px) { ... }
-
   'md': 768,
-  // => @media (min-width: 768px) { ... }
-
   'lg': 1024,
-  // => @media (min-width: 1024px) { ... }
-
   'xl': 1280,
-  // => @media (min-width: 1280px) { ... }
-
   '2xl': 1536,
-  // => @media (min-width: 1536px) { ... }
 }
 
 export const useBreakpoints = () => {

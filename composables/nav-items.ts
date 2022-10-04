@@ -1,4 +1,4 @@
-import type { NavItemModel } from '~~/models/nav'
+import type { NavItemModel } from '~~/models/ui'
 
 export const useNavItems = () => {
   const items = ref<NavItemModel[]>([

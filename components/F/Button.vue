@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTheme } from '~/store/theme'
-import type { ButtonSize, ButtonVariant } from '~/models/theme'
+import type { ButtonSize, ButtonVariant } from '~~/models/ui'
 
 type Props = {
   label?: string

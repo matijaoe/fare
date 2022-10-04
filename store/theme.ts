@@ -1,5 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import type { TextCasing } from '~~/models/theme'
+import type { TextCasing } from '~~/models/ui'
 
 export const useTheme = defineStore('theme', () => {
   const textCasing = ref<TextCasing>('')
