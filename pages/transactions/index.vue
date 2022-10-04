@@ -24,7 +24,7 @@ const transactionStore = useTransactionsStore()
           flex-1
         >
           <FInput
-            v-model="transactionStore.query"
+            v-model="transactionStore.searchQuery"
             type="search"
             placeholder="Search"
             icon="tabler:search"
@@ -32,10 +32,10 @@ const transactionStore = useTransactionsStore()
         </div>
       </div>
 
-      <TransactionAddBar
+      <!-- <TransactionAddBar
         fixed
         pos="bottom-6 right-6"
-      />
+      /> -->
     </div>
   </LayoutSectionWrapper>
 </template>

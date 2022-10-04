@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const trStore = useTransactionsStore()
+const { hasTransactions, transactions, query } = toRefs(useTransactionsStore())
 </script>
 
 <template>
@@ -10,9 +10,9 @@ const trStore = useTransactionsStore()
     flex="~ col"
     divide="y-2 dashed zinc-2 dark:zinc-9"
   >
-    <template v-if="trStore.hasTransactions">
+    <template v-if="hasTransactions">
       <TransactionItem
-        v-for="transaction in trStore.transactions"
+        v-for="transaction in transactions"
         :key="transaction.id"
         :item="transaction"
       />
@@ -25,7 +25,7 @@ const trStore = useTransactionsStore()
       flex-center
     >
       <div
-        v-if="trStore.pending"
+        v-if="query.isLoading"
         flex
         gap-4
         items-center

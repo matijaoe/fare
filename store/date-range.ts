@@ -26,9 +26,12 @@ export const useDateRangeStore = defineStore('date-range', () => {
 
   const isLatestMonth = computed(() => isSameMonth(get(selectedMonth), now))
 
+  const rangeStart = computed(() => !get(isAllTime) ? format(startOfMonth(get(selectedMonth)), formatType.full) : undefined)
+  const rangeEnd = computed(() => !get(isAllTime) ? format(endOfMonth(get(selectedMonth)), formatType.full) : undefined)
+
   const dateRange = computed(() => ({
-    start: !get(isAllTime) ? format(startOfMonth(get(selectedMonth)), formatType.full) : undefined,
-    end: !get(isAllTime) ? format(endOfMonth(get(selectedMonth)), formatType.full) : undefined,
+    start: rangeStart,
+    end: rangeEnd,
   }))
 
   const formattedDate = computed(() => {
@@ -47,6 +50,8 @@ export const useDateRangeStore = defineStore('date-range', () => {
     isLatestMonth,
     formattedDate,
     dateRange,
+    rangeStart,
+    rangeEnd,
   }
 })
 

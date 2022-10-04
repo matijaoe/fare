@@ -1,4 +1,4 @@
-import type { Account } from '@prisma/client'
-import { useQuery } from 'vue-query'
+// import type { Account } from '@prisma/client'
+// import { useQuery } from 'vue-query'
 
-export const useAccounts = () => useQuery('accounts', () => $fetch<Account[]>('/api/accounts'))
+// export const useAccounts = () => useQuery('accounts', () => $fetch<Account[]>('/api/accounts'))

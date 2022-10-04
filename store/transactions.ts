@@ -1,56 +1,43 @@
-import type { Transaction } from '@prisma/client'
-import { acceptHMRUpdate, defineStore } from 'pinia'
 import { get, set } from '@vueuse/core'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources/transactions'
 
 export const useTransactionsStore = defineStore('transactions', () => {
-  const rangeStore = useDateRangeStore()
-
-  const storedTransactions = ref<Transaction[]>([])
-  const storeTransactions = (value: Transaction[]) => set(storedTransactions, value ?? [])
-
-  const fetchState = useTransactions(toRef(rangeStore, 'dateRange'))
-
-  watch(fetchState.data, (value) => {
-    storeTransactions(value ?? [])
-  }, { immediate: true })
+  const { rangeStart, rangeEnd } = toRefs(useDateRangeStore())
 
   // Filters
-  const query = ref('')
-  const setQuery = (value: string) => set(query, value)
-  const clearQuery = () => set(query, '')
+  const searchQuery = ref('')
+  const setSearchQuery = (value: string) => set(searchQuery, value)
+  const clearSearchQuery = () => set(searchQuery, '')
 
-  watch(() => rangeStore.dateRange, clearQuery)
+  watch([rangeStart, rangeEnd], clearSearchQuery)
 
   const search = (transaction: TransactionWithCategoryAndCashAccount) => {
-    const matchName = transaction.name.toLowerCase().includes(query.value.toLowerCase())
-    const matchDescription = transaction.description?.toLowerCase().includes(query.value.toLowerCase())
-    const matchCategory = transaction.category?.name.toLowerCase().includes(query.value.toLowerCase())
+    const matchName = transaction.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    const matchDescription = transaction.description?.toLowerCase().includes(searchQuery.value.toLowerCase())
+    const matchCategory = transaction.category?.name.toLowerCase().includes(searchQuery.value.toLowerCase())
 
-    return [matchName, matchDescription, matchCategory].some(Boolean)
+    const filters = [matchName, matchDescription, matchCategory]
+
+    return filters.some(Boolean)
   }
 
-  const filteredTransactions = computed(() => get(storedTransactions).filter(search))
+  // Transactions
 
-  const hasStoredTransactions = computed(() => get(storedTransactions)?.length)
+  const query = useTransactions(rangeStart, rangeEnd)
 
-  const transactions = computed(() =>
-    get(hasStoredTransactions)
-      ? get(filteredTransactions)
-      : get(fetchState.data) ?? [],
-  )
-
+  const filteredTransactions = computed(() => get(query.data)?.filter(search) ?? [])
+  const transactions = computed(() => get(filteredTransactions))
   const hasTransactions = computed(() => get(transactions)?.length)
 
   return {
-    ...fetchState,
-    transactions: fetchState.data,
-    hasTransactions,
-    setTransactions: storeTransactions,
-    // filters
     query,
-    setQuery,
-    clearQuery,
+    transactions,
+    hasTransactions,
+    // Filters
+    searchQuery,
+    setSearchQuery,
+    clearSearchQuery,
   }
 })
 
