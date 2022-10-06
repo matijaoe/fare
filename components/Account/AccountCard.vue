@@ -66,8 +66,11 @@ const formattedExpense = useCurrencyFormat(-totals.expense, { signDisplay: 'alwa
           {{ formattedBalance }}
         </div>
         <div text="sm zinc-4 dark:zinc-5">
-          <span v-if="allTime">Total cashflow</span>
-          <span v-else>{{ formattedCashflow }} this month</span>
+          <p>
+            <span>
+              {{ formattedCashflow }} {{ allTime ? 'total cashflow' : 'this month' }}
+            </span>
+          </p>
         </div>
       </div>
     </div>
