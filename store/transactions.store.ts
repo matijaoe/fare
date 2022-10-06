@@ -3,28 +3,32 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources/transactions'
 
 export const useTransactionsStore = defineStore('transactions', () => {
-  const { rangeStart, rangeEnd } = toRefs(useDateRangeStore())
+  const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
 
   // Filters
   const searchQuery = ref('')
   const setSearchQuery = (value: string) => set(searchQuery, value)
   const clearSearchQuery = () => set(searchQuery, '')
 
-  watch([rangeStart, rangeEnd], clearSearchQuery)
+  watch([rangeFrom, rangeTo], clearSearchQuery)
 
   const search = (transaction: TransactionWithCategoryAndCashAccount) => {
-    const matchName = transaction.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const matchDescription = transaction.description?.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const matchCategory = transaction.category?.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    const match = (str?: string | null) => !!str?.toLowerCase().includes(searchQuery.value.toLowerCase())
 
-    const filters = [matchName, matchDescription, matchCategory]
-    console.log('transaction.name :>> ', transaction.name, filters.some(Boolean))
+    const matchName = match(transaction.name)
+    const matchDescription = match(transaction?.description)
+    const matchCategory = match(transaction.category?.name)
+    const fromAccount = match(transaction.fromAccount?.account.name)
+    const toAccount = match(transaction.toAccount?.account.name)
+
+    const filters = [matchName, matchDescription, matchCategory, fromAccount, toAccount]
+
     return filters.some(Boolean)
   }
 
   // Transactions
 
-  const query = useTransactions(rangeStart, rangeEnd)
+  const query = useTransactions(rangeFrom, rangeTo)
 
   const filteredTransactions = computed(() => get(query.data)?.filter(search) ?? [])
   const transactions = computed(() => get(filteredTransactions))

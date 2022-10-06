@@ -1,8 +1,8 @@
 import type { Account, CashAccount, Prisma, Transaction } from '@prisma/client'
 
 export type DateRange = {
-  start?: string
-  end?: string
+  from?: string
+  to?: string
 }
 
 export type CashAccountsQueryModel = DateRange & { transactions?: 'true' | 'false' }

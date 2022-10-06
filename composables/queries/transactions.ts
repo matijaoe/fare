@@ -6,7 +6,7 @@ const keys = {
   all: ['transactions'] as const,
   allTime: () => [...keys.all, 'all-time'] as const,
   ranges: () => [...keys.all, 'range'] as const,
-  range: (start: Ref<string | undefined>, end: Ref<string | undefined>) => [...keys.all, 'range', start, end] as const,
+  range: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keys.all, 'range', from, to] as const,
   details: () => [...keys.all, 'detail'] as const,
   detail: (id: Ref<string>) => [...keys.all, 'detail', id] as const,
 }
@@ -14,19 +14,18 @@ const keys = {
 export const useTransaction = (id: Ref<string>) =>
   useQuery(keys.detail(id), () => $fetch<Transaction>(`/api/transactions/${id.value}`))
 
-export const useTransactions = (start: Ref<string | undefined>, end: Ref<string | undefined>) => {
-  return useQuery<Transaction[]>(
-    keys.range(start, end),
+export const useTransactions = (from: Ref<string | undefined>, to: Ref<string | undefined>) =>
+  useQuery<Transaction[]>(
+    keys.range(from, to),
     () => {
-      const fullRangeDefined = isDefined(start) && isDefined(end)
+      const fullRangeDefined = isDefined(from) && isDefined(to)
       const url = fullRangeDefined
-        ? `/api/transactions?start=${start.value}&end=${end.value}`
+        ? `/api/transactions?from=${from.value}&to=${to.value}`
         : '/api/transactions'
 
       return $fetch<Transaction[]>(url)
     },
   )
-}
 
 export const useTransactionCreate = () => {
   const queryClient = useQueryClient()

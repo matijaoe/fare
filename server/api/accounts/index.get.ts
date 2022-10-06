@@ -1,18 +1,13 @@
 import type { Prisma } from '@prisma/client'
 import { prisma } from '~/prisma'
+import { useTransactionDateRange } from '~~/composables/server'
 
-export default defineEventHandler(async (event) => {
-  const { start, end } = useQuery(event) as { start: string; end: string }
-
-  const startDate = start ? new Date(start) : undefined
-  const endDate = end ? new Date(end) : undefined
+export default defineEventHandler((event) => {
+  const { dateQuery: date } = useTransactionDateRange(event)
 
   const paymentAccountArgs: Prisma.TransactionFindManyArgs = {
     where: {
-      date: {
-        gte: startDate,
-        lte: endDate,
-      },
+      date,
     },
     orderBy: {
       date: 'desc',
