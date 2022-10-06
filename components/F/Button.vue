@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTheme } from '~/store/theme'
+import { useTheme } from '~~/store/theme.store'
 import type { ButtonSize, ButtonVariant } from '~~/models/ui'
 
 type Props = {

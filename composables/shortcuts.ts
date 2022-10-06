@@ -1,4 +1,4 @@
-import { useSidebar } from '~~/store/sidebar'
+import { useSidebar } from '~~/store/sidebar.store'
 
 export const useShortcuts = () => {
   const sidebar = useSidebar()

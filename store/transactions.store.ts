@@ -18,7 +18,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
     const matchCategory = transaction.category?.name.toLowerCase().includes(searchQuery.value.toLowerCase())
 
     const filters = [matchName, matchDescription, matchCategory]
-
+    console.log('transaction.name :>> ', transaction.name, filters.some(Boolean))
     return filters.some(Boolean)
   }
 

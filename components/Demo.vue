@@ -18,15 +18,13 @@ const people = [
   { id: 4, name: 'Benedict Kessler', disabled: true },
   { id: 5, name: 'Katelyn Rohan', disabled: false },
 ]
-const peopleOptions = $(computed(() => {
-  return people.map((person: any) => {
-    return {
-      value: person.id,
-      label: person.name,
-      disabled: person.disabled,
-    }
-  })
-}))
+const peopleOptions = $(computed(() =>
+  people.map((person: any) => ({
+    value: person.id,
+    label: person.name,
+    disabled: person.disabled,
+  })),
+))
 const selectedPerson = ref<SelectItem | null>()
 </script>
 

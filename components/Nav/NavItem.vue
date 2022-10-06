@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { set } from '@vueuse/core'
 import type { NavItemModel } from '~/models/ui'
-import { useSidebar } from '~/store/sidebar'
+import { useSidebar } from '~~/store/sidebar.store'
 
 type Props = {
   item: NavItemModel
