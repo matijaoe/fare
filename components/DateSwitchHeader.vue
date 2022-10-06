@@ -50,20 +50,25 @@ const { query } = toRefs(useTransactionsStore())
       </template>
     </div>
     <div flex="center" h-full>
-      <FButton
-        variant="primary"
-        circle
-        size="lg"
-        :icon="isAllTime ? 'tabler:timeline' : 'tabler:calendar'"
-        :loading="query.isLoading"
-        keep-style-on-load
-        min-w="!36"
-        @click="query.refetch"
+      <FTooltip
+        content="Refresh"
+        placement="bottom"
       >
-        <p font="display" class="translate-y-0.2">
-          {{ isAllTime ? 'All time' : formattedDate }}
-        </p>
-      </FButton>
+        <FButton
+          variant="primary"
+          circle
+          size="lg"
+          :icon="isAllTime ? 'tabler:timeline' : 'tabler:calendar'"
+          :loading="query.isFetching"
+          keep-style-on-load
+          min-w="!36"
+          @click="query.refetch()"
+        >
+          <p font="display" class="translate-y-0.2">
+            {{ isAllTime ? 'All time' : formattedDate }}
+          </p>
+        </FButton>
+      </FTooltip>
     </div>
     <div
       class="justify-self-end"

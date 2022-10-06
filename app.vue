@@ -23,3 +23,8 @@ useShortcuts()
     </NuxtLayout>
   </div>
 </template>
+
+<style>
+/* TODO: what is css property for scrollbar to be over content so that it doesnt shift on overflow change? */
+</style>
+
