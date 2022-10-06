@@ -3,6 +3,7 @@ import type { CashAccountWithTotals } from '~~/models/resources/account'
 
 type Props = {
   cashAccount: CashAccountWithTotals
+  allTime?: boolean
 }
 
 const props = defineProps<Props>()
@@ -23,7 +24,7 @@ const formattedExpense = useCurrencyFormat(-totals.expense, { signDisplay: 'alwa
     overflow-hidden
     white
     paddingless
-    aspect="2/1 sm:3/2"
+    aspect="2/1 sm:4/3"
     flex="~ col"
     relative
   >
@@ -51,8 +52,8 @@ const formattedExpense = useCurrencyFormat(-totals.expense, { signDisplay: 'alwa
       </div>
 
       <div
-        mt-3
-        flex="1 ~ col"
+        class="-mb-2"
+        flex="1 ~ col gap-1.5"
         justify-center
         relative
         z-2
@@ -64,8 +65,9 @@ const formattedExpense = useCurrencyFormat(-totals.expense, { signDisplay: 'alwa
         >
           {{ formattedBalance }}
         </div>
-        <div mt-1 text="sm zinc-4 dark:zinc-5">
-          {{ formattedCashflow }} this month
+        <div text="sm zinc-4 dark:zinc-5">
+          <span v-if="allTime">Total cashflow</span>
+          <span v-else>{{ formattedCashflow }} this month</span>
         </div>
       </div>
     </div>
@@ -92,14 +94,15 @@ const formattedExpense = useCurrencyFormat(-totals.expense, { signDisplay: 'alwa
           flex="~ col"
           translate-y="0.4"
         >
-          <span
+          <p
             uppercase
             font="sans semibold"
             text="10px zinc-4 dark:zinc-5"
             class="leading-tight"
           >
-            Earned this month
-          </span>
+            <span v-if="allTime">Total earned</span>
+            <span v-else>Earned this month</span>
+          </p>
           {{ formattedIncome }}
         </div>
       </div>
@@ -114,14 +117,15 @@ const formattedExpense = useCurrencyFormat(-totals.expense, { signDisplay: 'alwa
           flex="~ col"
           translate-y="0.4"
         >
-          <span
+          <p
             uppercase
             font="sans semibold"
             text="10px zinc-4 dark:zinc-5"
             class="leading-tight"
           >
-            Spent this month
-          </span>
+            <span v-if="allTime">Total spent</span>
+            <span v-else>spent this month</span>
+          </p>
           {{ formattedExpense }}
         </div>
       </div>

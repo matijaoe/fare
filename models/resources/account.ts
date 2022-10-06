@@ -12,6 +12,11 @@ export type CashAccountWithTotals = CashAccount & {
   totals: Record<AccountTotalType, number>
 }
 
+export type CashAccountsReport = {
+  accounts: CashAccountWithTotals[]
+  totalBalance: number
+}
+
 export type CashAccountWithAccount = CashAccount & { account: Account }
 
 export type CashAccountWithTotalsAndTransactions = CashAccount & {
@@ -21,7 +26,7 @@ export type CashAccountWithTotalsAndTransactions = CashAccount & {
 
 export type AccountTotalType = 'income' | 'expense' | 'transferIn' | 'transferOut' | 'net' | 'transferNet' | 'balance'
 
-export type groupedAccount = (Prisma.PickArray<Prisma.TransactionGroupByOutputType, ('type' | 'fromAccountId' | 'toAccountId')[]> & {
+export type GroupedAccount = (Prisma.PickArray<Prisma.TransactionGroupByOutputType, ('type' | 'fromAccountId' | 'toAccountId')[]> & {
   _sum: {
     amount: number | null
   }

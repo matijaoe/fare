@@ -1,6 +1,6 @@
-import type { Account } from '@prisma/client'
-import type { Ref } from 'vue'
 import { useQuery } from '@tanstack/vue-query'
+import type { Ref } from 'vue'
+import type { CashAccountsReport } from '~~/models/resources/account'
 
 const keys = {
   all: ['accounts'] as const,
@@ -12,7 +12,7 @@ const keys = {
 }
 
 export const useAccountsTotals = (from: Ref<string | undefined>, to: Ref<string | undefined>) =>
-  useQuery<Account[]>(
+  useQuery<CashAccountsReport>(
     keys.totalsRange(from, to),
     () => {
       const fullRangeDefined = isDefined(from) && isDefined(to)
@@ -20,6 +20,6 @@ export const useAccountsTotals = (from: Ref<string | undefined>, to: Ref<string 
         ? `/api/accounts/totals?from=${from.value}&to=${to.value}`
         : '/api/accounts/totals'
 
-      return $fetch<Account[]>(url)
+      return $fetch<CashAccountsReport>(url)
     },
   )

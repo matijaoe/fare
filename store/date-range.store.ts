@@ -34,6 +34,8 @@ export const useDateRangeStore = defineStore('date-range', () => {
     to: rangeTo,
   }))
 
+  const hasDefinedRange = computed(() => get(rangeFrom) && get(rangeTo))
+
   const formattedDate = computed(() => {
     const date = get(selectedMonth)
     return format(date, isThisYear(date) ? formatType.month : formatType.monthYear)
@@ -52,6 +54,7 @@ export const useDateRangeStore = defineStore('date-range', () => {
     dateRange,
     rangeFrom,
     rangeTo,
+    hasDefinedRange,
   }
 })
 

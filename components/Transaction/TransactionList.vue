@@ -30,7 +30,7 @@ const { hasTransactions, transactions, query } = toRefs(useTransactionsStore())
         gap-4
         items-center
       >
-        <Icon name="tabler:loader-2" class="animate-spin" />
+        <FLoader />
         <p>Fetching your transactions</p>
       </div>
       <div
