@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Prisma } from '@prisma/client'
+
 const modal = useAddTransactionModal()
 const { mutate: create } = useTransactionCreate()
 
@@ -7,6 +9,12 @@ const modalConfig = computed(() => ({
   description: 'Add a new transaction',
   closable: true,
 }))
+
+const createTransaction = () => {
+  create(modal.form as Prisma.TransactionUncheckedCreateWithoutUserInput, {
+    onSuccess: modal.hide,
+  })
+}
 </script>
 
 <template>
@@ -27,10 +35,10 @@ const modalConfig = computed(() => ({
       flex
       flex-col
       gap-3
-      @submit.prevent="create(modal.mappedForm)"
+      @submit.prevent="createTransaction"
     >
       <FSelectField
-        v-model="modal.form.fromAccount"
+        v-model="modal.fromAccount"
         icon="tabler:category"
         label="From account"
         placeholder="Pick an account"
@@ -38,16 +46,27 @@ const modalConfig = computed(() => ({
         block
       />
       <FSelectField
-        v-model="modal.form.category"
+        v-model="modal.category"
         icon="tabler:building-bank"
         label="Category"
         placeholder="Pick a category"
         :items="modal.categoryOptions"
         block
       />
-      <FInput icon="tabler:text-size" label="Name" placeholder="Lunch" />
-      <FTextarea icon="tabler:align-left" label="Description" placeholder="Quinoa salad" />
       <FInput
+        v-model="modal.name"
+        icon="tabler:text-size"
+        label="Name"
+        placeholder="Lunch"
+      />
+      <FTextarea
+        v-model="modal.description"
+        icon="tabler:align-left"
+        label="Description"
+        placeholder="Quinoa salad"
+      />
+      <FInput
+        v-model="modal.amount"
         icon="tabler:currency-euro"
         label="Amount"
         type="number"
@@ -58,7 +77,7 @@ const modalConfig = computed(() => ({
       <FButton type="submit">
         Add
       </FButton>
-      <pre>{{ modal.mappedForm }}</pre>
+      <pre>{{ modal.form }}</pre>
     </form>
   </ModalBase>
 </template>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
-const { data: reportData, isLoading } = useAccountsTotals(rangeFrom, rangeTo)
+const { data: reportData, isLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
 
 const total = computed(() => reportData.value?.totalBalance || 0)
 const formattedTotal = useCurrencyFormat(total)

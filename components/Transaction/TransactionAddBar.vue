@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { TransactionType } from '@prisma/client'
-
 const modal = useAddTransactionModal()
 </script>
 

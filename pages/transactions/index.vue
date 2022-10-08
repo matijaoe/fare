@@ -32,10 +32,10 @@ const transactionStore = useTransactionsStore()
         </div>
       </div>
 
-      <!-- <TransactionAddBar
+      <TransactionAddBar
         fixed
         pos="bottom-6 right-6"
-      /> -->
+      />
     </div>
   </LayoutSectionWrapper>
 </template>

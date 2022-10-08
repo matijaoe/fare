@@ -10,7 +10,7 @@ useShortcuts()
 </script>
 
 <template>
-  <!-- <ModalGlobalModals /> -->
+  <ModalGlobalModals />
 
   <div
     font="mono"

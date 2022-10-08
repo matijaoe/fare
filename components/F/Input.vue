@@ -2,7 +2,7 @@
 import type { InputHTMLAttributes } from 'vue'
 
 type Props = {
-  modelValue?: string
+  modelValue?: string | number
   type?: string
   icon?: string
   iconPlacement?: 'left' | 'right'
@@ -18,10 +18,10 @@ type Props = {
 }
 
 type Emits = {
-  (e: 'input', value?: string): void
+  (e: 'input', value?: string | number): void
   (e: 'focus'): void
   (e: 'blur'): void
-  (e: 'update:modelValue', value?: string): void
+  (e: 'update:modelValue', value?: string | number): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -98,7 +98,7 @@ const disabledStyle = computed(() => 'disabled:(bg-zinc-1 dark:bg-zinc-9/50 bord
 
 const value = computed({
   get: () => props.modelValue ?? '',
-  set: (val: string) => emit('update:modelValue', val),
+  set: (val: string | number) => emit('update:modelValue', val),
 })
 
 const emits = {

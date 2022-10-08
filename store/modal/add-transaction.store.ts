@@ -1,6 +1,7 @@
-import type { TransactionType } from '@prisma/client'
+import type { Category, Prisma, TransactionType } from '@prisma/client'
 import { get, set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import type { CashAccountWithAccount } from '~~/models/resources/account'
 
 export const useAddTransactionModal = defineStore('modal-new-transaction', () => {
   // Form
@@ -19,28 +20,30 @@ export const useAddTransactionModal = defineStore('modal-new-transaction', () =>
     value: cashAccount.id,
   })) ?? [])
 
-  const form = reactive({
-    type: 'Expense',
-    name: '',
-    description: '',
-    amount: 0,
-    date: new Date(),
-    category: undefined,
-    fromAccount: undefined,
-  })
+  // Values
 
-  const mappedForm = computed(() => {
-    const { category, fromAccount, ...rest } = form
-    return {
-      // TODO: data isnt read, reworkt all of this
-      ...rest,
-      categoryId: category?.id,
-      fromAccountId: fromAccount?.id,
-    }
-  })
+  const type = ref<TransactionType>('Expense')
+  const name = ref<string>('')
+  const description = ref<string>('')
+  const amount = ref<number>()
+  const category = ref<Category>()
+  const date = ref<Date>(new Date())
+  const fromAccount = ref<CashAccountWithAccount>()
+  const toAccount = ref<CashAccountWithAccount>()
 
-  const setType = (type: TransactionType) => form.type = type
-  const isType = (type: TransactionType) => form.type === type
+  const form = computed<Partial<Prisma.TransactionUncheckedCreateWithoutUserInput>>(() => ({
+    type: get(type),
+    name: get(name),
+    description: get(description),
+    amount: get(amount),
+    date: get(date),
+    categoryId: get(category)?.id,
+    fromAccountId: get(fromAccount)?.id,
+    toAccountId: get(toAccount)?.id,
+  }))
+
+  const setType = (t: TransactionType) => set(type, t)
+  const isType = (t: TransactionType) => get(type) === t
 
   // Modal
   const open = ref(false)
@@ -59,17 +62,24 @@ export const useAddTransactionModal = defineStore('modal-new-transaction', () =>
   const hide = () => set(open, false)
 
   return {
+    // Values
+    type,
+    name,
+    description,
+    amount,
+    category,
+    fromAccount,
     // Form
+    form,
+    // Options
     categoryOptions,
     fromAccountsOptions,
-    form,
     isType,
     // modal
     opened,
     launch,
     hide,
     setType,
-    mappedForm,
   }
 })
 
