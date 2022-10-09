@@ -6,7 +6,7 @@ import {
 } from '@headlessui/vue'
 import type { Prisma } from '@prisma/client'
 
-const modal = useAddTransactionModal()
+const modal = useTransactionModal()
 const { mutate: create, isError, isLoading } = useTransactionCreate()
 
 const modalConfig = computed(() => ({
@@ -66,7 +66,7 @@ const createTransaction = () => {
               border="2 base rounded-md"
               font-display
               text-lg
-              :class="checked ? 'bg-sky-1 text-sky-8 !border-current' : 'bg-transparent hover:bg-zinc-1'"
+              :class="checked ? 'bg-zinc-2 text-zinc-8 !border-current' : 'bg-transparent hover:bg-zinc-1'"
             >
               Expense
             </div>

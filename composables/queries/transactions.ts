@@ -28,11 +28,11 @@ export const useTransactions = (from: Ref<string | undefined>, to: Ref<string | 
   )
 
 export const useTransactionCreate = () => {
-  const queryClient = useQueryClient()
+  const qc = useQueryClient()
 
   return useMutation((body: Prisma.TransactionUncheckedCreateWithoutUserInput) => $fetch<User>('/api/transactions', { method: 'POST', body }), {
     onSuccess: () => {
-      queryClient.invalidateQueries(keys.ranges())
+      qc.invalidateQueries(keys.ranges())
     },
   })
 }

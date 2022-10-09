@@ -15,6 +15,7 @@ type Props = {
   hint?: string
   error?: string
   inputProps?: InputHTMLAttributes
+  inputClass?: string
 }
 
 type Emits = {
@@ -145,7 +146,7 @@ const emits = {
         items-center
         outline="none focus:none"
         class="leading-5 placeholder-zinc-5/60 placeholder-shown:font-normal"
-        :class="[disabledStyle, paddingStyle, stateStyle]"
+        :class="[disabledStyle, paddingStyle, stateStyle, inputClass]"
         v-on="emits"
       >
 

@@ -1,4 +1,5 @@
-import { useQuery } from '@tanstack/vue-query'
+import type { CashAccount, Prisma } from '@prisma/client'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { Ref } from 'vue'
 import type { CashAccountWithAccount, CashAccountsReport } from '~~/models/resources/account'
 
@@ -25,3 +26,13 @@ export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<str
       return $fetch<CashAccountsReport>(url)
     },
   )
+
+export const useCashAccountCreate = () => {
+  const qc = useQueryClient()
+
+  return useMutation((body: Prisma.AccountUncheckedUpdateWithoutUserInput) => $fetch<CashAccount>('/api/accounts/cash', { method: 'POST', body }), {
+    onSuccess: () => {
+      qc.invalidateQueries(keys.all)
+    },
+  })
+}

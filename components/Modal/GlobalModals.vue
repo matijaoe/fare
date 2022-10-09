@@ -2,5 +2,6 @@
 </script>
 
 <template>
-  <ModalAddTransaction />
+  <ModalTransaction />
+  <ModalCashAccount />
 </template>

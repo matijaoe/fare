@@ -5,7 +5,7 @@ import { prisma } from '~~/prisma'
 
 export default defineEventHandler(async (event) => {
   const userId = useContextUserId(event)
-  const accountCreate = await useBody<Prisma.AccountUncheckedCreateInput>(event)
+  const accountCreate = await useBody<Prisma.AccountUncheckedCreateWithoutUserInput>(event)
 
   try {
     const account = await prisma.cashAccount.create({

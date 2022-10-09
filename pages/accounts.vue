@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+const cashAccountStore = useCashAccountModal()
 const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
 const { data: reportData, isLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
@@ -46,6 +47,11 @@ const formattedTotal = useCurrencyFormat(total)
     </div>
 
     <LayoutSectionWrapper title="Cash accounts" subtitle="Actively tracked accounts" mt-3>
+      <template #right>
+        <FButton variant="secondary" @click="cashAccountStore.launch()">
+          Add account
+        </FButton>
+      </template>
       <div
         v-if="reportData?.accounts.length"
         class="custom-grid"
@@ -58,10 +64,6 @@ const formattedTotal = useCurrencyFormat(total)
           :all-time="isAllTime"
         />
       </div>
-    </LayoutSectionWrapper>
-
-    <LayoutSectionWrapper title="Investment accounts" mt-8>
-      kajgod
     </LayoutSectionWrapper>
   </div>
 </template>

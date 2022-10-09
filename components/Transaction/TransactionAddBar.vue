@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const modal = useAddTransactionModal()
+const modal = useTransactionModal()
 </script>
 
 <template>

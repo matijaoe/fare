@@ -4,7 +4,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { format } from 'date-fns'
 import type { CashAccountWithAccount } from '~~/models/resources/account'
 
-export const useAddTransactionModal = defineStore('modal-new-transaction', () => {
+export const useTransactionModal = defineStore('modal-transaction', () => {
   // Form
   const { data: categories } = useCategories()
   const { data: accounts } = useCashAccounts({ transactions: 'false' })
@@ -117,5 +117,5 @@ export const useAddTransactionModal = defineStore('modal-new-transaction', () =>
 })
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useAddTransactionModal, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useTransactionModal, import.meta.hot))
 }
