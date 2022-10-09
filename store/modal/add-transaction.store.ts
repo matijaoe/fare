@@ -68,6 +68,7 @@ export const useAddTransactionModal = defineStore('modal-new-transaction', () =>
   })
 
   const launch = (type?: TransactionType) => {
+    // TODO: stopped working
     if (type) {
       setType('Expense')
     }

@@ -25,7 +25,7 @@ const createTransaction = () => {
 </script>
 
 <template>
-  <ModalBase v-model="modal.opened" v-bind="modalConfig">
+  <ModalBase v-model="modal.opened" v-bind="modalConfig" panel-class="!w-full !md:min-w-[600px]">
     <form
       mt-4
       flex

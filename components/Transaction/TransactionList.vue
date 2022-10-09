@@ -31,7 +31,7 @@ const { hasTransactions, transactions, query } = toRefs(useTransactionsStore())
         items-center
       >
         <FLoader />
-        <p>Fetching your transactions</p>
+        <p>Fetching transactions</p>
       </div>
       <div
         v-else
@@ -41,7 +41,7 @@ const { hasTransactions, transactions, query } = toRefs(useTransactionsStore())
       >
         <Icon name="tabler:cash-banknote-off" />
         <p>
-          No transactions this month
+          No transactions found
         </p>
       </div>
     </div>

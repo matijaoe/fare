@@ -59,7 +59,7 @@ devDependencies:
   nuxt-icon: 0.1.6
   pinia: 2.0.22_typescript@4.8.4
   prisma: 4.4.0
-  prisma-erd-generator: 1.2.1_prisma@4.4.0
+  prisma-erd-generator: 1.2.1_giivobx5jjk3b6yzlujmmspxm4
   typescript: 4.8.4
 
 packages:
@@ -6088,21 +6088,20 @@ packages:
       - supports-color
     dev: false
 
-  /prisma-erd-generator/1.2.1_prisma@4.4.0:
+  /prisma-erd-generator/1.2.1_giivobx5jjk3b6yzlujmmspxm4:
     resolution: {integrity: sha512-EAmlMlaBN9/L9SayECOE7mJ7iYAfn/QTiIfwGhwFw2klQMEBAVdew/UzOJ7fgGubK14Frp8ov2tWede1yHqe2Q==}
     engines: {node: '>=14'}
     hasBin: true
+    peerDependencies:
+      '@mermaid-js/mermaid-cli': ^9.1.6
+      '@prisma/client': ^4.0.0
     dependencies:
       '@mermaid-js/mermaid-cli': 9.1.6
       '@prisma/client': 4.4.0_prisma@4.4.0
       '@prisma/generator-helper': 4.4.0
       dotenv: 16.0.3
     transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - prisma
       - supports-color
-      - utf-8-validate
     dev: true
 
   /prisma/4.4.0:

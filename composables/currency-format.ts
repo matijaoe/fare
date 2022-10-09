@@ -5,5 +5,5 @@ export const useCurrencyFormat = (amount: MaybeRef<number>, options?: MaybeRef<I
   computed(() => new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'EUR',
-    ...[isRef(options) ? options.value : options],
-  }).format(isRef(amount) ? amount.value : amount))
+    ...[unref(options)],
+  }).format(unref(amount)))

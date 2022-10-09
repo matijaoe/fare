@@ -16,7 +16,7 @@ const totals = $computed(() => props.cashAccount.totals)
 const formattedBalance = useCurrencyFormat(totals.balance)
 const formattedCashflow = useCurrencyFormat(totals.net, { signDisplay: 'always' })
 const formattedIncome = useCurrencyFormat(totals.income, { signDisplay: 'always' })
-const formattedExpense = useCurrencyFormat(-totals.expense, { signDisplay: 'always' })
+const formattedExpense = useCurrencyFormat(-totals.expense)
 </script>
 
 <template>
@@ -68,7 +68,7 @@ const formattedExpense = useCurrencyFormat(-totals.expense, { signDisplay: 'alwa
         <div text="sm zinc-4 dark:zinc-5">
           <p>
             <span>
-              {{ formattedCashflow }} {{ allTime ? 'total cashflow' : 'this month' }}
+              {{ formattedCashflow }} {{ allTime ? 'total' : 'this month' }}
             </span>
           </p>
         </div>
