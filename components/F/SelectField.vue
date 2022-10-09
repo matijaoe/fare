@@ -10,7 +10,7 @@ import type { SelectItem } from '~~/models/ui'
 
 type Props = {
   items: SelectItem[]
-  modelValue: SelectItem
+  modelValue?: SelectItem & Record<string, any>
   label?: string
   placeholder?: string
   invalid?: boolean
@@ -57,7 +57,7 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
 
 <template>
   <!-- TODO: select label -->
-  <FInputWrapper v-bind="wrapperProps">
+  <FInputWrapper v-bind="wrapperProps" font-sans>
     <!-- <template v-if="$slots.label" #label>
       <slot name="label" />
     </template> -->
@@ -93,12 +93,21 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
             <Icon :name="icon" class="color-base-lighter" />
           </slot>
         </div>
-        <span v-if="selectedItem" class="block truncate"> {{ selectedItem?.label || '' }}</span>
+        <span
+          v-if="selectedItem"
+          w-full
+          text-left
+          class="block truncate"
+        >
+          <slot name="selected" :item="selectedItem">
+            {{ selectedItem.label }}
+          </slot>
+        </span>
         <span v-else>
           <slot name="placeholder">
-            <p
-              class="leading-5 text-zinc-5/60 font-normal"
-            >{{ placeholder || 'Select an item' }}</p>
+            <p class="leading-5 text-zinc-5/60 font-normal">
+              {{ placeholder || 'Select an item' }}
+            </p>
           </slot>
         </span>
 
@@ -138,6 +147,8 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
           py-1
           outline="none focus:none"
           border="2 t-0 rounded-b-md zinc-2 dark:zinc-8"
+          max-h="sm:!193px"
+          overflow-y="auto"
         >
           <ListboxOption
             v-for="item in items"
@@ -165,16 +176,16 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
                 >
                   {{ item.label }}
                 </span>
-                <span
-                  v-if="selected"
-                  pr="4"
-                  text="color-base"
-                  pos="absolute inset-y-0 right-0"
-                  class="flex items-center"
-                >
-                  <Icon name="tabler:check" />
-                </span>
               </slot>
+              <span
+                v-if="selected"
+                pr="4"
+                text="color-base"
+                pos="absolute inset-y-0 right-0"
+                class="flex items-center"
+              >
+                <Icon name="tabler:check" />
+              </span>
             </li>
           </ListboxOption>
         </ListboxOptions>

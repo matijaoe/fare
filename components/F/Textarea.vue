@@ -120,6 +120,7 @@ const emits = {
       <textarea
         v-bind="props"
         v-model="value"
+        font-sans
         :type="type"
         :readonly="loading"
         :disabled="disabled"
@@ -165,7 +166,7 @@ const emits = {
         </slot>
       </div>
     </div>
-<!-- 
+    <!--
     <template v-if="$slots.hint" #hint>
       <slot name="hint" />
     </template>

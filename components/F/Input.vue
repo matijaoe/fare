@@ -109,7 +109,7 @@ const emits = {
 </script>
 
 <template>
-  <FInputWrapper v-bind="wrapperProps">
+  <FInputWrapper v-bind="wrapperProps" font-sans>
     <!-- <template v-if="$slots.label" #label>
       <slot name="label" />
     </template> -->

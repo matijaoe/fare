@@ -9,20 +9,19 @@ const transactionStore = useTransactionsStore()
 
       <div
         w-full
-        flex="~ col md:row"
+        flex="~ col xl:row"
         justify-between
         gap-6
         mt-8
+        flex-1
       >
         <div
-          max-w="full sm:base md:lg lg:2xl"
+          max-w="full xl:base"
           flex-1
         >
           <TransactionList />
         </div>
-        <div
-          flex-1
-        >
+        <div flex-1 class="order--1 xl:order-1">
           <FInput
             v-model="transactionStore.searchQuery"
             type="search"
