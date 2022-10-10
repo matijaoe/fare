@@ -65,6 +65,10 @@ const formattedTotal = useCurrencyFormat(total)
           :key="`${account.id}.${rangeFrom}.${rangeTo}.${isAllTime ? 'allTime' : 'range'}`"
           :cash-account="account"
           :all-time="isAllTime"
+          @click="navigateTo({
+            name: 'accounts-accountId',
+            params: { accountId: account.id },
+          })"
         />
       </div>
     </LayoutSectionWrapper>

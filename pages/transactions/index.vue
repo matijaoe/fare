@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const transactionStore = useTransactionsStore()
+const { transactions, query } = toRefs(useTransactionsStore())
 </script>
 
 <template>
@@ -19,15 +19,10 @@ const transactionStore = useTransactionsStore()
           max-w="full xl:base"
           flex-1
         >
-          <TransactionList />
+          <TransactionList :transactions="transactions" :loading="query.isLoading" />
         </div>
         <div flex-1 class="order--1 xl:order-1">
-          <FInput
-            v-model="transactionStore.searchQuery"
-            type="search"
-            placeholder="Search"
-            icon="tabler:search"
-          />
+          <TransactionFilters />
         </div>
       </div>
 

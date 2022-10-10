@@ -14,6 +14,18 @@ export default defineEventHandler(async (event) => {
     orderBy: {
       date: 'desc',
     },
+    include: {
+      fromAccount: {
+        include: {
+          account: true,
+        },
+      },
+      toAccount: {
+        include: {
+          account: true,
+        },
+      },
+    },
   }
 
   try {

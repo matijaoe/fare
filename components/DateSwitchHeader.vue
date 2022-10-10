@@ -23,7 +23,7 @@ const { query } = toRefs(useTransactionsStore())
       gap-3
     >
       <template v-if="!isAllTime">
-        <FTooltip content="Previous month" placement="bottom">
+        <FTooltip content="Previous month" placement="top">
           <FButton
             icon-only
             circle
@@ -36,7 +36,7 @@ const { query } = toRefs(useTransactionsStore())
         <FTooltip
           v-if="!isLatestMonth"
           content="Next month"
-          placement="bottom"
+          placement="top"
         >
           <FButton
             icon-only
@@ -52,7 +52,7 @@ const { query } = toRefs(useTransactionsStore())
     <div flex="center" h-full>
       <FTooltip
         content="Click to refresh"
-        placement="bottom"
+        placement="top"
       >
         <FButton
           variant="primary"
@@ -78,7 +78,7 @@ const { query } = toRefs(useTransactionsStore())
       <FTooltip
         v-if="!isAllTime"
         content="All time"
-        placement="bottom"
+        placement="top"
       >
         <FButton
           icon-only
@@ -92,7 +92,7 @@ const { query } = toRefs(useTransactionsStore())
       <FTooltip
         v-if="isAllTime || !isLatestMonth"
         content="Current month"
-        placement="bottom"
+        placement="top"
       >
         <FButton
           icon-only

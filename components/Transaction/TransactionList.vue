@@ -1,5 +1,12 @@
 <script setup lang="ts">
-const { hasTransactions, transactions, query } = toRefs(useTransactionsStore())
+import type { Transaction } from '@prisma/client'
+
+const props = defineProps<{
+  transactions: Transaction[]
+  loading: boolean
+}>()
+
+const hasTransactions = computed(() => props.transactions?.length)
 </script>
 
 <template>
@@ -25,7 +32,7 @@ const { hasTransactions, transactions, query } = toRefs(useTransactionsStore())
       flex-center
     >
       <div
-        v-if="query.isLoading"
+        v-if="loading"
         flex
         gap-4
         items-center
