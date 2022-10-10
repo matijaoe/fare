@@ -20,7 +20,7 @@ defineProps<Props>()
             items-center
             gap-3
             text-2xl
-            font="sans bold"
+            font="sans semibold"
             uppercase
           >
             <Icon v-if="icon" :name="icon" />

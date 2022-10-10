@@ -51,7 +51,7 @@ const { query } = toRefs(useTransactionsStore())
     </div>
     <div flex="center" h-full>
       <FTooltip
-        content="Refresh"
+        content="Click to refresh"
         placement="bottom"
       >
         <FButton
@@ -61,10 +61,10 @@ const { query } = toRefs(useTransactionsStore())
           :icon="isAllTime ? 'tabler:timeline' : 'tabler:calendar'"
           :loading="query.isFetching"
           keep-style-on-load
-          min-w="!36"
+          min-w="!40"
           @click="query.refetch()"
         >
-          <p font="display" class="translate-y-0.2">
+          <p font="display medium" uppercase class="translate-y-0.2">
             {{ isAllTime ? 'All time' : formattedDate }}
           </p>
         </FButton>

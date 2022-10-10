@@ -46,32 +46,44 @@ const formattedExpense = useCurrencyFormat(-totals.expense)
           class="transform origin-center scale-800 sm:scale-600 dark:opacity-25"
         />
         <Icon :name="account.icon" :class="[colorDotText]" z-2 />
-        <p z-2 font="display">
+        <p
+          z-2
+          font="display medium"
+          uppercase
+          text-base
+        >
           {{ account.name }}
         </p>
       </div>
 
       <div
         class="-mb-2"
-        flex="1 ~ col gap-1.5"
+        flex="1 ~ col gap-1"
         justify-center
         relative
         z-2
         text-center
-        font-mono
       >
-        <div
-          text="3xl"
-        >
-          {{ formattedBalance }}
-        </div>
-        <div text="sm zinc-4 dark:zinc-5">
-          <p>
-            <span>
-              {{ formattedCashflow }} {{ allTime ? 'total' : 'this month' }}
-            </span>
+        <FTooltip mx-auto placement="right" content="Balance">
+          <div
+            font="display medium"
+            uppercase
+            text-4xl
+          >
+            {{ formattedBalance }}
+          </div>
+        </FTooltip>
+        <FTooltip mx-auto placement="right" :content="allTime ? 'Total cashflow' : 'Cashflow this month'">
+          <p
+            gap-0
+            flex
+            flex-col
+            font-mono
+            text="base zinc-4 dark:zinc-5"
+          >
+            {{ formattedCashflow }}
           </p>
-        </div>
+        </FTooltip>
       </div>
     </div>
 
@@ -90,7 +102,6 @@ const formattedExpense = useCurrencyFormat(-totals.expense)
         py-4
         border="base dark:zinc-7 r-dashed r-1"
         w-full
-        font="mono"
         flex="~ col"
       >
         <div
@@ -99,14 +110,14 @@ const formattedExpense = useCurrencyFormat(-totals.expense)
         >
           <p
             uppercase
-            font="sans semibold"
+            font="medium"
             text="10px zinc-4 dark:zinc-5"
             class="leading-tight"
           >
             <span v-if="allTime">Total earned</span>
             <span v-else>Earned this month</span>
           </p>
-          {{ formattedIncome }}
+          <span font-mono>{{ formattedIncome }}</span>
         </div>
       </div>
       <div
@@ -114,7 +125,6 @@ const formattedExpense = useCurrencyFormat(-totals.expense)
         py-4
         border="base dark:zinc-7 l-dashed l-1"
         w-full
-        font="mono"
       >
         <div
           flex="~ col"
@@ -122,14 +132,14 @@ const formattedExpense = useCurrencyFormat(-totals.expense)
         >
           <p
             uppercase
-            font="sans semibold"
+            font="sans medium"
             text="10px zinc-4 dark:zinc-5"
             class="leading-tight"
           >
             <span v-if="allTime">Total spent</span>
             <span v-else>spent this month</span>
           </p>
-          {{ formattedExpense }}
+          <span font-mono>{{ formattedExpense }}</span>
         </div>
       </div>
     </div>

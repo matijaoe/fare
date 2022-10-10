@@ -8,7 +8,7 @@ export const useDateRangeStore = defineStore('date-range', () => {
   const formatType = {
     full: 'yyyy-MM-dd',
     monthYear: 'MMM yy',
-    month: 'MMM',
+    month: 'MMMM',
   }
 
   const selectedMonth = ref<Date | number>(now)

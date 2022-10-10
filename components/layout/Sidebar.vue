@@ -5,6 +5,7 @@ const { mdDown } = useBreakpoints()
 
 <template>
   <div
+    font-mono
     absolute
     inset-0
     h-screen

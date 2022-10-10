@@ -32,10 +32,9 @@ const sizeStyle = computed(() => {
   />
   <div
     v-else
-    font-black
     flex
     items-center
-    font="mono"
+    font="mono black"
     class="color-base-lighter"
     :class="[sizeStyle.text]"
   >

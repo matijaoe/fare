@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
   trigger: 'mouseenter focus',
   arrow: false,
   hideOnClick: true,
-  offset: 8,
+  offset: 10,
   interactiveBorder: 10,
   interactiveDebounce: 1000,
   inertia: false,

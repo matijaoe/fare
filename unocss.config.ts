@@ -27,20 +27,16 @@ export default defineConfig({
     presetAttributify(),
     presetTypography(),
     presetWebFonts({
-      provider: 'google', // default provider
+      provider: 'none', // default provider
       fonts: {
-        sans: 'Dosis',
+        sans: 'Satoshi',
         mono: [
           {
             name: 'Iosevka Nerd Font',
             provider: 'none',
           },
-          {
-            name: 'Inconsolata',
-            provider: 'google',
-          },
         ],
-        display: 'Staatliches',
+        display: 'Khand',
       },
     }),
   ],

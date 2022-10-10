@@ -27,7 +27,7 @@ const sharedClasses = 'filter-saturate-70'
 </script>
 
 <template>
-  <div font="mono bold" text="xs" w-fit>
+  <div font="display medium" text="xs" w-fit>
     <div
       v-if="type === 'solid'"
       p="x-2 y-0.5"

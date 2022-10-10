@@ -19,14 +19,17 @@ const formattedTotal = useCurrencyFormat(total)
     >
       <span
         uppercase
-        font="sans semibold"
+        font="sans medium"
         text="sm zinc-4 dark:zinc-5"
         class="leading-tight"
       >
         Total balance
       </span>
 
-      <div text-5xl>
+      <div
+        text-6xl
+        font="display medium"
+      >
         <div
           v-if="isLoading"
           flex

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TransactionType } from '@prisma/client'
+import { get } from '@vueuse/core'
 import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources/transactions'
 
 type Props = {
@@ -13,6 +13,18 @@ const { isExpense, isTransfer, isIncome } = useTransactionData(item)
 const timeAgo = useTimeAgo(item.date)
 const formattedDate = useDateFormat(item.date)
 const formatedAmount = useCurrencyFormat(item.amount)
+
+const transactionTooltip = computed(() => {
+  if (get(isTransfer)) {
+    return `Transfered ${formatedAmount.value} from ${item.fromAccount!.account.name} to ${item.toAccount!.account.name}`
+  }
+  if (get(isExpense)) {
+    return `Spent ${formatedAmount.value} from ${item.fromAccount!.account.name}`
+  }
+  if (get(isIncome)) {
+    return `Received ${formatedAmount.value} on ${item.toAccount!.account.name}`
+  }
+})
 </script>
 
 <template>
@@ -22,6 +34,7 @@ const formatedAmount = useCurrencyFormat(item.amount)
     flex-col
     gap-4
   >
+    <!-- Top section -->
     <div flex items-center justify-between>
       <div
         flex
@@ -66,22 +79,42 @@ const formatedAmount = useCurrencyFormat(item.amount)
           </FBadge>
         </div>
       </div>
+
       <div
         flex
-        justify-between
         items-start
       >
-        <FTooltip :content="timeAgo" placement="right">
-          <div
-            ml-auto
-            font="normal"
-            text="xs zinc-4 dark:zinc-4"
+        <div
+          flex
+          justify-between
+          items-center
+          gap-2
+          text="xs zinc-4 dark:zinc-4"
+        >
+          <FTooltip
+            h-full
+            :content="timeAgo"
+            placement="top-end"
           >
-            {{ formattedDate }}
-          </div>
-        </FTooltip>
+            <div
+              ml-auto
+              font="normal"
+            >
+              {{ formattedDate }}
+            </div>
+          </FTooltip>
+
+          <FTooltip
+            flex-center
+            placement="top-end"
+            :content="transactionTooltip"
+          >
+            <Icon name="tabler:info-circle" />
+          </FTooltip>
+        </div>
       </div>
     </div>
+
     <div
       flex
       justify-between
@@ -95,8 +128,7 @@ const formatedAmount = useCurrencyFormat(item.amount)
         <div
           text-xl
           truncate
-          font="sans light"
-          uppercase
+          font="sans"
         >
           {{ item.name }}
         </div>
@@ -113,7 +145,7 @@ const formatedAmount = useCurrencyFormat(item.amount)
       </div>
 
       <div
-        font="display"
+        font="display semibold"
         text-3xl
         flex
         items-center
