@@ -1,22 +1,18 @@
 <script lang="ts" setup>
-import { get, set } from '@vueuse/core'
+import { get } from '@vueuse/core'
 
-const modal = useCashAccountModal()
-const { mutate: createAccount, isLoading } = useCashAccountCreate()
+const store = useCashAccountModal()
+
+const { mutate: createAccount, isLoading: isCreateLoading } = useCashAccountCreate()
+const { mutate: updateAccount, isLoading: isUpdateLoading } = useAccountUpdate()
+const { mutate: deleteAccount, isLoading: isDeleteLoading } = useAccountDelete()
+
+const loading = computed(() => get(isCreateLoading) || get(isUpdateLoading))
 
 const icons = ref([
-  {
-    label: 'Wallet',
-    value: 'tabler:wallet',
-  },
-  {
-    label: 'Cookie',
-    value: 'tabler:cookie',
-  },
-  {
-    label: 'Walk',
-    value: 'tabler:walk',
-  },
+  { label: 'Wallet', value: 'tabler:wallet' },
+  { label: 'Cookie', value: 'tabler:cookie' },
+  { label: 'Walk', value: 'tabler:walk' },
 ])
 
 const colors = ref([
@@ -26,48 +22,62 @@ const colors = ref([
   { label: 'Amber', value: 'amber', bg: 'bg-amber-5', text: 'text-amber-5' }],
 )
 
-const name = ref()
-const color = ref()
-const icon = ref()
-
-const form = computed(() => ({
-  name: get(name),
-  icon: get(icon).value,
-  color: get(color).value,
-}))
-
-const resetForm = () => {
-  set(name, '')
-  set(color, undefined)
-  set(icon, undefined)
-}
 const createAccountHandler = () => {
-  createAccount(form.value, {
+  createAccount(store.form, {
     onSuccess: () => {
-      resetForm()
-      modal.hide()
+      store.hide()
+      store.resetForm()
     },
   })
+}
+const editAccountHandler = () => {
+  updateAccount({
+    id: store.account!.id,
+    body: store.form,
+  }, {
+    onSuccess: () => {
+      store.hide()
+      store.resetForm()
+    },
+  })
+}
+
+const deleteAccountHandler = () => {
+  deleteAccount(store.account!.id, {
+    onSuccess: () => {
+      store.hide()
+      store.resetForm()
+    },
+  })
+}
+
+const submitHandler = () => {
+  if (store.isEdit) {
+    editAccountHandler()
+  } else {
+    createAccountHandler()
+  }
 }
 </script>
 
 <template>
   <ModalBase
-    v-model="modal.opened"
+    v-model="store.opened"
+    panel-class="w-full !sm:min-w-lg"
     closable
-    description="Create a new cash account"
+    :description="store.isEdit ? 'Edit a cash account' : 'Create a new cash account'"
   >
     <form
       flex
       flex-col
       gap-3
-      @submit.prevent="createAccountHandler"
+      @submit.prevent="submitHandler"
     >
-      <FInput v-model="name" label="Name" placeholder="Account name" />
+      <FInput v-model="store.name" label="Name" placeholder="Account name" />
 
       <div flex gap-3>
         <FSelectField
-          v-model="color"
+          v-model="store.color"
           flex-1
           label="Color"
           :items="colors"
@@ -109,7 +119,7 @@ const createAccountHandler = () => {
         </FSelectField>
 
         <FSelectField
-          v-model="icon"
+          v-model="store.icon"
           flex-1
           label="Icon"
           :items="icons"
@@ -137,11 +147,40 @@ const createAccountHandler = () => {
         </FSelectField>
       </div>
 
-      <div flex justify-end mt-4>
-        <FButton type="button" variant="subtle">
+      <div
+        flex
+        justify-end
+        gap-2
+        mt-4
+      >
+        <FButton type="button" variant="subtle" @click="store.hide()">
           Cancel
         </FButton>
-        <FButton type="submit" icon="tabler:plus" :loading="isLoading">
+        <FButton
+          v-if="store.isEdit"
+          type="button"
+          variant="danger"
+          :disabled="loading"
+          :loading="isDeleteLoading"
+          icon="tabler:x"
+          @click="deleteAccountHandler"
+        >
+          Delete
+        </FButton>
+        <FButton
+          v-if="store.isEdit"
+          type="submit"
+          icon="tabler:edit"
+          :loading="loading"
+        >
+          Edit
+        </FButton>
+        <FButton
+          v-if="store.isCreate"
+          type="submit"
+          icon="tabler:plus"
+          :loading="loading"
+        >
           Create
         </FButton>
       </div>

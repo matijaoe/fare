@@ -38,10 +38,7 @@ const formattedTotalBalance = useCurrencyFormat(balance)
           items-center
           class="color-base-lighter"
         >
-          <!-- TODO: seperate endpoint for total balance, so it doesnt reload on each range change -->
-          <span>
-            Calculating
-          </span>
+          <span>€X,XXX.XX</span>
           <FLoader text-4xl />
         </div>
         <h4 v-else>
@@ -63,7 +60,7 @@ const formattedTotalBalance = useCurrencyFormat(balance)
       >
         <AccountCard
           v-for="account in accountsWithTotals"
-          :key="`${account.id}.${rangeFrom}.${rangeTo}.${isAllTime ? 'allTime' : 'range'}`"
+          :key="`${account.id}-${account.timestamp}`"
           :cash-account="account"
           :all-time="isAllTime"
           @click="navigateTo({

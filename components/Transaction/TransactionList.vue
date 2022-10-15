@@ -7,13 +7,16 @@ const props = defineProps<{
 }>()
 
 const hasTransactions = computed(() => props.transactions?.length)
+
+const { isDark } = useColorscheme()
 </script>
 
 <template>
   <!-- v-auto-animate -->
   <FCard
     paddingless
-    white
+    :white="!isDark"
+    :filled="isDark"
     flex="~ col"
     divide="y-2 dashed zinc-2 dark:zinc-9"
   >

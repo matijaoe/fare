@@ -70,7 +70,8 @@ const formattedTotalBalance = useCurrencyFormat(balance)
         </p>
         <div flex gap-2 items-center>
           <p text-3xl font-display font-medium>
-            {{ formattedTotalBalance }}
+            <span v-if="isBalanceLoading">€X,XXX.XX</span>
+            <span v-else>{{ formattedTotalBalance }}</span>
           </p>
           <FLoader v-if="isBalanceLoading" />
         </div>

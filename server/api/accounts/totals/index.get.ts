@@ -116,6 +116,7 @@ export default defineEventHandler(async (event) => {
       return {
         ...account,
         totals,
+        timestamp: Date.now(),
       }
     })
 

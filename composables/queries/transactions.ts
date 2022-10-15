@@ -31,11 +31,10 @@ export const useTransactions = (from: Ref<string | undefined>, to: Ref<string | 
 export const useTransactionCreate = () => {
   const qc = useQueryClient()
 
-  return useMutation((body: Prisma.TransactionUncheckedCreateWithoutUserInput) => $fetch<User>('/api/transactions', { method: 'POST', body }), {
+  return useMutation((body: Prisma.TransactionUncheckedCreateWithoutUserInput) => $fetch<Transaction>('/api/transactions', { method: 'POST', body }), {
     onSuccess: () => {
-      qc.invalidateQueries(keysAccounts.balance())
+      qc.invalidateQueries(keysAccounts.all)
       qc.invalidateQueries(keysTransactions.ranges())
-      // TODO: not updating account totals after adding transaction
     },
   })
 }
