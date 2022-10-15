@@ -52,9 +52,9 @@ model Transaction {
   toAccountId   String?
 
   user        User         @relation(fields: [userId], references: [id])
-  category    Category?    @relation(fields: [categoryId], references: [id])
-  fromAccount CashAccount? @relation("paymentFromAccount", fields: [fromAccountId], references: [id])
-  toAccount   CashAccount? @relation("paymentToAccount", fields: [toAccountId], references: [id])
+  category    Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  fromAccount CashAccount? @relation("paymentFromAccount", fields: [fromAccountId], references: [id], onDelete: Restrict)
+  toAccount   CashAccount? @relation("paymentToAccount", fields: [toAccountId], references: [id], onDelete: Restrict)
 }
 
 model Account {
@@ -64,7 +64,7 @@ model Account {
   color  String?
   icon   String?
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   CashAccount       CashAccount?
   InvestmentAccount InvestmentAccount?
@@ -82,7 +82,7 @@ model CashAccount {
   id        String @id @default(cuid())
   accountId String @unique
 
-  account Account @relation(fields: [accountId], references: [id])
+  account Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
 
   paymentFromAccount Transaction[] @relation("paymentFromAccount")
   paymentToAccount   Transaction[] @relation("paymentToAccount")

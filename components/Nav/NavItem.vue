@@ -17,6 +17,8 @@ const route = useRoute()
 const isParentRoute = $computed(() => route.fullPath.startsWith(`/${item.route.name}`))
 const isActiveRoute = $computed(() => route.name === item.route.name!)
 
+// TODO: exact-active-class not matching accounts/:id
+
 const isOpen = ref(false)
 const toggleChildren = () => set(isOpen, !isOpen.value)
 const hasChildren = $computed(() => !!item?.children?.length)

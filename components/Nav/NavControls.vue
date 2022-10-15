@@ -5,6 +5,7 @@ const { isDark, toggleDark } = useColorscheme()
 
 <template>
   <div
+    v-bind="$attrs"
     mt-auto
     w-full
     grid="sm:~ sm:cols-4 sm:gap-3"

@@ -2,10 +2,11 @@
 const cashAccountStore = useCashAccountModal()
 const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
-const { data: reportData, isLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
+const { data: accountsWithTotals, isLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
+const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
 
-const total = computed(() => reportData.value?.totalBalance || 0)
-const formattedTotal = useCurrencyFormat(total)
+const balance = computed(() => totalBalance.value?.balance ?? 0)
+const formattedTotalBalance = useCurrencyFormat(balance)
 </script>
 
 <template>
@@ -31,7 +32,7 @@ const formattedTotal = useCurrencyFormat(total)
         font="display medium"
       >
         <div
-          v-if="isLoading"
+          v-if="isBalanceLoading"
           flex
           gap-4
           items-center
@@ -44,7 +45,7 @@ const formattedTotal = useCurrencyFormat(total)
           <FLoader text-4xl />
         </div>
         <h4 v-else>
-          {{ formattedTotal }}
+          {{ formattedTotalBalance }}
         </h4>
       </div>
     </div>
@@ -56,12 +57,12 @@ const formattedTotal = useCurrencyFormat(total)
         </FButton>
       </template>
       <div
-        v-if="reportData?.accounts.length"
+        v-if="accountsWithTotals?.length"
         class="custom-grid"
         gap-3
       >
         <AccountCard
-          v-for="account in reportData.accounts"
+          v-for="account in accountsWithTotals"
           :key="`${account.id}.${rangeFrom}.${rangeTo}.${isAllTime ? 'allTime' : 'range'}`"
           :cash-account="account"
           :all-time="isAllTime"

@@ -1,6 +1,6 @@
 import type { TransactionType } from '@prisma/client'
 import { sendInternalError, useContextUserId, useTransactionDateRange } from '~~/composables/server'
-import type { AccountTotalType, CashAccountWithAccount, CashAccountWithTotals, CashAccountsReport, GroupedAccount } from '~~/models/resources/account'
+import type { AccountTotalType, CashAccountWithAccount, CashAccountWithTotals, GroupedAccount } from '~~/models/resources/account'
 import { prisma } from '~~/prisma'
 
 const initalTotal = () => ({ income: 0, expense: 0, net: 0, transferIn: 0, transferOut: 0, transferNet: 0, balance: 0 })
@@ -82,6 +82,7 @@ export default defineEventHandler(async (event) => {
       const allTimeNet = allTimeAccountTotals.income - allTimeAccountTotals.expense
       const allTimeTransferNet = allTimeAccountTotals.transferIn - allTimeAccountTotals.transferOut
 
+      // All time balance could be wrong
       const allTimeBalance = allTimeNet + allTimeTransferNet
 
       if (totalsInRange) {
@@ -118,12 +119,7 @@ export default defineEventHandler(async (event) => {
       }
     })
 
-    const finalReport: CashAccountsReport = {
-      accounts: cashAccountsWithTotals,
-      totalBalance: cashAccountsWithTotals.reduce((total, curr) => total + curr.totals.balance, 0),
-    }
-
-    return finalReport
+    return cashAccountsWithTotals
   } catch (err) {
     console.error(err)
     sendInternalError(event, err)

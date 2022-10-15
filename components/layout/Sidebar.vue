@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 const sidebar = useSidebar()
 const { mdDown } = useBreakpoints()
+
+const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
+
+const balance = computed(() => totalBalance.value?.balance ?? 0)
+const formattedTotalBalance = useCurrencyFormat(balance)
 </script>
 
 <template>
@@ -9,11 +14,11 @@ const { mdDown } = useBreakpoints()
     absolute
     inset-0
     h-screen
-    py-4
+    pt-4
     bg="white dark:zinc-9"
     overflow-y="auto"
     border="r-0 md:r-2 base"
-    flex="~ col"
+    flex="~ col gap-6"
     :class="{ '!hidden': !sidebar.isOpen }"
   >
     <div
@@ -21,7 +26,6 @@ const { mdDown } = useBreakpoints()
       items-center
       justify-between
       mt-2
-      mb-6
       px-6
     >
       <NuxtLink to="/">
@@ -44,6 +48,39 @@ const { mdDown } = useBreakpoints()
 
     <NavList flex-1 />
 
-    <NavControls max-w="fit" mx-auto />
+    <div
+      bg="zinc-1 dark:transparent"
+    >
+      <div
+        flex
+        flex-col
+        gap-0.5
+        pt-4
+        py-3
+        px-4
+      >
+        <p
+          text-zinc-4
+          text="10px"
+          uppercase
+          font-sans
+          font-medium
+        >
+          Balance
+        </p>
+        <div flex gap-2 items-center>
+          <p text-3xl font-display font-medium>
+            {{ formattedTotalBalance }}
+          </p>
+          <FLoader v-if="isBalanceLoading" />
+        </div>
+      </div>
+
+      <NavControls
+        py-4
+        max-w="fit"
+        mx-auto
+      />
+    </div>
   </div>
 </template>

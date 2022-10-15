@@ -12,17 +12,14 @@ export type CashAccountWithTotals = CashAccount & {
   totals: Record<AccountTotalType, number>
 }
 
-export type CashAccountsReport = {
-  accounts: CashAccountWithTotals[]
-  totalBalance: number
-}
-
 export type CashAccountWithAccount = CashAccount & { account: Account }
 
 export type CashAccountWithTotalsAndTransactions = CashAccount & {
   paymentFromAccount: Transaction
   paymentToAccount: Transaction
 }
+
+export type CashAccountsBalanceModel = { balance: number }
 
 export type AccountTotalType = 'income' | 'expense' | 'transferIn' | 'transferOut' | 'net' | 'transferNet' | 'balance'
 
