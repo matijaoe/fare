@@ -3,6 +3,7 @@ const cashAccountStore = useCashAccountModal()
 const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
 const { data: accountsWithTotals, isLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
+
 const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
 
 const balance = computed(() => totalBalance.value?.balance ?? 0)

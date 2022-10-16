@@ -73,9 +73,11 @@ const { isDark } = useColorscheme()
         </div>
 
         <div>
-          <button @click.stop="cashAccountStore.launch(account)">
-            <Icon v-show="isHovered" text="zinc-5 dark:zinc-5" name="tabler:edit" />
-          </button>
+          <FTooltip content="Edit" placement="top">
+            <button @click.stop="cashAccountStore.launch(account)">
+              <Icon v-show="isHovered" text="zinc-6 dark:zinc-5" name="tabler:edit" />
+            </button>
+          </FTooltip>
         </div>
       </div>
 

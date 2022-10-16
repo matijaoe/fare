@@ -12,6 +12,7 @@ const mainContentDimensions = computed(() => 'max-w-default min-h-[calc(100vh-50
 
 <template>
   <div>
+    <NuxtLoadingIndicator />
     <LayoutSidebar :class="[sidebarWidth]" z-200 />
 
     <div h-screen :class="{ 'md:ml-260px': sidebar.isOpen }">

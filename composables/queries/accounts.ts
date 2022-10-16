@@ -1,7 +1,6 @@
 import type { Account, CashAccount, Prisma } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
-import { id } from 'date-fns/locale'
 import type { Ref } from 'vue'
 import type { CashAccountWithAccount, CashAccountWithTotals, CashAccountsBalanceModel } from '~~/models/resources/account'
 
@@ -15,12 +14,21 @@ export const keysAccounts = {
   detail: (id: MaybeRef<string>) => [...keysAccounts.all, 'detail', unref(id)] as const,
 }
 
-export const useCashAccount = (id: MaybeRef<string>) => useQuery<CashAccountWithAccount>(keysAccounts.detail(id), () => $fetch<CashAccountWithAccount>(`/api/accounts/cash/${unref(id)}`))
+export const useCached = async () => {
+  await useFetch('/api/accounts/cash/balance', { key: 'balance' })
+}
 
-export const useCashAccounts = ({ transactions }: { transactions: 'true' | 'false' }) => useQuery<CashAccountWithAccount[]>(keysAccounts.totals(), () => $fetch<CashAccountWithAccount[]>(`/api/accounts/cash?transactions=${transactions}`))
+export const useCashAccount = (id: MaybeRef<string>) => useQuery(keysAccounts.detail(id), () => $fetch<CashAccountWithAccount>(`/api/accounts/cash/${unref(id)}`))
+
+export const useCashAccounts = ({ transactions }: { transactions: 'true' | 'false' }) =>
+  useQuery(
+    keysAccounts.totals(),
+    () => $fetch<CashAccountWithAccount[]>(`/api/accounts/cash?transactions=${transactions}`),
+    // { initialData: useFetchedPayload<CashAccountWithAccount[]>('cash-accounts') },
+  )
 
 export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<string | undefined>) =>
-  useQuery<CashAccountWithTotals[]>(
+  useQuery(
     keysAccounts.totalsRange(from, to),
     () => {
       const fullRangeDefined = isDefined(from) && isDefined(to)
@@ -32,7 +40,11 @@ export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<str
     },
   )
 
-export const useCashAccountsBalance = () => useQuery<CashAccountsBalanceModel>(keysAccounts.balance(), () => $fetch<CashAccountsBalanceModel>('/api/accounts/cash/balance'))
+export const useCashAccountsBalance = () => useQuery(
+  keysAccounts.balance(),
+  () => $fetch<CashAccountsBalanceModel>('/api/accounts/cash/balance'),
+  { initialData: useFetchedPayload<CashAccountsBalanceModel>('balance') },
+)
 
 export const useCashAccountCreate = () => {
   const qc = useQueryClient()

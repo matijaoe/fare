@@ -1,4 +1,4 @@
-import type { Prisma, Transaction, User } from '@prisma/client'
+import type { Prisma, Transaction } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import type { Ref } from 'vue'
