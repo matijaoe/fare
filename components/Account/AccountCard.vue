@@ -1,24 +1,25 @@
 <script setup lang="ts">
-import type { CashAccountWithTotals } from '~~/models/resources/account'
-
+import { isClient } from '@vueuse/core'
+import type { AccountTotals, CashAccountWithAccount } from '~~/models/resources/account'
 type Props = {
-  cashAccount: CashAccountWithTotals
+  cashAccount: CashAccountWithAccount
+  totals?: AccountTotals
+  totalsLoading?: boolean
   allTime?: boolean
 }
 
 const props = defineProps<Props>()
-
 const cashAccountStore = useCashAccountModal()
 
 const { colorSolidBg, colorDotText } = useAppColors(props.cashAccount.account.color)
 
 const account = $computed(() => props.cashAccount.account)
-const totals = $computed(() => props.cashAccount.totals)
+const totals = $computed(() => props.totals)
 
-const formattedBalance = useCurrencyFormat(totals.balance)
-const formattedCashflow = useCurrencyFormat(totals.net, { signDisplay: 'always' })
-const formattedIncome = useCurrencyFormat(totals.income, { signDisplay: 'always' })
-const formattedExpense = useCurrencyFormat(-totals.expense)
+const formattedBalance = totals?.balance != null ? useCurrencyFormat(totals.balance) : '€XXX.XX'
+const formattedCashflow = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : '€XXX.XX'
+const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income, { signDisplay: 'always' }) : '€XXX.XX'
+const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.expense) : '€XXX.XX'
 
 const card = ref<HTMLElement>()
 const isHovered = useElementHover(card)
@@ -95,7 +96,10 @@ const { isDark } = useColorscheme()
             uppercase
             text-4xl
           >
-            {{ formattedBalance }}
+            <FLoader v-if="totalsLoading" />
+            <span v-else-if="totals">
+              {{ formattedBalance }}
+            </span>
           </div>
         </FTooltip>
         <FTooltip mx-auto placement="right" content="Cashflow">
@@ -106,7 +110,9 @@ const { isDark } = useColorscheme()
             font-mono
             text="base zinc-4 dark:zinc-5"
           >
-            {{ formattedCashflow }}
+            <span v-if="totals && !totalsLoading">
+              {{ formattedCashflow }}
+            </span>
           </p>
         </FTooltip>
       </div>
@@ -132,7 +138,7 @@ const { isDark } = useColorscheme()
           flex="~ col"
           translate-y="0.4"
         >
-          <p
+          <div
             uppercase
             font="medium"
             text="10px zinc-4 dark:zinc-5"
@@ -140,8 +146,13 @@ const { isDark } = useColorscheme()
           >
             <span v-if="allTime">Total earned</span>
             <span v-else>Earned this month</span>
-          </p>
-          <span font-mono>{{ formattedIncome }}</span>
+          </div>
+          <span font-mono>
+            <FLoader v-if="totalsLoading" />
+            <span v-else-if="totals">
+              {{ formattedIncome }}
+            </span>
+          </span>
         </div>
       </div>
       <div
@@ -154,7 +165,7 @@ const { isDark } = useColorscheme()
           flex="~ col"
           translate-y="0.4"
         >
-          <p
+          <div
             uppercase
             font="sans medium"
             text="10px zinc-4 dark:zinc-5"
@@ -162,8 +173,12 @@ const { isDark } = useColorscheme()
           >
             <span v-if="allTime">Total spent</span>
             <span v-else>spent this month</span>
-          </p>
-          <span font-mono>{{ formattedExpense }}</span>
+          </div>
+          <span font-mono>
+            <FLoader v-if="totalsLoading" />
+            <span v-else-if="totals">
+              {{ formattedExpense }}
+            </span></span>
         </div>
       </div>
     </div>

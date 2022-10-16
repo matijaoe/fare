@@ -2,12 +2,26 @@
 const cashAccountStore = useCashAccountModal()
 const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
-const { data: accountsWithTotals, isLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
-
 const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
+
+const { data: cashAccounts } = useCashAccounts()
+const { data: accountTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
 
 const balance = computed(() => totalBalance.value?.balance ?? 0)
 const formattedTotalBalance = useCurrencyFormat(balance)
+
+const shownAccounts = computed(() => {
+  const findAccount = (id: string) => accountTotals.value?.find(acc => acc.id === id)
+
+  return cashAccounts.value?.map((account) => {
+    const { timestamp = Date.now(), totals } = findAccount(account.id) ?? {}
+    return {
+      ...account,
+      timestamp,
+      totals,
+    }
+  })
+})
 </script>
 
 <template>
@@ -55,14 +69,16 @@ const formattedTotalBalance = useCurrencyFormat(balance)
         </FButton>
       </template>
       <div
-        v-if="accountsWithTotals?.length"
+        v-if="shownAccounts?.length"
         class="custom-grid"
         gap-3
       >
         <AccountCard
-          v-for="account in accountsWithTotals"
+          v-for="account in shownAccounts"
           :key="`${account.id}-${account.timestamp}`"
           :cash-account="account"
+          :totals="account.totals"
+          :totals-loading="isTotalsLoading"
           :all-time="isAllTime"
           @click="navigateTo({
             name: 'accounts-accountId',

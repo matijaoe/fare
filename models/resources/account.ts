@@ -7,13 +7,19 @@ export type DateRange = {
 
 export type CashAccountsQueryModel = DateRange & { transactions?: 'true' | 'false' }
 
+export type CashAccountWithAccount = CashAccount & { account: Account }
+
+export type AccountTotals = Record<AccountTotalType, number>
+
 export type CashAccountWithTotals = CashAccount & {
-  account: Account
-  totals: Record<AccountTotalType, number>
+  totals: AccountTotals
   timestamp: number
 }
 
-export type CashAccountWithAccount = CashAccount & { account: Account }
+export type CashAccountWithTotalsAndAccount = CashAccountWithAccount & {
+  totals: AccountTotals
+  timestamp?: number
+}
 
 export type CashAccountWithTotalsAndTransactions = CashAccount & {
   paymentFromAccount: Transaction

@@ -7,7 +7,7 @@ import type { CashAccountWithAccount } from '~~/models/resources/account'
 export const useTransactionModal = defineStore('modal-transaction', () => {
   // Form
   const { data: categories } = useCategories()
-  const { data: accounts } = useCashAccounts({ transactions: 'false' })
+  const { data: accounts } = useCashAccounts({ transactions: false })
 
   // Values
 

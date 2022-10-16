@@ -6,4 +6,4 @@ export const useCurrencyFormat = (amount: MaybeRef<number>, options?: MaybeRef<I
     style: 'currency',
     currency: 'EUR',
     ...[unref(options)],
-  }).format(unref(amount)))
+  })?.format(unref(amount)))

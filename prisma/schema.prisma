@@ -58,11 +58,12 @@ model Transaction {
 }
 
 model Account {
-  id     String  @id @default(cuid())
-  name   String
-  userId String
-  color  String?
-  icon   String?
+  id        String   @id @default(cuid())
+  name      String
+  userId    String
+  color     String?
+  icon      String?
+  createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

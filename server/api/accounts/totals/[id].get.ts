@@ -1,6 +1,6 @@
 import { TransactionType } from '@prisma/client'
 import { sendInternalError } from '~~/composables/server'
-import type { AccountTotalType, groupedAccount } from '~~/models/resources/account'
+import type { AccountTotalType, CashAccountWithTotalsAndAccount, GroupedAccount } from '~~/models/resources/account'
 import { prisma } from '~~/prisma'
 
 const initalTotal = () => ({ income: 0, expense: 0, transferIn: 0, transferOut: 0, net: 0, transferNet: 0, balance: 0 })
@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
       throw new Error('Account not found')
     }
 
-    const totals = groupByAccounts.reduce((totalsByAccount: Record<string, Record<AccountTotalType, number>>, curr: groupedAccount) => {
+    const totals = groupByAccounts.reduce((totalsByAccount: Record<string, Record<AccountTotalType, number>>, curr: GroupedAccount) => {
       const isType = (type: TransactionType) => curr.type === type
 
       const setupInitialAccountValues = (key: string) => {
@@ -77,7 +77,8 @@ export default defineEventHandler(async (event) => {
     return {
       ...cashAccount,
       totals: accountTotals,
-    }
+      timestamp: Date.now(),
+    } as CashAccountWithTotalsAndAccount
   } catch (err) {
     console.error(err)
     sendInternalError(event, err)

@@ -20,12 +20,14 @@ export const useCached = async () => {
 
 export const useCashAccount = (id: MaybeRef<string>) => useQuery(keysAccounts.detail(id), () => $fetch<CashAccountWithAccount>(`/api/accounts/cash/${unref(id)}`))
 
-export const useCashAccounts = ({ transactions }: { transactions: 'true' | 'false' }) =>
-  useQuery(
+export const useCashAccounts = (payload?: { transactions?: boolean }) => {
+  const transactions = payload?.transactions?.toString() ?? 'false'
+  return useQuery(
     keysAccounts.totals(),
-    () => $fetch<CashAccountWithAccount[]>(`/api/accounts/cash?transactions=${transactions}`),
-    // { initialData: useFetchedPayload<CashAccountWithAccount[]>('cash-accounts') },
+    () => $fetch<CashAccountWithAccount[]>(`/api/accounts/cash?transactions=${transactions ?? 'false'}`),
+    { initialData: transactions !== 'true' ? useFetchedPayload<CashAccountWithAccount[]>('cash-accounts') : null },
   )
+}
 
 export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<string | undefined>) =>
   useQuery(

@@ -1,21 +1,12 @@
 import type { TransactionType } from '@prisma/client'
 import { sendInternalError, useContextUserId, useTransactionDateRange } from '~~/composables/server'
-import type { AccountTotalType, CashAccountWithAccount, CashAccountWithTotals, GroupedAccount } from '~~/models/resources/account'
+import type { AccountTotalType, CashAccountWithTotals, GroupedAccount } from '~~/models/resources/account'
 import { prisma } from '~~/prisma'
 
 const initalTotal = () => ({ income: 0, expense: 0, net: 0, transferIn: 0, transferOut: 0, transferNet: 0, balance: 0 })
 
-const calculateAccountTotals = (groupedAccounts: GroupedAccount[], cashAccounts: CashAccountWithAccount[]) => {
-  const findAccount = (id: string | null) => cashAccounts.find(a => id === a.id)
-
+const calculateAccountTotals = (groupedAccounts: GroupedAccount[]) => {
   return groupedAccounts.reduce((totalsByAccount: Record<string, Record<AccountTotalType, number>>, curr: GroupedAccount) => {
-    const fromAccount = findAccount(curr.fromAccountId)
-    const toAccount = findAccount(curr.toAccountId)
-
-    if (!fromAccount && !toAccount) {
-      return totalsByAccount
-    }
-
     const isType = (type: TransactionType) => curr.type === type
 
     const setupInitialAccountValues = (key: string) => {
@@ -29,13 +20,13 @@ const calculateAccountTotals = (groupedAccounts: GroupedAccount[], cashAccounts:
       totalsByAccount[key][type] += curr._sum.amount ?? 0
     }
 
-    if (isType('Transfer') && fromAccount && toAccount && fromAccount !== toAccount) {
-      addTransaction(fromAccount.id, 'transferOut')
-      addTransaction(toAccount.id, 'transferIn')
-    } else if (isType('Expense') && fromAccount && !toAccount) {
-      addTransaction(fromAccount.id, 'expense')
-    } else if (isType('Income') && toAccount && !fromAccount) {
-      addTransaction(toAccount.id, 'income')
+    if (isType('Transfer') && curr.fromAccountId && curr.toAccountId && curr.fromAccountId !== curr.toAccountId) {
+      addTransaction(curr.fromAccountId, 'transferOut')
+      addTransaction(curr.toAccountId, 'transferIn')
+    } else if (isType('Expense') && curr.fromAccountId && !curr.toAccountId) {
+      addTransaction(curr.fromAccountId, 'expense')
+    } else if (isType('Income') && curr.toAccountId && !curr.fromAccountId) {
+      addTransaction(curr.toAccountId, 'income')
     }
 
     return totalsByAccount
@@ -65,13 +56,10 @@ export default defineEventHandler(async (event) => {
       : null
 
     // Fetch all cash accounts - could this better be done from client and pinia store/vue query?
-    const cashAccounts = await prisma.cashAccount.findMany({
-      include: {
-        account: true,
-      },
-    })
-    const totalsFullTime = calculateAccountTotals(groupByAccountsAllTime, cashAccounts)
-    const totalsInRange = groupByAccountsRange ? calculateAccountTotals(groupByAccountsRange, cashAccounts) : null
+    const cashAccounts = await prisma.cashAccount.findMany({})
+
+    const totalsFullTime = calculateAccountTotals(groupByAccountsAllTime)
+    const totalsInRange = groupByAccountsRange ? calculateAccountTotals(groupByAccountsRange) : null
 
     // Totals for all time - net, expenses, income, transfer net, balance
     const cashAccountsWithTotals: CashAccountWithTotals[] = cashAccounts.map((account) => {

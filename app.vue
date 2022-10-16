@@ -7,11 +7,6 @@ useHead({
 })
 
 useShortcuts()
-
-await useFetch('/api/accounts/cash/balance', { key: 'balance' })
-// await useFetch('/api/accounts/cash?transactions=false', { key: 'cash-accounts' })
-
-// const cached = useFetchedPayload('cash-accounts')
 </script>
 
 <template>
