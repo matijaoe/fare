@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { get } from '@vueuse/core'
+
 const cashAccountStore = useCashAccountModal()
 const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
@@ -22,12 +24,25 @@ const shownAccounts = computed(() => {
     }
   })
 })
+
+await useFetch('/api/accounts/cash?transactions=false', {
+  key: 'cash-accounts',
+})
+
+await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
+  key: `cash-accounts-totals-${get(rangeFrom)}-${get(rangeTo)}`,
+})
+
+watch([rangeFrom, rangeTo], async () => {
+  await useFetch(`/api/accounts/totals?from=${rangeFrom.value}&to=${rangeTo.value}`, {
+    key: `cash-accounts-totals-${rangeFrom.value}-${rangeTo.value}`,
+  })
+}, { immediate: true })
 </script>
 
 <template>
   <div flex flex-col gap-4>
     <DateSwitchHeader />
-
     <div
       my-4
       flex="~ col gap-2"

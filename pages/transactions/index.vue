@@ -1,5 +1,10 @@
 <script lang="ts" setup>
 const { transactions, query } = toRefs(useTransactionsStore())
+const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
+
+await useFetch(`/api/transactions?from=${rangeFrom.value}&to=${rangeTo.value}`, {
+  key: `transactions-${rangeFrom.value}-${rangeTo.value}`,
+})
 </script>
 
 <template>
@@ -19,7 +24,7 @@ const { transactions, query } = toRefs(useTransactionsStore())
           max-w="full xl:base"
           flex-1
         >
-          <TransactionList :transactions="transactions" :loading="query.isLoading" />
+          <TransactionList :transactions="transactions" :loading="query.isFetching" />
         </div>
         <div flex-1 class="order--1 xl:order-1">
           <TransactionFilters />

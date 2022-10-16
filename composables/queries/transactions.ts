@@ -1,5 +1,6 @@
 import type { Prisma, Transaction } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import { get } from '@vueuse/core'
 import type { MaybeRef } from '@vueuse/core'
 import type { Ref } from 'vue'
 
@@ -25,6 +26,10 @@ export const useTransactions = (from: Ref<string | undefined>, to: Ref<string | 
         : '/api/transactions'
 
       return $fetch<Transaction[]>(url)
+    },
+    {
+      // TODO: disbled bsc of strange behaviour, no inbetween loading states
+      initialData: () => useFetchedPayload<Transaction[]>(`transactions-${get(from)}-${get(to)}`) ?? [],
     },
   )
 

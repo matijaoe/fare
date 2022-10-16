@@ -1,5 +1,6 @@
 import type { Account, CashAccount, Prisma } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import { get } from '@vueuse/core'
 import type { MaybeRef } from '@vueuse/core'
 import type { Ref } from 'vue'
 import type { CashAccountWithAccount, CashAccountWithTotals, CashAccountsBalanceModel } from '~~/models/resources/account'
@@ -29,8 +30,8 @@ export const useCashAccounts = (payload?: { transactions?: boolean }) => {
   )
 }
 
-export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<string | undefined>) =>
-  useQuery(
+export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<string | undefined>) => {
+  return useQuery(
     keysAccounts.totalsRange(from, to),
     () => {
       const fullRangeDefined = isDefined(from) && isDefined(to)
@@ -40,8 +41,11 @@ export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<str
 
       return $fetch<CashAccountWithTotals[]>(url)
     },
+    {
+      initialData: () => useFetchedPayload<CashAccountWithTotals[]>(`cash-accounts-totals-${get(from)}-${get(to)}`),
+    },
   )
-
+}
 export const useCashAccountsBalance = () => useQuery(
   keysAccounts.balance(),
   () => $fetch<CashAccountsBalanceModel>('/api/accounts/cash/balance'),
