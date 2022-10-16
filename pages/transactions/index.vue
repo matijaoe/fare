@@ -2,6 +2,10 @@
 const { transactions, query } = toRefs(useTransactionsStore())
 const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
 
+setBreadcrumbs([
+  { label: 'Transactions', href: useRoute().path },
+])
+
 await useFetch(`/api/transactions?from=${rangeFrom.value}&to=${rangeTo.value}`, {
   key: `transactions-${rangeFrom.value}-${rangeTo.value}`,
 })

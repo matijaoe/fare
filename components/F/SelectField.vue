@@ -165,8 +165,8 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
               relative
               class="relative cursor-default select-none"
               :class="[
-                active && !selected ? 'bg-zinc-1 dark:bg-zinc-8/50 text-color-base' : '',
-                selected ? 'bg-zinc-2/40 dark:bg-zinc-8 text-color-base' : '',
+                active && !selected ? 'bg-zinc-1 dark:bg-zinc-8/50 color-base' : '',
+                selected ? 'bg-zinc-2/40 dark:bg-zinc-8 color-base' : '',
                 item.disabled ? '!text-zinc-3 !dark:text-zinc-7' : '',
               ]"
             >

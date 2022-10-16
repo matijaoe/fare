@@ -17,7 +17,9 @@ const sidebar = useSidebar()
   >
     <HeaderLogo />
 
-    <FBreadcrumbs pl-8 />
+    <ClientOnly>
+      <FBreadcrumbs pl-8 />
+    </ClientOnly>
 
     <!-- <HeaderSearch
       class="border-r-2 border-base ml-5"

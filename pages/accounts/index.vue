@@ -1,6 +1,12 @@
 <script lang="ts" setup>
 import { get } from '@vueuse/core'
 
+const route = useRoute()
+
+setBreadcrumbs([
+  { label: 'Accounts', href: { name: route.name } },
+])
+
 const cashAccountStore = useCashAccountModal()
 const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
@@ -79,7 +85,12 @@ watch([rangeFrom, rangeTo], async () => {
 
     <LayoutSectionWrapper title="Cash accounts" subtitle="Actively tracked accounts" mt-3>
       <template #right>
-        <FButton variant="secondary" @click="cashAccountStore.launch()">
+        <FButton
+          variant="secondary"
+          icon="tabler:plus"
+          icon-placement="left"
+          @click="cashAccountStore.launch()"
+        >
           Add account
         </FButton>
       </template>

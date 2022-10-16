@@ -62,7 +62,10 @@ const transactionTooltip = computed(() => {
             type="dot"
             :icon="item.fromAccount.account.icon"
             :color="item.fromAccount.account.color"
-            @click="navigateTo('/accounts')"
+            @click="navigateTo({
+              name: 'accounts-accountId',
+              params: { accountId: item.fromAccountId },
+            })"
           >
             {{ item.fromAccount.account.name }}
           </FBadge>
@@ -73,7 +76,10 @@ const transactionTooltip = computed(() => {
             type="dot"
             :icon="item.toAccount.account.icon"
             :color="item.toAccount.account.color"
-            @click="navigateTo('/accounts')"
+            @click="navigateTo({
+              name: 'accounts-accountId',
+              params: { accountId: item.toAccountId },
+            })"
           >
             {{ item.toAccount.account.name }}
           </FBadge>

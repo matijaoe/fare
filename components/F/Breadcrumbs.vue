@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useSidebar } from '~~/store/sidebar.store'
 
+const store = useBreadcrumbs()
+
 const sidebar = useSidebar()
 const { smDown } = $(useBreakpoints())
 
@@ -19,8 +21,20 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
       'border-l-2 border-base ml-5': handledSidebar,
     }]"
   >
-    <span text="zinc-4 dark:zinc-5">Home</span>
-    <span text="zinc-4 dark:zinc-5">/</span>
-    <span>{{ $route.name }}</span>
+    <template v-if="store.crumbs?.length">
+      <div
+        v-for="(crumb, i) in store.crumbs"
+        :key="i"
+        flex
+        items-center
+        gap-2
+        :class="[store.isPreviousCrumb(i) ? 'text-zinc-4 dark:text-zinc-5' : 'color-base']"
+      >
+        <NuxtLink :to="crumb.href" class="hover:color-base-lighter">
+          {{ crumb.label }}
+        </NuxtLink>
+        <span v-if="store.isPreviousCrumb(i)" text="zinc-4dark:zinc-5">/</span>
+      </div>
+    </template>
   </div>
 </template>

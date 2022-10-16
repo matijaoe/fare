@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-
+setBreadcrumbs([
+  { label: 'Dashboard', href: { name: 'index' } },
+])
 </script>
 
 <template>

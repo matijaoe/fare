@@ -3,7 +3,14 @@ import { get } from '@vueuse/core'
 import SectionWrapper from '~~/components/layout/SectionWrapper.vue'
 
 const route = useRoute()
-const { data: account, isLoading } = useCashAccount(route.params.accountId as string)
+
+const accountId = $computed(() => route.params.accountId as string)
+const { data: account, isLoading } = useCashAccount(accountId)
+
+watch(account, () => setBreadcrumbs([
+  { label: 'Accounts', href: { name: 'accounts' } },
+  { label: account.value?.account.name || accountId, href: route.path },
+]), { immediate: true })
 
 // TODO: add to types
 const transactions = computed(() => isDefined(account)
