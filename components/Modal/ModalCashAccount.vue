@@ -1,6 +1,10 @@
 <script lang="ts" setup>
+import { set } from '@vueuse/core'
+
 const {
   loading,
+  hasError,
+  isErrorShown,
   isDeleteLoading,
   icons,
   colors,
@@ -10,6 +14,11 @@ const {
 
 const modal = useCashAccountModal()
 const form = $computed(() => modal.form)
+
+const onClose = () => {
+  form.resetForm()
+  set(isErrorShown, false)
+}
 </script>
 
 <template>
@@ -18,8 +27,12 @@ const form = $computed(() => modal.form)
     panel-class="w-full !sm:min-w-xl"
     closable
     :description="modal.isEdit ? 'Edit a cash account' : 'Create a new cash account'"
-    @close="form.resetForm()"
+    @close="onClose"
   >
+    <FAlert v-if="isErrorShown && hasError" type="error" mb-3>
+      Something went wrong.
+    </FAlert>
+
     <form
       flex
       flex-col

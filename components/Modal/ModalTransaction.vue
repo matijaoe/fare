@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import {
-  RadioGroup,
-  RadioGroupLabel,
-  RadioGroupOption,
-} from '@headlessui/vue'
+import { RadioGroup, RadioGroupOption } from '@headlessui/vue'
 import type { Prisma } from '@prisma/client'
 
 const modal = useTransactionModal()

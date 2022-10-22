@@ -17,8 +17,8 @@ export const useCashAccountModal = defineStore('modal-account', () => {
   const validationSchema = toFormValidator(
     zod.object({
       name: zod.string().trim().min(1, { message: 'Name is required' }).max(24, { message: 'Name is too long' }),
-      color: zod.string().optional(),
-      icon: zod.string().optional(),
+      color: zod.any().optional(),
+      icon: zod.any().optional(),
     }),
   )
   const form = useForm({
@@ -36,8 +36,8 @@ export const useCashAccountModal = defineStore('modal-account', () => {
   })
 
   const { value: name, setValue: setName } = useField<string>('name')
-  const { value: color, setValue: setColor } = useField<string | undefined>('color')
-  const { value: icon, setValue: setIcon } = useField<string | undefined>('icon')
+  const { value: color, setValue: setColor } = useField<string | null>('color')
+  const { value: icon, setValue: setIcon } = useField<string | null>('icon')
 
   const colorDefault = {
     label: toTitleCase('gray'),
@@ -55,7 +55,7 @@ export const useCashAccountModal = defineStore('modal-account', () => {
           text: `text-${color.value}-5`,
         }
       : undefined,
-    set: obj => setColor(obj?.value),
+    set: obj => setColor(obj?.value ?? null),
   })
 
   if (!isDefined(color)) {
@@ -69,7 +69,7 @@ export const useCashAccountModal = defineStore('modal-account', () => {
           value: icon.value,
         }
       : undefined,
-    set: obj => setIcon(obj?.value),
+    set: obj => setIcon(obj?.value ?? null),
   })
 
   const open = ref(false)
@@ -79,34 +79,38 @@ export const useCashAccountModal = defineStore('modal-account', () => {
     set: value => set(open, value),
   })
 
+  const setEditAccount = (account: Account) => {
+    set($account, account)
+    set(type, 'edit')
+
+    setName(account.name)
+    setColor(account.color)
+    setIcon(account.icon)
+  }
+
   const launch = (account?: Account) => {
     set(open, true)
 
     if (account) {
-      set($account, account)
-      set(type, 'edit')
-
-      setName(account.name)
-      // TODO: handle sending null but not showing error when null
-      setColor(account.color ?? undefined)
-      setIcon(account.icon ?? undefined)
+      setEditAccount(account)
     } else {
       set(type, 'create')
     }
   }
 
-  const hide = () => {
-    set(open, false)
+  const reset = () => {
+    form.resetForm()
+    set(type, 'create')
   }
 
-  watch(open, (value) => {
-    if (!value) {
-      setTimeout(() => {
-        set(type, 'create')
-        form.resetForm()
-      }, 200)
-    }
-  })
+  const hide = (cb?: () => void) => {
+    set(open, false)
+
+    setTimeout(() => {
+      reset()
+      cb?.()
+    }, 200)
+  }
 
   const isEdit = computed(() => type.value === 'edit')
   const isCreate = computed(() => type.value === 'create')
@@ -126,6 +130,7 @@ export const useCashAccountModal = defineStore('modal-account', () => {
     form,
     account: $account,
     accountId,
+    showError,
   }
 })
 

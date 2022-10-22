@@ -1,53 +1,22 @@
 import type { Prisma } from '@prisma/client'
-import { get } from '@vueuse/core'
+import { get, set } from '@vueuse/core'
 import { toTitleCase } from '~~/utils'
 
 export const useCashAccountForm = () => {
   const modal = useCashAccountModal()
   const form = $computed(() => modal.form)
 
-  const { mutate: createAccount, isLoading: isCreateLoading } = useCashAccountCreate()
-  const { mutate: updateAccount, isLoading: isUpdateLoading } = useAccountUpdate(toRef(modal, 'accountId'))
-  const { mutate: deleteAccount, isLoading: isDeleteLoading } = useAccountDelete(toRef(modal, 'accountId'))
+  const { mutate: createAccount, isLoading: isCreateLoading, isError: isErrorCreate } = useCashAccountCreate()
+  const { mutate: updateAccount, isLoading: isUpdateLoading, isError: isErrorUpdate } = useAccountUpdate(toRef(modal, 'accountId'))
+  const { mutate: deleteAccount, isLoading: isDeleteLoading, isError: isErrorDelete } = useAccountDelete(toRef(modal, 'accountId'))
 
   const loading = computed(() => get(isCreateLoading) || get(isUpdateLoading))
+  const hasError = computed(() => get(isErrorCreate) || get(isErrorUpdate) || get(isErrorDelete))
 
-  const brandIcons = [
-    { label: 'Revolut', value: 'simple-icons:revolut' },
-    { label: 'Wise', value: 'simple-icons:wise' },
-    { label: 'Monzo', value: 'simple-icons:monzo' },
-    { label: 'N26', value: 'simple-icons:n26' },
-    { label: 'Cashapp', value: 'simple-icons:cashapp' },
-    { label: 'Bitcoin', value: 'simple-icons:bitcoin' },
-    { label: 'Nubank', value: 'simple-icons:nubank' },
-    { label: 'Starling Bank', value: 'simple-icons:starlingbank' },
-    { label: 'Bank of America', value: 'simple-icons:bankofamerica' },
-    { label: 'Deutsche Bank', value: 'simple-icons:deutschebank' },
-    { label: 'Binance', value: 'simple-icons:binance' },
-  ]
+  const isErrorShown = ref(false)
+  whenever(hasError, () => set(isErrorShown, true))
 
-  const generalIcons = [
-    { label: 'Wallet', value: 'tabler:wallet' },
-    { label: 'Report', value: 'tabler:report-money' },
-    { label: 'Moneybag', value: 'tabler:moneybag' },
-    { label: 'Home dollar', value: 'tabler:home-dollar' },
-    { label: 'Cash', value: 'tabler:cash' },
-    { label: 'Banknote', value: 'tabler:cash-banknote' },
-    { label: 'Bank', value: 'tabler:building-bank' },
-    { label: 'Mastercard', value: 'tabler:brand-mastercard' },
-    { label: 'Visa', value: 'tabler:brand-visa' },
-    { label: 'Dollar coin', value: 'tabler:coin' },
-    { label: 'Bitcoin coin', value: 'tabler:coin-bitcoin' },
-    { label: 'Euro coin', value: 'tabler:coin-euro' },
-    { label: 'Pound coin', value: 'tabler:coin-pound' },
-    { label: 'Cookie', value: 'tabler:cookie' },
-    { label: 'Walk', value: 'tabler:walk' },
-  ]
-
-  const icons = ref([
-    ...generalIcons,
-    ...brandIcons,
-  ])
+  const { allIcons: icons } = useIcons()
 
   const colors = ref([
     {
@@ -157,8 +126,7 @@ export const useCashAccountForm = () => {
   const createAccountHandler = (values: Prisma.AccountCreateWithoutUserInput) => {
     createAccount(values, {
       onSuccess: () => {
-        modal.hide()
-        form.resetForm()
+        modal.hide(() => set(isErrorShown, false))
       },
     })
   }
@@ -166,8 +134,7 @@ export const useCashAccountForm = () => {
   const editAccountHandler = (values: Prisma.AccountUpdateWithoutUserInput) => {
     updateAccount(values, {
       onSuccess: () => {
-        modal.hide()
-        form.resetForm()
+        modal.hide(() => set(isErrorShown, false))
       },
     })
   }
@@ -175,18 +142,16 @@ export const useCashAccountForm = () => {
   const deleteAccountHandler = () => {
     deleteAccount(undefined, {
       onSuccess: () => {
-        modal.hide()
-        form.resetForm()
+        modal.hide(() => set(isErrorShown, false))
       },
     })
   }
 
   const onSubmit = form.handleSubmit((values) => {
+    console.log(modal.type, values)
     if (modal.isEdit) {
-      console.log(modal.type)
       editAccountHandler(values)
     } else {
-      console.log(modal.type)
       createAccountHandler(values)
     }
   })
@@ -197,13 +162,14 @@ export const useCashAccountForm = () => {
     isCreateLoading,
     isUpdateLoading,
     isDeleteLoading,
+    // Error state
+    hasError,
+    isErrorShown,
     // Select options
     icons,
     colors,
     // Form actions
     onSubmit,
     deleteAccount: deleteAccountHandler,
-    form,
-    modal,
   }
 }
