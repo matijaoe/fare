@@ -10,7 +10,7 @@ import type { SelectItem } from '~~/models/ui'
 
 type Props = {
   items: SelectItem[]
-  modelValue?: SelectItem & Record<string, any>
+  modelValue?: SelectItem
   label?: string
   placeholder?: string
   invalid?: boolean
@@ -25,7 +25,7 @@ type Props = {
 }
 
 type Emits = {
-  (e: 'update:modelValue', value: SelectItem | null): void
+  (e: 'update:modelValue', value: SelectItem | undefined): void
 }
 
 const props = defineProps<Props>()
@@ -43,9 +43,11 @@ const wrapperProps = computed(() => ({
 }))
 
 const selectedItem = computed({
-  get: (): SelectItem | null => props.modelValue ?? null,
-  set: (value: SelectItem | null) => emit('update:modelValue', value),
+  get: () => props.modelValue,
+  set: (value: SelectItem | undefined) => emit('update:modelValue', value),
 })
+
+const isSelected = (item: SelectItem) => item.value === selectedItem.value?.value
 
 const clearSelected = () => set(selectedItem, null)
 
@@ -56,12 +58,7 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
 </script>
 
 <template>
-  <!-- TODO: select label -->
   <FInputWrapper v-bind="wrapperProps" font-sans>
-    <!-- <template v-if="$slots.label" #label>
-      <slot name="label" />
-    </template> -->
-
     <Listbox
       v-slot="{ open }"
       v-model="selectedItem"
@@ -70,7 +67,6 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
       :class="[widthStyle]"
       relative
     >
-      <!-- TODO: have icon padding space in line with input styles -->
       <ListboxButton
         ref="listboxButton"
         w="full"
@@ -161,27 +157,27 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
             <li
               w-full
               text="zinc-7 dark:zinc-3"
-              p="y-2 x-6 r-13"
+              p="y-2 x-4 r-13"
               relative
               class="relative cursor-default select-none"
               :class="[
-                active && !selected ? 'bg-zinc-1 dark:bg-zinc-8/50 color-base' : '',
-                selected ? 'bg-zinc-2/40 dark:bg-zinc-8 color-base' : '',
+                active && !(selected || isSelected(item)) ? 'bg-zinc-1 dark:bg-zinc-8/50 color-base' : '',
+                selected || isSelected(item) ? 'bg-zinc-2/40 dark:bg-zinc-8 color-base' : '',
                 item.disabled ? '!text-zinc-3 !dark:text-zinc-7' : '',
               ]"
             >
-              <slot name="option" :item="item">
-                <span
-                  class="block truncate"
-                >
+              <slot name="option" :item="item" :selected="selected || isSelected(item)">
+                <span class="block truncate">
                   {{ item.label }}
                 </span>
               </slot>
               <span
-                v-if="selected"
-                pr="4"
-                text="color-base"
-                pos="absolute inset-y-0 right-0"
+                v-if="selected || isSelected(item)"
+                pr-4
+                text-color-base
+                bg-zinc-1
+                absolute
+                pos="inset-y-0 right-0"
                 class="flex items-center"
               >
                 <Icon name="tabler:check" />
@@ -191,13 +187,5 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
         </ListboxOptions>
       </Transition>
     </Listbox>
-
-    <!-- <template v-if="$slots.hint" #hint>
-      <slot name="hint" />
-    </template>
-
-    <template v-if="$slots.error" #error>
-      <slot name="error" />
-    </template> -->
   </FInputWrapper>
 </template>

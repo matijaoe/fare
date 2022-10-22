@@ -1,83 +1,45 @@
 <script lang="ts" setup>
-import { get } from '@vueuse/core'
+const {
+  loading,
+  isDeleteLoading,
+  icons,
+  colors,
+  onSubmit,
+  deleteAccount,
+} = useCashAccountForm()
 
-const store = useCashAccountModal()
-
-const { mutate: createAccount, isLoading: isCreateLoading } = useCashAccountCreate()
-const { mutate: updateAccount, isLoading: isUpdateLoading } = useAccountUpdate()
-const { mutate: deleteAccount, isLoading: isDeleteLoading } = useAccountDelete()
-
-const loading = computed(() => get(isCreateLoading) || get(isUpdateLoading))
-
-const icons = ref([
-  { label: 'Wallet', value: 'tabler:wallet' },
-  { label: 'Cookie', value: 'tabler:cookie' },
-  { label: 'Walk', value: 'tabler:walk' },
-])
-
-const colors = ref([
-  { label: 'Red', value: 'red', bg: 'bg-red-5', text: 'text-red-5' },
-  { label: 'Green', value: 'green', bg: 'bg-green-5', text: 'text-green-5' },
-  { label: 'Blue', value: 'blue', bg: 'bg-blue-5', text: 'text-blue-5' },
-  { label: 'Amber', value: 'amber', bg: 'bg-amber-5', text: 'text-amber-5' }],
-)
-
-const createAccountHandler = () => {
-  createAccount(store.form, {
-    onSuccess: () => {
-      store.hide()
-      store.resetForm()
-    },
-  })
-}
-const editAccountHandler = () => {
-  updateAccount({
-    id: store.account!.id,
-    body: store.form,
-  }, {
-    onSuccess: () => {
-      store.hide()
-      store.resetForm()
-    },
-  })
-}
-
-const deleteAccountHandler = () => {
-  deleteAccount(store.account!.id, {
-    onSuccess: () => {
-      store.hide()
-      store.resetForm()
-    },
-  })
-}
-
-const submitHandler = () => {
-  if (store.isEdit) {
-    editAccountHandler()
-  } else {
-    createAccountHandler()
-  }
-}
+const modal = useCashAccountModal()
+const form = $computed(() => modal.form)
 </script>
 
 <template>
   <ModalBase
-    v-model="store.opened"
-    panel-class="w-full !sm:min-w-lg"
+    v-model="modal.opened"
+    panel-class="w-full !sm:min-w-xl"
     closable
-    :description="store.isEdit ? 'Edit a cash account' : 'Create a new cash account'"
+    :description="modal.isEdit ? 'Edit a cash account' : 'Create a new cash account'"
+    @close="form.resetForm()"
   >
     <form
       flex
       flex-col
       gap-3
-      @submit.prevent="submitHandler"
+      @submit.prevent="onSubmit"
     >
-      <FInput v-model="store.name" label="Name" placeholder="Account name" />
+      <FInput
+        v-model="form.values.name"
+        :invalid="!!form.errors.name"
+        :error="form.errors.name"
+        label="Name"
+        placeholder="Account name"
+      />
 
       <div flex gap-3>
         <FSelectField
-          v-model="store.color"
+          v-model="modal.colorObject"
+          block
+          :invalid="!!form.errors.color"
+          :error="form.errors.color"
           flex-1
           label="Color"
           :items="colors"
@@ -86,7 +48,7 @@ const submitHandler = () => {
             <div
               flex
               items-center
-              gap-3
+              gap-4
             >
               <span
                 w="4.5"
@@ -119,7 +81,10 @@ const submitHandler = () => {
         </FSelectField>
 
         <FSelectField
-          v-model="store.icon"
+          v-model="modal.iconObject"
+          block
+          :invalid="!!form.errors.icon"
+          :error="form.errors.icon"
           flex-1
           label="Icon"
           :items="icons"
@@ -128,7 +93,7 @@ const submitHandler = () => {
             <div
               flex
               items-center
-              gap-2
+              gap-4
             >
               <Icon :name="item.value" />
               <span>{{ item.label }}</span>
@@ -153,22 +118,22 @@ const submitHandler = () => {
         gap-2
         mt-4
       >
-        <FButton type="button" variant="subtle" @click="store.hide()">
+        <FButton type="button" variant="subtle" @click="modal.hide()">
           Cancel
         </FButton>
         <FButton
-          v-if="store.isEdit"
+          v-if="modal.isEdit"
           type="button"
           variant="danger"
           :disabled="loading"
           :loading="isDeleteLoading"
           icon="tabler:x"
-          @click="deleteAccountHandler"
+          @click="deleteAccount"
         >
           Delete
         </FButton>
         <FButton
-          v-if="store.isEdit"
+          v-if="modal.isEdit"
           type="submit"
           icon="tabler:edit"
           :loading="loading"
@@ -176,7 +141,7 @@ const submitHandler = () => {
           Edit
         </FButton>
         <FButton
-          v-if="store.isCreate"
+          v-if="modal.isCreate"
           type="submit"
           icon="tabler:plus"
           :loading="loading"

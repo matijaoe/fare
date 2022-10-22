@@ -7,6 +7,14 @@ setBreadcrumbs([
   { label: 'Accounts', href: { name: route.name } },
 ])
 
+// definePageMeta({
+//   meta: {
+//     crumbs: [
+//       { label: 'Accounts', href: { name: route.name } },
+//     ],
+//   },
+// })
+
 const cashAccountStore = useCashAccountModal()
 const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
@@ -87,11 +95,10 @@ watch([rangeFrom, rangeTo], async () => {
       <template #right>
         <FButton
           variant="secondary"
-          icon="tabler:plus"
           icon-placement="left"
           @click="cashAccountStore.launch()"
         >
-          Add account
+          Create account
         </FButton>
       </template>
       <div

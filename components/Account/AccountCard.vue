@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { isClient } from '@vueuse/core'
 import type { AccountTotals, CashAccountWithAccount } from '~~/models/resources/account'
 type Props = {
   cashAccount: CashAccountWithAccount
@@ -60,7 +59,7 @@ const { isDark } = useColorscheme()
             absolute
             top--4
             left--4
-            class="transform origin-center scale-800 sm:scale-600 dark:opacity-25"
+            class="transform origin-center scale-1000 filter-saturate-80 opacity-80 sm:scale-600 dark:opacity-25"
           />
           <Icon :name="account.icon" :class="[colorDotText]" z-2 />
           <p
@@ -104,14 +103,22 @@ const { isDark } = useColorscheme()
         </FTooltip>
         <FTooltip mx-auto placement="right" content="Cashflow">
           <p
-            gap-0
             flex
             flex-col
             font-mono
-            text="base zinc-4 dark:zinc-5"
+            font-medium
+            text="sm zinc-4 dark:zinc-5"
           >
-            <span v-if="totals && !totalsLoading">
-              {{ formattedCashflow }}
+            <span
+              v-if="totals && !totalsLoading"
+              class="filter-saturate-90"
+              :class="{
+                'px-2 py-1 text-white rounded-md': totals.net !== 0,
+                'bg-red-1 text-red-7': totals.net < 0,
+                'bg-emerald-1 text-emerald-7': totals.net > 0,
+              }"
+            >
+              {{ totals.net > 0 ? '+' : '' }}{{ formattedCashflow }}
             </span>
           </p>
         </FTooltip>

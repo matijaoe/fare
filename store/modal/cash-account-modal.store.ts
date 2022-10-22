@@ -1,6 +1,9 @@
 import type { Account } from '@prisma/client'
-import { get, set } from '@vueuse/core'
+import { toFormValidator } from '@vee-validate/zod'
+import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { useField, useForm } from 'vee-validate'
+import * as zod from 'zod'
 import { toTitleCase } from '~~/utils'
 
 type ActionType = 'create' | 'edit'
@@ -8,23 +11,66 @@ type ActionType = 'create' | 'edit'
 export const useCashAccountModal = defineStore('modal-account', () => {
   const type = ref<ActionType>('create')
 
-  const name = ref()
-  const color = ref()
-  const icon = ref()
   const $account = ref<Account>()
+  const accountId = computed(() => $account.value?.id)
 
-  const form = computed(() => ({
-    name: get(name),
-    icon: get(icon).value,
-    color: get(color).value,
-  }))
+  const validationSchema = toFormValidator(
+    zod.object({
+      name: zod.string().trim().min(1, { message: 'Name is required' }).max(24, { message: 'Name is too long' }),
+      color: zod.string().optional(),
+      icon: zod.string().optional(),
+    }),
+  )
+  const form = useForm({
+    validationSchema,
+    initialValues: {
+      name: '',
+      icon: null,
+      color: null,
+    },
+    initialErrors: {
+      name: '',
+      icon: '',
+      color: '',
+    },
+  })
 
-  const resetForm = () => {
-    set($account, undefined)
-    set(name, '')
-    set(color, undefined)
-    set(icon, undefined)
+  const { value: name, setValue: setName } = useField<string>('name')
+  const { value: color, setValue: setColor } = useField<string | undefined>('color')
+  const { value: icon, setValue: setIcon } = useField<string | undefined>('icon')
+
+  const colorDefault = {
+    label: toTitleCase('gray'),
+    value: 'gray',
+    bg: 'bg-gray-5',
+    text: 'text-gray-5',
   }
+
+  const colorObject = computed({
+    get: () => isDefined(color)
+      ? {
+          label: toTitleCase(color.value),
+          value: color.value,
+          bg: `bg-${color.value}-5`,
+          text: `text-${color.value}-5`,
+        }
+      : undefined,
+    set: obj => setColor(obj?.value),
+  })
+
+  if (!isDefined(color)) {
+    colorObject.value = { ...colorDefault }
+  }
+
+  const iconObject = computed({
+    get: () => isDefined(icon)
+      ? {
+          label: toTitleCase(icon.value?.split(':').at(-1) || 'None'),
+          value: icon.value,
+        }
+      : undefined,
+    set: obj => setIcon(obj?.value),
+  })
 
   const open = ref(false)
 
@@ -37,34 +83,28 @@ export const useCashAccountModal = defineStore('modal-account', () => {
     set(open, true)
 
     if (account) {
-      set(type, 'edit')
       set($account, account)
-      set(name, account.name)
-      set(color, {
-        label: toTitleCase(account.color ?? 'None'),
-        value: account.color,
-        bg: `bg-${account.color}-5`,
-        text: `text-${account.color}-5`,
-      },
-      )
-      set(icon, {
-        label: toTitleCase(account.icon?.split(':').at(-1) || 'None'),
-        value: account.icon,
-      })
+      set(type, 'edit')
+
+      setName(account.name)
+      // TODO: handle sending null but not showing error when null
+      setColor(account.color ?? undefined)
+      setIcon(account.icon ?? undefined)
     } else {
       set(type, 'create')
-      resetForm()
     }
   }
 
   const hide = () => {
     set(open, false)
-    set(type, 'create')
   }
 
-  watch(type, (val) => {
-    if (val === 'create') {
-      resetForm()
+  watch(open, (value) => {
+    if (!value) {
+      setTimeout(() => {
+        set(type, 'create')
+        form.resetForm()
+      }, 200)
     }
   })
 
@@ -80,10 +120,12 @@ export const useCashAccountModal = defineStore('modal-account', () => {
     hide,
     name,
     color,
+    colorObject,
+    iconObject,
     icon,
     form,
     account: $account,
-    resetForm,
+    accountId,
   }
 })
 

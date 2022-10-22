@@ -62,11 +62,10 @@ export const useCashAccountCreate = () => {
   })
 }
 
-export const useAccountUpdate = () => {
+export const useAccountUpdate = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
-
-  return useMutation(({ id, body }: { id: string; body: Prisma.AccountUpdateWithoutUserInput }) =>
-    $fetch<Account>(`/api/accounts/${id}`, {
+  return useMutation((body: Prisma.AccountUpdateWithoutUserInput) =>
+    $fetch<Account>(`/api/accounts/${id.value}`, {
       method: 'PATCH',
       body,
     }), {
@@ -76,11 +75,10 @@ export const useAccountUpdate = () => {
   })
 }
 
-export const useAccountDelete = () => {
+export const useAccountDelete = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
-
-  return useMutation((id: string) =>
-    $fetch<Account>(`/api/accounts/${id}`, {
+  return useMutation(() =>
+    $fetch<Account>(`/api/accounts/${id.value}`, {
       method: 'DELETE',
     }), {
     onSuccess: () => {

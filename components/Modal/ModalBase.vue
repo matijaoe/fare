@@ -32,7 +32,9 @@ const opened = computed<boolean>({
 
 const close = () => {
   set(opened, false)
-  emit('close')
+  setTimeout(() => {
+    emit('close')
+  }, 200)
 }
 
 const slots = useSlots()
