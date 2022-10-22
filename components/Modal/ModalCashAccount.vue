@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { set } from '@vueuse/core'
-
 const {
   loading,
   isErrorShown,
@@ -8,11 +6,28 @@ const {
   icons,
   colors,
   onSubmit,
+  onClose,
   deleteAccount,
   modal,
   form,
-  onClose,
 } = useCashAccountForm()
+
+const htmlRefHook = ref<HTMLElement | null>(null)
+const longPressedHook = ref(false)
+
+const onLongPressCallbackHook = () => {
+  longPressedHook.value = true
+  deleteAccount()
+}
+
+onLongPress(
+  htmlRefHook,
+  onLongPressCallbackHook,
+  {
+    modifiers: { prevent: true },
+    delay: 1000,
+  },
+)
 </script>
 
 <template>
@@ -128,17 +143,22 @@ const {
         <FButton type="button" variant="subtle" @click="modal.hide()">
           Cancel
         </FButton>
-        <FButton
-          v-if="modal.isEdit"
-          type="button"
-          variant="danger"
-          :disabled="loading"
-          :loading="isDeleteLoading"
-          icon="tabler:x"
-          @click="deleteAccount"
-        >
-          Delete
-        </FButton>
+
+        <!-- TODO: long press to delete instead of confirmation modal -->
+        <FTooltip content="Long press to delete" placement="bottom">
+          <FButton
+            v-if="modal.isEdit"
+            ref="htmlRefHook"
+            type="button"
+            variant="danger"
+            :disabled="loading"
+            :loading="isDeleteLoading"
+            icon="tabler:x"
+          >
+            Delete
+          </FButton>
+        </FTooltip>
+
         <FButton
           v-if="modal.isEdit"
           type="submit"
