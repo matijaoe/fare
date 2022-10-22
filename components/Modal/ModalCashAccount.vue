@@ -3,22 +3,16 @@ import { set } from '@vueuse/core'
 
 const {
   loading,
-  hasError,
   isErrorShown,
   isDeleteLoading,
   icons,
   colors,
   onSubmit,
   deleteAccount,
+  modal,
+  form,
+  onClose,
 } = useCashAccountForm()
-
-const modal = useCashAccountModal()
-const form = $computed(() => modal.form)
-
-const onClose = () => {
-  form.resetForm()
-  set(isErrorShown, false)
-}
 </script>
 
 <template>
@@ -29,7 +23,7 @@ const onClose = () => {
     :description="modal.isEdit ? 'Edit a cash account' : 'Create a new cash account'"
     @close="onClose"
   >
-    <FAlert v-if="isErrorShown && hasError" type="error" mb-3>
+    <FAlert v-if="isErrorShown" type="error" mb-3>
       Something went wrong.
     </FAlert>
 

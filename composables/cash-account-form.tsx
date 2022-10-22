@@ -14,7 +14,7 @@ export const useCashAccountForm = () => {
   const hasError = computed(() => get(isErrorCreate) || get(isErrorUpdate) || get(isErrorDelete))
 
   const isErrorShown = ref(false)
-  whenever(hasError, () => set(isErrorShown, true))
+  watch(hasError, val => set(isErrorShown, !!val))
 
   const { allIcons: icons } = useIcons()
 
@@ -156,6 +156,11 @@ export const useCashAccountForm = () => {
     }
   })
 
+  const onClose = () => {
+    form.resetForm()
+    set(isErrorShown, false)
+  }
+
   return {
     // Loading states
     loading,
@@ -163,13 +168,16 @@ export const useCashAccountForm = () => {
     isUpdateLoading,
     isDeleteLoading,
     // Error state
-    hasError,
     isErrorShown,
     // Select options
     icons,
     colors,
     // Form actions
     onSubmit,
+    onClose,
     deleteAccount: deleteAccountHandler,
+    // others
+    modal,
+    form,
   }
 }

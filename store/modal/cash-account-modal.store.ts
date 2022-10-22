@@ -28,11 +28,6 @@ export const useCashAccountModal = defineStore('modal-account', () => {
       icon: null,
       color: null,
     },
-    initialErrors: {
-      name: '',
-      icon: '',
-      color: '',
-    },
   })
 
   const { value: name, setValue: setName } = useField<string>('name')
@@ -40,10 +35,16 @@ export const useCashAccountModal = defineStore('modal-account', () => {
   const { value: icon, setValue: setIcon } = useField<string | null>('icon')
 
   const colorDefault = {
-    label: toTitleCase('gray'),
-    value: 'gray',
-    bg: 'bg-gray-5',
-    text: 'text-gray-5',
+    label: toTitleCase('green'),
+    value: 'green',
+    bg: 'bg-green-5',
+    text: 'text-green-5',
+  }
+
+  // TODO: something aint right
+  const iconDefault = {
+    label: toTitleCase('wallet'),
+    value: 'tabler:wallet',
   }
 
   const colorObject = computed({
@@ -54,13 +55,9 @@ export const useCashAccountModal = defineStore('modal-account', () => {
           bg: `bg-${color.value}-5`,
           text: `text-${color.value}-5`,
         }
-      : undefined,
+      : null,
     set: obj => setColor(obj?.value ?? null),
   })
-
-  if (!isDefined(color)) {
-    colorObject.value = { ...colorDefault }
-  }
 
   const iconObject = computed({
     get: () => isDefined(icon)
@@ -68,7 +65,7 @@ export const useCashAccountModal = defineStore('modal-account', () => {
           label: toTitleCase(icon.value?.split(':').at(-1) || 'None'),
           value: icon.value,
         }
-      : undefined,
+      : null,
     set: obj => setIcon(obj?.value ?? null),
   })
 

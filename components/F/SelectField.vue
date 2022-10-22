@@ -114,6 +114,7 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
         >
           <button
             v-if="selectedItem && isHovered"
+            type="button"
             flex="center"
             class="text-zinc-4"
             @click.stop="clearSelected"
