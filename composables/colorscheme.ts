@@ -1,6 +1,5 @@
-const isDark = useDark()
-
 export const useColorscheme = () => {
+  const isDark = useDark()
   const toggleDark = useToggle(isDark)
 
   return {

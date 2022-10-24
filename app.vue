@@ -19,12 +19,18 @@ useShortcuts()
     class="bg-base color-base"
   >
     <NuxtLayout>
+      <input type="checkbox">
+      test
       <NuxtPage />
     </NuxtLayout>
   </div>
 </template>
 
 <style>
+body {
+  accent-color: black;
+}
+/* scrollbar-gutter: stable; */
 /* TODO: what is css property for scrollbar to be over content so that it doesnt shift on overflow change? */
 </style>
 

@@ -47,6 +47,7 @@ useTippy(target, {
 </script>
 
 <template>
+  <!-- TODO: fix tippy for build -->
   <div ref="target" w-fit>
     <slot />
   </div>
