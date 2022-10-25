@@ -19,8 +19,6 @@ useShortcuts()
     class="bg-base color-base"
   >
     <NuxtLayout>
-      <input type="checkbox">
-      test
       <NuxtPage />
     </NuxtLayout>
   </div>
