@@ -1,4 +1,4 @@
-import type { Category, Prisma, TransactionType } from '@prisma/client'
+import type { Category, Prisma, Transaction, TransactionType } from '@prisma/client'
 import { get, set } from '@vueuse/core'
 import { format } from 'date-fns'
 import { acceptHMRUpdate, defineStore } from 'pinia'
@@ -18,6 +18,9 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
   const isCreate = computed(() => modalType.value === 'create')
 
   // Values
+
+  const $transaction = ref<Transaction>()
+  const transactionId = computed(() => get($transaction)?.id)
 
   const name = ref<string>('')
   const description = ref<string>('')
@@ -99,7 +102,10 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
   })
 
   const launchEdit = (transaction: TransactionWithCategoryAndCashAccount) => {
+    console.log('edit transaction', transaction)
+
     setModalType('edit')
+    set($transaction, transaction)
 
     set(type, transaction.type)
     set(name, transaction.name)
@@ -128,6 +134,8 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     modalType,
     isEdit,
     isCreate,
+    // Value for edit
+    transactionId,
     // Values
     type,
     name,

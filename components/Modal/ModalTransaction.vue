@@ -1,21 +1,41 @@
 <script setup lang="ts">
 import { RadioGroup, RadioGroupOption } from '@headlessui/vue'
 import type { Prisma } from '@prisma/client'
-import { get } from '@vueuse/core'
+import { get, set } from '@vueuse/core'
 import type { CashAccountWithAccount } from '~~/models/resources/account'
 import type { SelectItem } from '~~/models/ui/select'
 
 const modal = useTransactionModal()
-const { mutate: create, isError, isLoading } = useTransactionCreate()
 
-const modalConfig = computed(() => ({
-  title: 'New transaction',
-  description: 'Add a new transaction',
-  closable: true,
-}))
+// CRUD ---------------------------------
+const { mutate: createTransaction, isError: isErrorCreate, isLoading: isCreateLoading } = useTransactionCreate()
+const { mutate: updateTransaction, isLoading: isUpdateLoading, isError: isErrorUpdate } = useTransactionUpdate(toRef(modal, 'transactionId'))
+const { mutate: deleteTransaction, isLoading: isDeleteLoading, isError: isErrorDelete } = useTransactionDelete(toRef(modal, 'transactionId'))
 
-const createTransaction = () => {
-  create(modal.form as Prisma.TransactionUncheckedCreateWithoutUserInput, {
+const loading = computed(() => get(isCreateLoading) || get(isUpdateLoading))
+const hasError = computed(() => get(isErrorCreate) || get(isErrorUpdate) || get(isErrorDelete))
+
+const isErrorShown = ref(false)
+watch(hasError, val => set(isErrorShown, !!val))
+
+const createTransactionHandler = () => {
+  createTransaction(modal.form as Prisma.TransactionUncheckedCreateWithoutUserInput, {
+    onSuccess: () => {
+      modal.hide()
+    },
+  })
+}
+
+const editTransactionHandler = (values: Prisma.TransactionUpdateWithoutUserInput) => {
+  updateTransaction(values, {
+    onSuccess: () => {
+      modal.hide()
+    },
+  })
+}
+
+const deleteTransactionHandler = () => {
+  deleteTransaction(undefined, {
     onSuccess: () => {
       modal.hide()
     },
@@ -32,13 +52,44 @@ const accountOptions = computed(() => get(accounts)?.map(cashAccount => ({ ...ca
 
 const fromAccountOptions = computed(() => get(accountOptions).filter((acc: SelectItem<CashAccountWithAccount>) => acc.id !== modal.form.toAccountId) ?? [])
 const toAccountOptions = computed(() => get(accountOptions).filter((acc: SelectItem<CashAccountWithAccount>) => acc.id !== modal.form.fromAccountId) ?? [])
+
+const modalConfig = computed(() => ({
+  title: 'Transaction',
+  description: modal.isEdit ? 'Edit a transaction' : 'Add a new transaction',
+  closable: true,
+  panelClass: '!w-full !md:min-w-[600px]',
+}))
+
+const onSubmit = () => {
+  if (modal.isEdit) {
+    editTransactionHandler(modal.form)
+  } else {
+    createTransactionHandler()
+  }
+}
+
+const deleteBtn = ref<HTMLElement | null>(null)
+const longPressedHook = ref(false)
+
+const onLongPressCallbackHook = () => {
+  set(longPressedHook, true)
+  deleteTransactionHandler()
+}
+
+onLongPress(
+  deleteBtn,
+  onLongPressCallbackHook,
+  {
+    modifiers: { prevent: true },
+    delay: 1000,
+  },
+)
 </script>
 
 <template>
   <ModalBase
     v-model="modal.opened"
     v-bind="modalConfig"
-    panel-class="!w-full !md:min-w-[600px]"
     @close="modal.hide"
   >
     <form
@@ -46,9 +97,9 @@ const toAccountOptions = computed(() => get(accountOptions).filter((acc: SelectI
       flex
       flex-col
       gap-3
-      @submit.prevent="createTransaction"
+      @submit.prevent="onSubmit"
     >
-      <FAlert v-if="isError" type="info">
+      <FAlert v-if="isErrorCreate" type="info">
         Something went wrong.
       </FAlert>
 
@@ -241,15 +292,45 @@ const toAccountOptions = computed(() => get(accountOptions).filter((acc: SelectI
             :rows="8"
           />
 
-          <div flex justify-end gap-2>
-            <FButton type="button" variant="subtle" @click="modal.hide">
+          <div
+            flex
+            justify-end
+            gap-2
+            mt-4
+          >
+            <FButton type="button" variant="subtle" @click="modal.hide()">
               Cancel
             </FButton>
-            <FButton type="submit" :loading="isLoading">
-              <template #left>
-                <Icon name="tabler:plus" />
-              </template>
-              Add
+
+            <FTooltip content="Hold to delete" placement="bottom">
+              <FButton
+                v-if="modal.isEdit"
+                ref="deleteBtn"
+                type="button"
+                variant="danger"
+                :disabled="loading"
+                :loading="isDeleteLoading"
+                icon="tabler:x"
+              >
+                Delete
+              </FButton>
+            </FTooltip>
+
+            <FButton
+              v-if="modal.isEdit"
+              type="submit"
+              icon="tabler:edit"
+              :loading="loading"
+            >
+              Edit
+            </FButton>
+            <FButton
+              v-if="modal.isCreate"
+              type="submit"
+              icon="tabler:plus"
+              :loading="loading"
+            >
+              Create
             </FButton>
           </div>
         </div>

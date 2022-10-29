@@ -47,8 +47,6 @@ const selectedItem = computed({
   set: (value: SelectItemDefault | undefined) => emit('update:modelValue', value),
 })
 
-watch(selectedItem, value => console.log('selectedItem', value), { immediate: true })
-
 const isSelected = (item: SelectItemDefault) => item.value === selectedItem.value?.value
 
 const clearSelected = () => set(selectedItem, null)

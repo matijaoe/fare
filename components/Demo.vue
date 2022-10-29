@@ -7,10 +7,6 @@ const toggleLoading = useToggle(loading)
 const address = ref('bestovje')
 const pw = ref('hunter32')
 
-const testerFn = (type: 'blur' | 'input' | 'focus') => {
-  console.log(type)
-}
-
 const people = [
   { id: 1, name: 'Durward Reynolds', disabled: false },
   { id: 2, name: 'Kenton Towne', disabled: false },
@@ -31,13 +27,13 @@ const selectedPerson = ref<SelectItemDefault | null>()
 <template>
   <div flex="~ col sm:row gap-4">
     <FCard>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab, vero iure harum eaque molestias et hic eius exercitationem dolor cupiditate! Labore provident dicta at ab accusantium. Dicta sint iste minus.
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab, vero iure harum eaque molestias et.
     </FCard>
     <FCard white>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab, vero iure harum eaque molestias et hic eius exercitationem dolor cupiditate! Labore provident dicta at ab accusantium. Dicta sint iste minus.
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab, vero iure harum eaque molestias et.
     </FCard>
     <FCard filled>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Id dolores tempora ad nobis culpa doloribus? Doloremque sit explicabo ducimus quaerat, fuga aliquam tempora provident hic libero atque repudiandae dolore! Possimus?
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab, vero iure harum eaque molestias et.
     </FCard>
   </div>
   <div
@@ -60,34 +56,32 @@ const selectedPerson = ref<SelectItemDefault | null>()
       icon-placement="left"
       placeholder="Komentar"
     />
-    <FTextarea
-      invalid
-      hint="test"
-      error="Error test"
-      icon="tabler:cookie"
-      icon-placement="left"
-      placeholder="Komentar"
-    >
-      <template #label>
-        Komentar #2
-      </template>
-    </FTextarea>
-    <div flex gap-2 items-center>
-      <FPasswordField v-model="pw" :loading="loading" flex-1 />
-      <FButton
-        variant="primary"
-        @click="toggleLoading()"
+
+    <div class="flex gap-2">
+      <div
+        flex-1
+        flex
+        gap-2
+        items-center
       >
-        test
-      </FButton>
+        <FPasswordField v-model="pw" :loading="loading" flex-1 />
+        <FButton
+          variant="primary"
+          @click="toggleLoading()"
+        >
+          test
+        </FButton>
+      </div>
+      <FInput
+        v-model="address"
+        flex-1
+        icon="tabler:id"
+        icon-placement="left"
+        :loading="loading"
+        disabled
+      />
     </div>
-    <FInput
-      v-model="address"
-      icon="tabler:id"
-      icon-placement="left"
-      :loading="loading"
-      disabled
-    />
+
     <div flex gap-3>
       <FInput
         v-model="address"
@@ -96,9 +90,6 @@ const selectedPerson = ref<SelectItemDefault | null>()
         icon="tabler:id"
         icon-placement="left"
         :loading="loading"
-        @blur="testerFn('blur')"
-        @focus="testerFn('focus')"
-        @input="testerFn('input')"
       />
       <FInput
         icon="tabler:check"

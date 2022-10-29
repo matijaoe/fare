@@ -15,9 +15,9 @@ export const keysAccounts = {
   detail: (id: MaybeRef<string>) => [...keysAccounts.all, 'detail', unref(id)] as const,
 }
 
-export const useCached = async () => {
-  await useFetch('/api/accounts/cash/balance', { key: 'balance' })
-}
+// export const useCached = async () => {
+//   await useFetch('/api/accounts/cash/balance', { key: 'balance' })
+// }
 
 export const useCashAccount = (id: MaybeRef<string>) => useQuery(keysAccounts.detail(id), () => $fetch<CashAccountWithAccount>(`/api/accounts/cash/${unref(id)}`))
 

@@ -1,41 +1,53 @@
 <script lang="ts" setup>
+import { set } from '@vueuse/core'
+
 const {
+  // Loading states
   loading,
-  isErrorShown,
   isDeleteLoading,
+  // Error state
+  isErrorShown,
+  // Select options
   icons,
   colors,
+  // Form actions
   onSubmit,
   onClose,
   deleteAccount,
+  // others
   modal,
   form,
 } = useCashAccountForm()
 
-const htmlRefHook = ref<HTMLElement | null>(null)
+const deleteBtn = ref<HTMLElement | null>(null)
 const longPressedHook = ref(false)
 
 const onLongPressCallbackHook = () => {
-  longPressedHook.value = true
+  set(longPressedHook, true)
   deleteAccount()
 }
 
 onLongPress(
-  htmlRefHook,
+  deleteBtn,
   onLongPressCallbackHook,
   {
     modifiers: { prevent: true },
     delay: 1000,
   },
 )
+
+const modalConfig = computed(() => ({
+  title: 'Cash ccount',
+  description: modal.isEdit ? 'Edit a cash account' : 'Create a new cash account',
+  closable: true,
+  panelClass: 'w-full !sm:min-w-xl',
+}))
 </script>
 
 <template>
   <ModalBase
     v-model="modal.opened"
-    panel-class="w-full !sm:min-w-xl"
-    closable
-    :description="modal.isEdit ? 'Edit a cash account' : 'Create a new cash account'"
+    v-bind="modalConfig"
     @close="onClose"
   >
     <FAlert v-if="isErrorShown" type="error" mb-3>
@@ -147,7 +159,7 @@ onLongPress(
         <FTooltip content="Hold to delete" placement="bottom">
           <FButton
             v-if="modal.isEdit"
-            ref="htmlRefHook"
+            ref="deleteBtn"
             type="button"
             variant="danger"
             :disabled="loading"

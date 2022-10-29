@@ -1,4 +1,4 @@
-import type { Prisma, Transaction } from '@prisma/client'
+import type { Account, Prisma, Transaction } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { get } from '@vueuse/core'
 import type { MaybeRef } from '@vueuse/core'
@@ -29,6 +29,7 @@ export const useTransactions = (from: Ref<string | undefined>, to: Ref<string | 
     },
     {
       // TODO: disbled bsc of strange behaviour, no inbetween loading states
+      // is this still true?
       initialData: () => useFetchedPayload<Transaction[]>(`transactions-${get(from)}-${get(to)}`) ?? [],
     },
   )
@@ -40,6 +41,31 @@ export const useTransactionCreate = () => {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
       qc.invalidateQueries(keysTransactions.ranges())
+    },
+  })
+}
+
+export const useTransactionUpdate = (id: Ref<string | undefined>) => {
+  const qc = useQueryClient()
+  return useMutation((body: Prisma.TransactionUpdateWithoutUserInput) =>
+    $fetch<Account>(`/api/transactions/${id.value}`, {
+      method: 'PATCH',
+      body,
+    }), {
+    onSuccess: () => {
+      qc.invalidateQueries(keysTransactions.all)
+    },
+  })
+}
+
+export const useTransactionDelete = (id: Ref<string | undefined>) => {
+  const qc = useQueryClient()
+  return useMutation(() =>
+    $fetch<Account>(`/api/transactions/${id.value}`, {
+      method: 'DELETE',
+    }), {
+    onSuccess: () => {
+      qc.invalidateQueries(keysAccounts.all)
     },
   })
 }
