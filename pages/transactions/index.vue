@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { get } from '@vueuse/core'
 const { transactions, query } = toRefs(useTransactionsStore())
 const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
 
@@ -6,8 +7,8 @@ setBreadcrumbs([
   { label: 'Transactions', href: useRoute().path },
 ])
 
-await useFetch(`/api/transactions?from=${rangeFrom.value}&to=${rangeTo.value}`, {
-  key: `transactions-${rangeFrom.value}-${rangeTo.value}`,
+await useFetch(`/api/transactions?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
+  key: `transactions-${get(rangeFrom)}-${get(rangeTo)}`,
 })
 </script>
 

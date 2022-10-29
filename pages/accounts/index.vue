@@ -4,7 +4,7 @@ import { get } from '@vueuse/core'
 const route = useRoute()
 
 setBreadcrumbs([
-  { label: 'Accounts', href: { name: route.name } },
+  { label: 'Accounts', href: { name: route.name ?? 'ne znam' } },
 ])
 
 // definePageMeta({
@@ -46,12 +46,6 @@ await useFetch('/api/accounts/cash?transactions=false', {
 await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
   key: `cash-accounts-totals-${get(rangeFrom)}-${get(rangeTo)}`,
 })
-
-watch([rangeFrom, rangeTo], async () => {
-  await useFetch(`/api/accounts/totals?from=${rangeFrom.value}&to=${rangeTo.value}`, {
-    key: `cash-accounts-totals-${rangeFrom.value}-${rangeTo.value}`,
-  })
-}, { immediate: true })
 </script>
 
 <template>
