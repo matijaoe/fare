@@ -22,7 +22,7 @@ export const useTransactions = (from: Ref<string | undefined>, to: Ref<string | 
     () => {
       const fullRangeDefined = isDefined(from) && isDefined(to)
       const url = fullRangeDefined
-        ? `/api/transactions?from=${from.value}&to=${to.value}`
+        ? `/api/transactions?from=${get(from)}&to=${get(to)}`
         : '/api/transactions'
 
       return $fetch<Transaction[]>(url)
@@ -30,7 +30,7 @@ export const useTransactions = (from: Ref<string | undefined>, to: Ref<string | 
     {
       // TODO: disbled bsc of strange behaviour, no inbetween loading states
       // is this still true?
-      initialData: () => useFetchedPayload<Transaction[]>(`transactions-${get(from)}-${get(to)}`) ?? [],
+      initialData: () => useCachedPayload<Transaction[]>(`transactions-${get(from)}-${get(to)}`) ?? [],
     },
   )
 
@@ -48,11 +48,12 @@ export const useTransactionCreate = () => {
 export const useTransactionUpdate = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
   return useMutation((body: Prisma.TransactionUpdateWithoutUserInput) =>
-    $fetch<Account>(`/api/transactions/${id.value}`, {
+    $fetch<Account>(`/api/transactions/${get(id)}`, {
       method: 'PATCH',
       body,
     }), {
     onSuccess: () => {
+      qc.invalidateQueries(keysAccounts.all)
       qc.invalidateQueries(keysTransactions.all)
     },
   })
@@ -61,11 +62,12 @@ export const useTransactionUpdate = (id: Ref<string | undefined>) => {
 export const useTransactionDelete = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
   return useMutation(() =>
-    $fetch<Account>(`/api/transactions/${id.value}`, {
+    $fetch<Account>(`/api/transactions/${get(id)}`, {
       method: 'DELETE',
     }), {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
+      qc.invalidateQueries(keysTransactions.all)
     },
   })
 }

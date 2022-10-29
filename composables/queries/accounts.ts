@@ -26,7 +26,7 @@ export const useCashAccounts = (payload?: { transactions?: boolean }) => {
   return useQuery(
     keysAccounts.totals(),
     () => $fetch<CashAccountWithAccount[]>(`/api/accounts/cash?transactions=${transactions ?? 'false'}`),
-    { initialData: transactions !== 'true' ? useFetchedPayload<CashAccountWithAccount[]>('cash-accounts') : null },
+    { initialData: transactions !== 'true' ? useCachedPayload<CashAccountWithAccount[]>('cash-accounts') : null },
   )
 }
 
@@ -36,20 +36,18 @@ export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<str
     () => {
       const fullRangeDefined = isDefined(from) && isDefined(to)
       const url = fullRangeDefined
-        ? `/api/accounts/totals?from=${from.value}&to=${to.value}`
+        ? `/api/accounts/totals?from=${get(from)}&to=${get(to)}`
         : '/api/accounts/totals'
 
       return $fetch<CashAccountWithTotals[]>(url)
     },
-    {
-      initialData: () => useFetchedPayload<CashAccountWithTotals[]>(`cash-accounts-totals-${get(from)}-${get(to)}`),
-    },
+    { initialData: () => useCachedPayload<CashAccountWithTotals[]>(`cash-accounts-totals-${get(from)}-${get(to)}`) },
   )
 }
 export const useCashAccountsBalance = () => useQuery(
   keysAccounts.balance(),
   () => $fetch<CashAccountsBalanceModel>('/api/accounts/cash/balance'),
-  { initialData: useFetchedPayload<CashAccountsBalanceModel>('balance') },
+  { initialData: useCachedPayload<CashAccountsBalanceModel>('balance') },
 )
 
 export const useCashAccountCreate = () => {
@@ -65,7 +63,7 @@ export const useCashAccountCreate = () => {
 export const useAccountUpdate = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
   return useMutation((body: Prisma.AccountUpdateWithoutUserInput) =>
-    $fetch<Account>(`/api/accounts/${id.value}`, {
+    $fetch<Account>(`/api/accounts/${get(id)}`, {
       method: 'PATCH',
       body,
     }), {
@@ -78,7 +76,7 @@ export const useAccountUpdate = (id: Ref<string | undefined>) => {
 export const useAccountDelete = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
   return useMutation(() =>
-    $fetch<Account>(`/api/accounts/${id.value}`, {
+    $fetch<Account>(`/api/accounts/${get(id)}`, {
       method: 'DELETE',
     }), {
     onSuccess: () => {

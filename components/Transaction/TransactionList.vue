@@ -12,8 +12,8 @@ const { isDark } = useColorscheme()
 </script>
 
 <template>
-  <!-- v-auto-animate -->
   <FCard
+    v-auto-animate
     paddingless
     :white="!isDark"
     :filled="isDark"
