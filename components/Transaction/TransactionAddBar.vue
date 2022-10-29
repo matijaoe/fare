@@ -16,7 +16,7 @@ const modal = useTransactionModal()
         circle
         variant="success"
         class="!shadow-xl"
-        @click="modal.launch('Income')"
+        @click="modal.launchNew('Income')"
       />
     </FTooltip>
     <FTooltip content="Expense">
@@ -27,7 +27,7 @@ const modal = useTransactionModal()
         circle
         variant="primary"
         class="!shadow-xl"
-        @click="modal.launch('Expense')"
+        @click="modal.launchNew('Expense')"
       />
     </FTooltip>
     <FTooltip content="Transfer">
@@ -38,7 +38,7 @@ const modal = useTransactionModal()
         circle
         variant="indigo"
         class="!shadow-xl"
-        @click="modal.launch('Transfer')"
+        @click="modal.launchNew('Transfer')"
       />
     </FTooltip>
   </div>

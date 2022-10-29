@@ -9,6 +9,7 @@ type Props = {
 const { item } = defineProps<Props>()
 
 const { isExpense, isTransfer, isIncome } = useTransactionData(item)
+const transactionModal = useTransactionModal()
 
 const timeAgo = useTimeAgo(item.date)
 const formattedDate = useDateFormat(item.date)
@@ -116,6 +117,15 @@ const transactionTooltip = computed(() => {
             :content="transactionTooltip"
           >
             <Icon name="tabler:info-circle" />
+          </FTooltip>
+          <FTooltip
+            flex-center
+            placement="top-end"
+            content="Edit"
+          >
+            <button flex-center @click="transactionModal.launchEdit(item)">
+              <Icon name="tabler:pencil" />
+            </button>
           </FTooltip>
         </div>
       </div>

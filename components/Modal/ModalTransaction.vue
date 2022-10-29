@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { RadioGroup, RadioGroupOption } from '@headlessui/vue'
 import type { Prisma } from '@prisma/client'
+import { get } from '@vueuse/core'
+import type { CashAccountWithAccount } from '~~/models/resources/account'
+import type { SelectItem } from '~~/models/ui/select'
 
 const modal = useTransactionModal()
 const { mutate: create, isError, isLoading } = useTransactionCreate()
@@ -18,10 +21,26 @@ const createTransaction = () => {
     },
   })
 }
+
+// Select options
+
+const { data: categories } = useCategories()
+const { data: accounts } = useCashAccounts({ transactions: false })
+
+const categoryOptions = computed(() => get(categories)?.map(category => ({ ...category, label: category.name, value: category.id })) ?? [])
+const accountOptions = computed(() => get(accounts)?.map(cashAccount => ({ ...cashAccount, label: cashAccount.account.name, value: cashAccount.id })) ?? [])
+
+const fromAccountOptions = computed(() => get(accountOptions).filter((acc: SelectItem<CashAccountWithAccount>) => acc.id !== modal.form.toAccountId) ?? [])
+const toAccountOptions = computed(() => get(accountOptions).filter((acc: SelectItem<CashAccountWithAccount>) => acc.id !== modal.form.fromAccountId) ?? [])
 </script>
 
 <template>
-  <ModalBase v-model="modal.opened" v-bind="modalConfig" panel-class="!w-full !md:min-w-[600px]">
+  <ModalBase
+    v-model="modal.opened"
+    v-bind="modalConfig"
+    panel-class="!w-full !md:min-w-[600px]"
+    @close="modal.hide"
+  >
     <form
       mt-4
       flex
@@ -94,12 +113,12 @@ const createTransaction = () => {
           gap-3
         >
           <FSelectField
-            v-if="modal.isType('Expense') || modal.isType('Transfer')"
-            v-model="modal.fromAccount"
+            v-if="modal.isExpense || modal.isTransfer"
+            v-model="modal.selectedFromAccount"
             icon="tabler:arrow-up-right"
             label="From"
             placeholder="Pick an account"
-            :items="modal.fromAccountOptions"
+            :items="fromAccountOptions"
             block
           >
             <template #option="{ item }">
@@ -124,12 +143,12 @@ const createTransaction = () => {
             </template>
           </FSelectField>
           <FSelectField
-            v-if="modal.isType('Income') || modal.isType('Transfer')"
-            v-model="modal.toAccount"
+            v-if="modal.isIncome || modal.isTransfer"
+            v-model="modal.selectedToAccount"
             icon="tabler:arrow-down-left"
             label="To"
             placeholder="Pick an account"
-            :items="modal.toAccountOptions"
+            :items="toAccountOptions"
             block
           >
             <template #option="{ item }">
@@ -155,12 +174,12 @@ const createTransaction = () => {
           </FSelectField>
 
           <FSelectField
-            v-if="!modal.isType('Transfer')"
-            v-model="modal.category"
+            v-if="!modal.isTransfer"
+            v-model="modal.selectedCategory"
             icon="tabler:building-bank"
             label="Category"
             placeholder="Pick a category"
-            :items="modal.categoryOptions"
+            :items="categoryOptions"
             block
           >
             <template #option="{ item }">

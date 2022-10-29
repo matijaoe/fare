@@ -1,5 +1,9 @@
-export type SelectItem = {
+export type SelectItemProps = {
   label: string
   value: string | number
   disabled?: boolean
-} & Record<string, any>
+}
+
+export type SelectItemDefault = SelectItemProps & Record<string, any>
+
+export type SelectItem<T> = SelectItemProps & T

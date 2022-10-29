@@ -6,11 +6,11 @@ import {
   ListboxOptions,
 } from '@headlessui/vue'
 import { set } from '@vueuse/core'
-import type { SelectItem } from '~~/models/ui'
+import type { SelectItemDefault } from '~~/models/ui'
 
 type Props = {
-  items: SelectItem[]
-  modelValue?: SelectItem
+  items: SelectItemDefault[]
+  modelValue?: SelectItemDefault
   label?: string
   placeholder?: string
   invalid?: boolean
@@ -25,7 +25,7 @@ type Props = {
 }
 
 type Emits = {
-  (e: 'update:modelValue', value: SelectItem | undefined): void
+  (e: 'update:modelValue', value: SelectItemDefault | undefined): void
 }
 
 const props = defineProps<Props>()
@@ -44,10 +44,12 @@ const wrapperProps = computed(() => ({
 
 const selectedItem = computed({
   get: () => props.modelValue,
-  set: (value: SelectItem | undefined) => emit('update:modelValue', value),
+  set: (value: SelectItemDefault | undefined) => emit('update:modelValue', value),
 })
 
-const isSelected = (item: SelectItem) => item.value === selectedItem.value?.value
+watch(selectedItem, value => console.log('selectedItem', value), { immediate: true })
+
+const isSelected = (item: SelectItemDefault) => item.value === selectedItem.value?.value
 
 const clearSelected = () => set(selectedItem, null)
 

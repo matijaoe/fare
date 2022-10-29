@@ -144,8 +144,7 @@ onLongPress(
           Cancel
         </FButton>
 
-        <!-- TODO: long press to delete instead of confirmation modal -->
-        <FTooltip content="Long press to delete" placement="bottom">
+        <FTooltip content="Hold to delete" placement="bottom">
           <FButton
             v-if="modal.isEdit"
             ref="htmlRefHook"

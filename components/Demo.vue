@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SelectItem } from '~~/models/ui'
+import type { SelectItem, SelectItemDefault } from '~~/models/ui'
 
 const loading = ref(false)
 const toggleLoading = useToggle(loading)
@@ -25,7 +25,7 @@ const peopleOptions = $(computed(() =>
     disabled: person.disabled,
   })),
 ))
-const selectedPerson = ref<SelectItem | null>()
+const selectedPerson = ref<SelectItemDefault | null>()
 </script>
 
 <template>
