@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useSidebar } from '~~/store/sidebar.store'
-
 const sidebar = useSidebar()
 const { smDown } = $(useBreakpoints())
 

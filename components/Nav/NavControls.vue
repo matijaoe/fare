@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { smDown } = useBreakpoints()
-const { isDark, toggleDark } = useColorscheme()
+const { isDark, toggleDark } = useTheme()
 </script>
 
 <template>

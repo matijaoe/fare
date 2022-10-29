@@ -8,12 +8,12 @@ const props = defineProps<{
 
 const hasTransactions = computed(() => props.transactions?.length)
 
-const { isDark } = useColorscheme()
+const { isDark } = useTheme()
 </script>
 
 <template>
+  <!-- v-auto-animate -->
   <FCard
-    v-auto-animate
     paddingless
     :white="!isDark"
     :filled="isDark"

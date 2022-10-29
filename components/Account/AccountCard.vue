@@ -23,7 +23,7 @@ const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.exp
 const card = ref<HTMLElement>()
 const isHovered = useElementHover(card)
 
-const { isDark } = useColorscheme()
+const { isDark } = useTheme()
 </script>
 
 <template>

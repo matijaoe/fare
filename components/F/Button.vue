@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useTheme } from '~~/store/theme.store'
 import type { ButtonSize, ButtonVariant } from '~~/models/ui'
 
 type Props = {
@@ -22,8 +21,6 @@ const props = withDefaults(defineProps<Props>(), {
   iconPlacement: 'left',
   radius: 'square',
 })
-
-const theme = useTheme()
 
 const variantStyle = computed(() => {
   switch (props.variant) {
@@ -98,7 +95,7 @@ const isSlot = (name: 'left' | 'right') => {
     text="center"
     font="medium"
     :disabled="loading || disabled"
-    :class="[variantStyle, sizeStyle, widthStyle, radiusStyle, disabledStyle, theme.textCasing]"
+    :class="[variantStyle, sizeStyle, widthStyle, radiusStyle, disabledStyle]"
     outline="none"
   >
     <slot v-if="loading" name="loading">

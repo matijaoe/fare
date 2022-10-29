@@ -1,18 +1,37 @@
 import { useSidebar } from '~~/store/sidebar.store'
 
-export const useShortcuts = () => {
-  const sidebar = useSidebar()
-  const { toggleDark } = useColorscheme()
-  const { cmd, b, j } = $(useMagicKeys())
+type ShortcutsDefinitions = Record<string, { key: string; handler: () => void }>
 
-  watchEffect(() => {
-    // cmd+b to toggle sidebar
-    if (cmd && b) {
-      sidebar.toggle()
-    }
-    // cmd+j to toggle dark mode
-    if (cmd && j) {
-      toggleDark()
-    }
-  })
+const useShortcuts = (shortcuts: ShortcutsDefinitions) => {
+  const keys = useMagicKeys()
+
+  type ShortcutsThing = keyof typeof shortcuts
+
+  const defineShortcut = (thing: ShortcutsThing) => {
+    const { key, handler } = shortcuts[thing]
+    whenever(keys[key], handler)
+  }
+
+  const defineShortcuts = () => (Object.keys(shortcuts) as ShortcutsThing[]).forEach(defineShortcut)
+
+  defineShortcuts()
+}
+
+export const setupShortcuts = () => {
+  const sidebar = useSidebar()
+
+  const { toggleDark } = useTheme()
+
+  const shortcuts = {
+    theme: {
+      key: 'cmd+j',
+      handler: toggleDark,
+    },
+    sidebar: {
+      key: 'cmd+b',
+      handler: sidebar.toggle,
+    },
+  }
+
+  useShortcuts(shortcuts)
 }

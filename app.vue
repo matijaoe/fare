@@ -6,7 +6,7 @@ useHead({
   ],
 })
 
-useShortcuts()
+setupShortcuts()
 </script>
 
 <template>

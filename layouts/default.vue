@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useSidebar } from '~~/store/sidebar.store'
-
 const sidebar = useSidebar()
 
 const sidebarWidth = computed(() => 'w-screen md:w-260px')

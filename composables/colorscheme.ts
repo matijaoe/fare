@@ -1,6 +1,9 @@
-export const useColorscheme = () => {
+import { get, set } from '@vueuse/core'
+
+export const useTheme = () => {
   const isDark = useDark()
-  const toggleDark = useToggle(isDark)
+
+  const toggleDark = () => set(isDark, !get(isDark))
 
   return {
     isDark,
