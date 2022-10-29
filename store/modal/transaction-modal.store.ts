@@ -12,15 +12,12 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
   // Modal type
 
   const modalType = ref<ActionType>('create')
-  const setModalType = (t: ActionType) => set(modalType, t)
-
   const isEdit = computed(() => modalType.value === 'edit')
   const isCreate = computed(() => modalType.value === 'create')
 
   // Values
 
-  const $transaction = ref<Transaction>()
-  const transactionId = computed(() => get($transaction)?.id)
+  const transactionId = ref<string>()
 
   const name = ref<string>('')
   const description = ref<string>('')
@@ -51,11 +48,11 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     set: (item?: SelectItem<CashAccountWithAccount>) => set(toAccount, item),
   })
 
-  // Type
+  // Transaction type
   const type = ref<TransactionType>('Expense')
 
-  const setType = (t: TransactionType) => set(type, t)
   const isType = (t: TransactionType) => get(type) === t
+
   const isExpense = computed(() => isType('Expense'))
   const isIncome = computed(() => isType('Income'))
   const isTransfer = computed(() => isType('Transfer'))
@@ -83,8 +80,7 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     toAccountId: get(toAccount)?.id,
   }))
 
-  const clearForm = () => {
-    set(type, 'Expense')
+  const resetForm = () => {
     set(name, '')
     set(description, '')
     set(amount, undefined)
@@ -94,18 +90,15 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     set(toAccount, undefined)
   }
 
-  // Modal
+  // Modal state
   const open = ref(false)
   const opened = computed({
     get: () => open.value,
     set: value => set(open, value),
   })
 
-  const launchEdit = (transaction: TransactionWithCategoryAndCashAccount) => {
-    console.log('edit transaction', transaction)
-
-    setModalType('edit')
-    set($transaction, transaction)
+  const setEditTransaction = (transaction: TransactionWithCategoryAndCashAccount) => {
+    set(transactionId, transaction.id)
 
     set(type, transaction.type)
     set(name, transaction.name)
@@ -115,23 +108,36 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     set(category, transaction.category)
     set(fromAccount, transaction.fromAccount)
     set(toAccount, transaction.toAccount)
+  }
+
+  const launchEdit = (transaction: TransactionWithCategoryAndCashAccount) => {
+    set(modalType, 'edit')
+    setEditTransaction(transaction)
 
     set(open, true)
   }
 
-  const launchNew = (type?: TransactionType) => {
-    setModalType('create')
-    setType(type ?? 'Expense')
+  const launchNew = (transactionType?: TransactionType) => {
+    set(modalType, 'create')
+
+    set(type, transactionType ?? 'Expense')
+
     set(open, true)
+  }
+
+  const reset = () => {
+    resetForm()
+    set(type, 'create')
+    set(transactionId, undefined)
   }
 
   const hide = () => {
     set(open, false)
-    clearForm()
+    setTimeout(reset, 200)
   }
 
   return {
-    modalType,
+    // Modal type
     isEdit,
     isCreate,
     // Value for edit
@@ -151,18 +157,16 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     selectedToAccount,
     // Form
     form,
-    clearForm,
-    // Options
+    // Transaction types
     isType,
     isExpense,
     isIncome,
     isTransfer,
-    // modal
+    // Modal state
     opened,
     launchNew,
     launchEdit,
     hide,
-    setType,
   }
 })
 

@@ -3,10 +3,11 @@ import { set } from '@vueuse/core'
 
 const {
   // Loading states
-  loading,
+  isCreateLoading,
+  isUpdateLoading,
   isDeleteLoading,
   // Error state
-  isErrorShown,
+  hasError,
   // Select options
   icons,
   colors,
@@ -50,7 +51,7 @@ const modalConfig = computed(() => ({
     v-bind="modalConfig"
     @close="onClose"
   >
-    <FAlert v-if="isErrorShown" type="error" mb-3>
+    <FAlert v-if="hasError" type="error" mb-3>
       Something went wrong.
     </FAlert>
 
@@ -162,7 +163,7 @@ const modalConfig = computed(() => ({
             ref="deleteBtn"
             type="button"
             variant="danger"
-            :disabled="loading"
+            :disabled="isUpdateLoading || isCreateLoading"
             :loading="isDeleteLoading"
             icon="tabler:x"
           >
@@ -174,7 +175,7 @@ const modalConfig = computed(() => ({
           v-if="modal.isEdit"
           type="submit"
           icon="tabler:edit"
-          :loading="loading"
+          :loading="isUpdateLoading"
         >
           Edit
         </FButton>
@@ -182,7 +183,7 @@ const modalConfig = computed(() => ({
           v-if="modal.isCreate"
           type="submit"
           icon="tabler:plus"
-          :loading="loading"
+          :loading="isCreateLoading"
         >
           Create
         </FButton>

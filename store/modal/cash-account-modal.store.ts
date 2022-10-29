@@ -9,10 +9,14 @@ import { toTitleCase } from '~~/utils'
 type ActionType = 'create' | 'edit'
 
 export const useCashAccountModal = defineStore('modal-account', () => {
-  const type = ref<ActionType>('create')
+  // Modal type
+  const modalType = ref<ActionType>('create')
+  const isEdit = computed(() => modalType.value === 'edit')
+  const isCreate = computed(() => modalType.value === 'create')
 
-  const $account = ref<Account>()
-  const accountId = computed(() => get($account)?.id)
+  // Values
+
+  const accountId = ref<string>()
 
   const validationSchema = toFormValidator(
     zod.object({
@@ -34,6 +38,7 @@ export const useCashAccountModal = defineStore('modal-account', () => {
   const { value: color, setValue: setColor } = useField<string | null>('color')
   const { value: icon, setValue: setIcon } = useField<string | null>('icon')
 
+  // Defaults
   const colorDefault = {
     label: toTitleCase('green'),
     value: 'green',
@@ -46,6 +51,8 @@ export const useCashAccountModal = defineStore('modal-account', () => {
     label: toTitleCase('wallet'),
     value: 'tabler:wallet',
   }
+
+  // Select values
 
   const colorObject = computed({
     get: () => isDefined(color)
@@ -69,6 +76,8 @@ export const useCashAccountModal = defineStore('modal-account', () => {
     set: obj => setIcon(obj?.value ?? null),
   })
 
+  // Modal steta
+
   const open = ref(false)
 
   const opened = computed({
@@ -77,8 +86,7 @@ export const useCashAccountModal = defineStore('modal-account', () => {
   })
 
   const setEditAccount = (account: Account) => {
-    set($account, account)
-    set(type, 'edit')
+    set(accountId, account.id)
 
     setName(account.name)
     setColor(account.color)
@@ -86,49 +94,49 @@ export const useCashAccountModal = defineStore('modal-account', () => {
   }
 
   const launch = (account?: Account) => {
-    set(open, true)
-
     if (account) {
       setEditAccount(account)
+      set(modalType, 'edit')
     } else {
-      set(type, 'create')
+      set(modalType, 'create')
     }
+
+    set(open, true)
   }
 
   const reset = () => {
     form.resetForm()
-    set(type, 'create')
-    set($account, undefined)
+    set(modalType, 'create')
+    set(accountId, undefined)
   }
 
-  const hide = (cb?: () => void) => {
+  const hide = () => {
     set(open, false)
-
-    setTimeout(() => {
-      reset()
-      cb?.()
-    }, 200)
+    setTimeout(reset, 200)
   }
-
-  const isEdit = computed(() => type.value === 'edit')
-  const isCreate = computed(() => type.value === 'create')
 
   return {
-    type,
+    // Modal type
     isEdit,
     isCreate,
+    // Value for edit
+    accountId,
+    // Values
+    name,
+    color,
+    icon,
+
+    // Select item value
+    colorObject,
+    iconObject,
+    // Form
+    form,
+    reset,
+    showError,
+    // Modal state
     opened,
     launch,
     hide,
-    name,
-    color,
-    colorObject,
-    iconObject,
-    icon,
-    form,
-    reset,
-    accountId,
-    showError,
   }
 })
 

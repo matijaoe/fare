@@ -1,4 +1,5 @@
 import type { Prisma } from '@prisma/client'
+import { useQueries, useQueryClient } from '@tanstack/vue-query'
 import { get, set } from '@vueuse/core'
 import { toTitleCase } from '~~/utils'
 
@@ -109,24 +110,21 @@ const colors = [
 
 export const useCashAccountForm = () => {
   const modal = useCashAccountModal()
+
   const form = $computed(() => modal.form)
 
-  const { mutate: createAccount, isLoading: isCreateLoading, isError: isErrorCreate } = useCashAccountCreate()
-  const { mutate: updateAccount, isLoading: isUpdateLoading, isError: isErrorUpdate } = useAccountUpdate(toRef(modal, 'accountId'))
-  const { mutate: deleteAccount, isLoading: isDeleteLoading, isError: isErrorDelete } = useAccountDelete(toRef(modal, 'accountId'))
+  const { mutate: createAccount, isLoading: isCreateLoading, isError: isErrorCreate, reset: resetCreate } = useCashAccountCreate()
+  const { mutate: updateAccount, isLoading: isUpdateLoading, isError: isErrorUpdate, reset: resetUpdate } = useAccountUpdate(toRef(modal, 'accountId'))
+  const { mutate: deleteAccount, isLoading: isDeleteLoading, isError: isErrorDelete, reset: resetDelete } = useAccountDelete(toRef(modal, 'accountId'))
 
-  const loading = computed(() => get(isCreateLoading) || get(isUpdateLoading))
   const hasError = computed(() => get(isErrorCreate) || get(isErrorUpdate) || get(isErrorDelete))
-
-  const isErrorShown = ref(false)
-  watch(hasError, val => set(isErrorShown, !!val))
 
   const { allIcons: icons } = useIcons()
 
   const createAccountHandler = (values: Prisma.AccountCreateWithoutUserInput) => {
     createAccount(values, {
       onSuccess: () => {
-        modal.hide(() => set(isErrorShown, false))
+        modal.hide()
       },
     })
   }
@@ -134,7 +132,7 @@ export const useCashAccountForm = () => {
   const editAccountHandler = (values: Prisma.AccountUpdateWithoutUserInput) => {
     updateAccount(values, {
       onSuccess: () => {
-        modal.hide(() => set(isErrorShown, false))
+        modal.hide()
       },
     })
   }
@@ -142,7 +140,7 @@ export const useCashAccountForm = () => {
   const deleteAccountHandler = () => {
     deleteAccount(undefined, {
       onSuccess: () => {
-        modal.hide(() => set(isErrorShown, false))
+        modal.hide()
       },
     })
   }
@@ -155,19 +153,25 @@ export const useCashAccountForm = () => {
     }
   })
 
+  const resetQueries = () => {
+    resetCreate()
+    resetUpdate()
+    resetDelete()
+  }
+
   const onClose = () => {
     modal.reset()
-    set(isErrorShown, false)
+
+    resetQueries()
   }
 
   return {
     // Loading states
-    loading,
     isCreateLoading,
     isUpdateLoading,
     isDeleteLoading,
     // Error state
-    isErrorShown,
+    hasError,
     // Select options
     icons,
     colors,

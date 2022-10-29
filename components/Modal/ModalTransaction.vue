@@ -8,11 +8,10 @@ import type { SelectItem } from '~~/models/ui/select'
 const modal = useTransactionModal()
 
 // CRUD ---------------------------------
-const { mutate: createTransaction, isError: isErrorCreate, isLoading: isCreateLoading } = useTransactionCreate()
-const { mutate: updateTransaction, isLoading: isUpdateLoading, isError: isErrorUpdate } = useTransactionUpdate(toRef(modal, 'transactionId'))
-const { mutate: deleteTransaction, isLoading: isDeleteLoading, isError: isErrorDelete } = useTransactionDelete(toRef(modal, 'transactionId'))
+const { mutate: createTransaction, isLoading: isCreateLoading, isError: isErrorCreate, reset: resetCreate } = useTransactionCreate()
+const { mutate: updateTransaction, isLoading: isUpdateLoading, isError: isErrorUpdate, reset: resetUpdate } = useTransactionUpdate(toRef(modal, 'transactionId'))
+const { mutate: deleteTransaction, isLoading: isDeleteLoading, isError: isErrorDelete, reset: resetDelete } = useTransactionDelete(toRef(modal, 'transactionId'))
 
-const loading = computed(() => get(isCreateLoading) || get(isUpdateLoading))
 const hasError = computed(() => get(isErrorCreate) || get(isErrorUpdate) || get(isErrorDelete))
 
 const isErrorShown = ref(false)
@@ -308,7 +307,7 @@ onLongPress(
                 ref="deleteBtn"
                 type="button"
                 variant="danger"
-                :disabled="loading"
+                :disabled="isUpdateLoading || isCreateLoading"
                 :loading="isDeleteLoading"
                 icon="tabler:x"
               >
@@ -320,7 +319,7 @@ onLongPress(
               v-if="modal.isEdit"
               type="submit"
               icon="tabler:edit"
-              :loading="loading"
+              :loading="isUpdateLoading"
             >
               Edit
             </FButton>
@@ -328,7 +327,7 @@ onLongPress(
               v-if="modal.isCreate"
               type="submit"
               icon="tabler:plus"
-              :loading="loading"
+              :loading="isCreateLoading"
             >
               Create
             </FButton>
