@@ -13,7 +13,10 @@ export const keysCategory = {
   detail: (id: string) => [...keysCategory.all, 'detail', id] as const,
 }
 
-export const useCategories = () => useQuery(keysCategory.all, () => $fetch<Category[]>('/api/categories'))
+export const useCategories = () => useQuery(keysCategory.all,
+  () => $fetch<Category[]>('/api/categories'),
+  { initialData: () => useCachedPayload<CategoryWithTotals[]>('categories') },
+)
 
 export const useCategory = (id: string) => useQuery(keysCategory.detail(id), () => $fetch<Category[]>(`/api/categories/${id}`))
 
@@ -23,11 +26,11 @@ export const useCategoriesTotals = (from: Ref<string | undefined>, to: Ref<strin
     () => {
       const fullRangeDefined = isDefined(from) && isDefined(to)
       const url = fullRangeDefined
-        ? `/api/accounts/totals?from=${get(from)}&to=${get(to)}`
-        : '/api/accounts/totals'
+        ? `/api/categories/totals?from=${get(from)}&to=${get(to)}`
+        : '/api/categories/totals'
 
       return $fetch<CategoryWithTotals[]>(url)
     },
-    { initialData: () => useCachedPayload<CategoryWithTotals[]>(`cash-accounts-totals-${get(from)}-${get(to)}`) },
+    { initialData: () => useCachedPayload<CategoryWithTotals[]>(`categories-totals-${get(from)}-${get(to)}`) },
   )
 }

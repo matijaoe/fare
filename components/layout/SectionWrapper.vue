@@ -9,7 +9,7 @@ defineProps<Props>()
 </script>
 
 <template>
-  <div flex flex-col gap-5>
+  <section flex flex-col gap-5>
     <div flex items-start justify-between>
       <div
         v-if="$slots.title || title"
@@ -42,6 +42,6 @@ defineProps<Props>()
     <div>
       <slot />
     </div>
-  </div>
+  </section>
 </template>
 

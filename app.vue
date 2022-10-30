@@ -10,6 +10,8 @@ setupShortcuts()
 </script>
 
 <template>
+  <NuxtLoadingIndicator />
+
   <ModalGlobalModals />
 
   <div

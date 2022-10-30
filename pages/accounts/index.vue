@@ -1,10 +1,14 @@
 <script lang="ts" setup>
 import { get } from '@vueuse/core'
 
+definePageMeta({
+  layout: 'range',
+})
+
 const route = useRoute()
 
 setBreadcrumbs([
-  { label: 'Accounts', href: { name: route.name ?? 'ne znam' } },
+  { label: 'Accounts', href: { name: route.name ?? '🥺' } },
 ])
 
 const cashAccountModal = useCashAccountModal()
@@ -23,7 +27,7 @@ const shownAccounts = computed(() => {
   return cashAccounts.value?.map((account) => {
     const { totals } = findAccount(account.id) ?? {}
     return { ...account, totals }
-  })
+  }) ?? []
 })
 
 await useFetch('/api/accounts/cash?transactions=false', {
@@ -36,8 +40,7 @@ await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`,
 </script>
 
 <template>
-  <div flex flex-col gap-4>
-    <DateSwitchHeader />
+  <LayoutPageLayout>
     <div
       my-4
       flex="~ col gap-2"
@@ -101,7 +104,7 @@ await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`,
         />
       </div>
     </LayoutSectionWrapper>
-  </div>
+  </LayoutPageLayout>
 </template>
 
 <style scoped>

@@ -4,6 +4,10 @@
 
 <template>
   <LayoutDefaultLayout>
-    <slot />
+    <DateSwitchHeader />
+
+    <div mt-10>
+      <slot />
+    </div>
   </LayoutDefaultLayout>
 </template>
