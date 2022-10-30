@@ -8,6 +8,8 @@ const props = defineProps<{
 
 const hasTransactions = computed(() => props.transactions?.length)
 
+const transactionModal = useTransactionModal()
+
 const { isDark } = useTheme()
 </script>
 
@@ -21,11 +23,14 @@ const { isDark } = useTheme()
     divide="y-2 dashed zinc-2 dark:zinc-9"
   >
     <template v-if="hasTransactions">
-      <TransactionItem
+      <button
         v-for="transaction in transactions"
-        :key="transaction"
-        :item="transaction"
-      />
+        :key="JSON.stringify(transaction)"
+        class="hover:bg-zinc-1/40 dark:hover:bg-zinc-8/40"
+        @click="transactionModal.launchEdit(transaction)"
+      >
+        <TransactionItem :item="transaction" />
+      </button>
     </template>
     <div
       v-else

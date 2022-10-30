@@ -9,7 +9,6 @@ type Props = {
 const { item } = defineProps<Props>()
 
 const { isExpense, isTransfer, isIncome } = useTransactionData(item)
-const transactionModal = useTransactionModal()
 
 const timeAgo = useTimeAgo(item.date)
 const formattedDate = useDateFormat(item.date)
@@ -63,9 +62,9 @@ const transactionTooltip = computed(() => {
             type="dot"
             :icon="item.fromAccount.account.icon"
             :color="item.fromAccount.account.color"
-            @click="navigateTo({
-              name: 'accounts-accountId',
-              params: { accountId: item.fromAccountId },
+            @click.stop="navigateTo({
+              name: 'categories-categoryId',
+              params: { categoryId: item.categoryId },
             })"
           >
             {{ item.fromAccount.account.name }}
@@ -77,9 +76,10 @@ const transactionTooltip = computed(() => {
             type="dot"
             :icon="item.toAccount.account.icon"
             :color="item.toAccount.account.color"
-            @click="navigateTo({
+
+            @click.stop="navigateTo({
               name: 'accounts-accountId',
-              params: { accountId: item.toAccountId },
+              params: { accountId: item.fromAccountId },
             })"
           >
             {{ item.toAccount.account.name }}
@@ -89,45 +89,33 @@ const transactionTooltip = computed(() => {
 
       <div
         flex
-        items-start
+        justify-between
+        items-center
+        gap-3
+        text="xs zinc-4 dark:zinc-4"
       >
-        <div
-          flex
-          justify-between
-          items-center
-          gap-2
-          text="xs zinc-4 dark:zinc-4"
+        <FTooltip
+          flex-center
+          h-full
+          :content="timeAgo"
+          placement="top-end"
         >
-          <FTooltip
-            h-full
-            :content="timeAgo"
-            placement="top-end"
+          <div
+            ml-auto
+            font="normal"
           >
-            <div
-              ml-auto
-              font="normal"
-            >
-              {{ formattedDate }}
-            </div>
-          </FTooltip>
+            {{ formattedDate }}
+          </div>
+        </FTooltip>
 
-          <FTooltip
-            flex-center
-            placement="top-end"
-            :content="transactionTooltip"
-          >
-            <Icon name="tabler:info-circle" />
-          </FTooltip>
-          <FTooltip
-            flex-center
-            placement="top-end"
-            content="Edit"
-          >
-            <button flex-center @click="transactionModal.launchEdit(item)">
-              <Icon name="tabler:pencil" />
-            </button>
-          </FTooltip>
-        </div>
+        <FTooltip
+          flex-center
+          placement="top"
+          :content="transactionTooltip"
+          class="translate-y--0.25"
+        >
+          <Icon name="tabler:info-circle" text-xs />
+        </FTooltip>
       </div>
     </div>
 
