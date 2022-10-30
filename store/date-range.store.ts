@@ -41,6 +41,8 @@ export const useDateRangeStore = defineStore('date-range', () => {
     return format(date, isThisYear(date) ? formatType.month : formatType.monthYear)
   })
 
+  const isCurrentMonth = computed(() => isSameMonth(new Date(), get(selectedMonth)))
+
   return {
     selectedMonth,
     isAllTime,
@@ -55,6 +57,7 @@ export const useDateRangeStore = defineStore('date-range', () => {
     rangeFrom,
     rangeTo,
     hasDefinedRange,
+    isCurrentMonth,
   }
 })
 

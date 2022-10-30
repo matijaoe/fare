@@ -9,8 +9,7 @@ export const keysAccounts = {
   all: ['cash-accounts'] as const,
   balance: () => [...keysAccounts.all, 'balance'] as const,
   totals: () => [...keysAccounts.all, 'totals'] as const,
-  totalsRanges: () => [...keysAccounts.all, 'totals', 'range'] as const,
-  totalsRange: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysAccounts.all, 'totals', 'range', from, to] as const,
+  totalsRange: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysAccounts.all, 'totals', from, to] as const,
   details: () => [...keysAccounts.all, 'detail'] as const,
   detail: (id: MaybeRef<string>) => [...keysAccounts.all, 'detail', unref(id)] as const,
 }
@@ -40,6 +39,7 @@ export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<str
     { initialData: () => useCachedPayload<CashAccountWithTotals[]>(`cash-accounts-totals-${get(from)}-${get(to)}`) },
   )
 }
+
 export const useCashAccountsBalance = () => useQuery(
   keysAccounts.balance(),
   () => $fetch<CashAccountsBalanceModel>('/api/accounts/cash/balance'),

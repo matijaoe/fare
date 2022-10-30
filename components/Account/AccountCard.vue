@@ -61,7 +61,18 @@ const { isDark } = useTheme()
             left--4
             class="transform origin-center scale-1000 filter-saturate-80 opacity-80 sm:scale-600 dark:opacity-25"
           />
-          <Icon :name="account.icon" :class="[colorDotText]" z-2 />
+          <div
+            flex
+            items-center
+            justify-start
+            min-w-5
+          >
+            <Icon
+              :name="account.icon ?? 'tabler:cash'"
+              :class="[colorDotText]"
+              z-2
+            />
+          </div>
           <p
             z-2
             font="display medium"

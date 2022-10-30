@@ -6,7 +6,15 @@ import { prisma } from '~~/prisma'
 export default defineEventHandler(async (event) => {
   const where = useParams<Prisma.TransactionWhereUniqueInput>(event)
   const userId = useContextUserId(event)
-  const data = await useBody<Prisma.TransactionUncheckedCreateInput>(event)
+
+  const body = await useBody<Prisma.TransactionUncheckedUpdateWithoutUserInput>(event)
+
+  const data = { ...body }
+  if (data.type === 'Income') {
+    data.fromAccountId = null
+  } else if (data.type === 'Expense') {
+    data.toAccountId = null
+  }
 
   try {
     const res = await prisma.transaction.updateMany({

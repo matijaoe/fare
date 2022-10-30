@@ -27,11 +27,7 @@ export const useTransactions = (from: Ref<string | undefined>, to: Ref<string | 
 
       return $fetch<Transaction[]>(url)
     },
-    {
-      // TODO: disbled bsc of strange behaviour, no inbetween loading states
-      // is this still true?
-      initialData: () => useCachedPayload<Transaction[]>(`transactions-${get(from)}-${get(to)}`) ?? [],
-    },
+    { initialData: () => useCachedPayload<Transaction[]>(`transactions-${get(from)}-${get(to)}`) ?? [] },
   )
 
 export const useTransactionCreate = () => {
@@ -52,9 +48,11 @@ export const useTransactionUpdate = (id: Ref<string | undefined>) => {
       method: 'PATCH',
       body,
     }), {
-    onSuccess: () => {
-      qc.invalidateQueries(keysAccounts.all)
-      qc.invalidateQueries(keysTransactions.all)
+    onSuccess: async () => {
+      await Promise.all([
+        qc.invalidateQueries(keysAccounts.all),
+        qc.invalidateQueries(keysTransactions.all),
+      ])
     },
   })
 }

@@ -7,14 +7,6 @@ setBreadcrumbs([
   { label: 'Accounts', href: { name: route.name ?? 'ne znam' } },
 ])
 
-// definePageMeta({
-//   meta: {
-//     crumbs: [
-//       { label: 'Accounts', href: { name: route.name } },
-//     ],
-//   },
-// })
-
 const cashAccountStore = useCashAccountModal()
 const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
@@ -102,7 +94,7 @@ await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`,
       >
         <AccountCard
           v-for="account in shownAccounts"
-          :key="`${account.id}-${account.timestamp}`"
+          :key="account"
           :cash-account="account"
           :totals="account.totals"
           :totals-loading="isTotalsLoading"

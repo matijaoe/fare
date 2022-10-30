@@ -23,7 +23,7 @@ const { isDark } = useTheme()
     <template v-if="hasTransactions">
       <TransactionItem
         v-for="transaction in transactions"
-        :key="transaction.id"
+        :key="transaction"
         :item="transaction"
       />
     </template>

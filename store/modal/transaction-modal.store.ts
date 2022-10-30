@@ -23,7 +23,7 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
   const description = ref<string>('')
   const amount = ref<number>()
   const category = ref<Category>()
-  const date = ref<string>(format(new Date(), 'yyyy-MM-dd'))
+  const date = ref<string>()
   const fromAccount = ref<CashAccountWithAccount>()
   const toAccount = ref<CashAccountWithAccount>()
 
@@ -69,12 +69,13 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
 
   // Form
 
+  // TODO: add validaton, currenly breaks if account not defined
   const form = computed<Partial<Prisma.TransactionUncheckedCreateWithoutUserInput>>(() => ({
     type: get(type),
     name: get(name),
     description: get(description),
     amount: get(amount),
-    date: get(date) ? new Date(get(date)).toISOString() : undefined,
+    date: isDefined(date) ? new Date(get(date)).toISOString() : undefined,
     categoryId: get(category)?.id,
     fromAccountId: get(fromAccount)?.id,
     toAccountId: get(toAccount)?.id,
