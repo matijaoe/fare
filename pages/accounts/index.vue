@@ -3,9 +3,9 @@ import { get } from '@vueuse/core'
 
 const route = useRoute()
 
-setBreadcrumbs([
+onMounted(() => setBreadcrumbs([
   { label: 'Accounts', href: { name: route.name ?? '🥺' } },
-])
+]))
 
 const cashAccountModal = useCashAccountModal()
 const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())

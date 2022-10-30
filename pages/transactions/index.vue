@@ -3,9 +3,9 @@ import { get } from '@vueuse/core'
 const { transactions, query } = toRefs(useTransactionsStore())
 const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
 
-setBreadcrumbs([
+onMounted(() => setBreadcrumbs([
   { label: 'Transactions', href: useRoute().path },
-])
+]))
 
 // Fucks things up
 // await useFetch(`/api/transactions?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {

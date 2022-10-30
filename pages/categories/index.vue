@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { get } from '@vueuse/core'
 
-setBreadcrumbs([
+onMounted(() => setBreadcrumbs([
   { label: 'Categories', href: useRoute().path },
-])
+]))
 
 const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
 

@@ -9,9 +9,9 @@ const accountId = $computed(() => route.params.accountId as string)
 
 const { data: account, isLoading } = useCashAccount(accountId)
 
-watch(account, () => setBreadcrumbs([
+whenever(account, () => setBreadcrumbs([
   { label: 'Accounts', href: { name: 'accounts' } },
-  { label: account.value?.account.name || accountId, href: route.path },
+  { label: account.value?.account.name ?? accountId, href: route.path },
 ]), { immediate: true })
 
 // TODO: add to types

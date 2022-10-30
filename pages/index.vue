@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-setBreadcrumbs([
+onMounted(() => setBreadcrumbs([
   { label: 'Dashboard', href: { name: 'index' } },
-])
+]))
 </script>
 
 <template>
