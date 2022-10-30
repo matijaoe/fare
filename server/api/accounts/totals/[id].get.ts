@@ -77,7 +77,6 @@ export default defineEventHandler(async (event) => {
     return {
       ...cashAccount,
       totals: accountTotals,
-      timestamp: Date.now(),
     } as CashAccountWithTotalsAndAccount
   } catch (err) {
     console.error(err)

@@ -72,7 +72,6 @@ export default defineEventHandler(async (event) => {
         return {
           ...account,
           totals: initalTotal(),
-          timestamp: Date.now(),
         }
       }
 
@@ -100,7 +99,6 @@ export default defineEventHandler(async (event) => {
       return {
         ...account,
         totals,
-        timestamp: Date.now(),
       }
     })
   } catch (err) {

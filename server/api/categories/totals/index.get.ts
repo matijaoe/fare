@@ -79,7 +79,6 @@ export default defineEventHandler(async (event) => {
       return {
         ...category,
         totals: initalTotal(),
-        timestamp: Date.now(),
       }
     }
 
@@ -100,7 +99,6 @@ export default defineEventHandler(async (event) => {
     return {
       ...category,
       totals,
-      timestamp: Date.now(),
     }
   })
 })

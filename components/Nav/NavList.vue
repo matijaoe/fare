@@ -1,5 +1,94 @@
 <script lang="ts" setup>
-const { items } = useNavItems()
+const items = [
+  {
+    label: 'Dashboard',
+    icon: 'tabler:home',
+    route: {
+      name: 'index',
+    },
+  },
+  {
+    label: 'Transactions',
+    icon: 'tabler:receipt',
+    route: {
+      name: 'transactions',
+    },
+    children: [
+      {
+        label: 'Income',
+        icon: 'tabler:arrows-transfer-up',
+        route: {
+          name: 'transactions-income',
+        },
+      },
+      {
+        label: 'Transfers',
+        icon: 'tabler:arrows-transfer-down',
+        route: {
+          name: 'transactions-transfers',
+        },
+      },
+    ],
+  },
+  {
+    label: 'Accounts',
+    icon: 'tabler:wallet',
+    route: {
+      name: 'accounts',
+    },
+  },
+  {
+    label: 'Categories',
+    icon: 'tabler:box-padding',
+    route: {
+      name: 'categories',
+    },
+  },
+  {
+    label: 'Net worth',
+    icon: 'tabler:businessplan',
+    route: {
+      name: 'net-worth',
+    },
+  },
+  {
+    label: 'FI',
+    icon: 'tabler:flame',
+    route: {
+      name: 'fi',
+    },
+  },
+  {
+    label: 'Progress',
+    icon: 'tabler:chart-area-line',
+    route: {
+      name: 'progress',
+    },
+    children: [
+      {
+        label: 'Coast FIRE',
+        icon: 'tabler:chart-area-line',
+        route: {
+          name: 'progress-fire',
+        },
+      },
+    ],
+  },
+  {
+    label: 'Tools',
+    icon: 'tabler:tools',
+    route: {
+      name: 'tools',
+    },
+  },
+  {
+    label: 'Resources',
+    icon: 'tabler:books',
+    route: {
+      name: 'resources',
+    },
+  },
+]
 </script>
 
 <template>
@@ -16,4 +105,3 @@ const { items } = useNavItems()
     </NavItem>
   </ul>
 </template>
-

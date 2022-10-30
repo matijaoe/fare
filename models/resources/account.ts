@@ -17,12 +17,10 @@ export type AccountTotals = Record<AccountTotalType, number>
 
 export type CashAccountWithTotals = CashAccount & {
   totals: AccountTotals
-  timestamp: number
 }
 
 export type CashAccountWithTotalsAndAccount = CashAccountWithAccount & {
   totals: AccountTotals
-  timestamp?: number
 }
 
 export type CashAccountWithTotalsAndTransactions = CashAccount & {

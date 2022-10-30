@@ -7,13 +7,12 @@ setBreadcrumbs([
   { label: 'Accounts', href: { name: route.name ?? 'ne znam' } },
 ])
 
-const cashAccountStore = useCashAccountModal()
+const cashAccountModal = useCashAccountModal()
 const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
-
-const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
 
 const { data: cashAccounts } = useCashAccounts()
 const { data: accountTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
+const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
 
 const balance = computed(() => totalBalance.value?.balance ?? 0)
 const formattedTotalBalance = useCurrencyFormat(balance)
@@ -22,12 +21,8 @@ const shownAccounts = computed(() => {
   const findAccount = (id: string) => accountTotals.value?.find(acc => acc.id === id)
 
   return cashAccounts.value?.map((account) => {
-    const { timestamp = Date.now(), totals } = findAccount(account.id) ?? {}
-    return {
-      ...account,
-      timestamp,
-      totals,
-    }
+    const { totals } = findAccount(account.id) ?? {}
+    return { ...account, totals }
   })
 })
 
@@ -82,7 +77,7 @@ await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`,
         <FButton
           variant="secondary"
           icon-placement="left"
-          @click="cashAccountStore.launch()"
+          @click="cashAccountModal.launch()"
         >
           Create account
         </FButton>

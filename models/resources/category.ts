@@ -8,7 +8,6 @@ export type AccountTotals = Record<CategoryTotalType, number>
 
 export type CategoryWithTotals = Category & {
   totals: AccountTotals
-  timestamp: number
 }
 
 export type GroupedCategory = (Prisma.PickArray<Prisma.TransactionGroupByOutputType, ('type' | 'categoryId')[]> & {
