@@ -73,9 +73,7 @@ export default defineEventHandler(async (event) => {
     const hadTransactionsAllTime = category.id in totalsAllTime
     const hasTransactionInRange = isForRange && category.id in totalsInRange
 
-    // TODO: some categories in range dont have transactions in given range,
-    // so they dont have totals object (typescript does not know this)
-    if ((isForRange && !hasTransactionInRange) || !hadTransactionsAllTime) {
+    if (!hadTransactionsAllTime) {
       return {
         ...category,
         totals: initalTotal(),
@@ -84,10 +82,12 @@ export default defineEventHandler(async (event) => {
 
     const totalNet = totalsAllTime[category.id].income - totalsAllTime[category.id].expense
 
+    const ensuredTotalsInRange = hasTransactionInRange ? totalsInRange[category.id] : initalTotal()
+
     const totals = isForRange
       ? {
-          ...totalsInRange[category.id],
-          net: totalsInRange[category.id].income - totalsInRange[category.id].expense,
+          ...ensuredTotalsInRange,
+          net: ensuredTotalsInRange.income - ensuredTotalsInRange.expense,
           totalNet,
         }
       : {

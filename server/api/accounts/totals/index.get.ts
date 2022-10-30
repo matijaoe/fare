@@ -68,7 +68,7 @@ export default defineEventHandler(async (event) => {
       const hadTransactionsAllTime = account.id in totalsAllTime
       const hasTransactionInRange = isForRange && account.id in totalsInRange
 
-      if ((isForRange && !hasTransactionInRange) || !hadTransactionsAllTime) {
+      if (!hadTransactionsAllTime) {
         return {
           ...account,
           totals: initalTotal(),
@@ -79,14 +79,15 @@ export default defineEventHandler(async (event) => {
 
       const totalNet = allTimeAccountTotals.income - allTimeAccountTotals.expense
       const totalTransferNet = allTimeAccountTotals.transferIn - allTimeAccountTotals.transferOut
-      // All time balance could be wrong
       const totalBalance = totalNet + totalTransferNet
+
+      const ensuredTotalsInRange = hasTransactionInRange ? totalsInRange[account.id] : initalTotal()
 
       const totals = isForRange
         ? {
-            ...totalsInRange[account.id],
-            net: totalsInRange[account.id].income - totalsInRange[account.id].expense,
-            transferNet: totalsInRange[account.id].transferIn - totalsInRange[account.id].transferOut,
+            ...ensuredTotalsInRange,
+            net: ensuredTotalsInRange.income - ensuredTotalsInRange.expense,
+            transferNet: ensuredTotalsInRange.transferIn - ensuredTotalsInRange.transferOut,
             balance: totalBalance,
           }
         : {

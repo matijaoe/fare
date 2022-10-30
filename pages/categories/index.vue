@@ -15,7 +15,6 @@ const shownCategories = computed(() => {
 
   return categories.value?.map((category) => {
     const { totals } = findCategory(category.id) ?? {}
-    console.log('totals :>> ', totals)
     return { ...category, totals }
   }) ?? []
 })

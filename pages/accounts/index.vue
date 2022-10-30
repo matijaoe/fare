@@ -34,7 +34,7 @@ await useFetch('/api/accounts/cash?transactions=false', {
   key: 'cash-accounts',
 })
 
-await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
+await useFetch(isDefined(rangeFrom) && isDefined(rangeTo) ? `/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}` : '/api/accounts/totals', {
   key: `cash-accounts-totals-${get(rangeFrom)}-${get(rangeTo)}`,
 })
 </script>
@@ -90,9 +90,10 @@ await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`,
         class="custom-grid"
         gap-3
       >
+        <!-- TODO: keep an eye on this key...  -->
         <AccountCard
           v-for="account in shownAccounts"
-          :key="account"
+          :key="`${account.id}-${account.totals}-${rangeFrom}-${rangeTo}`"
           :cash-account="account"
           :totals="account.totals"
           :totals-loading="isTotalsLoading"

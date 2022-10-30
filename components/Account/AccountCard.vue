@@ -123,8 +123,10 @@ const { isDark } = useTheme()
             <span
               v-if="totals && !totalsLoading"
               class="filter-saturate-90"
+              px-2
+              py-1
               :class="{
-                'px-2 py-1 text-white rounded-md': totals.net !== 0,
+                ' text-white rounded-md': totals.net !== 0,
                 'bg-red-1 text-red-7': totals.net < 0,
                 'bg-emerald-1 text-emerald-7': totals.net > 0,
               }"
