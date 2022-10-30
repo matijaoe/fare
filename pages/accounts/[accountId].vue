@@ -25,9 +25,13 @@ await useFetch<CashAccountWithAccount>(`/api/accounts/cash/${accountId}`, { key:
 </script>
 
 <template>
-  <SectionWrapper :title="account?.account.name">
-    <div v-if="account">
-      <TransactionList v-if="transactions?.length" :transactions="transactions" :loading="isLoading" />
+  <LayoutPageLayout range>
+    <div>
+      <SectionWrapper :title="account?.account.name">
+        <div v-if="account">
+          <TransactionList v-if="transactions?.length" :transactions="transactions" :loading="isLoading" />
+        </div>
+      </SectionWrapper>
     </div>
-  </SectionWrapper>
+  </LayoutPageLayout>
 </template>

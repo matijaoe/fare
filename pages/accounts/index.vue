@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 import { get } from '@vueuse/core'
 
-definePageMeta({
-  layout: 'range',
-})
-
 const route = useRoute()
 
 setBreadcrumbs([
@@ -41,7 +37,7 @@ await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`,
 </script>
 
 <template>
-  <LayoutPageLayout>
+  <LayoutPageLayout range>
     <div
       my-4
       flex="~ col gap-2"

@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 import { get } from '@vueuse/core'
 
-definePageMeta({
-  layout: 'range',
-})
-
 setBreadcrumbs([
   { label: 'Categories', href: useRoute().path },
 ])
@@ -33,7 +29,7 @@ await useFetch(`/api/categories/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}
 </script>
 
 <template>
-  <LayoutPageLayout>
+  <LayoutPageLayout range>
     <div v-for="category in shownCategories" :key="category.id">
       <h5 font-bold>
         {{ category.name }}

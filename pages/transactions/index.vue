@@ -3,28 +3,24 @@ import { get } from '@vueuse/core'
 const { transactions, query } = toRefs(useTransactionsStore())
 const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
 
-definePageMeta({
-  layout: 'range',
-})
-
 setBreadcrumbs([
   { label: 'Transactions', href: useRoute().path },
 ])
 
-await useFetch(`/api/transactions?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
-  key: `transactions-${get(rangeFrom)}-${get(rangeTo)}`,
-})
+// Fucks things up
+// await useFetch(`/api/transactions?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
+//   key: `transactions-${get(rangeFrom)}-${get(rangeTo)}`,
+// })
 </script>
 
 <template>
-  <LayoutPageLayout>
-    <LayoutSectionWrapper pb-18>
+  <LayoutPageLayout range pb-18>
+    <LayoutSectionWrapper>
       <div
         w-full
         flex="~ col xl:row"
         justify-between
         gap-6
-        mt-8
         flex-1
       >
         <div
@@ -40,7 +36,8 @@ await useFetch(`/api/transactions?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
 
       <TransactionAddBar
         fixed
-        pos="bottom-6 right-6"
+        bottom-6
+        right-6
       />
     </LayoutSectionWrapper>
   </LayoutPageLayout>

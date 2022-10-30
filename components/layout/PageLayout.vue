@@ -1,5 +1,15 @@
+<script lang="ts" setup>
+defineProps<{
+  range: boolean
+}>()
+</script>
+
 <template>
-  <div space-y-10>
-    <slot />
+  <div space-y-8>
+    <LazyDateSwitchHeader v-if="range" />
+
+    <div space-y-10>
+      <slot />
+    </div>
   </div>
 </template>
