@@ -1,6 +1,6 @@
 import { get, set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources/transactions'
+import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources/transaction'
 
 export const useTransactionsStore = defineStore('transactions', () => {
   const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())

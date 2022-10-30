@@ -3,7 +3,7 @@ import { get, set } from '@vueuse/core'
 import { format } from 'date-fns'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { CashAccountWithAccount } from '~~/models/resources/account'
-import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources/transactions'
+import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources/transaction'
 import type { SelectItem } from '~~/models/ui'
 
 type ActionType = 'create' | 'edit'

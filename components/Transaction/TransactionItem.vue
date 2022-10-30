@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { get } from '@vueuse/core'
-import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources/transactions'
+import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources/transaction'
 
 type Props = {
   item: TransactionWithCategoryAndCashAccount

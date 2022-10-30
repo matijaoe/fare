@@ -5,6 +5,10 @@ export type DateRange = {
   to?: string
 }
 
+const initalTotal = { income: 0, expense: 0, transferIn: 0, transferOut: 0, net: 0, transferNet: 0, balance: 0 }
+
+export type AccountTotalType = keyof typeof initalTotal
+
 export type CashAccountsQueryModel = DateRange & { transactions?: 'true' | 'false' }
 
 export type CashAccountWithAccount = CashAccount & { account: Account }
@@ -27,8 +31,6 @@ export type CashAccountWithTotalsAndTransactions = CashAccount & {
 }
 
 export type CashAccountsBalanceModel = { balance: number }
-
-export type AccountTotalType = 'income' | 'expense' | 'transferIn' | 'transferOut' | 'net' | 'transferNet' | 'balance'
 
 export type GroupedAccount = (Prisma.PickArray<Prisma.TransactionGroupByOutputType, ('type' | 'fromAccountId' | 'toAccountId')[]> & {
   _sum: {
