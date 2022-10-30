@@ -21,6 +21,7 @@ const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalan
 const balance = computed(() => totalBalance.value?.balance ?? 0)
 const formattedTotalBalance = useCurrencyFormat(balance)
 
+// Totals dissapear from object on range change, is this okay?
 const shownAccounts = computed(() => {
   const findAccount = (id: string) => accountTotals.value?.find(acc => acc.id === id)
 
@@ -34,7 +35,7 @@ await useFetch('/api/accounts/cash?transactions=false', {
   key: 'cash-accounts',
 })
 
-await useFetch(isDefined(rangeFrom) && isDefined(rangeTo) ? `/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}` : '/api/accounts/totals', {
+await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
   key: `cash-accounts-totals-${get(rangeFrom)}-${get(rangeTo)}`,
 })
 </script>
@@ -85,6 +86,7 @@ await useFetch(isDefined(rangeFrom) && isDefined(rangeTo) ? `/api/accounts/total
           Create account
         </FButton>
       </template>
+
       <div
         v-if="shownAccounts?.length"
         class="custom-grid"

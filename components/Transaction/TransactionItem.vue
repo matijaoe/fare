@@ -41,49 +41,61 @@ const transactionTooltip = computed(() => {
         items-center
         gap-3
       >
-        <FBadge
-          v-if="item.category"
-          cursor="pointer"
-          type="solid"
-          :icon="item.category.icon"
-          :color="item.category.color"
-          rounded
+        <button
+          @click.stop="navigateTo({
+            name: 'categories-categoryId',
+            params: { categoryId: item.categoryId },
+          })"
         >
-          {{ item.category.name }}
-        </FBadge>
+          <FBadge
+            v-if="item.category"
+            cursor="pointer"
+            type="solid"
+            :icon="item.category.icon"
+            :color="item.category.color"
+            rounded
+          >
+            {{ item.category.name }}
+          </FBadge>
+        </button>
         <div
           flex
           items-center
           gap-1
         >
-          <FBadge
-            v-if="item.fromAccount"
-            cursor="pointer"
-            type="dot"
-            :icon="item.fromAccount.account.icon"
-            :color="item.fromAccount.account.color"
-            @click.stop="navigateTo({
-              name: 'categories-categoryId',
-              params: { categoryId: item.categoryId },
-            })"
-          >
-            {{ item.fromAccount.account.name }}
-          </FBadge>
-          <Icon v-if="isTransfer" name="tabler:arrow-right" text-sm />
-          <FBadge
-            v-if="item.toAccount"
-            cursor="pointer"
-            type="dot"
-            :icon="item.toAccount.account.icon"
-            :color="item.toAccount.account.color"
-
+          <button
             @click.stop="navigateTo({
               name: 'accounts-accountId',
               params: { accountId: item.fromAccountId },
             })"
           >
-            {{ item.toAccount.account.name }}
-          </FBadge>
+            <FBadge
+              v-if="item.fromAccount"
+              cursor="pointer"
+              type="dot"
+              :icon="item.fromAccount.account.icon"
+              :color="item.fromAccount.account.color"
+            >
+              {{ item.fromAccount.account.name }}
+            </FBadge>
+          </button>
+          <Icon v-if="isTransfer" name="tabler:arrow-right" text-sm />
+          <button
+            @click.stop="navigateTo({
+              name: 'accounts-accountId',
+              params: { accountId: item.toAccountId },
+            })"
+          >
+            <FBadge
+              v-if="item.toAccount"
+              cursor="pointer"
+              type="dot"
+              :icon="item.toAccount.account.icon"
+              :color="item.toAccount.account.color"
+            >
+              {{ item.toAccount.account.name }}
+            </FBadge>
+          </button>
         </div>
       </div>
 

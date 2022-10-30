@@ -43,4 +43,7 @@ export default defineNuxtConfig({
       'store/**', // Scan all nested directories
     ],
   },
+  app: {
+    layoutTransition: { name: 'layout', mode: 'out-in' },
+  },
 })

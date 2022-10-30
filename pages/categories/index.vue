@@ -5,7 +5,11 @@ definePageMeta({
   layout: 'range',
 })
 
-const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
+setBreadcrumbs([
+  { label: 'Categories', href: useRoute().path },
+])
+
+const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
 
 const { data: categories } = useCategories()
 const { data: categoriesTotals } = useCategoriesTotals(rangeFrom, rangeTo)

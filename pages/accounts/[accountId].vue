@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { get } from '@vueuse/core'
 import SectionWrapper from '~~/components/layout/SectionWrapper.vue'
+import type { CashAccountWithAccount } from '~~/models/resources/account'
 
 const route = useRoute()
 
 const accountId = $computed(() => route.params.accountId as string)
+
 const { data: account, isLoading } = useCashAccount(accountId)
 
 watch(account, () => setBreadcrumbs([
@@ -18,6 +20,8 @@ const transactions = computed(() => isDefined(account)
       ...tr,
     }))
   : [])
+
+await useFetch<CashAccountWithAccount>(`/api/accounts/cash/${accountId}`, { key: `cash-account-${accountId}` })
 </script>
 
 <template>

@@ -15,14 +15,17 @@ export const keysCategory = {
 
 export const useCategories = () => useQuery(keysCategory.all,
   () => $fetch<Category[]>('/api/categories'),
-  { initialData: () => useCachedPayload<CategoryWithTotals[]>('categories') },
+  { initialData: () => useCachedPayload<Category[]>('categories') },
 )
 
-export const useCategory = (id: string) => useQuery(keysCategory.detail(id), () => $fetch<Category[]>(`/api/categories/${id}`))
+export const useCategory = (id: string) => useQuery(keysCategory.detail(id),
+  () => $fetch<Category>(`/api/categories/${id}`),
+  { initialData: () => useCachedPayload<Category>(`category-${id}`) },
+)
 
 export const useCategoriesTotals = (from: Ref<string | undefined>, to: Ref<string | undefined>) => {
   return useQuery(
-    keysAccounts.totalsRange(from, to),
+    keysCategory.totalsRange(from, to),
     () => {
       const fullRangeDefined = isDefined(from) && isDefined(to)
       const url = fullRangeDefined
