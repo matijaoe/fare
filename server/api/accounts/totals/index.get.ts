@@ -1,42 +1,36 @@
 import type { TransactionType } from '@prisma/client'
 import { sendInternalError, useContextUserId, useTransactionDateRange } from '~~/composables/server'
-import type { AccountTotalType, CashAccountWithTotals, GroupedAccount } from '~~/models/resources/account'
+import type { AccountTotalType, GroupedAccount } from '~~/models/resources/account'
 import { prisma } from '~~/prisma'
 
 const initalTotal = () => ({ income: 0, expense: 0, net: 0, transferIn: 0, transferOut: 0, transferNet: 0, balance: 0 })
 
 const calculateAccountTotals = (groupedAccounts: GroupedAccount[]) => {
-  return groupedAccounts
-    .map((account: GroupedAccount) => ({
-      ...account,
-      totals: initalTotal(),
-    }))
-    .reduce((totals: Record<string, Record<AccountTotalType, number>>, curr: GroupedAccount) => {
-      const isType = (type: TransactionType) => curr.type === type
+  return groupedAccounts.reduce((totalsByAccount: Record<string, Record<AccountTotalType, number>>, curr: GroupedAccount) => {
+    const isType = (type: TransactionType) => curr.type === type
 
-      const ensureInitialTotals = (id: string) => {
-        const hasDefinedTotals = totals[id]
-        if (!hasDefinedTotals) {
-          totals[id] = initalTotal()
-        }
+    const setupInitialAccountValues = (key: string) => {
+      if (!totalsByAccount[key]) {
+        totalsByAccount[key] = initalTotal()
       }
+    }
 
-      const addSum = (id: string, type: AccountTotalType) => {
-        ensureInitialTotals(id)
-        totals[id][type] += curr._sum.amount ?? 0
-      }
+    const addTransaction = (key: string, type: AccountTotalType) => {
+      setupInitialAccountValues(key)
+      totalsByAccount[key][type] += curr._sum.amount ?? 0
+    }
 
-      if (isType('Transfer') && curr.fromAccountId && curr.toAccountId && curr.fromAccountId !== curr.toAccountId) {
-        addSum(curr.fromAccountId, 'transferOut')
-        addSum(curr.toAccountId, 'transferIn')
-      } else if (isType('Expense') && curr.fromAccountId && !curr.toAccountId) {
-        addSum(curr.fromAccountId, 'expense')
-      } else if (isType('Income') && curr.toAccountId && !curr.fromAccountId) {
-        addSum(curr.toAccountId, 'income')
-      }
+    if (isType('Transfer') && curr.fromAccountId && curr.toAccountId && curr.fromAccountId !== curr.toAccountId) {
+      addTransaction(curr.fromAccountId, 'transferOut')
+      addTransaction(curr.toAccountId, 'transferIn')
+    } else if (isType('Expense') && curr.fromAccountId && !curr.toAccountId) {
+      addTransaction(curr.fromAccountId, 'expense')
+    } else if (isType('Income') && curr.toAccountId && !curr.fromAccountId) {
+      addTransaction(curr.toAccountId, 'income')
+    }
 
-      return totals
-    }, {})
+    return totalsByAccount
+  }, {})
 }
 
 export default defineEventHandler(async (event) => {
@@ -45,14 +39,14 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Group by accounts and entry types
-    const groupedAccountsAllTime = await prisma.transaction.groupBy({
+    const groupByAccountsAllTime = await prisma.transaction.groupBy({
       by: ['fromAccountId', 'toAccountId', 'type'],
       _sum: { amount: true },
       orderBy: { fromAccountId: 'asc' },
       where: { userId },
     })
 
-    const groupedAccountsInRange = hasDefinedRange
+    const groupByAccountsRange = hasDefinedRange
       ? await prisma.transaction.groupBy({
         by: ['fromAccountId', 'toAccountId', 'type'],
         _sum: { amount: true },
@@ -61,51 +55,47 @@ export default defineEventHandler(async (event) => {
       })
       : null
 
-    const totalsFullTime = calculateAccountTotals(groupedAccountsAllTime)
-    const totalsInRange = groupedAccountsInRange ? calculateAccountTotals(groupedAccountsInRange) : null
-
     // Fetch all cash accounts - could this better be done from client and pinia store/vue query?
     const cashAccounts = await prisma.cashAccount.findMany({})
 
+    const totalsAllTime = calculateAccountTotals(groupByAccountsAllTime)
+    const totalsInRange = groupByAccountsRange ? calculateAccountTotals(groupByAccountsRange) : null
+
+    const isForRange = hasDefinedRange && totalsInRange
+
     // Totals for all time - net, expenses, income, transfer net, balance
-    const cashAccountsWithTotals: CashAccountWithTotals[] = cashAccounts.map((account) => {
-      let totals = initalTotal()
+    return cashAccounts.map((account) => {
+      const hadTransactionsAllTime = account.id in totalsAllTime
+      const hasTransactionInRange = isForRange && account.id in totalsInRange
 
-      const allTimeAccountTotals = totalsFullTime[account.id] ?? initalTotal()
-
-      const allTimeNet = allTimeAccountTotals.income - allTimeAccountTotals.expense
-      const allTimeTransferNet = allTimeAccountTotals.transferIn - allTimeAccountTotals.transferOut
-
-      // All time balance could be wrong
-      const allTimeBalance = allTimeNet + allTimeTransferNet
-
-      if (totalsInRange) {
-        const inRangeAccountTotals = totalsInRange[account.id] ?? initalTotal()
-
-        const inRangeNet = inRangeAccountTotals.income - inRangeAccountTotals.expense
-        const inRangeTransferNet = inRangeAccountTotals.transferIn - inRangeAccountTotals.transferOut
-
-        // Overwrite everthing for defined range, except global balance
-        totals = {
-          income: inRangeAccountTotals.income,
-          expense: inRangeAccountTotals.expense,
-          transferIn: inRangeAccountTotals.transferIn,
-          transferOut: inRangeAccountTotals.transferOut,
-          net: inRangeNet,
-          transferNet: inRangeTransferNet,
-          balance: allTimeBalance,
-        }
-      } else {
-        totals = {
-          income: allTimeAccountTotals.income,
-          expense: allTimeAccountTotals.expense,
-          transferIn: allTimeAccountTotals.transferIn,
-          transferOut: allTimeAccountTotals.transferOut,
-          net: allTimeNet,
-          transferNet: allTimeTransferNet,
-          balance: allTimeBalance,
+      if ((isForRange && !hasTransactionInRange) || !hadTransactionsAllTime) {
+        return {
+          ...account,
+          totals: initalTotal(),
+          timestamp: Date.now(),
         }
       }
+
+      const allTimeAccountTotals = totalsAllTime[account.id]
+
+      const totalNet = allTimeAccountTotals.income - allTimeAccountTotals.expense
+      const totalTransferNet = allTimeAccountTotals.transferIn - allTimeAccountTotals.transferOut
+      // All time balance could be wrong
+      const totalBalance = totalNet + totalTransferNet
+
+      const totals = isForRange
+        ? {
+            ...totalsInRange[account.id],
+            net: totalsInRange[account.id].income - totalsInRange[account.id].expense,
+            transferNet: totalsInRange[account.id].transferIn - totalsInRange[account.id].transferOut,
+            balance: totalBalance,
+          }
+        : {
+            ...allTimeAccountTotals,
+            net: totalNet,
+            transferNet: totalTransferNet,
+            balance: totalBalance,
+          }
 
       return {
         ...account,
@@ -113,8 +103,6 @@ export default defineEventHandler(async (event) => {
         timestamp: Date.now(),
       }
     })
-
-    return cashAccountsWithTotals
   } catch (err) {
     console.error(err)
     sendInternalError(event, err)
