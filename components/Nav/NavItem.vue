@@ -56,7 +56,7 @@ const handleNavClick = () => {
       items-center
       border="y-1 y-transparent"
       exact-active-class="!bg-zinc-1 dark:!bg-zinc-8 !color-base"
-      class="color-base-lighter text-lg md:text-base hover:(bg-zinc-1/50 dark:bg-zinc-8/40 color-base-lighter) focus:(bg-zinc-2/50 dark:bg-zinc-8 color-base)"
+      class="color-base-lighter text-lg md:text-sm hover:(bg-zinc-1/50 dark:bg-zinc-8/40 color-base-lighter) focus:(bg-zinc-2/50 dark:bg-zinc-8 color-base)"
       outline="none"
       @click="handleNavClick"
     >

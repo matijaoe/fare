@@ -27,15 +27,9 @@ export default defineConfig({
     presetAttributify(),
     presetTypography(),
     presetWebFonts({
-      provider: 'none', // default provider
       fonts: {
         sans: 'Satoshi',
-        mono: [
-          {
-            name: 'Iosevka Nerd Font',
-            provider: 'none',
-          },
-        ],
+        mono: 'JetBrains Mono',
         display: 'Khand',
       },
     }),
