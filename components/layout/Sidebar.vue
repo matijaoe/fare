@@ -10,7 +10,8 @@ const formattedTotalBalance = useCurrencyFormat(balance)
 
 <template>
   <div
-    font-mono
+    font-sans
+    font-medium
     absolute
     inset-0
     h-screen
@@ -61,7 +62,7 @@ const formattedTotalBalance = useCurrencyFormat(balance)
       >
         <p
           text-zinc-4
-          text="10px"
+          text-xs
           uppercase
           font-sans
           font-medium

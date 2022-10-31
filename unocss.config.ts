@@ -13,7 +13,7 @@ export default defineConfig({
     'border-base': 'border-zinc-2 dark:border-zinc-8',
     'bg-base': 'bg-zinc-50 dark:bg-zinc-9',
     'color-base': 'text-zinc-9 dark:text-zinc-3',
-    'color-base-lighter': 'text-zinc-8 dark:text-zinc-3/90',
+    'color-base-lighter': 'text-zinc-7 dark:text-zinc-3/80',
     'flex-center': 'flex items-center justify-center',
     'max-w-base': 'max-w-1440px',
   },

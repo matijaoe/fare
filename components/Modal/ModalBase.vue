@@ -43,13 +43,22 @@ const hasDefinedBaseSlots = computed(() =>
   hasDefined('title') || hasDefined('description'),
 )
 
-const transitions = {
+const transitionsBackdrop = {
   enter: 'duration-300 ease-out',
-  enterFrom: 'opacity-0',
+  enterFrom: 'opacity-0 ',
   enterTo: 'opacity-100',
   leave: 'duration-200 ease-in',
   leaveFrom: 'opacity-100',
   leaveTo: 'opacity-0',
+}
+
+const transitionsModal = {
+  enter: 'duration-300 ease-out',
+  enterFrom: 'opacity-0 scale-96',
+  enterTo: 'opacity-100 scale-100',
+  leave: 'duration-200 ease-in',
+  leaveFrom: 'opacity-100 scale-100',
+  leaveTo: 'opacity-0 scale-96',
 }
 </script>
 
@@ -60,7 +69,7 @@ const transitions = {
       relative
       @close="close"
     >
-      <TransitionChild v-bind="transitions">
+      <TransitionChild v-bind="transitionsBackdrop">
         <FBackdrop />
       </TransitionChild>
 
@@ -76,7 +85,7 @@ const transitions = {
         <!-- Container to center the panel -->
         <TransitionChild
           flex="center"
-          v-bind="transitions"
+          v-bind="transitionsModal"
         >
           <DialogPanel
             class="w-full sm:(w-fit min-w-sm max-w-xl)"

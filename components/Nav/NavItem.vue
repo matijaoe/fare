@@ -50,24 +50,32 @@ const handleNavClick = () => {
 <template>
   <li block>
     <NuxtLink
-      cursor="pointer"
       :to="item.route"
       flex="~ gap-2"
       items-center
-      border="y-1 y-transparent"
-      exact-active-class="!bg-zinc-1 dark:!bg-zinc-8 !color-base"
-      class="color-base-lighter text-lg md:text-sm hover:(bg-zinc-1/50 dark:bg-zinc-8/40 color-base-lighter) focus:(bg-zinc-2/50 dark:bg-zinc-8 color-base)"
+      class="color-base-lighter text-lg md:text-sm group hover:(bg-zinc-1 dark:bg-zinc-8/40)"
+      exact-active-class="bg-zinc-1 dark:bg-zinc-8/40"
       outline="none"
       @click="handleNavClick"
     >
       <div
         w-full
-        p="y-2"
-        flex="~ gap-5 sm:gap-4"
+        p="y-1.5"
+        flex="~ gap-6 md:gap-4"
         :class="[indentStyle]"
         items-center
       >
-        <Icon :name="item.icon" text="xl md:base" />
+        <div
+          p-3
+          sm:p-2
+          flex-center
+          bg="zinc-1 bg-zinc-8"
+          text="zinc-8 dark:text-zinc-4"
+          rounded-lg
+          class="icon-wrapper group-hover:bg-zinc-2"
+        >
+          <Icon :name="item.icon" text="xl md:sm" />
+        </div>
         <p>{{ item.label }}</p>
       </div>
       <button
@@ -89,3 +97,10 @@ const handleNavClick = () => {
     </div>
   </li>
 </template>
+
+<style scoped>
+.router-link-active .icon-wrapper {
+  background: #18181b !important;
+  color: #e4e4e7;
+}
+</style>

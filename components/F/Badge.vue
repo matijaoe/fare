@@ -36,8 +36,9 @@ const sharedClasses = 'filter-saturate-70'
       flex
       gap-1
       items-center
+      transition
       justify-center
-      class="leading-tight"
+      class="leading-tight hover:border-current"
       :class="[radiusClass, sharedClasses, colorSolidBg, colorSolidText]"
     >
       <Icon

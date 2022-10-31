@@ -42,6 +42,7 @@ const transactionTooltip = computed(() => {
         gap-3
       >
         <button
+          v-if="item.categoryId"
           @click.stop="navigateTo({
             name: 'categories-categoryId',
             params: { categoryId: item.categoryId },
