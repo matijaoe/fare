@@ -27,8 +27,8 @@ setupShortcuts()
 </template>
 
 <style>
-@import url('http://fonts.cdnfonts.com/css/satoshi');
-@import url('http://fonts.cdnfonts.com/css/khand');
+@import url('https://fonts.cdnfonts.com/css/satoshi');
+@import url('https://fonts.cdnfonts.com/css/khand');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/Iosevka/6.0.0/iosevka/iosevka.min.css');
 
 body {
