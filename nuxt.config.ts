@@ -39,6 +39,9 @@ export default defineNuxtConfig({
   vite: {
     plugins: [],
   },
+  css: [
+    '~/assets/styles/floating-vue.css',
+  ],
   imports: {
     dirs: [
       'composables/**', // Scan all nested directories

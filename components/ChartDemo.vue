@@ -26,7 +26,10 @@ const chartOptions = { responsive: true }
 
 <template>
   <ClientOnly>
-    <div max-w-lg w-full mx-auto>
+    <div
+      flex
+      w-full
+    >
       <bar-chart
         :chart-options="chartOptions"
         :chart-data="chartData"

@@ -111,7 +111,7 @@ const transactionTooltip = computed(() => {
           flex-center
           h-full
           :content="timeAgo"
-          placement="top-end"
+          placement="top"
         >
           <div
             ml-auto
@@ -123,7 +123,7 @@ const transactionTooltip = computed(() => {
 
         <FTooltip
           flex-center
-          placement="top"
+          placement="top-end"
           :content="transactionTooltip"
           class="translate-y--0.25"
         >

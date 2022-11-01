@@ -53,7 +53,7 @@ const handleNavClick = () => {
       :to="item.route"
       flex="~ gap-2"
       items-center
-      class="color-base-lighter text-lg md:text-sm group hover:(bg-zinc-1 dark:bg-zinc-8/40)"
+      class="color-base-lighter text-lg md:text-base hover:(bg-zinc-1 dark:bg-zinc-8/40)"
       exact-active-class="bg-zinc-1 dark:bg-zinc-8/40"
       outline="none"
       @click="handleNavClick"
@@ -61,7 +61,7 @@ const handleNavClick = () => {
       <div
         w-full
         p="y-1.5"
-        flex="~ gap-6 md:gap-3"
+        flex="~ gap-6 md:gap-4"
         :class="[indentStyle]"
         items-center
       >
@@ -94,9 +94,3 @@ const handleNavClick = () => {
   </li>
 </template>
 
-<style scoped>
-.router-link-active .icon-wrapper {
-  background: #18181b !important;
-  color: #e4e4e7;
-}
-</style>

@@ -10,8 +10,7 @@ const formattedTotalBalance = useCurrencyFormat(balance)
 
 <template>
   <div
-    font-sans
-    font-medium
+    font-mono
     absolute
     inset-0
     h-screen
@@ -49,16 +48,10 @@ const formattedTotalBalance = useCurrencyFormat(balance)
 
     <NavList flex-1 />
 
-    <div
-      bg="zinc-1 dark:transparent"
-    >
+    <div bg="zinc-1 dark:transparent">
       <div
-        flex
-        flex-col
-        gap-0.5
-        pt-4
-        py-3
-        px-4
+        flex="~ col gap-0.5"
+        p="4 y-3"
       >
         <p
           text-zinc-4
