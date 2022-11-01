@@ -36,7 +36,6 @@ const { isDark } = useTheme()
     aspect="2/1 sm:4/3"
     flex="~ col"
     relative
-    group
   >
     <div p-4 flex="1 ~ col">
       <div

@@ -10,7 +10,7 @@ onMounted(() => setBreadcrumbs([
       <Icon name="tabler:plane" />
       <h1>Dashboard</h1>
     </div>
-    <!-- <ChartDemo /> -->
+    <ChartDemo />
     <Demo />
   </div>
 </template>

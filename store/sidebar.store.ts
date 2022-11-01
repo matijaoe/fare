@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { set } from '@vueuse/core'
-import { useBreakpoints } from '~~/composables/breakpoints'
+import { useBreakpoints } from '~~/composables/ui/breakpoints'
 
 export const useSidebar = defineStore('sidebar', () => {
   const { mdDown } = useBreakpoints()

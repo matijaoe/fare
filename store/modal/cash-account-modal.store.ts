@@ -1,6 +1,6 @@
 import type { Account } from '@prisma/client'
 import { toFormValidator } from '@vee-validate/zod'
-import { get, set } from '@vueuse/core'
+import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import * as zod from 'zod'
@@ -15,7 +15,6 @@ export const useCashAccountModal = defineStore('modal-account', () => {
   const isCreate = computed(() => modalType.value === 'create')
 
   // Values
-
   const accountId = ref<string>()
 
   const validationSchema = toFormValidator(
@@ -125,7 +124,6 @@ export const useCashAccountModal = defineStore('modal-account', () => {
     name,
     color,
     icon,
-
     // Select item value
     colorObject,
     iconObject,

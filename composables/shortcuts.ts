@@ -1,5 +1,3 @@
-import { useSidebar } from '~~/store/sidebar.store'
-
 type ShortcutsDefinitions = Record<string, { key: string; handler: () => void }>
 
 const useShortcuts = (shortcuts: ShortcutsDefinitions) => {

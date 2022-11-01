@@ -1,4 +1,4 @@
-import type { Category, Prisma, Transaction, TransactionType } from '@prisma/client'
+import type { Category, Prisma, TransactionType } from '@prisma/client'
 import { get, set } from '@vueuse/core'
 import { format } from 'date-fns'
 import { acceptHMRUpdate, defineStore } from 'pinia'

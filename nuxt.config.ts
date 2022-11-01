@@ -18,6 +18,8 @@ export default defineNuxtConfig({
   },
   colorMode: {
     classSuffix: '',
+    preference: 'light',
+    fallback: 'light',
   },
   // https://github.com/nuxt/framework/issues/6204#issuecomment-1201398080
   hooks: {

@@ -19,10 +19,10 @@ const sidebar = useSidebar()
       <FBreadcrumbs pl-8 />
     </ClientOnly>
 
-    <!-- <HeaderSearch
+    <HeaderSearch
       class="border-r-2 border-base ml-5"
       ml-auto
-    /> -->
+    />
 
     <button
       grid

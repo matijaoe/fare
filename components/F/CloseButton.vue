@@ -8,9 +8,9 @@ const emit = defineEmits<Emits>()
 
 <template>
   <button
-    cursor="pointer"
+    p-1
+    cursor-pointer
     @click="emit('close')"
-    p="1"
   >
     <Icon
       name="tabler:x"
