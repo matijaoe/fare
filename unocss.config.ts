@@ -29,7 +29,7 @@ export default defineConfig({
     presetWebFonts({
       fonts: {
         sans: 'Satoshi',
-        mono: 'JetBrains Mono',
+        mono: 'Iosevka Nerd Font',
         display: 'Khand',
       },
     }),

@@ -12,12 +12,11 @@ const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
 const { data: cashAccounts } = useCashAccounts()
 const { data: accountTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
-const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
 
+const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
 const balance = computed(() => totalBalance.value?.balance ?? 0)
 const formattedTotalBalance = useCurrencyFormat(balance)
 
-// Totals dissapear from object on range change, is this okay?
 const shownAccounts = computed(() => {
   const findAccount = (id: string) => accountTotals.value?.find(acc => acc.id === id)
 
@@ -91,7 +90,7 @@ await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`,
         <!-- TODO: keep an eye on this key...  -->
         <AccountCard
           v-for="account in shownAccounts"
-          :key="`${account.id}-${account.totals}-${rangeFrom}-${rangeTo}`"
+          :key="account"
           :cash-account="account"
           :totals="account.totals"
           :totals-loading="isTotalsLoading"

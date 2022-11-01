@@ -61,20 +61,16 @@ const handleNavClick = () => {
       <div
         w-full
         p="y-1.5"
-        flex="~ gap-6 md:gap-4"
+        flex="~ gap-6 md:gap-3"
         :class="[indentStyle]"
         items-center
       >
         <div
-          p-3
-          sm:p-2
+          p-1
           flex-center
-          bg="zinc-1 bg-zinc-8"
-          text="zinc-8 dark:text-zinc-4"
           rounded-lg
-          class="icon-wrapper group-hover:bg-zinc-2"
         >
-          <Icon :name="item.icon" text="xl md:sm" />
+          <Icon :name="item.icon" text="xl md:base" />
         </div>
         <p>{{ item.label }}</p>
       </div>
