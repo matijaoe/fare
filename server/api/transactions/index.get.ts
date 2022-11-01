@@ -1,6 +1,6 @@
 import type { Prisma } from '@prisma/client'
 import { useContextUserId, useTransactionDateRange } from '~~/composables/server'
-import { prisma } from '~~/prisma'
+import { db } from '~~/lib/db'
 
 export default defineEventHandler((event) => {
   const userId = useContextUserId(event)
@@ -13,7 +13,7 @@ export default defineEventHandler((event) => {
   }
 
   try {
-    return prisma.transaction.findMany({
+    return db.transaction.findMany({
       where: {
         date,
         userId,

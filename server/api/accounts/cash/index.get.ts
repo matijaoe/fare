@@ -1,6 +1,6 @@
 import type { Prisma } from '@prisma/client'
-import { prisma } from '~/prisma'
 import { useContextUserId, useTransactionDateRange } from '~~/composables/server'
+import { db } from '~~/lib/db'
 
 // Get cash accounts, with transactions only from given month range
 export default defineEventHandler((event) => {
@@ -15,7 +15,7 @@ export default defineEventHandler((event) => {
     : false
 
   try {
-    return prisma.cashAccount.findMany({
+    return db.cashAccount.findMany({
       include: {
         paymentFromAccount: paymentAccountArgs,
         paymentToAccount: paymentAccountArgs,

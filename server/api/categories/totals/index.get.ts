@@ -1,7 +1,7 @@
 import type { TransactionType } from '@prisma/client'
 import { useContextUserId, useTransactionDateRange } from '~~/composables/server'
+import { db } from '~~/lib/db'
 import type { CategoryTotalType, GroupedCategory } from '~~/models/resources/category'
-import { prisma } from '~~/prisma'
 
 const initalTotal = () => ({ income: 0, expense: 0, net: 0, totalNet: 0 })
 
@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
   const userId = useContextUserId(event)
   const { dateQuery: date, hasDefinedRange } = useTransactionDateRange(event)
 
-  const groupedCategoriesAllTime = await prisma.transaction.groupBy({
+  const groupedCategoriesAllTime = await db.transaction.groupBy({
     by: ['categoryId', 'type'],
     _sum: { amount: true },
     orderBy: { categoryId: 'asc' },
@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
   })
 
   const groupedCategoriesInRange = hasDefinedRange
-    ? await prisma.transaction.groupBy({
+    ? await db.transaction.groupBy({
       by: ['categoryId', 'type'],
       _sum: { amount: true },
       orderBy: { categoryId: 'asc' },
@@ -61,7 +61,7 @@ export default defineEventHandler(async (event) => {
     })
     : null
 
-  const categories = await prisma.category.findMany({})
+  const categories = await db.category.findMany({})
 
   const totalsAllTime = calculateCategoryTotals(groupedCategoriesAllTime)
   const totalsInRange = groupedCategoriesInRange ? calculateCategoryTotals(groupedCategoriesInRange) : null

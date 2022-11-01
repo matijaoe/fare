@@ -1,8 +1,8 @@
-import { prisma } from '~/prisma'
+import { db } from '~~/lib/db'
 
 export default defineEventHandler((event) => {
   try {
-    return prisma.account.findMany({
+    return db.account.findMany({
       include: {
         CashAccount: true,
         InvestmentAccount: true,

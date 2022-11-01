@@ -1,7 +1,7 @@
 import { TransactionType } from '@prisma/client'
 import { sendInternalError } from '~~/composables/server'
+import { db } from '~~/lib/db'
 import type { AccountTotalType, CashAccountWithTotalsAndAccount, GroupedAccount } from '~~/models/resources/account'
-import { prisma } from '~~/prisma'
 
 const initalTotal = () => ({ income: 0, expense: 0, transferIn: 0, transferOut: 0, net: 0, transferNet: 0, balance: 0 })
 
@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const { id: requestedAccountId } = event.context.params
   try {
     // Group by accounts and entry types
-    const groupByAccounts = await prisma.transaction.groupBy({
+    const groupByAccounts = await db.transaction.groupBy({
       by: ['fromAccountId', 'toAccountId', 'type'],
       _sum: {
         amount: true,
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
       },
     })
 
-    const cashAccount = await prisma.cashAccount.findFirst({
+    const cashAccount = await db.cashAccount.findFirst({
       include: {
         account: true,
         paymentFromAccount: true,

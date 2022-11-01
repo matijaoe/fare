@@ -1,9 +1,9 @@
 import { sendInternalError, useContextUserId } from '~~/composables/server'
-import { prisma } from '~~/prisma'
+import { db } from '~~/lib/db'
 
 export default defineEventHandler((event) => {
   try {
-    return prisma.transaction.findMany({
+    return db.transaction.findMany({
       where: {
         type: 'Expense',
         userId: useContextUserId(event),

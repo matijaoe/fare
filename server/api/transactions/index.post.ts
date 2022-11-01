@@ -1,7 +1,7 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
 import { sendCustomError, sendInternalError, setResStatus, useContextUserId } from '~~/composables/server'
-import { prisma } from '~~/prisma'
+import { db } from '~~/lib/db'
 import { validEntryType } from '~~/utils/server/transaction'
 
 export default defineEventHandler(async (event) => {
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const entry = await prisma.transaction.create({
+    const entry = await db.transaction.create({
       data: {
         ...data,
         userId,
