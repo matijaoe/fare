@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import type { Placement } from 'floating-vue'
-import 'tippy.js/themes/material.css'
 
-type Props = {
+defineProps<{
   content: string
   placement?: Placement
-}
-
-const props = defineProps<Props>()
+}>()
 </script>
 
 <template>

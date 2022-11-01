@@ -9,15 +9,6 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-generator docs {
-  provider = "node node_modules/prisma-docs-generator"
-}
-
-generator erd {
-  provider = "prisma-erd-generator"
-  theme    = "forest"
-}
-
 model Category {
   id     String  @id @default(cuid())
   name   String
