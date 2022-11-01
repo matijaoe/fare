@@ -1,7 +1,7 @@
 import type { TransactionType } from '@prisma/client'
 import { sendInternalError, useContextUserId, useTransactionDateRange } from '~~/composables/server'
+import { db } from '~~/lib/db'
 import type { AccountTotalType, GroupedAccount } from '~~/models/resources/account'
-import { prisma } from '~~/prisma'
 
 const initalTotal = () => ({ income: 0, expense: 0, net: 0, transferIn: 0, transferOut: 0, transferNet: 0, balance: 0 })
 
@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Group by accounts and entry types
-    const groupByAccountsAllTime = await prisma.transaction.groupBy({
+    const groupByAccountsAllTime = await db.transaction.groupBy({
       by: ['fromAccountId', 'toAccountId', 'type'],
       _sum: { amount: true },
       orderBy: { fromAccountId: 'asc' },
@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
     })
 
     const groupByAccountsRange = hasDefinedRange
-      ? await prisma.transaction.groupBy({
+      ? await db.transaction.groupBy({
         by: ['fromAccountId', 'toAccountId', 'type'],
         _sum: { amount: true },
         orderBy: { fromAccountId: 'asc' },
@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
       : null
 
     // Fetch all cash accounts - could this better be done from client and pinia store/vue query?
-    const cashAccounts = await prisma.cashAccount.findMany({})
+    const cashAccounts = await db.cashAccount.findMany({})
 
     const totalsAllTime = calculateAccountTotals(groupByAccountsAllTime)
     const totalsInRange = groupByAccountsRange ? calculateAccountTotals(groupByAccountsRange) : null

@@ -1,7 +1,7 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { prisma } from '~/prisma'
 import { sendCustomError, sendInternalError, useParams, useTransactionDateRange } from '~~/composables/server'
+import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
   const where = useParams<Prisma.AccountWhereUniqueInput>(event)
@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const user = await prisma.cashAccount.findFirst({
+    const user = await db.cashAccount.findFirst({
       where,
       include: {
         paymentFromAccount: paymentAccountArgs,

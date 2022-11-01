@@ -1,12 +1,12 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
 import { sendCustomError, sendInternalError, useContextUserId, useParams } from '~~/composables/server'
-import { prisma } from '~~/prisma'
+import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
   const where = useParams<Prisma.TransactionWhereUniqueInput>(event)
   try {
-    const res = await prisma.transaction.deleteMany({
+    const res = await db.transaction.deleteMany({
       where: {
         ...where,
         userId: useContextUserId(event),

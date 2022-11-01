@@ -1,13 +1,13 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
 import { sendCustomError, sendInternalError, useContextUserId, useParams } from '~~/composables/server'
-import { prisma } from '~~/prisma'
+import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
   const where = useParams<Prisma.CategoryWhereUniqueInput>(event)
 
   try {
-    const item = await prisma.category.findFirst({
+    const item = await db.category.findFirst({
       where,
       include: {
         transactions: {

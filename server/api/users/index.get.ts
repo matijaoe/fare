@@ -1,5 +1,5 @@
-import { prisma } from '~~/prisma'
+import { db } from '~~/lib/db'
 
 export default defineEventHandler(() => {
-  return prisma.user.findMany()
+  return db.user.findMany()
 })
