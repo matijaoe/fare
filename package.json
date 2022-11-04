@@ -6,7 +6,7 @@
     "dev": "nuxi dev",
     "preview": "node .output/server/index.mjs",
     "lint": "eslint .",
-    "postinstall": "nuxi prepare",
+    "postinstall": "nuxi prepare && prisma generate",
     "studio": "npx prisma studio",
     "generate": "npx prisma generate",
     "db:push": "npx prisma db push",
