@@ -1,12 +1,10 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { set } from '@vueuse/core'
-import { useBreakpoints } from '~~/composables/ui/breakpoints'
 
 export const useSidebar = defineStore('sidebar', () => {
-  const { mdDown } = useBreakpoints()
+  const deviceStore = useDeviceStore()
 
-  // TODO: mobile check on server
-  const isOpen = ref(process.client ? !mdDown.value : true)
+  const isOpen = ref(deviceStore.isDesktop)
 
   const toggle = () => set(isOpen, !isOpen.value)
   const open = () => set(isOpen, true)

@@ -19,6 +19,7 @@ specifiers:
   eslint: ^8.26.0
   floating-vue: 2.0.0-beta.20
   http-status-codes: ^2.2.0
+  mobile-detect: ^1.4.5
   motion: ^10.14.3
   nuxt: 3.0.0-rc.13
   nuxt-icon: ^0.1.7
@@ -58,6 +59,7 @@ devDependencies:
   '@unocss/nuxt': 0.46.3
   '@vueuse/nuxt': 9.4.0_nuxt@3.0.0-rc.13
   eslint: 8.26.0
+  mobile-detect: 1.4.5
   nuxt: 3.0.0-rc.13_wyqvi574yv7oiwfeinomdzmc3m
   nuxt-icon: 0.1.7
   pinia: 2.0.23_typescript@4.8.4
@@ -5365,6 +5367,10 @@ packages:
       pathe: 0.3.9
       pkg-types: 0.3.6
       ufo: 0.8.6
+    dev: true
+
+  /mobile-detect/1.4.5:
+    resolution: {integrity: sha512-yc0LhH6tItlvfLBugVUEtgawwFU2sIe+cSdmRJJCTMZ5GEJyLxNyC/NIOAOGk67Fa8GNpOttO3Xz/1bHpXFD/g==}
     dev: true
 
   /moment/2.29.4:

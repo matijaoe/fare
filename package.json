@@ -4,11 +4,12 @@
   "scripts": {
     "build": "nuxi build && npx prisma generate",
     "dev": "nuxi dev",
+    "generate": "nuxi generate",
     "preview": "npx prisma generate && node .output/server/index.mjs && npx prisma generate",
     "lint": "eslint .",
     "postinstall": "nuxi prepare && npx prisma generate",
     "studio": "npx prisma studio",
-    "generate": "npx prisma generate",
+    "db:generate": "npx prisma generate",
     "db:push": "npx prisma db push",
     "docs": "npx prisma-docs-generator serve"
   },
@@ -21,6 +22,7 @@
     "@unocss/nuxt": "^0.46.3",
     "@vueuse/nuxt": "^9.4.0",
     "eslint": "^8.26.0",
+    "mobile-detect": "^1.4.5",
     "nuxt": "3.0.0-rc.13",
     "nuxt-icon": "^0.1.7",
     "pinia": "^2.0.23",
