@@ -87,6 +87,8 @@ export const useTransactionTotalsPerRange = (from: Ref<string | undefined>, to: 
 
     return $fetch<TransactionsTotalsPerRange>(url)
   },
+  { initialData: () => useCachedPayload<TransactionsTotalsPerRange>(`transactions-totals-${get(from)}-${get(to)}`) },
+
 )
 
 export const useTransactionTotalMonthlys = () => useQuery(
