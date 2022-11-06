@@ -9,9 +9,7 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-50px)]')
 
 <template>
   <div>
-    <ClientOnly>
-      <LayoutSidebar :class="[sidebarWidth]" z-200 />
-    </ClientOnly>
+    <LayoutSidebar :class="[sidebarWidth]" z-200 />
 
     <div h-screen :class="{ 'md:ml-260px': sidebar.isOpen }">
       <Header :class="[headerWidth]" z-100 />
@@ -22,5 +20,10 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-50px)]')
         </main>
       </div>
     </div>
+    <TransactionAddBar
+      fixed
+      bottom-6
+      right-6
+    />
   </div>
 </template>

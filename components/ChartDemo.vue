@@ -44,22 +44,20 @@ const chartOptions = { responsive: true }
 </script>
 
 <template>
-  <ClientOnly>
-    <div
-      flex
-      flex-col
-      lg:flex-row
-      w-full
-    >
-      <bar-chart
-        :chart-options="chartOptions"
-        :chart-data="chartData"
-      />
-      <line-chart
-        :chart-data="chartData"
-        :chart-options="chartOptions"
-      />
-    </div>
-  </ClientOnly>
+  <div
+    flex
+    flex-col
+    lg:flex-row
+    w-full
+  >
+    <bar-chart
+      :chart-options="chartOptions"
+      :chart-data="chartData"
+    />
+    <line-chart
+      :chart-data="chartData"
+      :chart-options="chartOptions"
+    />
+  </div>
 </template>
 

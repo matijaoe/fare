@@ -59,7 +59,6 @@ const { query } = toRefs(useTransactionsStore())
           circle
           size="lg"
           :icon="isAllTime ? 'tabler:timeline' : 'tabler:calendar'"
-          :loading="query.isFetching"
           keep-style-on-load
           min-w="!40"
           @click="query.refetch()"

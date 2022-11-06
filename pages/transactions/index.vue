@@ -33,12 +33,6 @@ onMounted(() => setBreadcrumbs([
           <TransactionFilters />
         </div>
       </div>
-
-      <TransactionAddBar
-        fixed
-        bottom-6
-        right-6
-      />
     </LayoutSectionWrapper>
   </LayoutPageLayout>
 </template>
