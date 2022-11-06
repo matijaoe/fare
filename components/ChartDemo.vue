@@ -7,7 +7,7 @@ const skipped = (ctx: any, value: any) => ctx.p0.skip || ctx.p1.skip ? value : u
 const down = (ctx: any, value: any) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined
 
 // Dates
-const { data: totals } = useTransactionMonthlyTotals()
+const { data: totals } = useTransactionTotalMonthlys()
 
 const { labels, data: expensesData } = $(useMonthlyTotals(totals, 'Expense'))
 const { data: incomeData } = $(useMonthlyTotals(totals, 'Income'))

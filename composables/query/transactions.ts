@@ -4,7 +4,7 @@ import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
 import { $fetch } from 'ohmyfetch'
 import type { Ref } from 'vue'
-import type { TransactionMonyhlyTotalObject } from '~~/models/resources/transaction'
+import type { TransactionTotalMonthlyObject } from '~~/models/resources/transaction'
 
 const keysTransactions = {
   all: ['transactions'] as const,
@@ -73,7 +73,7 @@ export const useTransactionDelete = (id: Ref<string | undefined>) => {
   })
 }
 
-export const useTransactionMonthlyTotals = () => useQuery(
+export const useTransactionTotalMonthlys = () => useQuery(
   keysTransactions.totals(),
-  () => $fetch<TransactionMonyhlyTotalObject>('/api/transactions/totals/monthly'),
+  () => $fetch<TransactionTotalMonthlyObject>('/api/transactions/totals/monthly'),
 )

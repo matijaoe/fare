@@ -9,7 +9,7 @@ export const useTransactionDateRange = (event: H3Event) => {
   const fromDate = from ? new Date(from) : undefined
   const toDate = to ? new Date(to) : undefined
 
-  const hasDefinedRange = computed(() => !!fromDate || !!toDate)
+  const hasDefinedRange = computed(() => !!fromDate && !!toDate)
 
   const withTransactions = computed(() => (hasDefinedRange.value && transactions !== 'false') || transactions === 'true')
 

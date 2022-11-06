@@ -7,11 +7,19 @@ export type TransactionWithCategoryAndCashAccount = Transaction &
   toAccount?: { account: Account }
 }
 
-export type TransactionMonthlyTotal = {
+export type TransactionTotalMonthly = {
   date: string
   type: Omit<TransactionType, 'Transfer'>
   currency: string
   total: number
 }
 
-export type TransactionMonyhlyTotalObject = Record<TransactionType, TransactionMonthlyTotal[]>
+export type TransactionTotalMonthlyObject = Record<TransactionType, TransactionTotalMonthly[]>
+
+export type TransactionsTotalsPerRange = {
+  from: Date | null
+  to: Date | null
+  income: number
+  expense: number
+  net: number
+}

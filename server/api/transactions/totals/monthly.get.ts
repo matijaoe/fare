@@ -1,13 +1,13 @@
 import { useContextUserId } from '~~/composables/server'
 import { db } from '~~/lib/db'
-import type { TransactionMonthlyTotal, TransactionMonyhlyTotalObject } from '~~/models/resources/transaction'
+import type { TransactionTotalMonthly, TransactionTotalMonthlyObject } from '~~/models/resources/transaction'
 import { groupBy } from '~~/utils'
 
 export default defineEventHandler(async (event) => {
   const userId = useContextUserId(event)
 
   try {
-    const totals: TransactionMonthlyTotal[] = await db.$queryRaw`
+    const totals: TransactionTotalMonthly[] = await db.$queryRaw`
       SELECT 
         DATE_FORMAT(t.date, '%Y-%m') as date,
         t.type,
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
         t.date desc
     `
 
-    return groupBy(totals, 'type') as TransactionMonyhlyTotalObject
+    return groupBy(totals, 'type') as TransactionTotalMonthlyObject
   } catch (err) {
     console.error(err)
     sendInternalError(event, err)
