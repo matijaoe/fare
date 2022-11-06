@@ -6,3 +6,9 @@ export type TransactionWithCategoryAndCashAccount = Transaction &
   fromAccount?: { account: Account }
   toAccount?: { account: Account }
 }
+
+export type TransactionMonthlyTotal = {
+  date: string
+  type: 'Expense' | 'Income'
+  total: number
+}
