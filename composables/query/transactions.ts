@@ -1,14 +1,17 @@
 import type { Account, Prisma, Transaction } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
-import { get } from '@vueuse/core'
 import type { MaybeRef } from '@vueuse/core'
+import { get } from '@vueuse/core'
+import { $fetch } from 'ohmyfetch'
 import type { Ref } from 'vue'
+import type { TransactionMonyhlyTotalObject } from '~~/models/resources/transaction'
 
 const keysTransactions = {
   all: ['transactions'] as const,
   allTime: () => [...keysTransactions.all, 'all-time'] as const,
   ranges: () => [...keysTransactions.all, 'range'] as const,
   range: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysTransactions.all, 'range', from, to] as const,
+  totals: () => [...keysTransactions.all, 'totals'] as const,
   details: () => [...keysTransactions.all, 'detail'] as const,
   detail: (id: MaybeRef<string>) => [...keysTransactions.all, 'detail', id] as const,
 }
@@ -69,3 +72,8 @@ export const useTransactionDelete = (id: Ref<string | undefined>) => {
     },
   })
 }
+
+export const useTransactionMonthlyTotals = () => useQuery(
+  keysTransactions.totals(),
+  () => $fetch<TransactionMonyhlyTotalObject>('/api/transactions/totals/monthly'),
+)

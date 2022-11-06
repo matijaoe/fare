@@ -1,6 +1,7 @@
 import type { Category } from '@prisma/client'
 import { useQuery } from '@tanstack/vue-query'
 import { get } from '@vueuse/core'
+import { $fetch } from 'ohmyfetch'
 import type { Ref } from 'vue'
 import type { CategoryWithTotals } from '~~/models/resources/category'
 

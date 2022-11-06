@@ -1,16 +1,35 @@
 <script setup lang="ts">
+import { format, isThisYear } from 'date-fns'
+
 const tension = 0.5
 
 const skipped = (ctx: any, value: any) => ctx.p0.skip || ctx.p1.skip ? value : undefined
 const down = (ctx: any, value: any) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined
 
-const chartData = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+// Dates
+const { data: totals } = useTransactionMonthlyTotals()
+
+const { labels, data: expensesData } = $(useMonthlyTotals(totals, 'Expense'))
+const { data: incomeData } = $(useMonthlyTotals(totals, 'Income'))
+
+const chartData = computed(() => ({
+  labels,
   datasets: [
     {
       label: 'Expense',
-      data: [65, 59, NaN, 48, 56, 57, 40],
-      borderColor: 'rgb(75, 192, 192)',
+      data: expensesData,
+      borderColor: '#0D9488',
+      segment: {
+        borderColor: (ctx: any) => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
+        borderDash: (ctx: any) => skipped(ctx, [6, 6]),
+      },
+      spanGaps: true,
+      tension,
+    },
+    {
+      label: 'Income',
+      data: incomeData,
+      borderColor: '#EA580C',
       segment: {
         borderColor: (ctx: any) => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
         borderDash: (ctx: any) => skipped(ctx, [6, 6]),
@@ -19,7 +38,7 @@ const chartData = {
       tension,
     },
   ],
-}
+}))
 
 const chartOptions = { responsive: true }
 </script>
@@ -28,6 +47,8 @@ const chartOptions = { responsive: true }
   <ClientOnly>
     <div
       flex
+      flex-col
+      lg:flex-row
       w-full
     >
       <bar-chart

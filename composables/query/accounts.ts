@@ -2,6 +2,7 @@ import type { Account, CashAccount, Prisma } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
+import { $fetch } from 'ohmyfetch'
 import type { Ref } from 'vue'
 import type { CashAccountWithAccount, CashAccountWithTotals, CashAccountsBalanceModel } from '~~/models/resources/account'
 

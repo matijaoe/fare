@@ -1,4 +1,4 @@
-import type { Account, Category, Transaction } from '@prisma/client'
+import type { Account, Category, Transaction, TransactionType } from '@prisma/client'
 
 export type TransactionWithCategoryAndCashAccount = Transaction &
 { category?: Category } &
@@ -9,6 +9,9 @@ export type TransactionWithCategoryAndCashAccount = Transaction &
 
 export type TransactionMonthlyTotal = {
   date: string
-  type: 'Expense' | 'Income'
+  type: Omit<TransactionType, 'Transfer'>
+  currency: string
   total: number
 }
+
+export type TransactionMonyhlyTotalObject = Record<TransactionType, TransactionMonthlyTotal[]>
