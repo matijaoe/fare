@@ -28,7 +28,7 @@ export type CashAccountWithTotalsAndTransactions = CashAccount & {
   paymentToAccount: Transaction
 }
 
-export type CashAccountsBalanceModel = { balance: number }
+export type CashAccountsBalanceModel = { balance: number; timestamp: Date }
 
 export type GroupedAccount = (Prisma.PickArray<Prisma.TransactionGroupByOutputType, ('type' | 'fromAccountId' | 'toAccountId')[]> & {
   _sum: {

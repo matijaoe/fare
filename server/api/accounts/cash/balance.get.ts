@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
       return total
     }, 0)
 
-    return { balance }
+    return { balance, timestamp: new Date() }
   } catch (err: unknown) {
     console.error(err)
     sendInternalError(event, err)

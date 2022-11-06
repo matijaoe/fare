@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const userId = useContextUserId(event)
 
   try {
-    const totals: TransactionTotalMonthly[] = await db.$queryRaw`
+    const totals = await db.$queryRaw<TransactionTotalMonthly[]>`
       SELECT 
         DATE_FORMAT(t.date, '%Y-%m') as date,
         t.type,

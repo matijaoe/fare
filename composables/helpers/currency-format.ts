@@ -1,9 +1,10 @@
-import type { MaybeRef } from '@vueuse/core'
+import { resolveUnref } from '@vueuse/core'
+import type { MaybeComputedRef } from '@vueuse/core'
 import { locale } from '~~/utils'
 
-export const useCurrencyFormat = (amount: MaybeRef<number>, options?: MaybeRef<Intl.NumberFormatOptions>) =>
+export const useCurrencyFormat = (amount: MaybeComputedRef<number>, options?: MaybeComputedRef<Intl.NumberFormatOptions>) =>
   computed(() => new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'EUR',
     ...[unref(options)],
-  })?.format(unref(amount)))
+  })?.format(resolveUnref(amount)))

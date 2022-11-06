@@ -15,6 +15,7 @@ const { colorSolidBg, colorDotText } = useAppColors(props.cashAccount.account.co
 const account = $computed(() => props.cashAccount.account)
 const totals = $computed(() => props.totals)
 
+// TODO: skeleton instead of xxx
 const formattedBalance = totals?.balance != null ? useCurrencyFormat(totals.balance) : '€XXX.XX'
 const formattedCashflow = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : '€XXX.XX'
 const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income, { signDisplay: 'always' }) : '€XXX.XX'

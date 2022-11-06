@@ -1,11 +1,19 @@
 <script lang="ts" setup>
-import { get } from '@vueuse/core'
-const { transactions, query } = toRefs(useTransactionsStore())
-const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
-
 onMounted(() => setBreadcrumbs([
   { label: 'Transactions', href: useRoute().path },
 ]))
+
+const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
+const { transactions, query } = toRefs(useTransactionsStore())
+const { data: totals, isLoading: isTotalsLoading } = useTransactionTotalsPerRange(rangeFrom, rangeTo)
+
+const net = computed(() => totals.value?.net ?? 0)
+const expense = computed(() => isDefined(totals) ? -totals.value.expense : 0)
+const income = computed(() => totals.value?.income ?? 0)
+
+const formattedNet = useCurrencyFormat(net, { signDisplay: 'always' })
+const formattedExpense = useCurrencyFormat(expense, { signDisplay: 'always' })
+const formattedIncome = useCurrencyFormat(income, { signDisplay: 'always' })
 
 // Fucks things up
 // await useFetch(`/api/transactions?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
@@ -15,6 +23,75 @@ onMounted(() => setBreadcrumbs([
 
 <template>
   <LayoutPageLayout range pb-18>
+    <div
+      my-4
+      flex="~ col gap-2"
+      translate-y="0.4"
+    >
+      <span
+        uppercase
+        font="sans medium"
+        text="sm zinc-4 dark:zinc-5"
+        class="leading-tight"
+      >
+        Cashflow
+      </span>
+
+      <div
+        text-6xl
+        font="display medium"
+      >
+        <div
+          v-if="isTotalsLoading"
+          flex
+          gap-4
+          items-center
+          class="color-base-lighter"
+        >
+          <!-- TODO: skeleton instead of xxx -->
+          <span>€X,XXX.XX</span>
+          <FLoader text-4xl />
+        </div>
+        <h4 v-else>
+          {{ formattedNet }}
+        </h4>
+      </div>
+      <div flex items-center gap-6>
+        <div flex="~ col">
+          <div
+            uppercase
+            font="sans medium"
+            text="10px zinc-4 dark:zinc-5"
+            class="leading-tight"
+          >
+            <span v-if="isAllTime">Total earned</span>
+            <span v-else>Earned this month</span>
+          </div>
+          <span font-mono>
+            <FLoader v-if="isTotalsLoading" />
+            <span v-else-if="totals">
+              {{ formattedIncome }}
+            </span></span>
+        </div>
+        <div flex="~ col">
+          <div
+            uppercase
+            font="sans medium"
+            text="10px zinc-4 dark:zinc-5"
+            class="leading-tight"
+          >
+            <span v-if="isAllTime">Total spent</span>
+            <span v-else>spent this month</span>
+          </div>
+          <span font-mono>
+            <FLoader v-if="isTotalsLoading" />
+            <span v-else-if="totals">
+              {{ formattedExpense }}
+            </span></span>
+        </div>
+      </div>
+    </div>
+
     <LayoutSectionWrapper>
       <div
         w-full

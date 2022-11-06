@@ -4,14 +4,17 @@ import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
 import { $fetch } from 'ohmyfetch'
 import type { Ref } from 'vue'
-import type { TransactionTotalMonthlyObject } from '~~/models/resources/transaction'
+import type { TransactionTotalMonthlyObject, TransactionsTotalsPerRange } from '~~/models/resources/transaction'
 
 const keysTransactions = {
   all: ['transactions'] as const,
-  allTime: () => [...keysTransactions.all, 'all-time'] as const,
+  // Ranges
   ranges: () => [...keysTransactions.all, 'range'] as const,
   range: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysTransactions.all, 'range', from, to] as const,
+  // Totals
   totals: () => [...keysTransactions.all, 'totals'] as const,
+  total: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysTransactions.all, 'totals', from, to] as const,
+  // Details
   details: () => [...keysTransactions.all, 'detail'] as const,
   detail: (id: MaybeRef<string>) => [...keysTransactions.all, 'detail', id] as const,
 }
@@ -40,6 +43,7 @@ export const useTransactionCreate = () => {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
       qc.invalidateQueries(keysTransactions.ranges())
+      qc.invalidateQueries(keysTransactions.totals())
     },
   })
 }
@@ -73,7 +77,20 @@ export const useTransactionDelete = (id: Ref<string | undefined>) => {
   })
 }
 
+export const useTransactionTotalsPerRange = (from: Ref<string | undefined>, to: Ref<string | undefined>) => useQuery(
+  keysTransactions.total(from, to),
+  () => {
+    const fullRangeDefined = isDefined(from) && isDefined(to)
+    const url = fullRangeDefined
+      ? `/api/transactions/totals?from=${get(from)}&to=${get(to)}`
+      : '/api/transactions/totals'
+
+    return $fetch<TransactionsTotalsPerRange>(url)
+  },
+)
+
 export const useTransactionTotalMonthlys = () => useQuery(
   keysTransactions.totals(),
   () => $fetch<TransactionTotalMonthlyObject>('/api/transactions/totals/monthly'),
 )
+
