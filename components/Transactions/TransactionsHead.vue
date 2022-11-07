@@ -20,7 +20,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
     <div flex items-center gap-5>
       <div text-2xl flex-center>
         <div
-          v-if="isLoading || !isDefined(totals)"
+          v-if="isLoading"
           p-3
           bg-stone-2
           text-stone-9
