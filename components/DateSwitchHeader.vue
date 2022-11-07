@@ -89,6 +89,7 @@ const { query } = toRefs(useTransactionsStore())
           @click="setAllTime(true)"
         />
       </FTooltip>
+
       <FTooltip
         v-if="isAllTime || !isLatestMonth"
         content="Current month"

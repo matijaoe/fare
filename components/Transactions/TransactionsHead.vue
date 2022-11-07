@@ -19,24 +19,27 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
   >
     <div flex items-center gap-5>
       <div text-2xl flex-center>
-        <!-- TODO: animate from top to bottom change -->
-        <TransitionFade>
+        <div
+          v-if="isLoading || !isDefined(totals)"
+          p-3
+          bg-stone-2
+          text-stone-9
+          rounded-full
+          ring="2 offset 2 current"
+          flex-center
+          flex-shrink-0
+        >
+          <FLoader />
+        </div>
+        <template v-else>
           <div
-            v-if="isLoading"
-            h="52.8px"
-            aspect-square
-            rounded-full
-            class="animate-pulse bg-stone-2 dark:bg-stone-7"
-          />
-          <div
-            v-else-if="net > 0"
+            v-if="net > 0"
             order-2
             bg-green-1
             text-green-9
             p-3
             ring="2 offset 2 current"
             rounded-full
-            aspect-square
             flex-center
             flex-shrink-0
           >
@@ -50,7 +53,6 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
             p-3
             ring="2 offset 2 current"
             rounded-full
-            aspect-square
             flex-center
             flex-shrink-0
           >
@@ -58,19 +60,17 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
           </div>
           <div
             v-else
-            order-2
             bg-stone-2
             text-stone-9
             p-3
             ring="2 offset 2 current"
             rounded-full
-            aspect-square
             flex-center
             flex-shrink-0
           >
             <Icon name="tabler:equal" />
           </div>
-        </TransitionFade>
+        </template>
       </div>
 
       <div space-y-1>

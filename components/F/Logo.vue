@@ -43,7 +43,7 @@ const sizeStyle = computed(() => {
       name="ph:lightning-duotone"
       :class="[sizeStyle.icon]"
     />
-    RELO
+    RAY
   </div>
 </template>
 
