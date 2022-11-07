@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@antfu/eslint-config': ^0.29.3
+  '@fontsource/iosevka': ^4.5.4
   '@formkit/auto-animate': 1.0.0-beta.3
   '@headlessui/vue': ^1.7.4
   '@mermaid-js/mermaid-cli': ^9.1.7
@@ -34,6 +35,7 @@ specifiers:
   zod: 3.19.1
 
 dependencies:
+  '@fontsource/iosevka': 4.5.4
   '@formkit/auto-animate': 1.0.0-beta.3
   '@headlessui/vue': 1.7.4
   '@prisma/client': 4.5.0_prisma@4.5.0
@@ -513,6 +515,10 @@ packages:
     resolution: {integrity: sha512-4kAVoogvQm2N0XE0G6APQJuCNuErjOfPW8Ux7DFxh8+AfugWflwVJ5LDlHOwrwut7z/30NUvdtHzQ3zSip4EzQ==}
     dependencies:
       '@floating-ui/core': 0.3.1
+    dev: false
+
+  /@fontsource/iosevka/4.5.4:
+    resolution: {integrity: sha512-S3rNmYP8EvjeyAJ8mwtt+9CZK8p5LdxYXpgv9lSBtHbRkwjcg8MbPs7vzWLRYs0R0MRmpvlLw864xvn3XKXclA==}
     dev: false
 
   /@formkit/auto-animate/1.0.0-beta.3:

@@ -1,4 +1,6 @@
 <script setup>
+import '@fontsource/iosevka'
+
 useHead({
   title: 'FIRE',
   link: [
