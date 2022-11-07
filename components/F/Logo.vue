@@ -34,7 +34,7 @@ const sizeStyle = computed(() => {
     v-else
     flex
     items-center
-    font="mono black"
+    font="sans black"
     class="color-base-lighter"
     :class="[sizeStyle.text]"
   >
@@ -43,7 +43,7 @@ const sizeStyle = computed(() => {
       name="ph:lightning-duotone"
       :class="[sizeStyle.icon]"
     />
-    RE
+    RELO
   </div>
 </template>
 

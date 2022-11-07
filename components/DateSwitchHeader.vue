@@ -49,6 +49,7 @@ const { query } = toRefs(useTransactionsStore())
         </FTooltip>
       </template>
     </div>
+
     <div flex="center" h-full>
       <FTooltip
         content="Click to refresh"

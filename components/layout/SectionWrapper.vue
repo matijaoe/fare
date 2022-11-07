@@ -10,10 +10,13 @@ defineProps<Props>()
 
 <template>
   <section flex flex-col gap-5>
-    <div flex items-start justify-between>
-      <div
-        v-if="$slots.title || title"
-      >
+    <div
+      v-if="$slots.title || title || $slots.right"
+      flex
+      items-start
+      justify-between
+    >
+      <div v-if="$slots.title || title">
         <slot name="title">
           <h1
             flex

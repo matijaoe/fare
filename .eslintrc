@@ -2,7 +2,7 @@
   "extends": "@antfu",
   "rules": {
     "vue/max-attributes-per-line": [
-      "error",
+      "warn",
       {
         "singleline": {
           "max": 3

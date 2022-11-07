@@ -170,7 +170,7 @@ const { isDark } = useTheme()
           <span font-mono>
             <FLoader v-if="totalsLoading" />
             <span v-else-if="totals">
-              {{ formattedIncome }}
+              {{ totals.income > 0 ? '+' : '' }}{{ formattedIncome }}
             </span>
           </span>
         </div>

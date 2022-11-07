@@ -28,10 +28,15 @@ export default defineConfig({
     presetTypography(),
     presetWebFonts({
       fonts: {
-        sans: 'Satoshi',
+        sans: {
+          name: 'Satoshi',
+          provider: 'fontshare',
+          weights: [400, 500, 600, 700, 800, 900],
+        },
         mono: {
           name: 'Iosevka',
           provider: 'none',
+          weights: [400, 500, 600, 700, 800, 900],
         },
         display: 'Khand',
       },

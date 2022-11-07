@@ -29,9 +29,7 @@ setupShortcuts()
 </template>
 
 <style>
-@import url('https://fonts.cdnfonts.com/css/satoshi');
 @import url('https://fonts.cdnfonts.com/css/khand');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/Iosevka/6.0.0/iosevka/iosevka.min.css');
 
 body {
   accent-color: black;
@@ -41,16 +39,6 @@ body {
 
 html.dark {
   color-scheme: dark;
-}
-
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 150ms ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
 }
 </style>
 

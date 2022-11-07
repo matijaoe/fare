@@ -2,8 +2,6 @@
 defineProps<{
   range: boolean
 }>()
-
-const mainContentDimensions = computed(() => 'max-w-default min-h-[calc(100vh-50px)]')
 </script>
 
 <template>
@@ -13,7 +11,6 @@ const mainContentDimensions = computed(() => 'max-w-default min-h-[calc(100vh-50
     <div
       space-y-10
       mx-auto
-      :class="[mainContentDimensions]"
     >
       <slot />
     </div>
