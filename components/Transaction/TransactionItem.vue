@@ -29,13 +29,19 @@ const transactionTooltip = computed(() => {
 
 <template>
   <div
+    h="125px"
     p-5
     flex
     flex-col
     gap-4
   >
     <!-- Top section -->
-    <div flex items-center justify-between>
+    <div
+      flex-1
+      flex
+      items-center
+      justify-between
+    >
       <div
         flex
         items-center
@@ -132,15 +138,19 @@ const transactionTooltip = computed(() => {
       </div>
     </div>
 
+    <!-- Bottom section -->
     <div
       flex
       justify-between
       items-end
       gap-12
+      mt-auto
     >
       <div
         text="left"
         truncate
+        flex
+        flex-col
       >
         <div
           text-xl
@@ -150,14 +160,14 @@ const transactionTooltip = computed(() => {
           {{ item.name }}
         </div>
         <div
-          v-if="item.description"
+          :class="{ 'opacity-0 invisible order--1': !item.description }"
           text-xs
           truncate
           font="normal"
           text="zinc-4 dark:zinc-4"
           mt="1"
         >
-          {{ item.description }}
+          {{ !!item.description ? item.description : '-' }}
         </div>
       </div>
 
