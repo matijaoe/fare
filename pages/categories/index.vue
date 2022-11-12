@@ -30,11 +30,12 @@ await useFetch(`/api/categories/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}
 
 <template>
   <LayoutPageLayout range>
-    <div v-for="category in shownCategories" :key="category.id">
-      <h5 font-bold>
-        {{ category.name }}
-      </h5>
-      <div>{{ category.totals }}</div>
+    <div grid lg:grid-cols-2 gap-3>
+      <CategoryCard
+        v-for="category in shownCategories"
+        :key="category.id"
+        :category="category"
+      />
     </div>
   </LayoutPageLayout>
 </template>

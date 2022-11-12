@@ -38,12 +38,12 @@ const sizeStyle = computed(() => {
     class="color-base-lighter"
     :class="[sizeStyle.text]"
   >
-    FI
+    FIN
     <Icon
-      name="ph:lightning-duotone"
+      name="ph:fire-duotone"
       :class="[sizeStyle.icon]"
     />
-    RAY
+    IND
   </div>
 </template>
 

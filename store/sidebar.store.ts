@@ -4,7 +4,8 @@ import { set } from '@vueuse/core'
 export const useSidebar = defineStore('sidebar', () => {
   const deviceStore = useDeviceStore()
 
-  const isOpen = ref(deviceStore.isDesktop)
+  // const isOpen = ref(deviceStore.isDesktop)
+  const isOpen = ref(false)
 
   const toggle = () => set(isOpen, !isOpen.value)
   const open = () => set(isOpen, true)

@@ -10,7 +10,7 @@ type Props = {
 const props = defineProps<Props>()
 const cashAccountStore = useCashAccountModal()
 
-const { colorSolidBg, colorDotText } = useAppColors(props.cashAccount.account.color)
+const { bg1, color4 } = useAppColors(props.cashAccount.account.color)
 
 const account = $computed(() => props.cashAccount.account)
 const totals = $computed(() => props.totals)
@@ -52,7 +52,7 @@ const { isDark } = useTheme()
         >
           <div
             rounded-full
-            :class="[colorSolidBg]"
+            :class="[bg1]"
             w-10
             h-10
             flex-center
@@ -69,7 +69,7 @@ const { isDark } = useTheme()
           >
             <Icon
               :name="account.icon ?? 'tabler:cash'"
-              :class="[colorDotText]"
+              :class="[color4]"
               z-2
             />
           </div>

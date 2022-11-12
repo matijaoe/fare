@@ -50,8 +50,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
         </span>
 
         <div
-          text-4xl
-          font="display medium"
+
           flex
           items-center
           gap-5
@@ -67,9 +66,13 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
             >
               <FSkeleton class="h-40px w-50" />
             </div>
-            <h4 v-else-if="isDefined(totals)">
+            <p
+              v-else-if="isDefined(totals)"
+              text-4xl
+              font="display medium"
+            >
               {{ net > 0 ? '+' : '' }}{{ formattedNet }}
-            </h4>
+            </p>
           </TransitionFade>
         </div>
       </div>

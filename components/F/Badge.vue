@@ -11,10 +11,10 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const {
-  colorSolidBg,
-  colorSolidText,
-  colorDotText,
-  colorDotBg,
+  bg1,
+  text9,
+  color4,
+  bg4,
 } = useAppColors(props.color)
 
 const radiusClass = computed(() => {
@@ -39,13 +39,13 @@ const sharedClasses = 'filter-saturate-70'
       transition
       justify-center
       class="leading-tight hover:border-current"
-      :class="[radiusClass, sharedClasses, colorSolidBg, colorSolidText]"
+      :class="[radiusClass, sharedClasses, bg1, text9]"
     >
       <Icon
         v-if="icon"
         text="10px"
         :name="icon"
-        :class="[colorSolidText]"
+        :class="[text9]"
       />
       <slot />
     </div>
@@ -67,7 +67,7 @@ const sharedClasses = 'filter-saturate-70'
         v-if="icon"
         text="10px"
         :name="icon"
-        :class="[colorDotText]"
+        :class="[color4]"
       />
       <div
         v-else
@@ -75,7 +75,7 @@ const sharedClasses = 'filter-saturate-70'
         rounded-full
         aspect-square
         mr="0.5"
-        :class="[colorDotBg]"
+        :class="[bg4]"
       />
       <slot />
     </div>
