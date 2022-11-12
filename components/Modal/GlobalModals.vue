@@ -4,4 +4,5 @@
 <template>
   <LazyModalTransaction />
   <LazyModalCashAccount />
+  <LazyModalCategory />
 </template>

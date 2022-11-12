@@ -61,7 +61,7 @@ export const useCashAccountModal = defineStore('modal-account', () => {
     set: obj => form.setFieldValue('icon', obj?.value ?? null),
   })
 
-  // Modal steta
+  // Modal state
 
   const open = ref(false)
 

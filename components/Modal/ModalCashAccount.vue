@@ -72,7 +72,7 @@ onLongPress(
 )
 
 const modalConfig = computed(() => ({
-  title: 'Cash ccount',
+  title: 'Cash account',
   description: modal.isEdit ? 'Edit a cash account' : 'Create a new cash account',
   closable: true,
   panelClass: 'w-full !sm:min-w-xl',

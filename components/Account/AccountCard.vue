@@ -17,7 +17,7 @@ const totals = $computed(() => props.totals)
 
 // TODO: skeleton instead of xxx
 const formattedBalance = totals?.balance != null ? useCurrencyFormat(totals.balance) : '€XXX.XX'
-const formattedCashflow = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : '€XXX.XX'
+const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : '€XXX.XX'
 const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income, { signDisplay: 'always' }) : '€XXX.XX'
 const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.expense) : '€XXX.XX'
 
@@ -112,7 +112,7 @@ const { isDark } = useTheme()
             </span>
           </div>
         </FTooltip>
-        <FTooltip mx-auto placement="right" content="Cashflow">
+        <FTooltip mx-auto placement="right" content="Net">
           <p
             flex
             flex-col
@@ -131,7 +131,7 @@ const { isDark } = useTheme()
                 'bg-emerald-1 text-emerald-7': totals.net > 0,
               }"
             >
-              {{ totals.net > 0 ? '+' : '' }}{{ formattedCashflow }}
+              {{ totals.net > 0 ? '+' : '' }}{{ formattedNet }}
             </span>
           </p>
         </FTooltip>
@@ -165,7 +165,7 @@ const { isDark } = useTheme()
             leading-tight
           >
             <span v-if="allTime">Total earned</span>
-            <span v-else>Earned this month</span>
+            <span v-else>Earned</span>
           </div>
           <span font-mono>
             <FLoader v-if="totalsLoading" />
@@ -192,7 +192,7 @@ const { isDark } = useTheme()
             leading-tight
           >
             <span v-if="allTime">Total spent</span>
-            <span v-else>spent this month</span>
+            <span v-else>Spent</span>
           </div>
           <span font-mono>
             <FLoader v-if="totalsLoading" />

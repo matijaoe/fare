@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { get } from '@vueuse/core'
+import { useCategoryModal } from '~~/store/modal/category-modal.store'
 
 onMounted(() => setBreadcrumbs([
   { label: 'Categories', href: useRoute().path },
 ]))
 
+const categoryModal = useCategoryModal()
 const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
 const { data: categories } = useCategories()
@@ -35,6 +37,7 @@ await useFetch(`/api/categories/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}
         <FButton
           variant="secondary"
           icon-placement="left"
+          @click="categoryModal.launch()"
         >
           Create category
         </FButton>
