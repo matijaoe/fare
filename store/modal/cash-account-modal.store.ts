@@ -24,55 +24,41 @@ export const useCashAccountModal = defineStore('modal-account', () => {
       icon: zod.any().optional(),
     }),
   )
-  const form = useForm({
+
+  const form = useForm<{
+    name: string
+    color: string | null
+    icon: string | null
+  }>({
     validationSchema,
-    initialValues: {
-      name: '',
-      icon: null,
-      color: null,
-    },
   })
 
-  const { value: name, setValue: setName } = useField<string>('name')
-  const { value: color, setValue: setColor } = useField<string | null>('color')
-  const { value: icon, setValue: setIcon } = useField<string | null>('icon')
-
-  // Defaults
-  const colorDefault = {
-    label: toTitleCase('green'),
-    value: 'green',
-    bg: 'bg-green-5',
-    text: 'text-green-5',
-  }
-
-  // TODO: something aint right
-  const iconDefault = {
-    label: toTitleCase('wallet'),
-    value: 'tabler:wallet',
-  }
+  useField<string>('name')
+  useField<string | null>('color')
+  useField<string | null>('icon')
 
   // Select values
 
   const colorObject = computed({
-    get: () => isDefined(color)
+    get: () => form.values.color
       ? {
-          label: toTitleCase(color.value),
-          value: color.value,
-          bg: `bg-${color.value}-5`,
-          text: `text-${color.value}-5`,
+          label: toTitleCase(form.values.color),
+          value: form.values.color,
+          bg: `bg-${form.values.color}-5`,
+          text: `text-${form.values.color}-5`,
         }
       : null,
-    set: obj => setColor(obj?.value ?? null),
+    set: obj => form.setFieldValue('color', obj?.value ?? null),
   })
 
   const iconObject = computed({
-    get: () => isDefined(icon)
+    get: () => form.values.icon
       ? {
-          label: toTitleCase(icon.value?.split(':').at(-1) || 'None'),
-          value: icon.value,
+          label: toTitleCase(form.values.icon?.split(':').at(-1) || 'None'),
+          value: form.values.icon,
         }
       : null,
-    set: obj => setIcon(obj?.value ?? null),
+    set: obj => form.setFieldValue('icon', obj?.value ?? null),
   })
 
   // Modal steta
@@ -85,11 +71,10 @@ export const useCashAccountModal = defineStore('modal-account', () => {
   })
 
   const setEditAccount = (account: Account) => {
-    set(accountId, account.id)
+    const { id, name, color, icon } = account
+    set(accountId, id)
 
-    setName(account.name)
-    setColor(account.color)
-    setIcon(account.icon)
+    form.setValues({ name, color, icon })
   }
 
   const launch = (account?: Account) => {
@@ -120,10 +105,6 @@ export const useCashAccountModal = defineStore('modal-account', () => {
     isCreate,
     // Value for edit
     accountId,
-    // Values
-    name,
-    color,
-    icon,
     // Select item value
     colorObject,
     iconObject,

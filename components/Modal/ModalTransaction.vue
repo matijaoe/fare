@@ -7,7 +7,6 @@ import type { SelectItem } from '~~/models/ui/select'
 
 const modal = useTransactionModal()
 
-// CRUD ---------------------------------
 const { mutate: createTransaction, isLoading: isCreateLoading, isError: isErrorCreate, reset: resetCreate } = useTransactionCreate()
 const { mutate: updateTransaction, isLoading: isUpdateLoading, isError: isErrorUpdate, reset: resetUpdate } = useTransactionUpdate(toRef(modal, 'transactionId'))
 const { mutate: deleteTransaction, isLoading: isDeleteLoading, isError: isErrorDelete, reset: resetDelete } = useTransactionDelete(toRef(modal, 'transactionId'))

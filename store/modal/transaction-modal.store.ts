@@ -16,7 +16,6 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
   const isCreate = computed(() => modalType.value === 'create')
 
   // Values
-
   const transactionId = ref<string>()
 
   const name = ref<string>('')
