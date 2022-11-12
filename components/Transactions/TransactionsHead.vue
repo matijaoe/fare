@@ -18,59 +18,26 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
     gap-4
   >
     <div flex items-center gap-5>
-      <div text-2xl flex-center>
-        <div
-          v-if="isLoading"
-          p-3
-          bg-stone-2
-          text-stone-9
-          rounded-full
-          ring="2 offset 2 current"
-          flex-center
-          flex-shrink-0
-        >
-          <FLoader />
-        </div>
-        <template v-else>
-          <div
-            v-if="net > 0"
-            order-2
-            bg-green-1
-            text-green-9
-            p-3
-            ring="2 offset 2 current"
-            rounded-full
-            flex-center
-            flex-shrink-0
-          >
-            <Icon name="tabler:trending-up" />
-          </div>
-          <div
-            v-else-if="net < 0"
-            order-2
-            bg-red-1
-            text-red-9
-            p-3
-            ring="2 offset 2 current"
-            rounded-full
-            flex-center
-            flex-shrink-0
-          >
-            <Icon name="tabler:trending-down" />
-          </div>
-          <div
-            v-else
-            bg-stone-2
-            text-stone-9
-            p-3
-            ring="2 offset 2 current"
-            rounded-full
-            flex-center
-            flex-shrink-0
-          >
-            <Icon name="tabler:equal" />
-          </div>
-        </template>
+      <div
+        text-2xl
+        p-4
+        ring="2 offset 2 current"
+        rounded-full
+        flex-center
+        flex-shrink-0
+        transition
+        :class="{
+          'bg-stone-2 text-stone-9': isLoading || net === 0,
+          'bg-green-2 text-green-9': net > 0,
+          'bg-red-2 text-red-9': net < 0,
+        }"
+      >
+        <TransitionFade>
+          <FLoader v-if="isLoading" />
+          <Icon v-else-if="net > 0" name="tabler:trending-up" />
+          <Icon v-else-if="net < 0" name="tabler:trending-down" />
+          <Icon v-else name="tabler:equal" />
+        </TransitionFade>
       </div>
 
       <div space-y-1>

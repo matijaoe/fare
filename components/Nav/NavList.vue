@@ -13,22 +13,6 @@ const items = [
     route: {
       name: 'transactions',
     },
-    children: [
-      {
-        label: 'Income',
-        icon: 'tabler:arrows-transfer-up',
-        route: {
-          name: 'transactions-income',
-        },
-      },
-      {
-        label: 'Transfers',
-        icon: 'tabler:arrows-transfer-down',
-        route: {
-          name: 'transactions-transfers',
-        },
-      },
-    ],
   },
   {
     label: 'Accounts',
