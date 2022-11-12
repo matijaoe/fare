@@ -11,7 +11,6 @@ specifiers:
   '@prisma/client': ^4.6.0
   '@tanstack/vue-query': ^4.14.5
   '@types/chart.js': ^2.9.37
-  '@types/chartjs': ^0.0.31
   '@unocss/nuxt': ^0.46.4
   '@vee-validate/zod': ^4.7.2
   '@vueuse/nuxt': ^9.5.0
@@ -40,7 +39,6 @@ dependencies:
   '@headlessui/vue': 1.7.4
   '@prisma/client': 4.6.0_prisma@4.6.0
   '@types/chart.js': 2.9.37
-  '@types/chartjs': 0.0.31
   '@vee-validate/zod': 4.7.2_ecpf7q6qeavdec4r6mdm5yf2b4
   chart.js: 3.9.1
   date-fns: 2.29.3
@@ -1327,11 +1325,6 @@ packages:
     resolution: {integrity: sha512-9bosRfHhkXxKYfrw94EmyDQcdjMaQPkU1fH2tDxu8DWXxf1mjzWQAV4laJF51ZbC2ycYwNDvIm1rGez8Bug0vg==}
     dependencies:
       moment: 2.29.4
-    dev: false
-
-  /@types/chartjs/0.0.31:
-    resolution: {integrity: sha512-eF1AgrIO0qP9KJYwM2dTKL2pczTjiLa0hfmZdQfKiqFq5WIvFTKPn1gkgADitF5sT4byEyq4EFdMVvuPIk6zeQ==}
-    deprecated: '''@types/chartjs'' is now ''@types/chart.js'''
     dev: false
 
   /@types/cross-spawn/6.0.2:
@@ -3373,7 +3366,7 @@ packages:
     optional: true
 
   /esbuild-openbsd-64/0.15.13:
-    resolution: {integrity: sha512-nkuDlIjF/sfUhfx8SKq0+U+Fgx5K9JcPq1mUodnxI0x4kBdCv46rOGWbuJ6eof2n3wdoCLccOoJAbg1ba/bT2w==}
+    resolution: {integrity: sha512-nkuDlIjF/sfUhfx8SKq0+U+Fgx5K9JcPq1mUodnxI0x4kBdCv46rOGWbuJ6eof2n3wdoCLccOoJAbg9ba/bT2w==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [openbsd]

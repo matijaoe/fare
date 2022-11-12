@@ -36,9 +36,8 @@ await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`,
 </script>
 
 <template>
-  <LayoutPageLayout range>
+  <LayoutPageLayout>
     <div
-      my-4
       flex="~ col gap-2"
       translate-y="0.4"
     >

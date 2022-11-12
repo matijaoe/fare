@@ -25,13 +25,7 @@ const sizeStyle = computed(() => {
 </script>
 
 <template>
-  <Icon
-    v-if="minimal"
-    name="ph:fire-duotone"
-    :class="[sizeStyle.icon]"
-  />
   <div
-    v-else
     flex
     gap="0.5"
     items-center
@@ -40,10 +34,10 @@ const sizeStyle = computed(() => {
     :class="[sizeStyle.text]"
   >
     <Icon
-      name="ph:fire-duotone"
+      name="ph:campfire-duotone"
       :class="[sizeStyle.icon]"
     />
-    IND
+    <span v-if="!minimal">IRE</span>
   </div>
 </template>
 

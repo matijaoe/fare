@@ -560,43 +560,43 @@ export const useAppColors = (color?: string | null) => {
   const bg50 = computed(() => {
     switch (color) {
       case 'red':
-        return 'bg-red-50 dark:(bg-red-4 filter-saturate-40)'
+        return 'bg-red-50  dark:(bg-red-4 filter-saturate-40)'
       case 'orange':
-        return 'bg-orange-50 dark:(bg-orange-4 filter-saturate-40)'
+        return 'bg-orange-50  dark:(bg-orange-4 filter-saturate-40)'
       case 'amber':
-        return 'bg-amber-50 dark:(bg-amber-4 filter-saturate-40)'
+        return 'bg-amber-50  dark:(bg-amber-4 filter-saturate-40)'
       case 'yellow':
-        return 'bg-yellow-50 dark:(bg-yellow-4 filter-saturate-40)'
+        return 'bg-yellow-50  dark:(bg-yellow-4 filter-saturate-40)'
       case 'lime':
-        return 'bg-lime-50 dark:(bg-lime-4 filter-saturate-40)'
+        return 'bg-lime-50  dark:(bg-lime-4 filter-saturate-40)'
       case 'green':
-        return 'bg-green-50 dark:(bg-green-4 filter-saturate-40)'
+        return 'bg-green-50  dark:(bg-green-4 filter-saturate-40)'
       case 'emerald':
-        return 'bg-emerald-50 dark:(bg-emerald-4 filter-saturate-40)'
+        return 'bg-emerald-50  dark:(bg-emerald-4 filter-saturate-40)'
       case 'teal':
-        return 'bg-teal-50 dark:(bg-teal-4 filter-saturate-40)'
+        return 'bg-teal-50  dark:(bg-teal-4 filter-saturate-40)'
       case 'cyan':
-        return 'bg-cyan-50 dark:(bg-cyan-4 filter-saturate-40)'
+        return 'bg-cyan-50  dark:(bg-cyan-4 filter-saturate-40)'
       case 'sky':
-        return 'bg-sky-50 dark:(bg-sky-4 filter-saturate-40)'
+        return 'bg-sky-50  dark:(bg-sky-4 filter-saturate-40)'
       case 'blue':
-        return 'bg-blue-50 dark:(bg-blue-4 filter-saturate-40)'
+        return 'bg-blue-50  dark:(bg-blue-4 filter-saturate-40)'
       case 'indigo':
-        return 'bg-indigo-50 dark:(bg-indigo-4 filter-saturate-40)'
+        return 'bg-indigo-50  dark:(bg-indigo-4 filter-saturate-40)'
       case 'violet':
-        return 'bg-violet-50 dark:(bg-violet-4 filter-saturate-40)'
+        return 'bg-violet-50  dark:(bg-violet-4 filter-saturate-40)'
       case 'purple':
-        return 'bg-purple-50 dark:(bg-purple-4 filter-saturate-40)'
+        return 'bg-purple-50  dark:(bg-purple-4 filter-saturate-40)'
       case 'fuchsia':
-        return 'bg-fuchsia-50 dark:(bg-fuchsia-4 filter-saturate-40)'
+        return 'bg-fuchsia-50  dark:(bg-fuchsia-4 filter-saturate-40)'
       case 'pink':
-        return 'bg-pink-50 dark:(bg-pink-4 filter-saturate-40)'
+        return 'bg-pink-50  dark:(bg-pink-4 filter-saturate-40)'
       case 'rose':
-        return 'bg-rose-50 dark:(bg-rose-4 filter-saturate-40)'
+        return 'bg-rose-50  dark:(bg-rose-4 filter-saturate-40)'
       case 'gray':
-        return 'bg-gray-50 dark:(bg-gray-4 filter-saturate-40)'
+        return 'bg-gray-50  dark:(bg-gray-4 filter-saturate-40)'
       default:
-        return 'bg-zinc-50 dark:(bg-zinc-4 filter-saturate-40)'
+        return 'bg-zinc-50  dark:(bg-zinc-4 filter-saturate-40)'
     }
   })
 

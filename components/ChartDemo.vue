@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { format, isThisYear } from 'date-fns'
-
 const tension = 0.5
 
 const skipped = (ctx: any, value: any) => ctx.p0.skip || ctx.p1.skip ? value : undefined
@@ -16,9 +14,10 @@ const chartData = computed(() => ({
   labels,
   datasets: [
     {
-      label: 'Expense',
+      label: 'Expenses',
       data: expensesData,
-      borderColor: '#0D9488',
+      borderColor: '#FF9494',
+      backgroundColor: '#FF9494',
       segment: {
         borderColor: (ctx: any) => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
         borderDash: (ctx: any) => skipped(ctx, [6, 6]),
@@ -29,7 +28,8 @@ const chartData = computed(() => ({
     {
       label: 'Income',
       data: incomeData,
-      borderColor: '#EA580C',
+      borderColor: '#B6E388',
+      backgroundColor: '#B6E388',
       segment: {
         borderColor: (ctx: any) => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
         borderDash: (ctx: any) => skipped(ctx, [6, 6]),
@@ -40,24 +40,28 @@ const chartData = computed(() => ({
   ],
 }))
 
-const chartOptions = { responsive: true }
+const chartOptions = { responsive: true, mantainAspectRatio: false }
 </script>
 
 <template>
   <div
     flex
-    flex-col
     lg:flex-row
     w-full
   >
     <bar-chart
+      flex-1
+      w-full
+      :height="200"
       :chart-options="chartOptions"
       :chart-data="chartData"
     />
-    <line-chart
+    <!-- <line-chart
+      flex-1
+      max-w="350px"
       :chart-data="chartData"
       :chart-options="chartOptions"
-    />
+    /> -->
   </div>
 </template>
 

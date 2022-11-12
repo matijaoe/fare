@@ -4,7 +4,7 @@ import type { Ref } from 'nuxt/dist/app/compat/capi'
 import type { TransactionTotalMonthlyObject } from '~~/models/resources/transaction'
 
 export const useMonthlyTotals = (totals: Ref<TransactionTotalMonthlyObject> | Ref<undefined>, type: TransactionType) => {
-  const monthsRange = ref(12)
+  const monthsRange = ref(6)
 
   const months = $computed(() => Array.from({ length: monthsRange.value }, (_, i) => {
     const date = new Date()

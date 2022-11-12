@@ -31,7 +31,7 @@ await useFetch(`/api/categories/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}
 </script>
 
 <template>
-  <LayoutPageLayout range>
+  <LayoutPageLayout>
     <LayoutSectionWrapper title="Categories" subtitle=" All your transactions across categories" mt-3>
       <template #right>
         <FButton

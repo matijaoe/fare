@@ -16,30 +16,53 @@ await useFetch(() => `/api/transactions/totals?from=${get(rangeFrom.value)}&to=$
 // await useFetch(() => `/api/transactions?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
 //   key: `transactions-${get(rangeFrom)}-${get(rangeTo)}`,
 // })
+const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-68px)]')
+
+const transactionStore = useTransactionsStore()
 </script>
 
 <template>
-  <LayoutPageLayout range pb-18>
-    <TransactionsHead />
-
+  <div>
     <LayoutSectionWrapper>
       <div
         w-full
         flex="~ col xl:row"
         justify-between
-        gap-6
         flex-1
       >
         <div
-          max-w="full xl:base"
+          max-w="full xl:lg"
           flex-1
+          border="r-2 zinc-2 dark:zinc-9"
         >
-          <TransactionList :transactions="transactions" :loading="query.isFetching" />
+          <FInput
+            v-model="transactionStore.searchQuery"
+            type="search"
+            placeholder="Search"
+            icon="tabler:search"
+            input-class="rounded-none !bg-white !py-5"
+          />
+          <TransactionList
+            border="t-2 zinc-2 dark:zinc-9"
+            :transactions="transactions"
+            :loading="query.isFetching"
+          />
         </div>
-        <div flex-1 class="order--1 xl:order-1">
-          <TransactionFilters />
+
+        <div
+          p-6
+          pb-32
+          flex-1
+          space-y-12
+          class="order--1 xl:order-1"
+          overflow-y-scroll
+          :class="mainContentWrapperHeight"
+        >
+          <TransactionsHead />
+          <ChartDemo />
+          <!-- <TransactionFilters /> -->
         </div>
       </div>
     </LayoutSectionWrapper>
-  </LayoutPageLayout>
+  </div>
 </template>

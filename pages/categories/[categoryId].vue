@@ -16,7 +16,7 @@ await useFetch<Category>(`/api/categories/${categoryId}`, { key: `category-${cat
 </script>
 
 <template>
-  <LayoutPageLayout range>
+  <LayoutPageLayout>
     category - {{ $route.params.categoryId }}
     <pre bg-zinc-2>
       {{ category }}

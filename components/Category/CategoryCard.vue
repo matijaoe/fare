@@ -31,12 +31,12 @@ const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.exp
         :class="[bg50, borderClr3, text9]"
       >
         <TransitionFade>
-          <FSkeleton v-if="totalsLoading" w-20 h="36px" />
+          <FSkeleton v-if="totalsLoading" w-20 h="32px" />
           <p
             v-if="!totalsLoading"
             order--1
             class="translate-y-.25"
-            text-3xl
+            text-2xl
             font="display medium"
           >
             {{ allTime
@@ -48,17 +48,17 @@ const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.exp
         <div
           ml-auto
           flex
-          gap-4
+          gap-3
           items-center
         >
-          <h4 text-xl font-medium>
+          <h4 text-base font-medium>
             {{ category.name }}
           </h4>
           <div
             w-max
             aspect-square
-            text-xl
-            p-3
+            text-lg
+            p-2
             rounded-full
             flex-center
             :class="[bg3]"

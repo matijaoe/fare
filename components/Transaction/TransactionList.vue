@@ -10,23 +10,25 @@ const hasTransactions = computed(() => props.transactions?.length)
 
 const transactionModal = useTransactionModal()
 
-const { isDark } = useTheme()
+const sidebar = useSidebar()
+const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-68px)]')
 </script>
 
 <template>
   <!-- v-auto-animate -->
-  <FCard
-    paddingless
-    :white="!isDark"
-    :filled="isDark"
+  <div
+    bg-white
+    dark:bg-zinc-9
     flex="~ col"
     divide="y-2 dashed zinc-2 dark:zinc-9"
+    overflow-y-auto
+    :class="[mainContentWrapperHeight]"
   >
     <template v-if="hasTransactions">
       <button
         v-for="transaction in transactions"
         :key="JSON.stringify(transaction)"
-        class="hover:bg-zinc-1/40 dark:hover:bg-zinc-8/40"
+        class="hover:bg-zinc-1/40 dark:hover:bg-zinc-8/40 last:(!border-b-2 !border-b-dashed)"
         @click="transactionModal.launchEdit(transaction)"
       >
         <TransactionItem :item="transaction" />
@@ -60,6 +62,6 @@ const { isDark } = useTheme()
         </p>
       </div>
     </div>
-  </FCard>
+  </div>
 </template>
 

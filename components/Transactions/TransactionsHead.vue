@@ -13,8 +13,9 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
 
 <template>
   <div
-    grid
-    grid-cols="[260px_1fr_260px]"
+    flex
+    items-center
+    justify-between
     gap-4
   >
     <div flex items-center gap-5>
@@ -28,8 +29,8 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
         transition
         :class="{
           'bg-stone-2 text-stone-9': isLoading || net === 0,
-          'bg-green-2 text-green-9': net > 0,
-          'bg-red-2 text-red-9': net < 0,
+          'bg-green-1 text-green-9': net > 0,
+          'bg-red-1 text-red-9': net < 0,
         }"
       >
         <TransitionFade>
@@ -40,7 +41,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
         </TransitionFade>
       </div>
 
-      <div space-y-1>
+      <div space-y-1 flex-1>
         <span
           uppercase
           font="sans medium"
@@ -50,7 +51,6 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
         </span>
 
         <div
-
           flex
           items-center
           gap-5
@@ -79,47 +79,22 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
     </div>
 
     <div
-      class="translate-y--1"
-      grid
-      grid-cols-2
-      items-center
-      mt-5
+      flex
       justify-center
+      items-end
       font-mono
+      gap-8
+      divide-x-2
     >
-      <div
-        flex
-        items-center
-        justify-end
-        gap-6
-      >
+      <FTooltip content="Income" placement="top-end">
         <div
-          order-2
-          bg-green-1
-          text-green-9
-          p-2
-          ring="2 offset 2 current"
-          rounded-full
-          aspect-square
-          flex-center
-          flex-shrink-0
+          flex
+          items-center
+          gap-4
         >
-          <Icon name="tabler:arrow-down-left" text-2xl />
-        </div>
-
-        <div space-y="0.5">
-          <p
-            uppercase
-            font="sans medium"
-            text="10px zinc-4 dark:zinc-5"
-            leading-tight
-            text-right
-          >
-            Earned
-          </p>
-          <div text-2xl text-right>
+          <div text-lg text-right space-y="0.5">
             <TransitionFade>
-              <FSkeleton v-if="isLoading" w-22 h="32px" />
+              <FSkeleton v-if="isLoading" w-22 h="28px" />
               <span
                 v-else-if="isDefined(totals)"
                 flex
@@ -129,46 +104,56 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
               </span>
             </TransitionFade>
           </div>
-        </div>
-      </div>
 
-      <div
-        flex
-        items-center
-        justify-start
-        gap-6
-      >
-        <div
-          bg-stone-2
-          text-stone-9
-          p-2
-          ring="2 offset 2 current"
-          rounded-full
-          flex-center
-          flex-shrink-0
-        >
-          <Icon name="tabler:arrow-up-right" text-2xl />
-        </div>
-
-        <div space-y="0.5">
-          <p
-            uppercase
-            font="sans medium"
-            text="10px zinc-4 dark:zinc-5"
-            leading-tight
+          <div
+            bg-stone-1
+            text-stone-9
+            p-2
+            ring="2 offset 2 current"
+            rounded-full
+            aspect-square
+            flex-center
+            flex-shrink-0
           >
-            Spent
-          </p>
-          <div text-2xl>
+            <Icon name="tabler:arrow-down-left" sm />
+          </div>
+        </div>
+      </FTooltip>
+
+      <FTooltip content="Expenses" placement="top-end">
+        <div
+          flex
+          items-center
+          gap-4
+          pl-5
+        >
+          <div
+            text-lg
+            text-right
+            space-y="0.5"
+          >
             <TransitionFade>
-              <FSkeleton v-if="isLoading" w-22 h="32px" />
+              <FSkeleton v-if="isLoading" w-22 h="28px" />
               <span v-else-if="isDefined(totals)">
                 {{ formattedExpense }}
               </span>
             </TransitionFade>
           </div>
+
+          <div
+            bg-stone-2
+            text-stone-9
+            p-2
+            ring="2 offset 2 current"
+            rounded-full
+            aspect-square
+            flex-center
+            flex-shrink-0
+          >
+            <Icon name="tabler:arrow-up-right" sm />
+          </div>
         </div>
-      </div>
+      </FTooltip>
     </div>
   </div>
 </template>

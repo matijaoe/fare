@@ -65,7 +65,7 @@ const transitionsModal = {
 <template>
   <TransitionRoot :show="opened">
     <Dialog
-      z-500
+      z-599
       relative
       @close="close"
     >
@@ -78,7 +78,7 @@ const transitionsModal = {
         fixed
         inset-0
         flex-center
-        z-1000
+        z-600
         p-4
         overflow-y-auto
       >

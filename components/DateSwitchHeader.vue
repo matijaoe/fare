@@ -20,14 +20,14 @@ const { query } = toRefs(useTransactionsStore())
     <div
       w-fit
       flex
-      gap-3
+      gap-2
     >
       <template v-if="!isAllTime">
         <FTooltip content="Previous month" placement="top">
           <FButton
             icon-only
             circle
-            size="lg"
+            size="md"
             variant="secondary"
             icon="tabler:arrow-left"
             @click="setPreviousMonth"
@@ -41,7 +41,7 @@ const { query } = toRefs(useTransactionsStore())
           <FButton
             icon-only
             circle
-            size="lg"
+            size="md"
             variant="secondary"
             icon="tabler:arrow-right"
             @click="setNextMonth"
@@ -58,10 +58,10 @@ const { query } = toRefs(useTransactionsStore())
         <FButton
           variant="primary"
           circle
-          size="lg"
+          size="md"
           :icon="isAllTime ? 'tabler:timeline' : 'tabler:calendar'"
           keep-style-on-load
-          min-w="!40"
+          min-w="!36"
           @click="query.refetch()"
         >
           <p font="display medium" uppercase class="translate-y-0.2">
@@ -73,7 +73,7 @@ const { query } = toRefs(useTransactionsStore())
     <div
       class="justify-self-end"
       flex
-      gap-3
+      gap-2
     >
       <FTooltip
         v-if="!isAllTime"
@@ -83,7 +83,7 @@ const { query } = toRefs(useTransactionsStore())
         <FButton
           icon-only
           circle
-          size="lg"
+          size="md"
           variant="outline"
           icon="tabler:timeline"
           @click="setAllTime(true)"
@@ -98,7 +98,7 @@ const { query } = toRefs(useTransactionsStore())
         <FButton
           icon-only
           circle
-          size="lg"
+          size="md"
           variant="primary"
           icon="tabler:calendar"
           @click="setToToday"

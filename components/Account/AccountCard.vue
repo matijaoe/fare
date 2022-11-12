@@ -105,8 +105,16 @@ const { isDark } = useTheme()
             font="display medium"
             uppercase
             text-4xl
+            flex
+            justify-center
           >
-            <FLoader v-if="totalsLoading" />
+            <FSkeleton
+              v-if="totalsLoading"
+              w-24
+              py-2
+              h="36px"
+              py="0.5"
+            />
             <span v-else-if="totals">
               {{ formattedBalance }}
             </span>
@@ -120,13 +128,15 @@ const { isDark } = useTheme()
             font-medium
             text="sm zinc-4 dark:zinc-5"
           >
+            <FSkeleton v-if="totalsLoading" h="28px" w-14 />
             <span
-              v-if="totals && !totalsLoading"
+              v-else-if="totals"
               class="filter-saturate-90"
               px-2
               py-1
+              rounded-md
               :class="{
-                ' text-white rounded-md': totals.net !== 0,
+                ' bg-stone-1 text-stone-7': totals.net === 0,
                 'bg-red-1 text-red-7': totals.net < 0,
                 'bg-emerald-1 text-emerald-7': totals.net > 0,
               }"
@@ -167,12 +177,12 @@ const { isDark } = useTheme()
             <span v-if="allTime">Total earned</span>
             <span v-else>Earned</span>
           </div>
-          <span font-mono>
-            <FLoader v-if="totalsLoading" />
+          <div font-mono flex justify-center>
+            <FSkeleton v-if="totalsLoading" h="28px" w-18 />
             <span v-else-if="totals">
               {{ totals.income > 0 ? '+' : '' }}{{ formattedIncome }}
             </span>
-          </span>
+          </div>
         </div>
       </div>
       <div
@@ -194,11 +204,12 @@ const { isDark } = useTheme()
             <span v-if="allTime">Total spent</span>
             <span v-else>Spent</span>
           </div>
-          <span font-mono>
-            <FLoader v-if="totalsLoading" />
+          <div font-mono flex justify-center>
+            <FSkeleton v-if="totalsLoading" h="28px" w-18 />
             <span v-else-if="totals">
               {{ formattedExpense }}
-            </span></span>
+            </span>
+          </div>
         </div>
       </div>
     </div>

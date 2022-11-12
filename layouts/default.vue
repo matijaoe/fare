@@ -1,21 +1,36 @@
 <script lang="ts" setup>
 const sidebar = useSidebar()
 
-const sidebarWidth = computed(() => 'w-screen md:w-260px')
-const headerWidth = computed(() => sidebar.isOpen ? 'sm:(w-[calc(100vw-260px)])' : 'w-screen')
+const sidebarWidth = computed(() => 'w-screen md:w-240px')
+const headerWidth = computed(() => sidebar.isOpen ? 'sm:(w-[calc(100vw-240px)])' : 'w-screen')
 
-const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-50px)]')
+const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-68px)]')
 </script>
 
 <template>
   <div>
     <LayoutSidebar :class="[sidebarWidth]" z-200 />
 
-    <div h-screen :class="{ 'md:ml-260px': sidebar.isOpen }">
+    <div h-screen :class="{ 'md:ml-240px': sidebar.isOpen }">
       <Header :class="[headerWidth]" z-100 />
+      <DateSwitchHeader
+        :class="[headerWidth]"
+        z-100
+        fixed
+        top-0
+        right-0
+        px-6
+        py-3
+        border="b-2 base"
+        class="bg-base"
+      />
 
-      <div mt="50px" overflow-y-auto :class="[mainContentWrapperHeight]">
-        <main p="4 md:(x-8 t-7 b-10)" mx-auto>
+      <div
+        mt="68px"
+        overflow-hidden
+        :class="[mainContentWrapperHeight]"
+      >
+        <main mx-auto>
           <slot />
         </main>
       </div>

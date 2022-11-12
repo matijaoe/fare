@@ -37,7 +37,6 @@
     "@headlessui/vue": "^1.7.4",
     "@prisma/client": "^4.6.0",
     "@types/chart.js": "^2.9.37",
-    "@types/chartjs": "^0.0.31",
     "@vee-validate/zod": "^4.7.2",
     "chart.js": "^3.9.1",
     "date-fns": "^2.29.3",
