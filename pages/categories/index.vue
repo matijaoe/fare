@@ -5,10 +5,10 @@ onMounted(() => setBreadcrumbs([
   { label: 'Categories', href: useRoute().path },
 ]))
 
-const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
+const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
 const { data: categories } = useCategories()
-const { data: categoriesTotals } = useCategoriesTotals(rangeFrom, rangeTo)
+const { data: categoriesTotals, isLoading: isTotalsLoading } = useCategoriesTotals(rangeFrom, rangeTo)
 
 const shownCategories = computed(() => {
   const findCategory = (id: string) => categoriesTotals.value?.find(cat => cat.id === id)
@@ -30,12 +30,26 @@ await useFetch(`/api/categories/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}
 
 <template>
   <LayoutPageLayout range>
-    <div grid lg:grid-cols-2 gap-3>
-      <CategoryCard
-        v-for="category in shownCategories"
-        :key="category.id"
-        :category="category"
-      />
-    </div>
+    <LayoutSectionWrapper title="Categories" subtitle=" All your transactions across categories" mt-3>
+      <template #right>
+        <FButton
+          variant="secondary"
+          icon-placement="left"
+        >
+          Create category
+        </FButton>
+      </template>
+
+      <div grid lg:grid-cols-2 gap-3>
+        <CategoryCard
+          v-for="category in shownCategories"
+          :key="category"
+          :category="category"
+          :totals="category.totals"
+          :all-time="isAllTime"
+          :totals-loading="isTotalsLoading"
+        />
+      </div>
+    </LayoutSectionWrapper>
   </LayoutPageLayout>
 </template>

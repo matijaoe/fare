@@ -4,10 +4,10 @@ const initalTotal = { income: 0, expense: 0, net: 0, totalNet: 0 }
 
 export type CategoryTotalType = keyof typeof initalTotal
 
-export type AccountTotals = Record<CategoryTotalType, number>
+export type CategoryTotals = Record<CategoryTotalType, number>
 
 export type CategoryWithTotals = Category & {
-  totals: AccountTotals
+  totals: CategoryTotals
 }
 
 export type GroupedCategory = (Prisma.PickArray<Prisma.TransactionGroupByOutputType, ('type' | 'categoryId')[]> & {

@@ -10,12 +10,12 @@ onMounted(() => setBreadcrumbs([
 const cashAccountModal = useCashAccountModal()
 const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
-const { data: cashAccounts } = useCashAccounts()
-const { data: accountTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
-
 const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
 const balance = computed(() => totalBalance.value?.balance ?? 0)
 const formattedTotalBalance = useCurrencyFormat(balance)
+
+const { data: cashAccounts } = useCashAccounts()
+const { data: accountTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
 
 const shownAccounts = computed(() => {
   const findAccount = (id: string) => accountTotals.value?.find(acc => acc.id === id)

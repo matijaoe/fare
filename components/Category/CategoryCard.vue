@@ -1,15 +1,13 @@
 <script lang="ts" setup>
 import type { Category } from '@prisma/client'
-import type { CategoryWithTotals } from '~~/models/resources/category'
+import type { CategoryTotals } from '~~/models/resources/category'
 
-const { category } = defineProps<{
-  category: CategoryWithTotals
-  loading?: boolean
+const { category, totals } = defineProps<{
+  category: Category
+  totals: CategoryTotals
+  totalsLoading?: boolean
+  allTime?: boolean
 }>()
-
-const { isAllTime } = toRefs(useDateRangeStore())
-
-const totals = $computed(() => category.totals)
 
 const { bg50, borderClr3, text9, bg3 } = useAppColors(category.color)
 
@@ -32,7 +30,23 @@ const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.exp
         rounded="r-full"
         :class="[bg50, borderClr3, text9]"
       >
+        <TransitionFade>
+          <FSkeleton v-if="totalsLoading" w-20 h="36px" />
+          <p
+            v-if="!totalsLoading"
+            order--1
+            class="translate-y-.25"
+            text-3xl
+            font="display medium"
+          >
+            {{ allTime
+              ? (totals?.totalNet > 0 ? '+' : '')
+              : (totals?.net > 0 ? '+' : '') }}{{ allTime ? formattedTotalNet : formattedNet }}
+          </p>
+        </TransitionFade>
+
         <div
+          ml-auto
           flex
           gap-4
           items-center
@@ -49,19 +63,9 @@ const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.exp
             flex-center
             :class="[bg3]"
           >
-            <Icon :name="category.icon" />
+            <Icon :name="category?.icon" />
           </div>
         </div>
-        <p
-          order--1
-          class="translate-y-.25"
-          text-3xl
-          font="display medium"
-        >
-          {{ isAllTime
-            ? (totals.totalNet > 0 ? '+' : '')
-            : (totals.net > 0 ? '+' : '') }}{{ isAllTime ? formattedTotalNet : formattedNet }}
-        </p>
       </div>
       <div
         pr-5
@@ -75,14 +79,19 @@ const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.exp
           <p
             uppercase
             font="sans medium"
-            text="xs zinc-4 dark:zinc-5"
+            text="10px zinc-4 dark:zinc-5"
             leading-tight
           >
             Earned
           </p>
-          <div text-xl>
+          <div
+            text-xl
+            min-w-18
+            flex
+            justify-start
+          >
             <TransitionFade>
-              <FSkeleton v-if="loading" w-22 h="32px" />
+              <FSkeleton v-if="totalsLoading" w-full h="28px" />
               <span
                 v-else-if="isDefined(totals)"
                 font-mono
@@ -95,19 +104,24 @@ const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.exp
           </div>
         </div>
 
-        <div>
+        <div pl-5>
           <p
             uppercase
             font="sans medium"
-            text="xs zinc-4 dark:zinc-5"
+            text="10px zinc-4 dark:zinc-5"
             leading-tight
             text-right
           >
             Spent
           </p>
-          <div text-xl>
+          <div
+            text-xl
+            min-w-18
+            flex
+            justify-end
+          >
             <TransitionFade>
-              <FSkeleton v-if="loading" w-22 h="32px" />
+              <FSkeleton v-if="totalsLoading" w-full h="28px" />
               <span
                 v-else-if="isDefined(totals)"
                 font-mono

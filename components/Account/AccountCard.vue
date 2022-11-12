@@ -162,7 +162,7 @@ const { isDark } = useTheme()
             uppercase
             font="medium"
             text="10px zinc-4 dark:zinc-5"
-            class="leading-tight"
+            leading-tight
           >
             <span v-if="allTime">Total earned</span>
             <span v-else>Earned this month</span>
@@ -189,7 +189,7 @@ const { isDark } = useTheme()
             uppercase
             font="sans medium"
             text="10px zinc-4 dark:zinc-5"
-            class="leading-tight"
+            leading-tight
           >
             <span v-if="allTime">Total spent</span>
             <span v-else>spent this month</span>
