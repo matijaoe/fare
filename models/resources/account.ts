@@ -1,4 +1,4 @@
-import type { Account, CashAccount, Prisma, Transaction } from '@prisma/client'
+import type { MoneyAccount, CashAccount, Prisma, Transaction } from '@prisma/client'
 
 export type DateRange = {
   from?: string
@@ -11,7 +11,7 @@ export type AccountTotalType = keyof typeof initalTotal
 
 export type CashAccountsQueryModel = DateRange & { transactions?: 'true' | 'false' }
 
-export type CashAccountWithAccount = CashAccount & { account: Account }
+export type CashAccountWithAccount = CashAccount & { account: MoneyAccount }
 
 export type AccountTotals = Record<AccountTotalType, number>
 

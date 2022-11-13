@@ -48,14 +48,13 @@ const transactionTooltip = computed(() => {
         gap-3
       >
         <button
-          v-if="item.categoryId"
+          v-if="item.category"
           @click.stop="navigateTo({
             name: 'categories-categoryId',
             params: { categoryId: item.categoryId },
           })"
         >
           <FBadge
-            v-if="item.category"
             cursor="pointer"
             type="solid"
             :icon="item.category.icon"
@@ -71,13 +70,14 @@ const transactionTooltip = computed(() => {
           gap-1
         >
           <button
+            v-if="item.fromAccount"
             @click.stop="navigateTo({
               name: 'accounts-accountId',
               params: { accountId: item.fromAccountId },
             })"
           >
             <FBadge
-              v-if="item.fromAccount"
+
               cursor="pointer"
               type="dot"
               :icon="item.fromAccount.account.icon"
@@ -88,13 +88,14 @@ const transactionTooltip = computed(() => {
           </button>
           <Icon v-if="isTransfer" name="tabler:arrow-right" text-sm />
           <button
+            v-if="item.toAccount"
             @click.stop="navigateTo({
               name: 'accounts-accountId',
               params: { accountId: item.toAccountId },
             })"
           >
             <FBadge
-              v-if="item.toAccount"
+
               cursor="pointer"
               type="dot"
               :icon="item.toAccount.account.icon"

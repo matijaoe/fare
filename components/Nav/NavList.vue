@@ -72,6 +72,13 @@ const items = [
       name: 'resources',
     },
   },
+  {
+    label: 'Login page',
+    icon: 'tabler:lungs',
+    route: {
+      name: 'login',
+    },
+  },
 ]
 </script>
 

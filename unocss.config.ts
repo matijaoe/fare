@@ -15,7 +15,6 @@ export default defineConfig({
     'color-base': 'text-zinc-9 dark:text-zinc-3',
     'color-base-lighter': 'text-zinc-7 dark:text-zinc-3/80',
     'flex-center': 'flex items-center justify-center',
-    'max-w-base': 'max-w-1440px',
   },
   theme: {
     maxWidth: {

@@ -16,11 +16,8 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-68px)]')
       <DateSwitchHeader
         :class="[headerWidth]"
         z-100
-        fixed
-        top-0
-        right-0
-        px-6
-        py-3
+        pos="fixed top-0 right-0"
+        p="x-6 y-3"
         border="b-2 base"
         class="bg-base"
       />

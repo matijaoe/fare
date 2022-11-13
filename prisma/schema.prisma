@@ -9,6 +9,55 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
+model Account {
+  id                       String  @id @default(cuid())
+  userId                   String
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.Text
+  refresh_token_expires_in Int?
+  access_token             String? @db.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String? @db.Text
+  session_state            String?
+  oauth_token_secret       String?
+  oauth_token              String?
+
+  // relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  // relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?   @default("Unknown")
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+
+  // opposite relations
+  accounts      Account[]
+  sessions      Session[]
+  // custom
+  transactions  Transaction[]
+  moneyAccounts MoneyAccount[]
+  categories    Category[]
+}
+
 model Category {
   id     String  @id @default(cuid())
   name   String
@@ -48,7 +97,7 @@ model Transaction {
   toAccount   CashAccount? @relation("paymentToAccount", fields: [toAccountId], references: [id], onDelete: Restrict)
 }
 
-model Account {
+model MoneyAccount {
   id        String   @id @default(cuid())
   name      String
   userId    String
@@ -74,7 +123,7 @@ model CashAccount {
   id        String @id @default(cuid())
   accountId String @unique
 
-  account Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  account MoneyAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
 
   paymentFromAccount Transaction[] @relation("paymentFromAccount")
   paymentToAccount   Transaction[] @relation("paymentToAccount")
@@ -95,7 +144,7 @@ model InvestmentAccount {
   expectedRateOfReturn Float?
   type                 InvestmentType
 
-  account Account @relation(fields: [accountId], references: [id])
+  account MoneyAccount @relation(fields: [accountId], references: [id])
 }
 
 model AccountTimechart {
@@ -103,18 +152,7 @@ model AccountTimechart {
   total     Float
   date      DateTime
 
-  account Account @relation(fields: [accountId], references: [id])
+  account MoneyAccount @relation(fields: [accountId], references: [id])
 
   @@unique([accountId, date])
-}
-
-model User {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  createdAt DateTime @default(now())
-
-  transactions Transaction[]
-  accounts     Account[]
-  categories   Category[]
 }

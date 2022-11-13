@@ -6,7 +6,7 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-68px)]')
   <div
     space-y-8
     pb-20
-    p="4 md:(x-8 t-7 b-10)"
+    p="4 md:(x-8 t-7 b-20)"
     overflow-y-auto
     :class="mainContentWrapperHeight"
   >

@@ -1,4 +1,4 @@
-import type { Account, Prisma, Transaction } from '@prisma/client'
+import type { MoneyAccount, Prisma, Transaction } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
@@ -51,7 +51,7 @@ export const useTransactionCreate = () => {
 export const useTransactionUpdate = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
   return useMutation((body: Prisma.TransactionUpdateWithoutUserInput) =>
-    $fetch<Account>(`/api/transactions/${get(id)}`, {
+    $fetch<MoneyAccount>(`/api/transactions/${get(id)}`, {
       method: 'PATCH',
       body,
     }), {
@@ -67,7 +67,7 @@ export const useTransactionUpdate = (id: Ref<string | undefined>) => {
 export const useTransactionDelete = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
   return useMutation(() =>
-    $fetch<Account>(`/api/transactions/${get(id)}`, {
+    $fetch<MoneyAccount>(`/api/transactions/${get(id)}`, {
       method: 'DELETE',
     }), {
     onSuccess: () => {

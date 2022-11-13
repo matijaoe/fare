@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { useSession } from '#imports'
 
+definePageMeta({
+  layout: 'auth',
+})
+
 const { data, status, getCsrfToken, getProviders, signIn, signOut } = await useSession({ required: false })
 const providers = await getProviders()
 const csrfToken = await getCsrfToken()
@@ -11,19 +15,12 @@ const signOutHandler = () => {
 </script>
 
 <template>
-  <LayoutPageLayout>
-    <div class="px-5">
-      <h3 class="text-xl font-bold ">
-        Authentication Overview
-      </h3>
-      <p class="text-sm">
-        See all available authentication & session information below.
-      </p>
-      <pre v-if="status"><span>Status:</span> {{ status }}</pre>
-      <pre v-if="data"><span>Data:</span> {{ data }}</pre>
-      <pre v-if="csrfToken"><span>CSRF Token:</span> {{ csrfToken }}</pre>
-      <pre v-if="providers"><span>Providers:</span> {{ providers }}</pre>
-
+  <div
+    flex-1
+    grid
+    place-content-center
+  >
+    <div flex gap-2>
       <FButton v-if="data && status === 'authenticated'" @click="signOutHandler">
         logout
       </FButton>
@@ -33,10 +30,10 @@ const signOutHandler = () => {
           callbackUrl: '/',
         })"
       >
-        login
+        login with github
       </FButton>
     </div>
-  </LayoutPageLayout>
+  </div>
 </template>
 
 <style scoped>

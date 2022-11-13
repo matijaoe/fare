@@ -11,7 +11,7 @@ onMounted(() => setBreadcrumbs([
         <Icon name="tabler:plane" />
         <h1>Dashboard</h1>
       </div>
-      <Demo />
+      <!-- <Demo /> -->
     </div>
   </LayoutPageLayout>
 </template>
