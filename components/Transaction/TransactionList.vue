@@ -10,7 +10,7 @@ const hasTransactions = computed(() => props.transactions?.length)
 
 const transactionModal = useTransactionModal()
 
-const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-68px-44px)]')
+const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px-44px)]')
 
 const items = computed({
   get: () => props.transactions,

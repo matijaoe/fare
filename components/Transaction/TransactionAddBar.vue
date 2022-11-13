@@ -7,6 +7,7 @@ const modal = useTransactionModal()
     flex
     gap-2
     v-bind="$attrs"
+    z-100
   >
     <FTooltip content="Income">
       <FButton

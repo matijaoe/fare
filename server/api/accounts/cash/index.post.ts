@@ -12,7 +12,6 @@ export default defineEventHandler(async (event) => {
   const accountCreate = await useBody<Prisma.MoneyAccountUncheckedCreateInput>(event)
 
   try {
-    console.log('-----------------> PRISMA QUERY')
     const account = await db.cashAccount.create({
       data: {
         account: {

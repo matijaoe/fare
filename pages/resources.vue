@@ -1,11 +1,14 @@
 <script lang="ts" setup>
+import { useQueryClient } from '@tanstack/vue-query'
 import { useSession } from '#imports'
 
 const { data, status, getCsrfToken, getProviders, signIn, signOut } = await useSession({ required: false })
 const providers = await getProviders()
 const csrfToken = await getCsrfToken()
 
+const qc = useQueryClient()
 const signOutHandler = () => {
+  qc.clear()
   signOut({ callbackUrl: '/' })
 }
 </script>

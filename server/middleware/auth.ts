@@ -1,6 +1,15 @@
 import { getServerSession } from '#auth'
 
 export default defineEventHandler(async (event) => {
-  console.log('🔵', event.req.url)
+  const { url } = event.req
+
+  const isAuthRequest = url?.startsWith('/api/auth')
+
+  if (!isAuthRequest) {
+    const session = await getServerSession(event)
+    if (session?.user) {
+      event.context.userId = session.user.id ?? null
+    }
+  }
 })
 

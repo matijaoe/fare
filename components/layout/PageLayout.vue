@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-68px)]')
+const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
 </script>
 
 <template>

@@ -16,7 +16,7 @@ await useFetch(() => `/api/transactions/totals?from=${get(rangeFrom.value)}&to=$
 // await useFetch(() => `/api/transactions?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
 //   key: `transactions-${get(rangeFrom)}-${get(rangeTo)}`,
 // })
-const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-68px)]')
+const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
 
 const transactionStore = useTransactionsStore()
 </script>

@@ -4,7 +4,7 @@ const sidebar = useSidebar()
 const sidebarWidth = computed(() => 'w-screen md:w-240px')
 const headerWidth = computed(() => sidebar.isOpen ? 'sm:(w-[calc(100vw-240px)])' : 'w-screen')
 
-const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-68px)]')
+const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
 </script>
 
 <template>
@@ -17,13 +17,13 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-68px)]')
         :class="[headerWidth]"
         z-100
         pos="fixed top-0 right-0"
-        p="x-6 y-3"
+        p="x-6 y-2"
         border="b-2 base"
         class="bg-base"
       />
 
       <div
-        mt="68px"
+        mt="60px"
         overflow-hidden
         :class="[mainContentWrapperHeight]"
       >

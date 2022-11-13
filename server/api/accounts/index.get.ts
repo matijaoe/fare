@@ -1,6 +1,6 @@
 import { db } from '~~/lib/db'
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   try {
     return db.moneyAccount.findMany({
       include: {

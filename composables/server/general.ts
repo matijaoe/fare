@@ -1,6 +1,5 @@
 import type { CompatibilityEvent, H3Event } from 'h3'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
-import { getServerSession } from '#auth'
 
 export const sendCustomError = (
   event: CompatibilityEvent,
@@ -49,4 +48,10 @@ export const useParams = <T>(event: H3Event) => event.context.params as T
 
 export const useContext = <T>(event: H3Event) => event.context as T & { params: Record<string, any> }
 
-export const useContextUserId = (event: H3Event) => event.context.userId as string
+export const useContextUserId = (event: H3Event): string => {
+  if (!event.context?.userId) {
+    // fallback just in case
+    throw new Error('User id not found in context')
+  }
+  return event.context.userId
+}

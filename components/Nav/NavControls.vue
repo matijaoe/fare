@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { useQueryClient } from '@tanstack/vue-query'
+
 const { smDown } = useBreakpoints()
 const { isDark, toggleDark } = useTheme()
 
 const { data, signOut } = await useSession({ required: false })
+const qc = useQueryClient()
 const signOutHandler = () => {
+  qc.clear()
   signOut({ callbackUrl: '/' })
 }
 </script>
