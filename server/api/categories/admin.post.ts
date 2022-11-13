@@ -1,6 +1,6 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { sendInternalError, setResStatus } from '~~/composables/server'
+import { sendInternalError, setResStatus } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {

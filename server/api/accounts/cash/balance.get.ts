@@ -1,5 +1,5 @@
 import type { Prisma } from '@prisma/client'
-import { sendInternalError, useContextUserId } from '~~/composables/server'
+import { sendInternalError, useContextUserId } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 type GroupedTotal = Prisma.PickArray<Prisma.TransactionGroupByOutputType, 'type'[]> & {

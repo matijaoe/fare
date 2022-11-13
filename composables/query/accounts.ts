@@ -62,7 +62,7 @@ export const useCashAccountCreate = () => {
 export const useAccountUpdate = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
   return useMutation((body: Prisma.MoneyAccountUpdateWithoutUserInput) =>
-    $fetch<MoneyAccount>(`/api/accounts/${get(id)}`, {
+    $fetch<{ count: number }>(`/api/accounts/${get(id)}`, {
       method: 'PATCH',
       body,
     }), {

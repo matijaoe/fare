@@ -1,4 +1,4 @@
-import { useContextUserId } from '~~/composables/server'
+import { useContextUserId } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import type { TransactionTotalMonthly, TransactionTotalMonthlyObject } from '~~/models/resources/transaction'
 import { groupBy } from '~~/utils'

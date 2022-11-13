@@ -5,10 +5,12 @@ export default defineEventHandler(async (event) => {
 
   const isAuthRequest = url?.startsWith('/api/auth')
 
+  console.log('🔵🔵🔵 MIDDLEWARE 🔵🔵🔵')
+
   if (!isAuthRequest) {
     const session = await getServerSession(event)
-    if (session?.user) {
-      event.context.userId = session.user.id ?? null
+    if (session?.user?.id) {
+      event.context.userId = session.user.id
     }
   }
 })

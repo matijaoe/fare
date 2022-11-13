@@ -1,6 +1,6 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { sendCustomError, sendInternalError, setResStatus, useContextUserId } from '~~/composables/server'
+import { sendCustomError, sendInternalError, setResStatus, useContextUserId } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import { validEntryType } from '~~/utils/server/transaction'
 
