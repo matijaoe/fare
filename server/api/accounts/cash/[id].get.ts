@@ -4,7 +4,7 @@ import { sendCustomError, sendInternalError, useParams, useTransactionDateRange 
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
-  const where = useParams<Prisma.AccountWhereUniqueInput>(event)
+  const where = useParams<Prisma.MoneyAccountWhereUniqueInput>(event)
   const { dateQuery: date } = useTransactionDateRange(event)
 
   const paymentAccountArgs: Prisma.TransactionFindManyArgs = {

@@ -17,13 +17,18 @@ const hasError = computed(() => get(isErrorCreate) || get(isErrorUpdate) || get(
 const { allIcons: icons } = useIcons()
 const { colorOptions: colors } = useAppColors()
 
-const createAccountHandler = (values: Prisma.AccountCreateWithoutUserInput) => {
-  createAccount(values, {
-    onSuccess: () => modal.hide(),
-  })
+const createAccountHandler = async (values: Prisma.MoneyAccountCreateWithoutUserInput) => {
+  const { userId } = await useAuth()
+  console.log('data :>> ', userId.value)
+
+  if (userId.value) {
+    createAccount({ ...values, userId: userId.value }, {
+      onSuccess: () => modal.hide(),
+    })
+  }
 }
 
-const editAccountHandler = (values: Prisma.AccountUpdateWithoutUserInput) => {
+const editAccountHandler = (values: Prisma.MoneyAccountUpdateWithoutUserInput) => {
   updateAccount(values, {
     onSuccess: () => modal.hide(),
   })

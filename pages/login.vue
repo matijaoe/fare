@@ -8,7 +8,6 @@ definePageMeta({
 const { data, status, getCsrfToken, getProviders, signIn, signOut } = await useSession({ required: false })
 const providers = await getProviders()
 const csrfToken = await getCsrfToken()
-
 const signOutHandler = () => {
   signOut({ callbackUrl: '/' })
 }

@@ -1,7 +1,7 @@
 import GithubProvider from 'next-auth/providers/github'
 import { NuxtAuthHandler } from '#auth'
 import { db } from '~~/lib/db'
-import { PrismaAdapter } from '~~/lib/nuxt-auth/adapter-prisma'
+import { PrismaAdapter } from '~~/lib/nuxt-auth'
 
 export default NuxtAuthHandler({
   adapter: PrismaAdapter(db),
@@ -12,11 +12,13 @@ export default NuxtAuthHandler({
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
   ],
-  // callbacks: {
-  //   // @ts-expect-error kajgod
-  //   signIn: async (user, account, profile) => {
-  //     console.log('signIn', user, account, profile)
-  //     return true
-  //   },
-  // },
+  callbacks: {
+    // https://stackoverflow.com/questions/70409219/get-user-id-from-session-in-next-auth-client
+    session: async ({ session, user }) => {
+      if (user) {
+        session.user.id = user.id
+      }
+      return session
+    },
+  },
 })

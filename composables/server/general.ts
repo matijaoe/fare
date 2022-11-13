@@ -1,5 +1,6 @@
 import type { CompatibilityEvent, H3Event } from 'h3'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
+import { getServerSession } from '#auth'
 
 export const sendCustomError = (
   event: CompatibilityEvent,

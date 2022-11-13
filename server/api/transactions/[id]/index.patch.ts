@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     const res = await db.transaction.updateMany({
       where: {
         ...where,
-        userId: useContextUserId(event),
+        userId,
       },
       data: {
         ...data,

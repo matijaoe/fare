@@ -16,7 +16,6 @@ export function PrismaAdapter(p: PrismaClient): Adapter {
     updateUser: ({ id, ...data }) => p.user.update({ where: { id }, data }),
     deleteUser: id => p.user.delete({ where: { id } }),
     linkAccount: data => {
-      console.log('link account', data)
       return p.account.create({ data }) as unknown as AdapterAccount
     },
     unlinkAccount: provider_providerAccountId =>

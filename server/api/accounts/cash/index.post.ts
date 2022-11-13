@@ -4,16 +4,21 @@ import { sendInternalError, setResStatus, useContextUserId } from '~~/composable
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
-  const userId = useContextUserId(event)
-  const accountCreate = await useBody<Prisma.AccountUncheckedCreateWithoutUserInput>(event)
+  // console.log('🧽🧽🧽🧽🧽🧽🧽🧽🧽')
+  // console.log('event.context :>> ', event.context)
+  // const userId = useContextUserId(event)
+  // console.log('🍎 server userId :>> ', userId)
+
+  const accountCreate = await useBody<Prisma.MoneyAccountUncheckedCreateInput>(event)
 
   try {
+    console.log('-----------------> PRISMA QUERY')
     const account = await db.cashAccount.create({
       data: {
         account: {
           create: {
             ...accountCreate,
-            userId,
+            // userId,
           },
         },
       },

@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   const data = await useBody<{ name: string }>(event)
 
   try {
-    const account = await db.account.update({
+    const account = await db.moneyAccount.update({
       where: { id },
       data,
     })

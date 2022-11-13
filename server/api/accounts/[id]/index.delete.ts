@@ -4,13 +4,15 @@ import { sendCustomError, sendInternalError, useContextUserId, useParams } from 
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
-  const where = useParams<Prisma.AccountWhereUniqueInput>(event)
+  const where = useParams<Prisma.MoneyAccountWhereUniqueInput>(event)
+
+  const userId = await useContextUserId(event)
 
   try {
-    const res = await db.account.deleteMany({
+    const res = await db.moneyAccount.deleteMany({
       where: {
         ...where,
-        userId: useContextUserId(event),
+        userId,
       },
     })
 

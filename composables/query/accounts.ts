@@ -1,4 +1,4 @@
-import type { MoneyAccount, CashAccount, Prisma } from '@prisma/client'
+import type { CashAccount, MoneyAccount, Prisma } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
@@ -52,8 +52,7 @@ export const useCashAccountsBalance = () => useQuery(
 
 export const useCashAccountCreate = () => {
   const qc = useQueryClient()
-
-  return useMutation((body: Prisma.AccountUncheckedUpdateWithoutUserInput) => $fetch<CashAccount>('/api/accounts/cash', { method: 'POST', body }), {
+  return useMutation((body: Prisma.MoneyAccountUncheckedCreateInput) => $fetch<CashAccount>('/api/accounts/cash', { method: 'POST', body }), {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
     },
@@ -62,7 +61,7 @@ export const useCashAccountCreate = () => {
 
 export const useAccountUpdate = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
-  return useMutation((body: Prisma.AccountUpdateWithoutUserInput) =>
+  return useMutation((body: Prisma.MoneyAccountUpdateWithoutUserInput) =>
     $fetch<MoneyAccount>(`/api/accounts/${get(id)}`, {
       method: 'PATCH',
       body,
