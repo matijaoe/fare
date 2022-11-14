@@ -22,10 +22,13 @@ const createAccountHandler = async (values: Prisma.MoneyAccountCreateWithoutUser
   // console.log('data :>> ', userId.value)
 
   // if (userId.value) {
-  createAccount({ ...values }, {
+  //   createAccount({ ...values, userId: userId.value }, {
+  //     onSuccess: () => modal.hide(),
+  //   })
+  // }
+  createAccount(values, {
     onSuccess: () => modal.hide(),
   })
-  // }
 }
 
 const editAccountHandler = (values: Prisma.MoneyAccountUpdateWithoutUserInput) => {

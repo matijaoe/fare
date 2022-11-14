@@ -5,11 +5,9 @@ definePageMeta({
   layout: 'auth',
 })
 
-const { data, status, getCsrfToken, getProviders, signIn, signOut } = await useSession({ required: false })
-const providers = await getProviders()
-const csrfToken = await getCsrfToken()
+const { data, status, isLoading, isAuthenticated, signIn, signOut } = await useAuth()
 const signOutHandler = () => {
-  signOut({ callbackUrl: '/' })
+  signOut({ callbackUrl: '/login' })
 }
 </script>
 
@@ -20,16 +18,19 @@ const signOutHandler = () => {
     place-content-center
   >
     <div flex gap-2>
-      <FButton v-if="data && status === 'authenticated'" @click="signOutHandler">
+      <FButton v-if="isAuthenticated" @click="signOutHandler">
         logout
       </FButton>
       <FButton
         v-else
-        @click="signIn('github', {
-          callbackUrl: '/',
-        })"
+        :loading="isLoading"
+        @click="signIn('github', { callbackUrl: '/' })"
       >
         login with github
+      </FButton>
+
+      <FButton variant="info" @click="navigateTo('/')">
+        Home
       </FButton>
     </div>
   </div>

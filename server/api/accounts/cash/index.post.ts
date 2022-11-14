@@ -9,16 +9,16 @@ export default defineEventHandler(async (event) => {
   const userId = useContextUserId(event)
   // console.log('🍎 server userId :>> ', userId)
 
-  const accountCreate = await useBody<Prisma.MoneyAccountUncheckedCreateInput>(event)
-
+  const accountCreate = await useBody<Prisma.MoneyAccountUncheckedCreateWithoutUserInput>(event)
+  const body = { ...accountCreate, userId }
+  console.log('🔴 body :>> ', body)
   // TODO: query is run before antyhing before it???????
   try {
     const account = await db.cashAccount.create({
       data: {
         account: {
           create: {
-            ...accountCreate,
-            userId,
+            ...body,
           },
         },
       },

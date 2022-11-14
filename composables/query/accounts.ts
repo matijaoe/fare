@@ -52,7 +52,7 @@ export const useCashAccountsBalance = () => useQuery(
 
 export const useCashAccountCreate = () => {
   const qc = useQueryClient()
-  return useMutation((body: Prisma.MoneyAccountUncheckedCreateInput) => $fetch<CashAccount>('/api/accounts/cash', { method: 'POST', body }), {
+  return useMutation((body: Prisma.MoneyAccountUncheckedCreateWithoutUserInput) => $fetch<CashAccount>('/api/accounts/cash', { method: 'POST', body }), {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
     },

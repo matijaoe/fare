@@ -54,5 +54,5 @@ export const useContextUserId = (event: H3Event): string => {
   //   // TODO: fallback just in case
   //   throw new Error('User id not found in context')
   // }
-  return event.context.userId
+  return event.context?.userId
 }

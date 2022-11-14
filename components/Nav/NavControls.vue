@@ -4,11 +4,11 @@ import { useQueryClient } from '@tanstack/vue-query'
 const { smDown } = useBreakpoints()
 const { isDark, toggleDark } = useTheme()
 
-const { data, signOut } = await useSession({ required: false })
+const { data, signOut } = await useAuth()
 const qc = useQueryClient()
 const signOutHandler = () => {
   qc.clear()
-  signOut({ callbackUrl: '/' })
+  signOut({ callbackUrl: '/login' })
 }
 </script>
 

@@ -2,15 +2,11 @@
 import { useQueryClient } from '@tanstack/vue-query'
 import { useSession } from '#imports'
 
-const { data, status, getCsrfToken, getProviders, signIn, signOut } = await useSession({ required: false })
+const { data, status, getCsrfToken, getProviders, signIn, signOut } = await useAuth()
 const providers = await getProviders()
 const csrfToken = await getCsrfToken()
 
 const qc = useQueryClient()
-const signOutHandler = () => {
-  qc.clear()
-  signOut({ callbackUrl: '/' })
-}
 </script>
 
 <template>
@@ -26,18 +22,6 @@ const signOutHandler = () => {
       <pre v-if="data"><span>Data:</span> {{ data }}</pre>
       <pre v-if="csrfToken"><span>CSRF Token:</span> {{ csrfToken }}</pre>
       <pre v-if="providers"><span>Providers:</span> {{ providers }}</pre>
-
-      <FButton v-if="data && status === 'authenticated'" @click="signOutHandler">
-        logout
-      </FButton>
-      <FButton
-        v-else
-        @click="signIn('github', {
-          callbackUrl: '/',
-        })"
-      >
-        login
-      </FButton>
     </div>
   </LayoutPageLayout>
 </template>
