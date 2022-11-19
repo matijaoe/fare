@@ -17,22 +17,34 @@ const hasError = computed(() => get(isErrorCreate) || get(isErrorUpdate) || get(
 const { allIcons: icons } = useIcons()
 const { colorOptions: colors } = useAppColors()
 
-const createAccountHandler = (values: Prisma.AccountCreateWithoutUserInput) => {
-  createAccount(values, {
-    onSuccess: () => modal.hide(),
-  })
+const createAccountHandler = async (values: Prisma.MoneyAccountCreateWithoutUserInput) => {
+  const userId = (await useAuth()).userId.value
+
+  if (userId) {
+    createAccount({ ...values, userId }, {
+      onSuccess: () => modal.hide(),
+    })
+  }
 }
 
-const editAccountHandler = (values: Prisma.AccountUpdateWithoutUserInput) => {
-  updateAccount(values, {
-    onSuccess: () => modal.hide(),
-  })
+const editAccountHandler = async (values: Prisma.MoneyAccountUncheckedUpdateManyInput) => {
+  const userId = (await useAuth()).userId.value
+
+  if (userId) {
+    updateAccount({ ...values, userId }, {
+      onSuccess: () => modal.hide(),
+    })
+  }
 }
 
-const deleteAccountHandler = () => {
-  deleteAccount(undefined, {
-    onSuccess: () => modal.hide(),
-  })
+const deleteAccountHandler = async () => {
+  const userId = (await useAuth()).userId.value
+
+  if (userId) {
+    deleteAccount({ userId }, {
+      onSuccess: () => modal.hide(),
+    })
+  }
 }
 
 const onSubmit = form.handleSubmit((values) => {

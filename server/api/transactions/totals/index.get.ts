@@ -1,5 +1,5 @@
 import type { TransactionType } from '@prisma/client'
-import { useContextUserId, useTransactionDateRange } from '~~/composables/server'
+import { readUserId, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import type { TransactionsTotalsPerRange } from '~~/models/resources/transaction'
 
@@ -10,7 +10,7 @@ type TotalsForMonth = {
 }
 
 export default defineEventHandler(async (event) => {
-  const userId = useContextUserId(event)
+  const userId = readUserId(event)
   const { startDate, endDate, hasDefinedRange } = useTransactionDateRange(event)
 
   let sqlRes: TotalsForMonth[] = []

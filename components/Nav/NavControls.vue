@@ -1,6 +1,13 @@
 <script setup lang="ts">
 const { smDown } = useBreakpoints()
 const { isDark, toggleDark } = useTheme()
+
+const { user, signOut } = await useAuth()
+
+const signOutHandler = async () => {
+  await signOut()
+  navigateTo({ name: 'login' })
+}
 </script>
 
 <template>
@@ -8,14 +15,16 @@ const { isDark, toggleDark } = useTheme()
     v-bind="$attrs"
     mt-auto
     w-full
-    grid="sm:~ sm:cols-4 sm:gap-3"
+    grid="sm:~ sm:cols-4 sm:gap-1"
     flex="~ gap-5 wrap"
     class="justify-center items-center sm:justify-items-center"
     px-3
   >
     <button>
       <img
-        src="https://source.boringavatars.com/marble/50"
+        v-if="user"
+        rounded-full
+        :src="user!.image"
         w="60px sm:50.8px"
         aspect-square
       >
@@ -58,6 +67,7 @@ const { isDark, toggleDark } = useTheme()
           '!p-4': smDown,
         }"
         icon-only
+        @click="signOutHandler"
       >
         <template #icon>
           <Icon name="tabler:logout" text="xl sm:base" />

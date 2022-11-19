@@ -1,10 +1,10 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { sendCustomError, sendInternalError, useContextUserId, useParams } from '~~/composables/server'
+import { readParams, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
-  const where = useParams<Prisma.CategoryWhereUniqueInput>(event)
+  const where = readParams<Prisma.CategoryWhereUniqueInput>(event)
 
   try {
     const item = await db.category.findFirst({
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
       include: {
         transactions: {
           where: {
-            userId: useContextUserId(event),
+            userId: readUserId(event),
           },
         },
       },

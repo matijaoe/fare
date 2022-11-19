@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     'nuxt-icon',
+    '@sidebase/nuxt-auth',
   ],
   experimental: {
     reactivityTransform: true,
@@ -50,5 +51,9 @@ export default defineNuxtConfig({
   },
   app: {
     layoutTransition: { name: 'layout', mode: 'out-in' },
+  },
+  auth: {
+    origin: 'http://localhost:3000',
+    isEnabled: true,
   },
 })

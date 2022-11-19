@@ -44,8 +44,6 @@ export const setResStatus = (
   statusCode: StatusCodes,
 ) => res.statusCode = statusCode
 
-export const useParams = <T>(event: H3Event) => event.context.params as T
+export const readParams = <T>(event: H3Event) => event.context.params as T
 
-export const useContext = <T>(event: H3Event) => event.context as T & { params: Record<string, any> }
-
-export const useContextUserId = (event: H3Event) => event.context.userId as string
+export const readUserId = (event: H3Event): string | undefined => event.context?.userId

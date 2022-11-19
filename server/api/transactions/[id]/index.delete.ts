@@ -1,21 +1,30 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { sendCustomError, sendInternalError, useContextUserId, useParams } from '~~/composables/server'
 import { db } from '~~/lib/db'
+import { readParams, sendCustomError, sendInternalError, setResStatus } from '~~/server/utils'
 
 export default defineEventHandler(async (event) => {
-  const where = useParams<Prisma.TransactionWhereUniqueInput>(event)
+  const where = readParams<Prisma.TransactionWhereUniqueInput>(event)
+
+  const { userId } = await readBody<{ userId: string }>(event)
+
+  if (!userId) {
+    return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
+  }
+
   try {
     const res = await db.transaction.deleteMany({
       where: {
         ...where,
-        userId: useContextUserId(event),
+        userId,
       },
     })
 
     if (!res.count) {
       return sendCustomError(event, StatusCodes.NOT_FOUND, 'Transaction not found')
     }
+
+    setResStatus(event, StatusCodes.OK)
 
     return res
   } catch (err: unknown) {

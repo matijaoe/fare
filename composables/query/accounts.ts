@@ -1,4 +1,4 @@
-import type { Account, CashAccount, Prisma } from '@prisma/client'
+import type { CashAccount, MoneyAccount, Prisma } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
@@ -52,8 +52,7 @@ export const useCashAccountsBalance = () => useQuery(
 
 export const useCashAccountCreate = () => {
   const qc = useQueryClient()
-
-  return useMutation((body: Prisma.AccountUncheckedUpdateWithoutUserInput) => $fetch<CashAccount>('/api/accounts/cash', { method: 'POST', body }), {
+  return useMutation((body: Prisma.MoneyAccountUncheckedCreateInput) => $fetch<CashAccount>('/api/accounts/cash', { method: 'POST', body }), {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
     },
@@ -62,8 +61,8 @@ export const useCashAccountCreate = () => {
 
 export const useAccountUpdate = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
-  return useMutation((body: Prisma.AccountUpdateWithoutUserInput) =>
-    $fetch<Account>(`/api/accounts/${get(id)}`, {
+  return useMutation((body: Prisma.MoneyAccountUncheckedUpdateManyInput) =>
+    $fetch<{ count: number }>(`/api/accounts/${get(id)}`, {
       method: 'PATCH',
       body,
     }), {
@@ -75,9 +74,10 @@ export const useAccountUpdate = (id: Ref<string | undefined>) => {
 
 export const useAccountDelete = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
-  return useMutation(() =>
-    $fetch<Account>(`/api/accounts/${get(id)}`, {
+  return useMutation(({ userId }: { userId: string }) =>
+    $fetch<MoneyAccount>(`/api/accounts/${get(id)}`, {
       method: 'DELETE',
+      body: { userId },
     }), {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)

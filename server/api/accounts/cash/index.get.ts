@@ -1,15 +1,20 @@
 import type { Prisma } from '@prisma/client'
-import { useContextUserId, useTransactionDateRange } from '~~/composables/server'
+import { readUserId, sendInternalError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 // Get cash accounts, with transactions only from given month range
-export default defineEventHandler((event) => {
-  const userId = useContextUserId(event)
+export default defineEventHandler(async (event) => {
+  const userId = readUserId(event)
+  if (!userId) {
+    console.log('🚫 No userId')
+    return null
+  }
+
   const { dateQuery: date, withTransactions } = useTransactionDateRange(event)
 
   const paymentAccountArgs: Prisma.TransactionFindManyArgs | boolean = withTransactions
     ? {
-        where: { date },
+        where: { date, userId },
         orderBy: { date: 'desc' },
       }
     : false

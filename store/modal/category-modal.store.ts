@@ -1,4 +1,4 @@
-import type { Account } from '@prisma/client'
+import type { MoneyAccount } from '@prisma/client'
 import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
@@ -19,7 +19,7 @@ export const useCategoryModal = defineStore('modal-category', () => {
     set: value => set(open, value),
   })
 
-  const launch = (account?: Account) => {
+  const launch = (account?: MoneyAccount) => {
     if (account) {
       set(modalType, 'edit')
     } else {

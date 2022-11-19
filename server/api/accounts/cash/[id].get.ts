@@ -1,10 +1,10 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { sendCustomError, sendInternalError, useParams, useTransactionDateRange } from '~~/composables/server'
+import { readParams, sendCustomError, sendInternalError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
-  const where = useParams<Prisma.AccountWhereUniqueInput>(event)
+  const where = readParams<Prisma.MoneyAccountWhereUniqueInput>(event)
   const { dateQuery: date } = useTransactionDateRange(event)
 
   const paymentAccountArgs: Prisma.TransactionFindManyArgs = {

@@ -1,10 +1,10 @@
-import type { Account, Category, Transaction, TransactionType } from '@prisma/client'
+import type { MoneyAccount, Category, Transaction, TransactionType } from '@prisma/client'
 
 export type TransactionWithCategoryAndCashAccount = Transaction &
 { category?: Category } &
 {
-  fromAccount?: { account: Account }
-  toAccount?: { account: Account }
+  fromAccount?: { account: MoneyAccount }
+  toAccount?: { account: MoneyAccount }
 }
 
 export type TransactionTotalMonthly = {

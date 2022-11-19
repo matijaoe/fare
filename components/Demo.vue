@@ -64,7 +64,9 @@ const selectedPerson = ref<SelectItemDefault | null>()
         gap-2
         items-center
       >
-        <FPasswordField v-model="pw" :loading="loading" flex-1 />
+        <form>
+          <FPasswordField v-model="pw" :loading="loading" flex-1 />
+        </form>
         <FButton
           variant="primary"
           @click="toggleLoading()"

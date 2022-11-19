@@ -1,4 +1,4 @@
-import type { Account } from '@prisma/client'
+import type { MoneyAccount } from '@prisma/client'
 import { toFormValidator } from '@vee-validate/zod'
 import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
@@ -70,14 +70,14 @@ export const useCashAccountModal = defineStore('modal-account', () => {
     set: value => set(open, value),
   })
 
-  const setEditAccount = (account: Account) => {
+  const setEditAccount = (account: MoneyAccount) => {
     const { id, name, color, icon } = account
     set(accountId, id)
 
     form.setValues({ name, color, icon })
   }
 
-  const launch = (account?: Account) => {
+  const launch = (account?: MoneyAccount) => {
     if (account) {
       setEditAccount(account)
       set(modalType, 'edit')

@@ -1,5 +1,5 @@
 import type { TransactionType } from '@prisma/client'
-import { useContextUserId, useTransactionDateRange } from '~~/composables/server'
+import { readUserId, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import type { CategoryTotalType, GroupedCategory } from '~~/models/resources/category'
 
@@ -33,7 +33,7 @@ const calculateCategoryTotals = (grupedCategories: GroupedCategory[]) => {
 }
 
 export default defineEventHandler(async (event) => {
-  const userId = useContextUserId(event)
+  const userId = readUserId(event)
   const { dateQuery: date, hasDefinedRange } = useTransactionDateRange(event)
 
   const groupedCategoriesAllTime = await db.transaction.groupBy({

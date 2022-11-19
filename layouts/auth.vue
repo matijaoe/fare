@@ -1,0 +1,20 @@
+<template>
+  <div
+    bg-stone-2
+    dark:bg-stone-9
+    min-h-screen
+    flex
+    flex-col
+  >
+    <div
+      p-8
+      container
+      mx-auto
+      flex
+      flex-col
+      flex-1
+    >
+      <slot />
+    </div>
+  </div>
+</template>

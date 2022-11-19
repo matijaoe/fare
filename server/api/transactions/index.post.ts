@@ -1,12 +1,11 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { sendCustomError, sendInternalError, setResStatus, useContextUserId } from '~~/composables/server'
 import { db } from '~~/lib/db'
+import { sendCustomError, sendInternalError, setResStatus } from '~~/server/utils'
 import { validEntryType } from '~~/utils/server/transaction'
 
 export default defineEventHandler(async (event) => {
-  const userId = useContextUserId(event)
-  const data = await useBody<Prisma.TransactionUncheckedCreateInput>(event)
+  const data = await readBody<Prisma.TransactionUncheckedCreateInput>(event)
 
   if (!validEntryType(data)) {
     return sendCustomError(event, StatusCodes.BAD_REQUEST, 'Invalid entry type logic')
@@ -14,10 +13,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const entry = await db.transaction.create({
-      data: {
-        ...data,
-        userId,
-      },
+      data,
     })
 
     setResStatus(event, StatusCodes.CREATED)

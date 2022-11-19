@@ -1,5 +1,5 @@
 import { TransactionType } from '@prisma/client'
-import { sendInternalError } from '~~/composables/server'
+import { sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import type { AccountTotalType, CashAccountWithTotalsAndAccount, GroupedAccount } from '~~/models/resources/account'
 

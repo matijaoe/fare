@@ -1,16 +1,29 @@
-import { sendInternalError } from '~~/composables/server'
+import type { Prisma } from '@prisma/client'
+import { id } from 'date-fns/locale'
+import { StatusCodes } from 'http-status-codes'
 import { db } from '~~/lib/db'
+import { readParams, sendCustomError, sendInternalError, setResStatus } from '~~/server/utils'
 
 export default defineEventHandler(async (event) => {
-  const { id } = event.context.params
-  const data = await useBody<{ name: string }>(event)
+  const where = readParams<Prisma.AccountWhereUniqueInput>(event)
+
+  const data = await readBody<Prisma.AccountUncheckedUpdateManyInput>(event)
+  const userId = data?.userId as string | undefined
+
+  if (!userId) {
+    return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
+  }
 
   try {
-    const account = await db.account.update({
-      where: { id },
+    const account = await db.moneyAccount.updateMany({
+      where: {
+        ...where,
+        userId,
+      },
       data,
     })
 
+    setResStatus(event, StatusCodes.OK)
     return account
   } catch (err: unknown) {
     console.error(err)

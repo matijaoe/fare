@@ -37,7 +37,7 @@ const sizeStyle = computed(() => {
       name="ph:campfire-duotone"
       :class="[sizeStyle.icon]"
     />
-    <span v-if="!minimal">IRE</span>
+    <span v-if="!minimal">FARE</span>
   </div>
 </template>
 

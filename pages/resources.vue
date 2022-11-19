@@ -1,9 +1,9 @@
 <script lang="ts" setup>
+
 </script>
 
 <template>
-  Resources
+  <LayoutPageLayout>
+    kajgod
+  </LayoutPageLayout>
 </template>
-
-<style>
-</style>

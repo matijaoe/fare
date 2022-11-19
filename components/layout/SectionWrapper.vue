@@ -31,7 +31,7 @@ defineProps<Props>()
           </h1>
           <p
             v-if="subtitle"
-            mt="1.5"
+            mt="1"
             text="sm zinc-4 dark:zinc-5"
           >
             {{ subtitle }}
