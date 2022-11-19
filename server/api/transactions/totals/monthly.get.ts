@@ -1,10 +1,10 @@
-import { useContextUserId } from '~~/server/utils'
+import { readUserId } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import type { TransactionTotalMonthly, TransactionTotalMonthlyObject } from '~~/models/resources/transaction'
 import { groupBy } from '~~/utils'
 
 export default defineEventHandler(async (event) => {
-  const userId = useContextUserId(event)
+  const userId = readUserId(event)
 
   try {
     const totals = await db.$queryRaw<TransactionTotalMonthly[]>`

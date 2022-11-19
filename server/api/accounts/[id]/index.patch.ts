@@ -1,10 +1,10 @@
-import { sendInternalError, useContextUserId } from '~~/server/utils'
+import { readUserId, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
   const { id } = event.context.params
-  const userId = useContextUserId(event)
-  console.log('userId :>> ', userId)
+  const userId = readUserId(event)
+  console.log('🩹 PATCH userId :>> ', userId)
 
   const data = await useBody<{ name: string }>(event)
 

@@ -1,15 +1,15 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { sendCustomError, sendInternalError, useContextUserId, useParams } from '~~/server/utils'
+import { readParams, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
-  const where = useParams<Prisma.TransactionWhereUniqueInput>(event)
+  const where = readParams<Prisma.TransactionWhereUniqueInput>(event)
   try {
     const item = await db.transaction.findFirst({
       where: {
         ...where,
-        userId: useContextUserId(event),
+        userId: readUserId(event),
       },
       include: {
         category: true,

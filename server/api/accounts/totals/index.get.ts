@@ -1,5 +1,5 @@
 import type { TransactionType } from '@prisma/client'
-import { sendInternalError, useContextUserId, useTransactionDateRange } from '~~/server/utils'
+import { readUserId, sendInternalError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import type { AccountTotalType, GroupedAccount } from '~~/models/resources/account'
 
@@ -34,7 +34,7 @@ const calculateAccountTotals = (groupedAccounts: GroupedAccount[]) => {
 }
 
 export default defineEventHandler(async (event) => {
-  const userId = useContextUserId(event)
+  const userId = readUserId(event)
   const { dateQuery: date, hasDefinedRange } = useTransactionDateRange(event)
 
   try {

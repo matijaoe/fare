@@ -1,11 +1,11 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { sendCustomError, sendInternalError, useContextUserId, useParams } from '~~/server/utils'
+import { readParams, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
-  const where = useParams<Prisma.TransactionWhereUniqueInput>(event)
-  const userId = useContextUserId(event)
+  const where = readParams<Prisma.TransactionWhereUniqueInput>(event)
+  const userId = readUserId(event)
 
   const body = await useBody<Prisma.TransactionUncheckedUpdateWithoutUserInput>(event)
 

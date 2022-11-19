@@ -1,5 +1,5 @@
 import type { Prisma } from '@prisma/client'
-import { sendInternalError, useContextUserId } from '~~/server/utils'
+import { readUserId, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 type GroupedTotal = Prisma.PickArray<Prisma.TransactionGroupByOutputType, 'type'[]> & {
@@ -7,7 +7,7 @@ type GroupedTotal = Prisma.PickArray<Prisma.TransactionGroupByOutputType, 'type'
 }
 
 export default defineEventHandler(async (event) => {
-  const userId = useContextUserId(event)
+  const userId = readUserId(event)
 
   try {
     const groupedTotals = await db.transaction.groupBy({

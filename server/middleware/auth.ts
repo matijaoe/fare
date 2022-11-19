@@ -1,5 +1,3 @@
-import { StatusCodes } from 'http-status-codes'
-import { sendCustomError } from '../utils'
 import { getServerSession } from '#auth'
 
 export default defineEventHandler(async (event) => {
@@ -11,9 +9,8 @@ export default defineEventHandler(async (event) => {
     const session = await getServerSession(event)
 
     if (session?.user) {
+      // only work correctly in GET requests, and then it must be handled so that userId is not undefined, which would return everything
       event.context.userId = session.user.id
-    } else {
-      sendCustomError(event, StatusCodes.UNAUTHORIZED, 'Unauthorized')
     }
   }
 })

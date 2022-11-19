@@ -1,10 +1,10 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { sendInternalError, setResStatus, useContextUserId } from '~~/server/utils'
+import { readUserId, sendInternalError, setResStatus } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
-  const userId = useContextUserId(event)
+  const userId = readUserId(event)
   const body = await useBody<Prisma.CategoryUncheckedCreateInput>(event)
 
   try {
