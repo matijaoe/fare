@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-import { useSession } from '#imports'
-
 definePageMeta({
   layout: 'auth',
 })
 
-const { data, status, isLoading, isAuthenticated, signIn, signOut } = await useAuth()
-const signOutHandler = () => {
-  signOut({ callbackUrl: '/login' })
+const { status, signIn, signOut } = await useSession({ required: false })
+
+const signInHandler = async () => {
+  signIn('github', { callbackUrl: '/' })
 }
 </script>
 
@@ -18,19 +17,15 @@ const signOutHandler = () => {
     place-content-center
   >
     <div flex gap-2>
-      <FButton v-if="isAuthenticated" @click="signOutHandler">
-        logout
-      </FButton>
-      <FButton
-        v-else
-        :loading="isLoading"
-        @click="signIn('github', { callbackUrl: '/' })"
-      >
+      <FButton @click="signInHandler">
         login with github
       </FButton>
 
       <FButton variant="info" @click="navigateTo('/')">
         Home
+      </FButton>
+      <FButton variant="warning" @click="navigateTo('/transactions')">
+        Transactions
       </FButton>
     </div>
   </div>

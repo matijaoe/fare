@@ -1,9 +1,10 @@
 import type { Prisma } from '@prisma/client'
-import { useContextUserId, useTransactionDateRange } from '~~/server/utils'
+import { sendInternalError, useContextUserId, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 // Get cash accounts, with transactions only from given month range
 export default defineEventHandler(async (event) => {
+  console.log('🙁 event.context :>> ', event.context.userId)
   const userId = useContextUserId(event)
   const { dateQuery: date, withTransactions } = useTransactionDateRange(event)
 

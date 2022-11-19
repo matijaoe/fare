@@ -1,12 +1,5 @@
 <script lang="ts" setup>
-import { useQueryClient } from '@tanstack/vue-query'
-import { useSession } from '#imports'
 
-const { data, status, getCsrfToken, getProviders, signIn, signOut } = await useAuth()
-const providers = await getProviders()
-const csrfToken = await getCsrfToken()
-
-const qc = useQueryClient()
 </script>
 
 <template>

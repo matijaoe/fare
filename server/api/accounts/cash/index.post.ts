@@ -4,16 +4,24 @@ import { sendInternalError, setResStatus, useContextUserId } from '~~/server/uti
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
+  console.log('event.context :>> ', event.context)
   console.log('🟧🟧🟧 ACCOUNT 🟧🟧🟧')
-  // console.log('event.context :>> ', event.context)
+  // console.log('event.context :>> ', event.context.userId)
   const userId = useContextUserId(event)
   // console.log('🍎 server userId :>> ', userId)
 
   const accountCreate = await useBody<Prisma.MoneyAccountUncheckedCreateWithoutUserInput>(event)
   const body = { ...accountCreate, userId }
-  console.log('🔴 body :>> ', body)
-  // TODO: query is run before antyhing before it???????
+
+  if (!userId) {
+    console.log('❄️ no user id')
+    return
+  }
+
+  // console.log('🔴 body :>> ', body)
+  // TODO: query is run before anything before it???????
   try {
+    console.log('---------------- BEFORE', userId)
     const account = await db.cashAccount.create({
       data: {
         account: {
@@ -26,7 +34,7 @@ export default defineEventHandler(async (event) => {
         account: true,
       },
     })
-
+    console.log('---------------- AFTER ', userId)
     setResStatus(event, StatusCodes.CREATED)
     return account
   } catch (err: unknown) {

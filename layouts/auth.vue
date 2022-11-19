@@ -1,6 +1,7 @@
 <template>
   <div
     bg-stone-2
+    dark:bg-stone-9
     min-h-screen
     flex
     flex-col

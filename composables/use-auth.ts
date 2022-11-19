@@ -1,5 +1,5 @@
 export const useAuth = async (options: UseAuthOptions = {}) => {
-  const { data: $data, status: $status, getCsrfToken, getProviders, getSession, signIn, signOut } = await useSession({
+  const { data: $data, status: $status, ...rest } = await useSession({
     required: true,
     onUnauthenticated: () => {
       // console.log('NON AUTH, GO TO LOGIN')
@@ -27,11 +27,7 @@ export const useAuth = async (options: UseAuthOptions = {}) => {
     isAuthenticated,
     isUnauthenticated,
     isLoading,
-    getCsrfToken,
-    getProviders,
-    getSession,
-    signIn,
-    signOut,
+    ...rest,
   }
 }
 
