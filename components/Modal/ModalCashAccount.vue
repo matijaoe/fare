@@ -18,29 +18,37 @@ const { allIcons: icons } = useIcons()
 const { colorOptions: colors } = useAppColors()
 
 const createAccountHandler = async (values: Prisma.MoneyAccountCreateWithoutUserInput) => {
-  const { userId } = await useAuth()
+  const userId = (await useAuth()).userId.value
 
-  if (userId.value) {
-    createAccount({ ...values, userId: userId.value }, {
+  if (userId) {
+    createAccount({ ...values, userId }, {
       onSuccess: () => modal.hide(),
     })
   }
-
-  // createAccount(values, {
-  //   onSuccess: () => modal.hide(),
-  // })
 }
 
-const editAccountHandler = (values: Prisma.MoneyAccountUpdateWithoutUserInput) => {
-  updateAccount(values, {
-    onSuccess: () => modal.hide(),
-  })
+const editAccountHandler = async (values: Prisma.MoneyAccountUncheckedUpdateManyInput) => {
+  const userId = (await useAuth()).userId.value
+
+  if (userId) {
+    updateAccount({ ...values, userId }, {
+      onSuccess: () => modal.hide(),
+      onError: (err) => {
+        // baca bad request a prode skroz normalno...
+        console.log('🙁🙁🙁🙁🙁', err)
+      },
+    })
+  }
 }
 
-const deleteAccountHandler = () => {
-  deleteAccount(undefined, {
-    onSuccess: () => modal.hide(),
-  })
+const deleteAccountHandler = async () => {
+  const userId = (await useAuth()).userId.value
+
+  if (userId) {
+    deleteAccount({ userId }, {
+      onSuccess: () => modal.hide(),
+    })
+  }
 }
 
 const onSubmit = form.handleSubmit((values) => {

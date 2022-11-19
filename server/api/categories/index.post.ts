@@ -5,7 +5,7 @@ import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
-  const body = await useBody<Prisma.CategoryUncheckedCreateInput>(event)
+  const body = await readBody<Prisma.CategoryUncheckedCreateInput>(event)
 
   try {
     const item = await db.category.create({

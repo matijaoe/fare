@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const where = readParams<Prisma.TransactionWhereUniqueInput>(event)
   const userId = readUserId(event)
 
-  const body = await useBody<Prisma.TransactionUncheckedUpdateWithoutUserInput>(event)
+  const body = await readBody<Prisma.TransactionUncheckedUpdateWithoutUserInput>(event)
 
   const data = { ...body }
   if (data.type === 'Income') {

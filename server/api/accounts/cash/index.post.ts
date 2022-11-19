@@ -1,13 +1,10 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { readUserId, sendInternalError, setResStatus } from '~~/server/utils'
 import { db } from '~~/lib/db'
+import { sendInternalError, setResStatus } from '~~/server/utils'
 
 export default defineEventHandler(async (event) => {
-  const body = await useBody<Prisma.MoneyAccountUncheckedCreateInput>(event)
-
-  const userId = readUserId(event)
-  console.log('🦄 POST userId :>> ', userId)
+  const body = await readBody<Prisma.MoneyAccountUncheckedCreateInput>(event)
 
   try {
     const account = await db.cashAccount.create({
