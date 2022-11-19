@@ -1,11 +1,10 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { readUserId, sendCustomError, sendInternalError, setResStatus } from '~~/server/utils'
 import { db } from '~~/lib/db'
+import { sendCustomError, sendInternalError, setResStatus } from '~~/server/utils'
 import { validEntryType } from '~~/utils/server/transaction'
 
 export default defineEventHandler(async (event) => {
-  const userId = readUserId(event)
   const data = await readBody<Prisma.TransactionUncheckedCreateInput>(event)
 
   if (!validEntryType(data)) {
@@ -14,10 +13,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const entry = await db.transaction.create({
-      data: {
-        ...data,
-        userId,
-      },
+      data,
     })
 
     setResStatus(event, StatusCodes.CREATED)

@@ -1,10 +1,11 @@
 import type { Prisma } from '@prisma/client'
+import { id } from 'date-fns/locale'
 import { StatusCodes } from 'http-status-codes'
 import { db } from '~~/lib/db'
-import { sendCustomError, sendInternalError, setResStatus } from '~~/server/utils'
+import { readParams, sendCustomError, sendInternalError, setResStatus } from '~~/server/utils'
 
 export default defineEventHandler(async (event) => {
-  const { id } = event.context.params
+  const where = readParams<Prisma.AccountWhereUniqueInput>(event)
 
   const data = await readBody<Prisma.AccountUncheckedUpdateManyInput>(event)
   const userId = data?.userId as string | undefined
@@ -16,7 +17,7 @@ export default defineEventHandler(async (event) => {
   try {
     const account = await db.moneyAccount.updateMany({
       where: {
-        id,
+        ...where,
         userId,
       },
       data,

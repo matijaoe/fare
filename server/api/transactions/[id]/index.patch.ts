@@ -1,13 +1,13 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { readParams, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
+import { readParams, sendCustomError, sendInternalError, setResStatus } from '~~/server/utils'
 
 export default defineEventHandler(async (event) => {
   const where = readParams<Prisma.TransactionWhereUniqueInput>(event)
-  const userId = readUserId(event)
 
-  const body = await readBody<Prisma.TransactionUncheckedUpdateWithoutUserInput>(event)
+  const body = await readBody<Prisma.TransactionUncheckedUpdateInput>(event)
+  const userId = body?.userId as string | undefined
 
   const data = { ...body }
   if (data.type === 'Income') {
@@ -22,15 +22,14 @@ export default defineEventHandler(async (event) => {
         ...where,
         userId,
       },
-      data: {
-        ...data,
-        userId,
-      },
+      data,
     })
 
     if (!res.count) {
       return sendCustomError(event, StatusCodes.NOT_FOUND, 'Transaction not found')
     }
+
+    setResStatus(event, StatusCodes.OK)
 
     return res
   } catch (err: unknown) {

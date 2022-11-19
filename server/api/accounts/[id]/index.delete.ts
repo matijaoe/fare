@@ -5,6 +5,7 @@ import { readParams, sendCustomError, sendInternalError, setResStatus } from '~~
 
 export default defineEventHandler(async (event) => {
   const where = readParams<Prisma.MoneyAccountWhereUniqueInput>(event)
+
   const { userId } = await readBody<{ userId: string }>(event)
 
   if (!userId) {

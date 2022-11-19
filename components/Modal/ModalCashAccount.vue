@@ -33,10 +33,6 @@ const editAccountHandler = async (values: Prisma.MoneyAccountUncheckedUpdateMany
   if (userId) {
     updateAccount({ ...values, userId }, {
       onSuccess: () => modal.hide(),
-      onError: (err) => {
-        // baca bad request a prode skroz normalno...
-        console.log('🙁🙁🙁🙁🙁', err)
-      },
     })
   }
 }
