@@ -3,7 +3,7 @@ definePageMeta({
   layout: 'auth',
 })
 
-const { signIn, getProviders } = await useAuth()
+const { signIn, data, getProviders, isAuthenticated } = await useAuth()
 const providers = await getProviders()
 
 // TODO on register, it logs in but doesn't automatically redirect to page, only on second login
@@ -16,6 +16,10 @@ const providerIcons: Record<ProviderId, string> = {
   github: 'tabler:brand-github',
   google: 'tabler:brand-google',
 }
+
+whenever(isAuthenticated, () => {
+  navigateTo('/')
+}, { immediate: true })
 </script>
 
 <template>
@@ -24,7 +28,7 @@ const providerIcons: Record<ProviderId, string> = {
     grid
     place-content-center
   >
-    <pre>{{ providers }}</pre>
+    <pre>{{ data }}</pre>
     <div flex gap-2>
       <FButton
         v-for="provider in providers"

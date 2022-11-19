@@ -24,12 +24,23 @@ export default NuxtAuthHandler({
     signIn: '/login',
     newUser: '/login',
   },
+  // callbacks: {
+  //   session: async ({ session, user }) => {
+  //     if (user) {
+  //       session.user.id = user.id
+  //     }
+  //     return session
+  //   },
+  // },
   callbacks: {
-    session: async ({ session, user }) => {
-      if (user) {
-        session.user.id = user.id
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.sub
       }
       return session
     },
+  },
+  session: {
+    strategy: 'jwt',
   },
 })
