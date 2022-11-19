@@ -1,22 +1,16 @@
 <script setup lang="ts">
-import { useQueryClient } from '@tanstack/vue-query'
-import { routerKey } from 'vue-router'
-
 const { smDown } = useBreakpoints()
 const { isDark, toggleDark } = useTheme()
 
-const { data, signOut, status } = await useSession({ required: false })
+const { user, signOut } = await useAuth()
 
-const router = useRouter()
 const signOutHandler = async () => {
-  const data = await signOut()
-  console.log('logout data :>> ', data)
-  router.push({ path: '/login' })
+  await signOut()
+  navigateTo({ name: 'login' })
 }
 </script>
 
 <template>
-  {{ data }}
   <div
     v-bind="$attrs"
     mt-auto
@@ -28,16 +22,9 @@ const signOutHandler = async () => {
   >
     <button>
       <img
-        v-if="status === 'authenticated'"
+        v-if="user"
         rounded-full
-        :src="data.user.image"
-        w="60px sm:50.8px"
-        aspect-square
-      >
-      <img
-        v-else
-        rounded-full
-        src="https://source.boringavatars.com/marble/50"
+        :src="user!.image"
         w="60px sm:50.8px"
         aspect-square
       >

@@ -1,15 +1,13 @@
-export default defineNuxtRouteMiddleware(async (to, from) => {
+export default defineNuxtRouteMiddleware(async (to) => {
   const safeRoutes = ['/login']
 
-  const isProtected = !safeRoutes.includes(to.path)
+  const isNonAuthRoute = safeRoutes.includes(to.path)
 
-  console.log('🟧 to', to.path, ' | protected:', isProtected)
-
-  if (!isProtected) {
-    console.log('protected page')
+  // Always allow access
+  if (isNonAuthRoute) {
     return
   }
 
-  console.info('in global middleware! protecting secrets')
+  // If not authenticated, redirect to login ({ required: true} by default), else navigate to path (callbackUrl)
   await useSession({ callbackUrl: to.path })
 })

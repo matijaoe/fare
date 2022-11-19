@@ -6,6 +6,7 @@ specifiers:
   '@formkit/auto-animate': 1.0.0-beta.3
   '@headlessui/vue': ^1.7.4
   '@mermaid-js/mermaid-cli': ^9.1.7
+  '@next-auth/prisma-adapter': ^1.0.5
   '@nuxtjs/color-mode': ^3.1.8
   '@pinia/nuxt': ^0.4.3
   '@prisma/client': ^4.6.0
@@ -38,6 +39,7 @@ dependencies:
   '@fontsource/iosevka': 4.5.4
   '@formkit/auto-animate': 1.0.0-beta.3
   '@headlessui/vue': 1.7.4
+  '@next-auth/prisma-adapter': 1.0.5_@prisma+client@4.6.0
   '@prisma/client': 4.6.0_prisma@4.6.0
   '@types/chart.js': 2.9.37
   '@vee-validate/zod': 4.7.2_ecpf7q6qeavdec4r6mdm5yf2b4
@@ -733,6 +735,15 @@ packages:
     dependencies:
       is-promise: 4.0.0
     dev: true
+
+  /@next-auth/prisma-adapter/1.0.5_@prisma+client@4.6.0:
+    resolution: {integrity: sha512-VqMS11IxPXrPGXw6Oul6jcyS/n8GLOWzRMrPr3EMdtD6eOalM6zz05j08PcNiis8QzkfuYnCv49OvufTuaEwYQ==}
+    peerDependencies:
+      '@prisma/client': '>=2.26.0 || >=3'
+      next-auth: ^4
+    dependencies:
+      '@prisma/client': 4.6.0_prisma@4.6.0
+    dev: false
 
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}

@@ -1,18 +1,19 @@
+import type { DefaultSession, Status, UseAuthOptions } from '~~/models'
+
+// required is set as false, so it wont automatically redirect to /login page when called
+// use only for helpers, and typed data
+// TODO: why type: any in my useSession, should be typed by default
 export const useAuth = async (options: UseAuthOptions = {}) => {
   const { data: $data, status: $status, ...rest } = await useSession({
-    required: true,
-    onUnauthenticated: () => {
-      // console.log('NON AUTH, GO TO LOGIN')
-      // navigateTo({ name: 'login' })
-    },
+    required: false,
     ...options,
   })
 
-  const data = computed(() => $data.value as SessionData)
+  const data = computed(() => $data.value as DefaultSession)
   const status = computed(() => $status.value as Status)
 
-  const user = computed(() => data?.value?.user ?? undefined)
-  const userId = computed(() => user.value?.id ?? undefined)
+  const user = computed(() => data?.value?.user)
+  const userId = computed(() => user.value?.id)
 
   const isAuthenticated = computed<boolean>(() => status.value === 'authenticated')
   const isUnauthenticated = computed<boolean>(() => status.value === 'unauthenticated')
@@ -29,23 +30,4 @@ export const useAuth = async (options: UseAuthOptions = {}) => {
     isLoading,
     ...rest,
   }
-}
-
-type Status = 'authenticated' | 'unauthenticated' | 'loading'
-type SessionUser = {
-  image: string
-  name: string
-  email: string
-  id: string
-}
-
-type SessionData = {
-  user: SessionUser
-  expires: string
-} | null
-
-type UseAuthOptions = {
-  required?: boolean
-  callbackUrl?: string
-  onUnauthenticated?: () => void
 }
