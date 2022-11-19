@@ -4,15 +4,14 @@ import { db } from '~~/lib/db'
 
 // Get cash accounts, with transactions only from given month range
 export default defineEventHandler(async (event) => {
-  console.log('🙁 event.context :>> ', event.context.userId)
   const userId = useContextUserId(event)
+  console.log('🙁 GET ACC, userId :>> ', userId)
+
   const { dateQuery: date, withTransactions } = useTransactionDateRange(event)
 
   const paymentAccountArgs: Prisma.TransactionFindManyArgs | boolean = withTransactions
     ? {
-        where: {
-          date,
-        },
+        where: { date, userId },
         orderBy: { date: 'desc' },
       }
     : false

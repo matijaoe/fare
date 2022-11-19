@@ -48,11 +48,6 @@ export const useParams = <T>(event: H3Event) => event.context.params as T
 
 export const useContext = <T>(event: H3Event) => event.context as T & { params: Record<string, any> }
 
-export const useContextUserId = (event: H3Event): string => {
-  console.log('🌼 event.context?.userId :>> ', event.context?.userId)
-  // if (!event.context?.userId) {
-  //   // TODO: fallback just in case
-  //   throw new Error('User id not found in context')
-  // }
+export const useContextUserId = (event: H3Event): string | undefined => {
   return event.context?.userId
 }

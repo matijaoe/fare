@@ -4,6 +4,7 @@ import { db } from '~~/lib/db'
 export default defineEventHandler(async (event) => {
   const { id } = event.context.params
   const userId = useContextUserId(event)
+  console.log('userId :>> ', userId)
 
   const data = await useBody<{ name: string }>(event)
 

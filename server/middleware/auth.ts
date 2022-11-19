@@ -1,17 +1,20 @@
+import { StatusCodes } from 'http-status-codes'
+import { sendCustomError } from '../utils'
 import { getServerSession } from '#auth'
 
 export default defineEventHandler(async (event) => {
-  // const { url } = event.req
+  const { url } = event.req
 
-  // const isAuthRequest = url?.startsWith('/api/auth')
+  const isAuthRequest = url?.startsWith('/api/auth')
 
-  // if (!isAuthRequest) {
-  //   const session = await getServerSession(event)
-  //   if (session?.user) {
-  //     console.log('🔵🔵🔵 MIDDLEWARE 🔵🔵🔵', session.user.id)
-  //     event.context.userId = session.user.id
-  //     event.context.user = session.user
-  //   }
-  // }
+  if (!isAuthRequest) {
+    const session = await getServerSession(event)
+
+    if (session?.user) {
+      event.context.userId = session.user.id
+    } else {
+      sendCustomError(event, StatusCodes.UNAUTHORIZED, 'Unauthorized')
+    }
+  }
 })
 

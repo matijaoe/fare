@@ -6,12 +6,11 @@ definePageMeta({
 const { signIn, getProviders } = await useAuth()
 const providers = await getProviders()
 
+// TODO on register, it logs in but doesn't automatically redirect to page, only on second login
 const signInHandler = async (provider: string) => {
-  const res = await signIn(provider, { callbackUrl: '/', redirect: false })
-  console.log('res :>> ', res)
+  await signIn(provider, { callbackUrl: '/', redirect: false })
 }
 
-// TODO on register, it logs in but doesnt automatixally redirect to page, only on second login
 type ProviderId = 'github' | 'google'
 const providerIcons: Record<ProviderId, string> = {
   github: 'tabler:brand-github',
