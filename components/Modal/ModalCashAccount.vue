@@ -27,7 +27,7 @@ const createAccountHandler = async (values: Prisma.MoneyAccountCreateWithoutUser
   }
 }
 
-const editAccountHandler = async (values: Prisma.MoneyAccountUncheckedUpdateManyInput) => {
+const editAccountHandler = async (values: Prisma.MoneyAccountUncheckedUpdateWithoutUserInput) => {
   const userId = (await useAuth()).userId.value
 
   if (userId) {

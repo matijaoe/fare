@@ -1,6 +1,10 @@
-import type { MoneyAccount } from '@prisma/client'
+import type { Category } from '@prisma/client'
+import { toFormValidator } from '@vee-validate/zod'
 import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { useField, useForm } from 'vee-validate'
+import * as zod from 'zod'
+import { toTitleCase } from '~~/utils'
 
 type ActionType = 'create' | 'edit'
 
@@ -9,6 +13,53 @@ export const useCategoryModal = defineStore('modal-category', () => {
   const modalType = ref<ActionType>('create')
   const isEdit = computed(() => modalType.value === 'edit')
   const isCreate = computed(() => modalType.value === 'create')
+
+  // Values
+  const categoryId = ref<string>()
+
+  const validationSchema = toFormValidator(
+    zod.object({
+      name: zod.string().trim().min(1, { message: 'Name is required' }).max(24, { message: 'Name is too long' }),
+      color: zod.any().optional(),
+      icon: zod.any().optional(),
+    }),
+  )
+
+  const form = useForm<{
+    name: string
+    color: string | null
+    icon: string | null
+  }>({
+    validationSchema,
+  })
+
+  useField<string>('name')
+  useField<string | null>('color')
+  useField<string | null>('icon')
+
+  // Select values
+
+  const colorObject = computed({
+    get: () => form.values.color
+      ? {
+          label: toTitleCase(form.values.color),
+          value: form.values.color,
+          bg: `bg-${form.values.color}-5`,
+          text: `text-${form.values.color}-5`,
+        }
+      : null,
+    set: obj => form.setFieldValue('color', obj?.value ?? null),
+  })
+
+  const iconObject = computed({
+    get: () => form.values.icon
+      ? {
+          label: toTitleCase(form.values.icon?.split(':').at(-1) || 'None'),
+          value: form.values.icon,
+        }
+      : null,
+    set: obj => form.setFieldValue('icon', obj?.value ?? null),
+  })
 
   // Modal state
 
@@ -19,8 +70,16 @@ export const useCategoryModal = defineStore('modal-category', () => {
     set: value => set(open, value),
   })
 
-  const launch = (account?: MoneyAccount) => {
-    if (account) {
+  const setEditCategory = (category: Category) => {
+    const { id, name, color, icon } = category
+    set(categoryId, id)
+
+    form.setValues({ name, color, icon })
+  }
+
+  const launch = (category?: Category) => {
+    if (category) {
+      setEditCategory(category)
       set(modalType, 'edit')
     } else {
       set(modalType, 'create')
@@ -30,7 +89,9 @@ export const useCategoryModal = defineStore('modal-category', () => {
   }
 
   const reset = () => {
+    form.resetForm()
     set(modalType, 'create')
+    set(categoryId, undefined)
   }
 
   const hide = () => {
@@ -43,6 +104,12 @@ export const useCategoryModal = defineStore('modal-category', () => {
     isEdit,
     isCreate,
     // Value for edit
+    categoryId,
+    // Select item value
+    colorObject,
+    iconObject,
+    // Form
+    form,
     reset,
     showError,
     // Modal state

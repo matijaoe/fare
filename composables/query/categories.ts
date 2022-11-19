@@ -1,5 +1,5 @@
-import type { Category } from '@prisma/client'
-import { useQuery } from '@tanstack/vue-query'
+import type { Category, Prisma } from '@prisma/client'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { get } from '@vueuse/core'
 import { $fetch } from 'ohmyfetch'
 import type { Ref } from 'vue'
@@ -37,4 +37,26 @@ export const useCategoriesTotals = (from: Ref<string | undefined>, to: Ref<strin
     },
     { initialData: () => useCachedPayload<CategoryWithTotals[]>(`categories-totals-${get(from)}-${get(to)}`) },
   )
+}
+
+export const useCategoryCreate = () => {
+  const qc = useQueryClient()
+  return useMutation((body: Prisma.CategoryUncheckedCreateInput) => $fetch<Category>('/api/categories', { method: 'POST', body }), {
+    onSuccess: () => {
+      qc.invalidateQueries(keysCategory.all)
+    },
+  })
+}
+
+export const useCategoryDelete = (id: Ref<string | undefined>) => {
+  const qc = useQueryClient()
+  return useMutation(({ userId }: { userId: string }) =>
+    $fetch<{ count: number }>(`/api/categories/${get(id)}`, {
+      method: 'DELETE',
+      body: { userId },
+    }), {
+    onSuccess: () => {
+      qc.invalidateQueries(keysAccounts.all)
+    },
+  })
 }

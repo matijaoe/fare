@@ -1,4 +1,4 @@
-import type { CashAccount, MoneyAccount, Prisma } from '@prisma/client'
+import type { CashAccount, Prisma } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
@@ -75,7 +75,7 @@ export const useAccountUpdate = (id: Ref<string | undefined>) => {
 export const useAccountDelete = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
   return useMutation(({ userId }: { userId: string }) =>
-    $fetch<MoneyAccount>(`/api/accounts/${get(id)}`, {
+    $fetch<{ count: number }>(`/api/accounts/${get(id)}`, {
       method: 'DELETE',
       body: { userId },
     }), {
