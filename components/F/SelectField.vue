@@ -91,8 +91,7 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
         </div>
         <span
           v-if="selectedItem"
-          w-full
-          text-left
+          w-full text-left
           class="block truncate"
         >
           <slot name="selected" :item="selectedItem">
@@ -116,7 +115,7 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
             v-if="selectedItem && isHovered"
             type="button"
             flex="center"
-            class="text-zinc-4"
+            text-zinc-4
             @click.stop="clearSelected"
           >
             <Icon name="tabler:x" />

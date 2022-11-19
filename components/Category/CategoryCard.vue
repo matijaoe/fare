@@ -29,11 +29,8 @@ const isHovered = useElementHover(card)
     class="!pl-0 pb-0"
   >
     <div
-      flex
-      justify-between
-      items-center
-      p-2
-      pl-6
+      flex justify-between items-center
+      p-2 pl-6
       border="~ !dotted !2 !l-0"
       rounded="r-full"
       :class="[bg50, borderClr3, text9]"
@@ -53,22 +50,12 @@ const isHovered = useElementHover(card)
         </p>
       </TransitionFade>
 
-      <div
-        ml-auto
-        flex
-        gap-3
-        items-center
-      >
+      <div ml-auto flex gap-3 items-center>
         <h4 text-base font-medium>
           {{ category.name }}
         </h4>
         <div
-          w-max
-          aspect-square
-          text-lg
-          p-2
-          rounded-full
-          flex-center
+          w-max aspect-square text-lg p-2 rounded-full flex-center
           :class="[bg3]"
         >
           <Icon :name="category?.icon" />
@@ -76,41 +63,18 @@ const isHovered = useElementHover(card)
       </div>
     </div>
 
-    <div
-      flex
-      items-end
-      justify-between
-      p-5
-      pr-1
-    >
-      <div
-        justify-start
-        flex
-        items-center
-        gap-8
-      >
+    <div flex items-end justify-between p-5 pr-1>
+      <div flex justify-start items-center gap-8>
         <div>
-          <p
-            uppercase
-            font="sans medium"
-            text="10px zinc-4 dark:zinc-5"
-            leading-tight
-          >
+          <p font="sans medium" text="10px zinc-4 dark:zinc-5" leading-tight uppercase>
             Earned
           </p>
-          <div
-            text-xl
-            min-w-18
-            flex
-            justify-start
-          >
+          <div text-xl min-w-18 flex justify-start>
             <TransitionFade>
               <FSkeleton v-if="totalsLoading" w-full h="28px" />
               <span
                 v-else-if="isDefined(totals)"
-                font-mono
-                flex
-                items-center
+                font-mono flex items-center
               >
                 {{ formattedIncome }}
               </span>
@@ -119,28 +83,15 @@ const isHovered = useElementHover(card)
         </div>
 
         <div pl-5>
-          <p
-            uppercase
-            font="sans medium"
-            text="10px zinc-4 dark:zinc-5"
-            leading-tight
-            text-right
-          >
+          <p font="sans medium" text="10px right zinc-4 dark:zinc-5" leading-tight uppercase>
             Spent
           </p>
-          <div
-            text-xl
-            min-w-18
-            flex
-            justify-end
-          >
+          <div text-xl min-w-18 flex justify-end>
             <TransitionFade>
               <FSkeleton v-if="totalsLoading" w-full h="28px" />
               <span
                 v-else-if="isDefined(totals)"
-                font-mono
-                flex
-                items-center
+                font-mono flex items-center
               >
                 {{ formattedExpense }}
               </span>

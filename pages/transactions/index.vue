@@ -25,14 +25,10 @@ const transactionStore = useTransactionsStore()
   <div>
     <LayoutSectionWrapper>
       <div
-        w-full
-        flex="~ col xl:row"
-        justify-between
-        flex-1
+        w-full flex="~ col xl:row 1" justify-between
       >
         <div
-          max-w="full xl:lg"
-          flex-1
+          max-w="full xl:lg" flex-1
           border="r-2 zinc-2 dark:zinc-9"
         >
           <FInput
@@ -50,12 +46,8 @@ const transactionStore = useTransactionsStore()
         </div>
 
         <div
-          p-6
-          pb-32
-          flex-1
-          space-y-12
-          class="order--1 xl:order-1"
-          overflow-y-scroll
+          p-6 pb-32 space-y-12 overflow-y-scroll
+          flex-1 order--1 xl:order-1
           :class="mainContentWrapperHeight"
         >
           <TransactionsHead />

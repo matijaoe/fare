@@ -93,13 +93,7 @@ onLongPress(
     v-bind="modalConfig"
     @close="modal.hide"
   >
-    <form
-      mt-4
-      flex
-      flex-col
-      gap-3
-      @submit.prevent="onSubmit"
-    >
+    <form mt-4 flex flex-col gap-3 @submit.prevent="onSubmit">
       <FAlert v-if="isErrorCreate" type="info">
         Something went wrong.
       </FAlert>
@@ -113,10 +107,8 @@ onLongPress(
             value="Income"
           >
             <div
-              p-6
+              p-6 font-display text-lg
               border="2 base rounded-md"
-              font-display
-              text-lg
               :class="checked ? 'bg-green-1 text-green-8 !border-current' : 'bg-transparent hover:bg-zinc-1'"
             >
               Income
@@ -129,10 +121,8 @@ onLongPress(
             value="Expense"
           >
             <div
-              p-6
+              p-6 font-display text-lg
               border="2 base rounded-md"
-              font-display
-              text-lg
               :class="checked ? 'bg-zinc-2 text-zinc-8 !border-current' : 'bg-transparent hover:bg-zinc-1'"
             >
               Expense
@@ -145,10 +135,8 @@ onLongPress(
             value="Transfer"
           >
             <div
-              p-6
+              p-6 font-display text-lg
               border="2 base rounded-md"
-              font-display
-              text-lg
               :class="checked ? 'bg-indigo-1 text-indigo-8 !border-current' : 'bg-transparent hover:bg-zinc-1'"
             >
               Transfer
@@ -158,12 +146,7 @@ onLongPress(
       </RadioGroup>
 
       <div grid grid-cols-2 gap-3>
-        <div
-          mt-4
-          flex
-          flex-col
-          gap-3
-        >
+        <div mt-4 flex flex-col gap-3>
           <FSelectField
             v-if="modal.isExpense || modal.isTransfer"
             v-model="modal.selectedFromAccount"
@@ -211,12 +194,7 @@ onLongPress(
               </div>
             </template>
             <template #selected="{ item }">
-              <div
-                flex
-                items-center
-                justify-between
-                gap-4
-              >
+              <div flex items-center justify-between gap-4>
                 {{ item.label }}
                 <FBadge :color="item.account.color">
                   {{ item.label }}
@@ -228,10 +206,10 @@ onLongPress(
           <FSelectField
             v-if="!modal.isTransfer"
             v-model="modal.selectedCategory"
+            :items="categoryOptions"
             icon="tabler:building-bank"
             label="Category"
             placeholder="Pick a category"
-            :items="categoryOptions"
             block
           >
             <template #option="{ item }">
@@ -242,12 +220,7 @@ onLongPress(
               </div>
             </template>
             <template #selected="{ item }">
-              <div
-                flex
-                items-center
-                justify-between
-                gap-4
-              >
+              <div flex items-center justify-between gap-4>
                 {{ item.label }}
                 <FBadge :color="item.color">
                   {{ item.label }}
@@ -273,12 +246,7 @@ onLongPress(
           />
         </div>
 
-        <div
-          mt-4
-          flex
-          flex-col
-          gap-3
-        >
+        <div mt-4 flex flex-col gap-3>
           <FInput
             v-model="modal.name"
             icon="tabler:text-size"
@@ -293,12 +261,7 @@ onLongPress(
             :rows="8"
           />
 
-          <div
-            flex
-            justify-end
-            gap-2
-            mt-4
-          >
+          <div flex justify-end gap-2 mt-4>
             <FButton type="button" variant="subtle" @click="modal.hide()">
               Cancel
             </FButton>

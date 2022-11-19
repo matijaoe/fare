@@ -28,8 +28,7 @@ const { list, containerProps, wrapperProps } = useVirtualList(
 <template>
   <div
     v-bind="containerProps"
-    bg-white
-    dark:bg-zinc-9
+    bg-white dark:bg-zinc-9
     overflow-y-auto
     :class="[mainContentWrapperHeight]"
   >
@@ -50,25 +49,17 @@ const { list, containerProps, wrapperProps } = useVirtualList(
       </template>
       <div
         v-else
-        flex
-        gap-4
+        flex-center gap-4
         min-h="244px"
-        flex-center
       >
         <div
-          v-if="loading"
-          flex
-          gap-4
-          items-center
+          v-if="loading" flex gap-4 items-center
         >
           <FLoader />
           <p>Fetching transactions</p>
         </div>
         <div
-          v-else
-          flex
-          gap-4
-          items-center
+          v-else flex gap-4 items-center
         >
           <Icon name="tabler:cash-banknote-off" />
           <p>

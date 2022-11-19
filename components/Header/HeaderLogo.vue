@@ -8,10 +8,7 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
 <template>
   <NuxtLink
     v-if="handledSidebar"
-    pl-4
-    flex
-    items-center
-    justify-center
+    flex items-center justify-center pl-4
     to="/"
   >
     <FLogo />

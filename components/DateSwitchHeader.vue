@@ -13,15 +13,8 @@ const { query } = toRefs(useTransactionsStore())
 </script>
 
 <template>
-  <div
-    grid="~ cols-[100px_1fr_100px]"
-    w-full
-  >
-    <div
-      w-fit
-      flex
-      gap-2
-    >
+  <div grid="~ cols-[100px_1fr_100px]" w-full>
+    <div w-fit flex gap-2>
       <template v-if="!isAllTime">
         <FTooltip content="Previous month" placement="top">
           <FButton
@@ -70,11 +63,7 @@ const { query } = toRefs(useTransactionsStore())
         </FButton>
       </FTooltip>
     </div>
-    <div
-      class="justify-self-end"
-      flex
-      gap-2
-    >
+    <div flex justify-self-end gap-2>
       <FTooltip
         v-if="!isAllTime"
         content="All time"

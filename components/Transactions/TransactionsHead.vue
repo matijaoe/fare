@@ -12,21 +12,11 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
 </script>
 
 <template>
-  <div
-    flex
-    items-center
-    justify-between
-    gap-4
-  >
+  <div flex items-center justify-between gap-4>
     <div flex items-center gap-5>
       <div
-        text-2xl
-        p-4
-        ring="2 offset 2 current"
-        rounded-full
-        flex-center
-        flex-shrink-0
-        transition
+        flex-center flex-shrink-0
+        text-2xl p-4 rounded-full ring="2 offset 2 current" transition
         :class="{
           'bg-stone-2 text-stone-9': isLoading || net === 0,
           'bg-green-1 text-green-9': net > 0,
@@ -42,34 +32,22 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
       </div>
 
       <div space-y-1 flex-1>
-        <span
-          uppercase
-          font="sans medium"
-          text="xs zinc-4 dark:zinc-5"
-        >
+        <span uppercase font="sans medium" text="xs zinc-4 dark:zinc-5">
           Cashflow
         </span>
 
-        <div
-          flex
-          items-center
-          gap-5
-        >
+        <div flex items-center gap-5>
           <TransitionFade>
             <div
               v-if="isLoading"
-              flex
-              gap-4
-              items-center
+              flex gap-4 items-center h-full
               class="color-base-lighter"
-              h-full
             >
               <FSkeleton class="h-40px w-50" />
             </div>
             <p
               v-else-if="isDefined(totals)"
-              text-4xl
-              font="display medium"
+              text-4xl font="display medium"
             >
               {{ net > 0 ? '+' : '' }}{{ formattedNet }}
             </p>
@@ -78,27 +56,15 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
       </div>
     </div>
 
-    <div
-      flex
-      justify-center
-      items-end
-      font-mono
-      gap-8
-      divide-x-2
-    >
+    <div flex justify-center items-end gap-8 divide-x-2 font-mono>
       <FTooltip content="Income" placement="top-end">
-        <div
-          flex
-          items-center
-          gap-4
-        >
+        <div flex items-center gap-4>
           <div text-lg text-right space-y="0.5">
             <TransitionFade>
               <FSkeleton v-if="isLoading" w-22 h="28px" />
               <span
                 v-else-if="isDefined(totals)"
-                flex
-                items-center
+                flex items-center
               >
                 {{ net > 0 ? '+' : '' }}{{ formattedIncome }}
               </span>
@@ -106,14 +72,10 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
           </div>
 
           <div
-            bg-stone-1
-            text-stone-9
-            p-2
+            bg-stone-1 text-stone-9
             ring="2 offset 2 current"
-            rounded-full
-            aspect-square
-            flex-center
-            flex-shrink-0
+            flex-center flex-shrink-0
+            p-2 rounded-full aspect-square
           >
             <Icon name="tabler:arrow-down-left" sm />
           </div>
@@ -121,17 +83,8 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
       </FTooltip>
 
       <FTooltip content="Expenses" placement="top-end">
-        <div
-          flex
-          items-center
-          gap-4
-          pl-5
-        >
-          <div
-            text-lg
-            text-right
-            space-y="0.5"
-          >
+        <div flex items-center gap-4 pl-5>
+          <div text="lg right" space-y="0.5">
             <TransitionFade>
               <FSkeleton v-if="isLoading" w-22 h="28px" />
               <span v-else-if="isDefined(totals)">
@@ -141,14 +94,10 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
           </div>
 
           <div
-            bg-stone-2
-            text-stone-9
-            p-2
+            bg-stone-1 text-stone-9
             ring="2 offset 2 current"
-            rounded-full
-            aspect-square
-            flex-center
-            flex-shrink-0
+            flex-center flex-shrink-0
+            p-2 rounded-full aspect-square
           >
             <Icon name="tabler:arrow-up-right" sm />
           </div>

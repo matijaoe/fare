@@ -3,12 +3,7 @@ const modal = useTransactionModal()
 </script>
 
 <template>
-  <div
-    flex
-    gap-2
-    v-bind="$attrs"
-    z-100
-  >
+  <div flex gap-2 z-100 v-bind="$attrs">
     <FTooltip content="Income">
       <FButton
         icon-only

@@ -3,12 +3,7 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 </script>
 
 <template>
-  <Popover
-    v-slot="{ open }"
-    relative
-    w-fit
-    mt-8
-  >
+  <Popover v-slot="{ open }" relative w-fit mt-8>
     <PopoverButton
       :class="{ 'text-opacity-90': open }"
       class="group inline-flex items-center rounded-md bg-orange-700 px-3 py-2 text-base font-medium text-white hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"

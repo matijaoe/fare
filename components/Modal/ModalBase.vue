@@ -65,8 +65,7 @@ const transitionsModal = {
 <template>
   <TransitionRoot :show="opened">
     <Dialog
-      z-599
-      relative
+      z-599 relative
       @close="close"
     >
       <TransitionChild v-bind="transitionsBackdrop">
@@ -74,14 +73,7 @@ const transitionsModal = {
       </TransitionChild>
 
       <!-- Full-screen container to center the panel -->
-      <div
-        fixed
-        inset-0
-        flex-center
-        z-600
-        p-4
-        overflow-y-auto
-      >
+      <div fixed inset-0 flex-center z-600 p-4 overflow-y-auto>
         <!-- Container to center the panel -->
         <TransitionChild
           flex="center"
@@ -106,18 +98,12 @@ const transitionsModal = {
               >
                 <div
                   v-if="hasDefinedBaseSlots"
-                  relative
-                  space-y-4
-                  w-full
+                  relative space-y-4 w-full
                   :class="{ 'max-w-[calc(100%-2rem)]': closable }"
                 >
                   <DialogTitle v-if="hasDefined('title')">
                     <slot name="title">
-                      <h2
-                        text-xl
-                        font-bold
-                        leading-tight
-                      >
+                      <h2 text-xl font-bold leading-tight>
                         {{ title }}
                       </h2>
                     </slot>

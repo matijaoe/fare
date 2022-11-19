@@ -4,12 +4,8 @@ const sidebar = useSidebar()
 
 <template>
   <header
-    fixed
-    top-0
-    flex
-    justify-between
-    items-center
-    h-50px
+    fixed top-0 h-50px
+    flex justify-between items-center
     border="b-2 base"
     class="color-base-lighter"
   >
@@ -19,14 +15,10 @@ const sidebar = useSidebar()
       <FBreadcrumbs pl-8 />
     </ClientOnly>
 
-    <HeaderSearch
-      class="border-r-2 border-base ml-5"
-      ml-auto
-    />
+    <HeaderSearch border="r-2 base" ml-auto />
 
     <button
-      grid
-      content-center
+      grid content-center
       p="y-2.5 x-3"
       bg="hover:zinc-1 hover:dark:zinc-8"
       @click="sidebar.toggle()"

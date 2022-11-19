@@ -9,12 +9,10 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
 
 <template>
   <div
-    mr-auto
-    class="hidden md:flex"
-    items-center
-    gap-2
-    h-full
+    mr-auto h-full
     font="mono"
+    class="hidden md:flex"
+    items-center gap-2
     :class="[{
       'border-l-2 border-base ml-5': handledSidebar,
     }]"
@@ -23,9 +21,7 @@ const handledSidebar = computed(() => smDown || !sidebar.isOpen)
       <div
         v-for="(crumb, i) in store.crumbs"
         :key="i"
-        flex
-        items-center
-        gap-2
+        flex items-center gap-2
         :class="[store.isPreviousCrumb(i) ? 'text-zinc-4 dark:text-zinc-5' : 'color-base']"
       >
         <NuxtLink :to="crumb.href" class="hover:color-base-lighter">

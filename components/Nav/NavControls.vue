@@ -13,12 +13,10 @@ const signOutHandler = async () => {
 <template>
   <div
     v-bind="$attrs"
-    mt-auto
-    w-full
+    mt-auto w-full px-3
     grid="sm:~ sm:cols-4 sm:gap-1"
     flex="~ gap-5 wrap"
     class="justify-center items-center sm:justify-items-center"
-    px-3
   >
     <button>
       <img

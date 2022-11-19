@@ -30,55 +30,31 @@ const { isDark } = useTheme()
 <template>
   <FCard
     ref="card"
-    overflow-hidden
     :white="!isDark"
     :filled="isDark"
     paddingless
     aspect="2/1 sm:4/3"
     flex="~ col"
-    relative
+    relative overflow-hidden
   >
     <div p-4 flex="1 ~ col">
-      <div
-        flex
-        justify-between
-        items-center
-        w-full
-      >
-        <div
-          flex
-          items-center
-          gap-4
-        >
+      <div flex justify-between items-center w-full>
+        <div flex items-center gap-4>
           <div
+            w-10 h-10 flex-center
+            absolute top--4 left--4
             rounded-full
             :class="[bg1]"
-            w-10
-            h-10
-            flex-center
-            absolute
-            top--4
-            left--4
             class="transform origin-center scale-1000 filter-saturate-80 opacity-80 sm:scale-600 dark:opacity-25"
           />
-          <div
-            flex
-            items-center
-            justify-start
-            min-w-5
-          >
+          <div flex items-center justify-start min-w-5>
             <Icon
               :name="account.icon ?? 'tabler:cash'"
               :class="[color4]"
               z-2
             />
           </div>
-          <p
-            z-2
-            font="display medium"
-            uppercase
-            text-base
-          >
+          <p z-2 font="display medium" uppercase text-base>
             {{ account.name }}
           </p>
         </div>
@@ -93,27 +69,19 @@ const { isDark } = useTheme()
       </div>
 
       <div
-        class="-mb-2"
-        flex="1 ~ col gap-1"
-        justify-center
-        relative
-        z-2
-        text-center
+        flex="1 ~ col gap-1" justify-center
+        mb--2 z-2 relative text-center
       >
         <FTooltip mx-auto placement="right" content="Balance">
           <div
             font="display medium"
-            uppercase
-            text-4xl
-            flex
-            justify-center
+            text-4xl uppercase
+            flex justify-center
           >
             <FSkeleton
               v-if="totalsLoading"
-              w-24
-              py-2
-              h="36px"
-              py="0.5"
+              w-24 h="36px"
+              py-2 py="0.5"
             />
             <span v-else-if="totals">
               {{ formattedBalance }}
@@ -122,19 +90,15 @@ const { isDark } = useTheme()
         </FTooltip>
         <FTooltip mx-auto placement="right" content="Net">
           <p
-            flex
-            flex-col
-            font-mono
-            font-medium
+            flex flex-col
+            font="mono medium"
             text="sm zinc-4 dark:zinc-5"
           >
             <FSkeleton v-if="totalsLoading" h="28px" w-14 />
             <span
               v-else-if="totals"
               class="filter-saturate-90"
-              px-2
-              py-1
-              rounded-md
+              px-2 py-1 rounded-md
               :class="{
                 ' bg-stone-1 text-stone-7': totals.net === 0,
                 'bg-red-1 text-red-7': totals.net < 0,
@@ -149,31 +113,21 @@ const { isDark } = useTheme()
     </div>
 
     <div
-      mt-auto
-      z-2
+      mt-auto z-2 relative
       grid="~ cols-2"
       border="base dark:zinc-7 t-dashed t-2"
-      text-center
-      relative
-      text="lg"
+      text="center lg"
     >
       <div
-        z-2
-        py-4
+        z-2 py-4 w-full
         border="base dark:zinc-7 r-dashed r-1"
-        w-full
         flex="~ col"
       >
         <div
           flex="~ col"
           translate-y="0.4"
         >
-          <div
-            uppercase
-            font="medium"
-            text="10px zinc-4 dark:zinc-5"
-            leading-tight
-          >
+          <div uppercase font="medium" text="10px zinc-4 dark:zinc-5" leading-tight>
             <span v-if="allTime">Total earned</span>
             <span v-else>Earned</span>
           </div>
@@ -186,20 +140,17 @@ const { isDark } = useTheme()
         </div>
       </div>
       <div
-        z-2
-        py-4
+        z-2 py-4 w-full
         border="base dark:zinc-7 l-dashed l-1"
-        w-full
       >
         <div
           flex="~ col"
           translate-y="0.4"
         >
           <div
-            uppercase
             font="sans medium"
             text="10px zinc-4 dark:zinc-5"
-            leading-tight
+            leading-tight uppercase
           >
             <span v-if="allTime">Total spent</span>
             <span v-else>Spent</span>

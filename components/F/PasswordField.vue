@@ -45,11 +45,7 @@ const emits = {
     v-on="emits"
   >
     <template #right>
-      <button
-        grid
-        content-center
-        @click="toggleVisible()"
-      >
+      <button grid content-center @click="toggleVisible()">
         <Icon v-show="visible" name="tabler:eye-off" />
         <Icon
           v-show="!visible"

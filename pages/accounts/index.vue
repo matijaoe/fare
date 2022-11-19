@@ -37,28 +37,15 @@ await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`,
 
 <template>
   <LayoutPageLayout>
-    <div
-      flex="~ col gap-2"
-      translate-y="0.4"
-    >
-      <span
-        uppercase
-        font="sans medium"
-        text="sm zinc-4 dark:zinc-5"
-        class="leading-tight"
-      >
+    <div flex="~ col gap-2" translate-y="0.4">
+      <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
         Total balance
       </span>
 
-      <div
-        text-6xl
-        font="display medium"
-      >
+      <div text-6xl font="display medium">
         <div
           v-if="isBalanceLoading"
-          flex
-          gap-4
-          items-center
+          flex gap-4 items-center
           class="color-base-lighter"
         >
           <span>€X,XXX.XX</span>
@@ -83,8 +70,7 @@ await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`,
 
       <div
         v-if="shownAccounts?.length"
-        class="custom-grid"
-        gap-3
+        class="custom-grid" gap-3
       >
         <!-- TODO: keep an eye on this key...  -->
         <AccountCard

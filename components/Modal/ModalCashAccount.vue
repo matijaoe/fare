@@ -101,12 +101,7 @@ const modalConfig = computed(() => ({
       Something went wrong.
     </FAlert>
 
-    <form
-      flex
-      flex-col
-      gap-3
-      @submit.prevent="onSubmit"
-    >
+    <form flex flex-col gap-3 @submit.prevent="onSubmit">
       <FInput
         v-model="form.values.name"
         label="Name"
@@ -126,34 +121,18 @@ const modalConfig = computed(() => ({
           :items="colors"
         >
           <template #selected="{ item }">
-            <div
-              flex
-              items-center
-              gap-4
-            >
+            <div flex items-center gap-4>
               <span
-                w="4.5"
-                h="4.5"
-                flex-shrink-0
-                aspect="square"
-                rounded-full
+                w="4.5" h="4.5" flex-shrink-0 aspect-square rounded-full
                 :class="item?.bg"
               />
               <span>{{ item.label }}</span>
             </div>
           </template>
           <template #option="{ item }">
-            <div
-              flex
-              items-center
-              gap-4
-            >
+            <div flex items-center gap-4>
               <span
-                w="4.5"
-                h="4.5"
-                flex-shrink-0
-                aspect="square"
-                rounded-full
+                w="4.5" h="4.5" flex-shrink-0 aspect-square rounded-full
                 :class="item.bg"
               />
               <span>{{ item.label }}</span>
@@ -163,29 +142,21 @@ const modalConfig = computed(() => ({
 
         <FSelectField
           v-model="modal.iconObject"
-          block
+          :items="icons"
           :invalid="!!form.errors.icon"
           :error="form.errors.icon"
-          flex-1
           label="Icon"
-          :items="icons"
+          block
+          flex-1
         >
           <template #selected="{ item }">
-            <div
-              flex
-              items-center
-              gap-4
-            >
+            <div flex items-center gap-4>
               <Icon :name="item.value" />
               <span>{{ item.label }}</span>
             </div>
           </template>
           <template #option="{ item }">
-            <div
-              flex
-              items-center
-              gap-4
-            >
+            <div flex items-center gap-4>
               <Icon :name="item.value" />
               <span>{{ item.label }}</span>
             </div>
@@ -193,12 +164,7 @@ const modalConfig = computed(() => ({
         </FSelectField>
       </div>
 
-      <div
-        flex
-        justify-end
-        gap-2
-        mt-4
-      >
+      <div flex justify-end gap-2 mt-4>
         <FButton type="button" variant="subtle" @click="modal.hide()">
           Cancel
         </FButton>
@@ -207,10 +173,10 @@ const modalConfig = computed(() => ({
           <FButton
             v-if="modal.isEdit"
             ref="deleteBtn"
-            type="button"
-            variant="danger"
             :disabled="isUpdateLoading || isCreateLoading"
             :loading="isDeleteLoading"
+            type="button"
+            variant="danger"
             icon="tabler:x"
           >
             Delete

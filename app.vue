@@ -40,13 +40,5 @@ body {
 html.dark {
   color-scheme: dark;
 }
-
-pre {
-  @apply bg-gray-800 text-white p-3 my-3 rounded shadow overflow-x-auto;
-}
-
-pre span {
-  @apply text-green-400;
-}
 </style>
 

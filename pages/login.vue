@@ -6,7 +6,6 @@ definePageMeta({
 const { signIn, data, getProviders, isAuthenticated } = await useAuth()
 const providers = await getProviders()
 
-// TODO on register, it logs in but doesn't automatically redirect to page, only on second login
 const signInHandler = async (provider: string) => {
   await signIn(provider, { callbackUrl: '/', redirect: false })
 }
@@ -23,11 +22,7 @@ whenever(isAuthenticated, () => {
 </script>
 
 <template>
-  <div
-    flex-1
-    grid
-    place-content-center
-  >
+  <div flex-1 grid place-content-center>
     <pre>{{ data }}</pre>
     <div flex gap-2>
       <FButton
@@ -43,9 +38,16 @@ whenever(isAuthenticated, () => {
       <FButton variant="info" @click="navigateTo('/')">
         Home
       </FButton>
-      <FButton variant="warning" @click="navigateTo('/transactions')">
-        Transactions
-      </FButton>
     </div>
   </div>
 </template>
+
+<style scoped>
+pre {
+  @apply bg-gray-800 text-white p-3 my-3 rounded shadow overflow-x-auto;
+}
+
+pre span {
+  @apply text-green-400;
+}
+</style>

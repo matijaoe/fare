@@ -31,13 +31,9 @@ const sharedClasses = 'filter-saturate-70'
     <div
       v-if="type === 'solid'"
       p="x-2 y-0.5"
-      uppercase
       border="1 transparent"
-      flex
-      gap-1
-      items-center
-      transition
-      justify-center
+      flex gap-1 items-center justify-center
+      transition uppercase
       class="leading-tight hover:border-current"
       :class="[radiusClass, sharedClasses, bg1, text9]"
     >
@@ -54,12 +50,9 @@ const sharedClasses = 'filter-saturate-70'
       text="zinc-7 dark:zinc-4"
       p="x-1.5 y-0.5"
       bg="dark:zinc-9"
-      uppercase
       border="1 base dark:transparent"
-      flex
-      gap-1
-      items-center
-      justify-center
+      flex gap-1 items-center justify-center
+      uppercase
       class="leading-tight"
       :class="[radiusClass, sharedClasses]"
     >
@@ -70,12 +63,7 @@ const sharedClasses = 'filter-saturate-70'
         :class="[color4]"
       />
       <div
-        v-else
-        w-2
-        rounded-full
-        aspect-square
-        mr="0.5"
-        :class="[bg4]"
+        v-else w-2 rounded-full aspect-square mr="0.5" :class="[bg4]"
       />
       <slot />
     </div>

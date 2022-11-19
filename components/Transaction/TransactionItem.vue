@@ -28,25 +28,10 @@ const transactionTooltip = computed(() => {
 </script>
 
 <template>
-  <div
-    h="125px"
-    p-5
-    flex
-    flex-col
-    gap-4
-  >
+  <div h="125px" p-5 flex flex-col gap-4>
     <!-- Top section -->
-    <div
-      flex-1
-      flex
-      items-center
-      justify-between
-    >
-      <div
-        flex
-        items-center
-        gap-3
-      >
+    <div flex-1 flex items-center justify-between>
+      <div flex items-center gap-3>
         <button
           v-if="item.category"
           @click.stop="navigateTo({
@@ -64,11 +49,7 @@ const transactionTooltip = computed(() => {
             {{ item.category.name }}
           </FBadge>
         </button>
-        <div
-          flex
-          items-center
-          gap-1
-        >
+        <div flex items-center gap-1>
           <button
             v-if="item.fromAccount"
             @click.stop="navigateTo({
@@ -95,7 +76,6 @@ const transactionTooltip = computed(() => {
             })"
           >
             <FBadge
-
               cursor="pointer"
               type="dot"
               :icon="item.toAccount.account.icon"
@@ -108,30 +88,23 @@ const transactionTooltip = computed(() => {
       </div>
 
       <div
-        flex
-        justify-between
-        items-center
-        gap-3
+        flex justify-between items-center gap-3
         text="xs zinc-4 dark:zinc-4"
       >
         <FTooltip
-          flex-center
-          h-full
+          flex-center h-full
           :content="timeAgo"
           placement="top"
         >
-          <div
-            ml-auto
-            font="normal"
-          >
+          <div ml-auto font="normal">
             {{ formattedDate }}
           </div>
         </FTooltip>
 
         <FTooltip
-          flex-center
           placement="top-end"
           :content="transactionTooltip"
+          flex-center
           class="translate-y--0.25"
         >
           <Icon name="tabler:info-circle" text-xs />
@@ -140,44 +113,22 @@ const transactionTooltip = computed(() => {
     </div>
 
     <!-- Bottom section -->
-    <div
-      flex
-      justify-between
-      items-end
-      gap-12
-      mt-auto
-    >
-      <div
-        text="left"
-        truncate
-        flex
-        flex-col
-      >
-        <div
-          text-xl
-          truncate
-          font="sans"
-        >
+    <div flex justify-between items-end gap-12 mt-auto>
+      <div text="left" truncate flex flex-col>
+        <div text-xl truncate font-sans>
           {{ item.name }}
         </div>
         <div
+          font="normal" text="xs zinc-4 dark:zinc-4" truncate mt="1"
           :class="{ 'opacity-0 invisible order--1': !item.description }"
-          text-xs
-          truncate
-          font="normal"
-          text="zinc-4 dark:zinc-4"
-          mt="1"
         >
           {{ !!item.description ? item.description : '-' }}
         </div>
       </div>
 
       <div
-        font="display semibold"
-        text-3xl
-        flex
-        items-center
-        gap-1
+        font="display semibold" text-3xl
+        flex items-center gap-1
         :class="{
           'text-emerald-5': isIncome,
           'text-indigo-5': isTransfer,

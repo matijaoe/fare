@@ -59,27 +59,18 @@ const handleNavClick = () => {
       @click="handleNavClick"
     >
       <div
-        w-full
-        p="y-1.5"
-        flex="~ gap-6 md:gap-4"
+        w-full p="y-1.5"
+        flex="~ gap-6 md:gap-4" items-center
         :class="[indentStyle]"
-        items-center
       >
-        <div
-          p-1
-          flex-center
-          rounded-lg
-        >
+        <div p-1 flex-center rounded-lg>
           <Icon :name="item.icon" text="xl md:base" />
         </div>
         <p>{{ item.label }}</p>
       </div>
       <button
         v-if="hasChildren"
-        p-1
-        mr-3
-        grid
-        content-center
+        p-1 mr-3 grid content-center
         class="hover:bg-zinc-2/50 rounded-full"
       >
         <Icon

@@ -137,13 +137,11 @@ const emits = {
         :placeholder="placeholder"
         :readonly="loading"
         :disabled="disabled"
-        w-full
-        h="41px"
+        h="41px" w-full
         p="y-2.5 x-4"
         text="base"
         border="2 rounded-md"
-        flex="~ gap-4"
-        items-center
+        flex="~ gap-4" items-center
         outline="none focus:none"
         class="leading-5 placeholder-zinc-5/60 placeholder-shown:font-normal"
         :class="[disabledStyle, paddingStyle, stateStyle, inputClass]"
