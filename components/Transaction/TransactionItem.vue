@@ -12,17 +12,17 @@ const { isExpense, isTransfer, isIncome } = useTransactionData(item)
 
 const timeAgo = useTimeAgo(item.date)
 const formattedDate = useDateFormat(item.date)
-const formatedAmount = useCurrencyFormat(item.amount)
+const formattedAmount = useCurrencyFormat(item.amount)
 
 const transactionTooltip = computed(() => {
   if (get(isTransfer)) {
-    return `Transfered ${formatedAmount.value} from ${item.fromAccount!.account.name} to ${item.toAccount!.account.name}`
+    return `Transferred ${formattedAmount.value} from ${item.fromAccount!.account.name} to ${item.toAccount!.account.name}`
   }
   if (get(isExpense)) {
-    return `Spent ${formatedAmount.value} from ${item.fromAccount!.account.name}`
+    return `Spent ${formattedAmount.value} from ${item.fromAccount!.account.name}`
   }
   if (get(isIncome)) {
-    return `Received ${formatedAmount.value} on ${item.toAccount!.account.name}`
+    return `Received ${formattedAmount.value} on ${item.toAccount!.account.name}`
   }
 })
 </script>
@@ -185,7 +185,7 @@ const transactionTooltip = computed(() => {
       >
         <span v-if="isExpense">-</span>
         <span v-else-if="isIncome">+</span>
-        {{ formatedAmount }}
+        {{ formattedAmount }}
       </div>
     </div>
   </div>

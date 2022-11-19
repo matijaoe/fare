@@ -6,7 +6,7 @@ import { $fetch } from 'ohmyfetch'
 import type { Ref } from 'vue'
 import type { TransactionTotalMonthlyObject, TransactionsTotalsPerRange } from '~~/models/resources/transaction'
 
-const keysTransactions = {
+export const keysTransactions = {
   all: ['transactions'] as const,
   // Ranges
   ranges: () => [...keysTransactions.all, 'range'] as const,
@@ -92,7 +92,7 @@ export const useTransactionTotalsPerRange = (from: Ref<string | undefined>, to: 
 
 )
 
-export const useTransactionTotalMonthlys = () => useQuery(
+export const useTransactionTotalMonthly = () => useQuery(
   keysTransactions.totals(),
   () => $fetch<TransactionTotalMonthlyObject>('/api/transactions/totals/monthly'),
 )

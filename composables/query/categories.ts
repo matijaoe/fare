@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { get } from '@vueuse/core'
 import { $fetch } from 'ohmyfetch'
 import type { Ref } from 'vue'
+import { keysTransactions } from './transactions'
 import type { CategoryWithTotals } from '~~/models/resources/category'
 
 export const keysCategory = {
@@ -48,6 +49,19 @@ export const useCategoryCreate = () => {
   })
 }
 
+export const useCategoryUpdate = (id: Ref<string | undefined>) => {
+  const qc = useQueryClient()
+  return useMutation((body: Prisma.CategoryUncheckedUpdateManyInput) =>
+    $fetch<{ count: number }>(`/api/categories/${get(id)}`, {
+      method: 'PATCH',
+      body,
+    }), {
+    onSuccess: () => {
+      qc.invalidateQueries(keysCategory.all)
+    },
+  })
+}
+
 export const useCategoryDelete = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
   return useMutation(({ userId }: { userId: string }) =>
@@ -56,7 +70,8 @@ export const useCategoryDelete = (id: Ref<string | undefined>) => {
       body: { userId },
     }), {
     onSuccess: () => {
-      qc.invalidateQueries(keysAccounts.all)
+      qc.invalidateQueries(keysCategory.all)
+      qc.invalidateQueries(keysTransactions.all)
     },
   })
 }

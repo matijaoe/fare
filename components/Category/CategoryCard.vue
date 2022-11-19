@@ -9,71 +9,85 @@ const { category, totals } = defineProps<{
   allTime?: boolean
 }>()
 
+const categoryModal = useCategoryModal()
+
 const { bg50, borderClr3, text9, bg3 } = useAppColors(category.color)
 
 const formattedTotalNet = totals?.totalNet != null ? useCurrencyFormat(totals.totalNet) : '€XXX.XX'
 const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : '€XXX.XX'
 const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income, { signDisplay: 'always' }) : '€XXX.XX'
 const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.expense) : '€XXX.XX'
+
+const card = ref<HTMLElement>()
+const isHovered = useElementHover(card)
 </script>
 
 <template>
-  <FCard white class="!pl-0 pb-0">
-    <div>
-      <div
-        flex
-        justify-between
-        items-center
-        p-2
-        pl-6
-        border="~ !dotted !2 !l-0"
-        rounded="r-full"
-        :class="[bg50, borderClr3, text9]"
-      >
-        <TransitionFade>
-          <FSkeleton v-if="totalsLoading" w-20 h="32px" />
-          <p
-            v-if="!totalsLoading"
-            order--1
-            class="translate-y-.25"
-            text-2xl
-            font="display medium"
-          >
-            {{ allTime
-              ? (totals?.totalNet > 0 ? '+' : '')
-              : (totals?.net > 0 ? '+' : '') }}{{ allTime ? formattedTotalNet : formattedNet }}
-          </p>
-        </TransitionFade>
-
-        <div
-          ml-auto
-          flex
-          gap-3
-          items-center
+  <FCard
+    ref="card"
+    white
+    class="!pl-0 pb-0"
+  >
+    <div
+      flex
+      justify-between
+      items-center
+      p-2
+      pl-6
+      border="~ !dotted !2 !l-0"
+      rounded="r-full"
+      :class="[bg50, borderClr3, text9]"
+    >
+      <TransitionFade>
+        <FSkeleton v-if="totalsLoading" w-20 h="32px" />
+        <p
+          v-if="!totalsLoading"
+          order--1
+          class="translate-y-.25"
+          text-2xl
+          font="display medium"
         >
-          <h4 text-base font-medium>
-            {{ category.name }}
-          </h4>
-          <div
-            w-max
-            aspect-square
-            text-lg
-            p-2
-            rounded-full
-            flex-center
-            :class="[bg3]"
-          >
-            <Icon :name="category?.icon" />
-          </div>
+          {{ allTime
+            ? (totals?.totalNet > 0 ? '+' : '')
+            : (totals?.net > 0 ? '+' : '') }}{{ allTime ? formattedTotalNet : formattedNet }}
+        </p>
+      </TransitionFade>
+
+      <div
+        ml-auto
+        flex
+        gap-3
+        items-center
+      >
+        <h4 text-base font-medium>
+          {{ category.name }}
+        </h4>
+        <div
+          w-max
+          aspect-square
+          text-lg
+          p-2
+          rounded-full
+          flex-center
+          :class="[bg3]"
+        >
+          <Icon :name="category?.icon" />
         </div>
       </div>
+    </div>
+
+    <div
+      flex
+      items-end
+      justify-between
+      p-5
+      pr-1
+    >
       <div
-        pr-5
         justify-start
         flex
         items-center
         gap-8
-        p-6
       >
         <div>
           <p
@@ -133,6 +147,18 @@ const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.exp
             </TransitionFade>
           </div>
         </div>
+      </div>
+
+      <div>
+        <FButton
+          v-show="isHovered"
+          icon="tabler:edit"
+          variant="subtle"
+          size="sm"
+          @click.stop="categoryModal.launch(category)"
+        >
+          Edit
+        </FButton>
       </div>
     </div>
   </FCard>

@@ -4,9 +4,9 @@ import { db } from '~~/lib/db'
 import { readParams, sendCustomError, sendInternalError, setResStatus } from '~~/server/utils'
 
 export default defineEventHandler(async (event) => {
-  const where = readParams<Prisma.AccountWhereUniqueInput>(event)
+  const where = readParams<Prisma.CategoryWhereUniqueInput>(event)
 
-  const data = await readBody<Prisma.AccountUncheckedUpdateManyInput>(event)
+  const data = await readBody<Prisma.CategoryUncheckedUpdateManyInput>(event)
   const userId = data?.userId as string | undefined
 
   if (!userId) {
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const account = await db.moneyAccount.updateMany({
+    const category = await db.category.updateMany({
       where: {
         ...where,
         userId,
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
     })
 
     setResStatus(event, StatusCodes.OK)
-    return account
+    return category
   } catch (err: unknown) {
     console.error(err)
     sendInternalError(event, err)

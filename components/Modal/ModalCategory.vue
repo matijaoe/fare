@@ -10,11 +10,10 @@ const form = $computed(() => modal.form)
 const categoryId = toRef(modal, 'categoryId')
 
 const { mutate: createCategory, isLoading: isCreateLoading, isError: isErrorCreate, reset: resetCreate } = useCategoryCreate()
-// const { mutate: updateCategory, isLoading: isUpdateLoading, isError: isErrorUpdate, reset: resetUpdate } = useCategoryUpdate(categoryId)
-const isUpdateLoading = ref(false)
+const { mutate: updateCategory, isLoading: isUpdateLoading, isError: isErrorUpdate, reset: resetUpdate } = useCategoryUpdate(categoryId)
 const { mutate: deleteCategory, isLoading: isDeleteLoading, isError: isErrorDelete, reset: resetDelete } = useCategoryDelete(categoryId)
 
-const hasError = computed(() => get(isErrorCreate) || get(isErrorDelete))
+const hasError = computed(() => get(isErrorCreate) || get(isErrorUpdate) || get(isErrorDelete))
 
 const { allIcons: icons } = useIcons()
 const { colorOptions: colors } = useAppColors()
@@ -30,13 +29,13 @@ const createCategoryHandler = async (values: Prisma.CategoryCreateWithoutUserInp
 }
 
 const editCategoryHandler = async (values: Prisma.CategoryUncheckedUpdateWithoutUserInput) => {
-  // const userId = (await useAuth()).userId.value
+  const userId = (await useAuth()).userId.value
 
-  // if (userId) {
-  //   updateCategory({ ...values, userId }, {
-  //     onSuccess: () => modal.hide(),
-  //   })
-  // }
+  if (userId) {
+    updateCategory({ ...values, userId }, {
+      onSuccess: () => modal.hide(),
+    })
+  }
 }
 
 const deleteCategoryHandler = async () => {
@@ -59,7 +58,7 @@ const onSubmit = form.handleSubmit((values) => {
 
 const resetQueries = () => {
   resetCreate()
-  // resetUpdate()
+  resetUpdate()
   resetDelete()
 }
 
