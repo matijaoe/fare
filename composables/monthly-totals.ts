@@ -38,10 +38,17 @@ export const useMonthlyTotals = (totals: Ref<TransactionTotalMonthlyObject | und
   const expenseTotals = computed(() => calcTransactionsTotals('Expense').map(({ total }) => total))
   const incomeTotals = computed(() => calcTransactionsTotals('Income').map(({ total }) => total))
 
+  // calculate net totals
+  const netTotals = computed(() => {
+    const arr = Array.from({ length: monthCount.value }, (_, i) => i)
+    return arr.map(i => incomeTotals.value[i] - expenseTotals.value[i])
+  })
+
   return {
     months,
     labels: computed(() => graphLabeledDates.map(t => t.label)),
     expenseTotals,
     incomeTotals,
+    netTotals,
   }
 }

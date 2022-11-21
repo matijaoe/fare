@@ -7,7 +7,7 @@ import { Tab } from '@headlessui/vue'
     v-slot="{ selected }"
     as="template"
   >
-    <FButton size="sm" :variant="selected ? 'primary' : 'subtle'">
+    <FButton size="sm" :variant="selected ? 'primary' : 'secondary'">
       <slot :selected="{ selected }" />
     </FButton>
   </Tab>
