@@ -18,11 +18,10 @@ setupShortcuts()
 
   <div
     font="sans"
-    h="screen"
-    overflow="hidden"
+    h-screen w-screen overflow-hidden
     class="bg-base color-base"
   >
-    <NuxtLayout h-screen overflow-hidden>
+    <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
   </div>

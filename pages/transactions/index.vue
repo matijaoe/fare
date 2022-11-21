@@ -51,7 +51,7 @@ const transactionStore = useTransactionsStore()
           :class="mainContentWrapperHeight"
         >
           <TransactionsHead />
-          <ChartDemo />
+          <TransactionCharts />
         </div>
       </div>
     </LayoutSectionWrapper>

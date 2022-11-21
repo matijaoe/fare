@@ -11,7 +11,7 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
   <div>
     <LayoutSidebar :class="[sidebarWidth]" z-200 />
 
-    <div h-screen :class="{ 'md:ml-240px': sidebar.isOpen }">
+    <div :class="{ 'md:ml-240px': sidebar.isOpen }">
       <Header :class="[headerWidth]" z-100 />
       <DateSwitchHeader
         :class="[headerWidth]"
