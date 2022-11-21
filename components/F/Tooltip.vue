@@ -8,11 +8,10 @@ defineProps<{
 </script>
 
 <template>
-  <!-- TODO: fix tippy for build -->
   <div
     ref="target"
     v-tooltip="{
-      delay: 20,
+      delay: 100,
       content,
       theme: 'info-tooltip',
       placement,

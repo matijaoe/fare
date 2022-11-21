@@ -31,8 +31,8 @@ await useFetch(`/api/categories/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}
 </script>
 
 <template>
-  <LayoutPageLayout>
-    <LayoutSectionWrapper title="Categories" subtitle=" All your transactions across categories" mt-3>
+  <LayoutPage>
+    <LayoutSectionWrapper title="Categories" desc=" All your transactions across categories" mt-3>
       <template #right>
         <FButton
           variant="secondary"
@@ -54,5 +54,5 @@ await useFetch(`/api/categories/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}
         />
       </div>
     </LayoutSectionWrapper>
-  </LayoutPageLayout>
+  </LayoutPage>
 </template>

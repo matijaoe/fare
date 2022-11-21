@@ -4,7 +4,7 @@ const toggleLoading = useToggle(loading)
 </script>
 
 <template>
-  <div>
+  <LayoutPage>
     {{ $route.name }}
     <div flex flex-col gap-3>
       <div flex gap-2 items-center>
@@ -45,5 +45,5 @@ const toggleLoading = useToggle(loading)
         :loading="loading"
       />
     </div>
-  </div>
+  </LayoutPage>
 </template>

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <LayoutPageLayout>
+  <LayoutPage>
     kajgod
-  </LayoutPageLayout>
+  </LayoutPage>
 </template>

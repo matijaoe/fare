@@ -5,13 +5,9 @@ onMounted(() => setBreadcrumbs([
 </script>
 
 <template>
-  <LayoutPageLayout>
+  <LayoutPage>
     <div flex flex-col gap-3>
-      <div flex items-center gap-3>
-        <Icon name="tabler:plane" />
-        <h1>Dashboard</h1>
-      </div>
-      <!-- <Demo /> -->
+      <Demo />
     </div>
-  </LayoutPageLayout>
+  </LayoutPage>
 </template>

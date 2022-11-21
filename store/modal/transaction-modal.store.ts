@@ -80,6 +80,26 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     toAccountId: get(toAccount)?.id,
   }))
 
+  // lame solution but will do for now, gotta replace with real veevalidate/zod solution
+  const formValid = computed(() => {
+    const { type, amount, date, fromAccountId, toAccountId } = form.value
+    if (!type) {
+      return false
+    }
+    if (!amount || amount <= 0 || !date) {
+      return false
+    }
+    if (type === 'Expense') {
+      return !!fromAccountId
+    }
+    if (type === 'Income') {
+      return !!toAccountId
+    }
+    if (type === 'Transfer') {
+      return !!fromAccountId && !!toAccountId
+    }
+  })
+
   const resetForm = () => {
     set(name, '')
     set(description, '')
@@ -157,6 +177,7 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     selectedToAccount,
     // Form
     form,
+    formValid,
     // Transaction types
     isType,
     isExpense,

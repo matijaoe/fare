@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div>
+  <LayoutPage>
     {{ $route.name }}
-  </div>
+  </LayoutPage>
 </template>

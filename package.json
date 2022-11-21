@@ -22,7 +22,7 @@
     "@tanstack/vue-query": "^4.14.5",
     "@unocss/nuxt": "^0.46.4",
     "@vueuse/nuxt": "^9.5.0",
-    "eslint": "^8.26.0",
+    "eslint": "^8.27.0",
     "mobile-detect": "^1.4.5",
     "nuxt": "3.0.0-rc.13",
     "nuxt-icon": "^0.1.7",

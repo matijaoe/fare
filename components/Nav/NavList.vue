@@ -2,14 +2,14 @@
 const items = [
   {
     label: 'Dashboard',
-    icon: 'tabler:home',
+    icon: 'tabler:sofa',
     route: {
       name: 'index',
     },
   },
   {
-    label: 'Transactions',
-    icon: 'tabler:receipt',
+    label: 'Activity',
+    icon: 'tabler:activity',
     route: {
       name: 'transactions',
     },
@@ -43,42 +43,49 @@ const items = [
     },
   },
   {
-    label: 'Progress',
-    icon: 'tabler:chart-area-line',
+    label: 'Configuration',
+    icon: 'tabler:adjustments-alt',
     route: {
-      name: 'progress',
-    },
-    children: [
-      {
-        label: 'Coast FIRE',
-        icon: 'tabler:chart-area-line',
-        route: {
-          name: 'progress-fire',
-        },
-      },
-    ],
-  },
-  {
-    label: 'Tools',
-    icon: 'tabler:tools',
-    route: {
-      name: 'tools',
+      name: 'configuration',
     },
   },
-  {
-    label: 'Resources',
-    icon: 'tabler:books',
-    route: {
-      name: 'resources',
-    },
-  },
-  {
-    label: 'Login page',
-    icon: 'tabler:lungs',
-    route: {
-      name: 'login',
-    },
-  },
+  // {
+  //   label: 'Progress',
+  //   icon: 'tabler:chart-area-line',
+  //   route: {
+  //     name: 'progress',
+  //   },
+  //   children: [
+  //     {
+  //       label: 'Coast FIRE',
+  //       icon: 'tabler:chart-area-line',
+  //       route: {
+  //         name: 'progress-fire',
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   label: 'Tools',
+  //   icon: 'tabler:tools',
+  //   route: {
+  //     name: 'tools',
+  //   },
+  // },
+  // {
+  //   label: 'Resources',
+  //   icon: 'tabler:books',
+  //   route: {
+  //     name: 'resources',
+  //   },
+  // },
+  // {
+  //   label: 'Login page',
+  //   icon: 'tabler:lungs',
+  //   route: {
+  //     name: 'login',
+  //   },
+  // },
 ]
 </script>
 

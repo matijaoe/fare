@@ -1,20 +1,18 @@
 <script setup lang="ts">
-type Props = {
+defineProps<{
   title?: string
-  subtitle?: string
+  desc?: string
   icon?: string
-}
-
-defineProps<Props>()
+}>()
 </script>
 
 <template>
   <section flex flex-col gap-5>
     <div
-      v-if="$slots.title || title || $slots.right"
+      v-if="$slots.title || title || $slots.right || desc"
       flex items-start justify-between
     >
-      <div v-if="$slots.title || title">
+      <div v-if="$slots.title || title || desc" space-y-1>
         <slot name="title">
           <h1
             flex items-center gap-3
@@ -24,11 +22,10 @@ defineProps<Props>()
             {{ title }}
           </h1>
           <p
-            v-if="subtitle"
-            mt="1"
+            v-if="desc"
             text="sm zinc-4 dark:zinc-5"
           >
-            {{ subtitle }}
+            {{ desc }}
           </p>
         </slot>
       </div>
@@ -36,7 +33,7 @@ defineProps<Props>()
         <slot name="right" />
       </div>
     </div>
-    <div>
+    <div space-y-5>
       <slot />
     </div>
   </section>

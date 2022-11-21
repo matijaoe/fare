@@ -88,7 +88,7 @@ const transactionTooltip = computed(() => {
       </div>
 
       <div
-        flex justify-between items-center gap-3
+        flex justify-between items-center gap-2
         text="xs zinc-4 dark:zinc-4"
       >
         <FTooltip
@@ -106,6 +106,7 @@ const transactionTooltip = computed(() => {
           :content="transactionTooltip"
           flex-center
           class="translate-y--0.25"
+          p-1
         >
           <Icon name="tabler:info-circle" text-xs />
         </FTooltip>

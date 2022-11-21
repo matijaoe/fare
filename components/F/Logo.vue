@@ -32,7 +32,7 @@ const sizeStyle = computed(() => {
     :class="[sizeStyle.text]"
   >
     <Icon
-      name="ph:campfire-duotone"
+      name="fluent-emoji-flat:hand-with-index-finger-and-thumb-crossed-medium-light"
       :class="[sizeStyle.icon]"
     />
     <span v-if="!minimal">FARE</span>

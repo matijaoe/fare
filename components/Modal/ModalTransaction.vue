@@ -285,6 +285,7 @@ onLongPress(
               type="submit"
               icon="tabler:edit"
               :loading="isUpdateLoading"
+              :disabled="!modal.formValid"
             >
               Edit
             </FButton>
@@ -293,6 +294,7 @@ onLongPress(
               type="submit"
               icon="tabler:plus"
               :loading="isCreateLoading"
+              :disabled="!modal.formValid"
             >
               Create
             </FButton>

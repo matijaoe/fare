@@ -36,7 +36,7 @@ await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`,
 </script>
 
 <template>
-  <LayoutPageLayout>
+  <LayoutPage>
     <div flex="~ col gap-2" translate-y="0.4">
       <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
         Total balance
@@ -57,7 +57,7 @@ await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`,
       </div>
     </div>
 
-    <LayoutSectionWrapper title="Cash accounts" subtitle="Actively tracked accounts" mt-3>
+    <LayoutSectionWrapper title="Cash accounts" desc="Actively tracked accounts" mt-3>
       <template #right>
         <FButton
           variant="secondary"
@@ -87,7 +87,7 @@ await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`,
         />
       </div>
     </LayoutSectionWrapper>
-  </LayoutPageLayout>
+  </LayoutPage>
 </template>
 
 <style scoped>

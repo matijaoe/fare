@@ -2,9 +2,9 @@
 import '@fontsource/iosevka'
 
 useHead({
-  title: 'FIRE',
+  title: 'FARE',
   link: [
-    { rel: 'icon', type: 'image/png', href: '/nuxt.png' },
+    { rel: 'icon', href: 'https://favicones.vercel.app/api/fluent-emoji-flat:hand-with-index-finger-and-thumb-crossed-medium-light' },
   ],
 })
 
@@ -12,7 +12,7 @@ setupShortcuts()
 </script>
 
 <template>
-  <NuxtLoadingIndicator />
+  <!-- <NuxtLoadingIndicator /> -->
 
   <ModalGlobalModals />
 

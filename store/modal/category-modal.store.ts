@@ -19,7 +19,7 @@ export const useCategoryModal = defineStore('modal-category', () => {
 
   const validationSchema = toFormValidator(
     zod.object({
-      name: zod.string().trim().min(1, { message: 'Name is required' }).max(24, { message: 'Name is too long' }),
+      name: zod.string({ required_error: 'Names is required' }).trim().min(1, { message: 'Name is required' }).max(24, { message: 'Name is too long' }),
       color: zod.any().optional(),
       icon: zod.any().optional(),
     }),
