@@ -53,7 +53,8 @@ export default defineNuxtConfig({
     layoutTransition: { name: 'layout', mode: 'out-in' },
   },
   auth: {
-    origin: 'http://localhost:3000',
     isEnabled: true,
+    origin: 'http://localhost:3000',
+    basePath: '/api/auth',
   },
 })

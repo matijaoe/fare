@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import type { Category } from '@prisma/client'
-import type { CategoryTotals } from '~~/models/resources/category'
+import type { CategoryTotals, CategoryWithCount } from '~~/models/resources/category'
 
 const { category, totals } = defineProps<{
-  category: Category
+  category: CategoryWithCount
   totals: CategoryTotals
   totalsLoading?: boolean
   allTime?: boolean
@@ -17,6 +16,8 @@ const formattedTotalNet = totals?.totalNet != null ? useCurrencyFormat(totals.to
 const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : '€XXX.XX'
 const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income, { signDisplay: 'always' }) : '€XXX.XX'
 const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.expense) : '€XXX.XX'
+
+const transactionCount = computed(() => category._count.transactions)
 
 const card = ref<HTMLElement>()
 const isHovered = useElementHover(card)
@@ -64,39 +65,45 @@ const isHovered = useElementHover(card)
     </div>
 
     <div flex items-end justify-between p-5 pr-1>
-      <div flex justify-start items-center gap-8>
-        <div>
-          <p font="sans medium" text="10px zinc-4 dark:zinc-5" leading-tight uppercase>
-            Earned
-          </p>
-          <div text-xl min-w-18 flex justify-start>
-            <TransitionFade>
-              <FSkeleton v-if="totalsLoading" w-full h="28px" />
-              <span
-                v-else-if="isDefined(totals)"
-                font-mono flex items-center
-              >
-                {{ formattedIncome }}
-              </span>
-            </TransitionFade>
+      <div flex gap-14 items-end>
+        <div flex justify-start items-center gap-8>
+          <div>
+            <p font="sans medium" text="10px zinc-4 dark:zinc-5" leading-tight uppercase>
+              Earned
+            </p>
+            <div text-xl min-w-18 flex justify-start>
+              <TransitionFade>
+                <FSkeleton v-if="totalsLoading" w-full h="28px" />
+                <span
+                  v-else-if="isDefined(totals)"
+                  font-mono flex items-center
+                >
+                  {{ formattedIncome }}
+                </span>
+              </TransitionFade>
+            </div>
+          </div>
+
+          <div pl-5>
+            <p font="sans medium" text="10px right zinc-4 dark:zinc-5" leading-tight uppercase>
+              Spent
+            </p>
+            <div text-xl min-w-18 flex justify-end>
+              <TransitionFade>
+                <FSkeleton v-if="totalsLoading" w-full h="28px" />
+                <span
+                  v-else-if="isDefined(totals)"
+                  font-mono flex items-center
+                >
+                  {{ formattedExpense }}
+                </span>
+              </TransitionFade>
+            </div>
           </div>
         </div>
 
-        <div pl-5>
-          <p font="sans medium" text="10px right zinc-4 dark:zinc-5" leading-tight uppercase>
-            Spent
-          </p>
-          <div text-xl min-w-18 flex justify-end>
-            <TransitionFade>
-              <FSkeleton v-if="totalsLoading" w-full h="28px" />
-              <span
-                v-else-if="isDefined(totals)"
-                font-mono flex items-center
-              >
-                {{ formattedExpense }}
-              </span>
-            </TransitionFade>
-          </div>
+        <div>
+          {{ transactionCount }} {{ transactionCount.toString().at(-1) === '1' ? 'transaction' : 'transactions' }}
         </div>
       </div>
 

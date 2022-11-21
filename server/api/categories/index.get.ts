@@ -9,5 +9,8 @@ export default defineEventHandler((event) => {
         { userId: null },
       ],
     },
+    include: {
+      _count: true,
+    },
   })
 })

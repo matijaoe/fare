@@ -4,7 +4,7 @@ import { get } from '@vueuse/core'
 import { $fetch } from 'ohmyfetch'
 import type { Ref } from 'vue'
 import { keysTransactions } from './transactions'
-import type { CategoryWithTotals } from '~~/models/resources/category'
+import type { CategoryWithCount, CategoryWithTotals } from '~~/models/resources/category'
 
 export const keysCategory = {
   all: ['categories'] as const,
@@ -16,7 +16,7 @@ export const keysCategory = {
 }
 
 export const useCategories = () => useQuery(keysCategory.all,
-  () => $fetch<Category[]>('/api/categories'),
+  () => $fetch<CategoryWithCount[]>('/api/categories'),
   { initialData: () => useCachedPayload<Category[]>('categories') },
 )
 
