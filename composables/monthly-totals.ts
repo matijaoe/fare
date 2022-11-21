@@ -12,30 +12,36 @@ export const useMonthlyTotals = (totals: Ref<TransactionTotalMonthlyObject> | Re
     return date
   }).reverse())
 
-  const formatted = $computed(() => months.map(date => ({
+  const graphLabeledDates = $computed(() => months.map(date => ({
     label: isThisYear(date) ? format(date, 'MMM') : format(date, 'MMM yy'),
     date: format(date, 'yyyy-MM'),
   })))
 
-  const expensesTotals = computed(() => {
+  const transactionsTotals = computed(() => {
     const arr = totals.value?.[type] ?? []
 
-    const findMo = (date: string) => arr.find(t => t.date === date)
-    return formatted.map((date) => {
-      const calculated = findMo(date.date) ?? { type, currency: 'EUR', total: 0 }
+    const getTransactionsForMonth = (date: string) => arr.filter(t => t.date === date)
+
+    return graphLabeledDates.map((date) => {
+      const transactionsForMonth = getTransactionsForMonth(date.date) ?? { type, currency: 'EUR', total: 0 }
+      const total = transactionsForMonth.reduce((acc, curr) => acc + curr.total, 0)
+
       return {
         ...date,
-        ...calculated,
+        total,
+        type,
+        currency: transactionsForMonth[0]?.currency ?? 'EUR',
+
       }
     }) ?? []
   })
 
-  const labels = computed(() => expensesTotals.value.map(t => t.label))
-  const data = computed(() => expensesTotals.value.map(t => t.total))
+  const labels = computed(() => transactionsTotals.value.map(t => t.label))
+  const data = computed(() => transactionsTotals.value.map(t => t.total))
 
   return {
     months,
-    expensesTotals,
+    transactionsTotals,
     labels,
     data,
   }

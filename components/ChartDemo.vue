@@ -46,8 +46,9 @@ const chartOptions = { responsive: true, mantainAspectRatio: false }
 <template>
   <div
     flex
-    lg:flex-row
+    lg:flex-col
     w-full
+    gap-8
   >
     <bar-chart
       flex-1
@@ -56,12 +57,13 @@ const chartOptions = { responsive: true, mantainAspectRatio: false }
       :chart-options="chartOptions"
       :chart-data="chartData"
     />
-    <!-- <line-chart
+    <line-chart
       flex-1
-      max-w="350px"
+      w-full
+      :height="200"
       :chart-data="chartData"
       :chart-options="chartOptions"
-    /> -->
+    />
   </div>
 </template>
 

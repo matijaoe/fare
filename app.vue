@@ -22,7 +22,7 @@ setupShortcuts()
     overflow="hidden"
     class="bg-base color-base"
   >
-    <NuxtLayout>
+    <NuxtLayout h-screen overflow-hidden>
       <NuxtPage />
     </NuxtLayout>
   </div>

@@ -52,7 +52,6 @@ const transactionStore = useTransactionsStore()
         >
           <TransactionsHead />
           <ChartDemo />
-          <!-- <TransactionFilters /> -->
         </div>
       </div>
     </LayoutSectionWrapper>
