@@ -15,7 +15,7 @@ export const keysAccounts = {
 }
 
 export const useCashAccount = (id: string) => useQuery(keysAccounts.detail(id),
-  () => $fetch<CashAccountWithAccount>(`/api/accounts/cast/${unref(id)}`),
+  () => $fetch<CashAccountWithAccount>(`/api/accounts/cash/${unref(id)}`),
 )
 
 export const useCashAccounts = (payload?: { transactions?: boolean }) => {

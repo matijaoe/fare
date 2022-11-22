@@ -3,7 +3,7 @@ definePageMeta({
   layout: 'auth',
 })
 
-const { signIn, data, getProviders, isAuthenticated } = await useAuth()
+const { signIn, getProviders, isAuthenticated } = await useAuth()
 const providers = await getProviders()
 
 const signInHandler = async (provider: string) => {
@@ -22,32 +22,56 @@ whenever(isAuthenticated, () => {
 </script>
 
 <template>
-  <div flex-1 grid place-content-center>
-    <pre>{{ data }}</pre>
-    <div flex gap-2>
-      <FButton
-        v-for="provider in providers"
-        :key="provider.id"
-        :icon="providerIcons[provider.id as ProviderId]"
-        icon-placement="right"
-        @click="signInHandler(provider.id)"
-      >
-        Sign in with {{ provider.name }}
-      </FButton>
+  <div class="auth-wrapper" />
+  <div z-2 flex flex-col items-center flex-1>
+    <FLogo class="z-2" size="lg" />
 
-      <FButton variant="info" @click="navigateTo('/')">
-        Home
-      </FButton>
+    <div flex-1 grid place-content-center mt="-20vh">
+      <div flex flex-col gap-2>
+        <FButton
+          v-for="provider in providers"
+          :key="provider.id"
+          size="lg"
+          @click="signInHandler(provider.id)"
+        >
+          <div flex items-center justify-start gap-3>
+            <Icon :name="providerIcons[provider.id as ProviderId]" />
+            <p>Sign in with {{ provider.name }}</p>
+          </div>
+        </FButton>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-pre {
-  @apply bg-gray-800 text-white p-3 my-3 rounded shadow overflow-x-auto;
+.auth-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+
+  --bg: #fafaf9;
+  background-color: var(--bg);
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e7e5e4' fill-opacity='0.4'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
-pre span {
-  @apply text-green-400;
+.auth-wrapper::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(transparent 25%, var(--bg) 50%);
+  background-size: 100% 200%;
+  animation: fade-in-grid 0.8s linear forwards;
+}
+
+@keyframes fade-in-grid {
+  from {
+    background-position-y: 100%;
+  }
+
+  to {
+    background-position-y: 0%;
+  }
 }
 </style>

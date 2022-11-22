@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { get } from '@vueuse/core'
 import SectionWrapper from '~~/components/layout/SectionWrapper.vue'
-import type { CashAccountWithAccount } from '~~/models/resources/account'
 
 const route = useRoute()
 
@@ -24,7 +23,7 @@ const transactions = computed(() => isDefined(account)
 
 <template>
   <LayoutPage>
-    <SectionWrapper :title="account?.account.name">
+    <SectionWrapper :title="account?.account?.name ?? 'Unknown'">
       <template v-if="account">
         <TransactionList v-if="transactions?.length" :transactions="transactions" :loading="isLoading" />
       </template>
