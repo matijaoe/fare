@@ -2,6 +2,8 @@
 onMounted(() => setBreadcrumbs([
   { label: 'Dashboard', href: { name: 'index' } },
 ]))
+
+const app = useNuxtApp()
 </script>
 
 <template>

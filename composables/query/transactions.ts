@@ -33,7 +33,7 @@ export const useTransactions = (from: Ref<string | undefined>, to: Ref<string | 
 
       return $fetch<Transaction[]>(url)
     },
-    { initialData: () => useCachedPayload<Transaction[]>(`transactions-${get(from)}-${get(to)}`) ?? [] },
+    // { initialData: () => useCachedPayload<Transaction[]>(`transactions-${get(from)}-${get(to)}`) ?? [] },
   )
 
 export const useTransactionCreate = () => {
@@ -88,7 +88,7 @@ export const useTransactionTotalsPerRange = (from: Ref<string | undefined>, to: 
 
     return $fetch<TransactionsTotalsPerRange>(url)
   },
-  { initialData: () => useCachedPayload<TransactionsTotalsPerRange>(`transactions-totals-${get(from)}-${get(to)}`) },
+  // { initialData: () => useCachedPayload<TransactionsTotalsPerRange>(`transactions-totals-${get(from)}-${get(to)}`) },
 
 )
 
