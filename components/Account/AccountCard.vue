@@ -41,11 +41,9 @@ const { isDark } = useTheme()
       <div flex justify-between items-center w-full>
         <div flex items-center gap-4>
           <div
-            w-10 h-10 flex-center
-            absolute top--4 left--4
-            rounded-full
-            :class="[bg1]"
+            w-10 h-10 flex-center absolute top--4 left--4 rounded-full
             class="transform origin-center scale-1000 filter-saturate-80 opacity-80 sm:scale-600 dark:opacity-25"
+            :class="[bg1]"
           />
           <div flex items-center justify-start min-w-5>
             <Icon
@@ -73,15 +71,10 @@ const { isDark } = useTheme()
         mb--2 z-2 relative text-center
       >
         <FTooltip mx-auto placement="right" content="Balance">
-          <div
-            font="display medium"
-            text-4xl uppercase
-            flex justify-center
-          >
+          <div font="display medium" text-4xl uppercase flex justify-center>
             <FSkeleton
               v-if="totalsLoading"
-              w-24 h="36px"
-              py-2 py="0.5"
+              w-24 h="36px" py-2 py="0.5"
             />
             <span v-else-if="totals">
               {{ formattedBalance }}
@@ -89,11 +82,7 @@ const { isDark } = useTheme()
           </div>
         </FTooltip>
         <FTooltip mx-auto placement="right" content="Net">
-          <p
-            flex flex-col
-            font="mono medium"
-            text="sm zinc-4 dark:zinc-5"
-          >
+          <p flex flex-col font="mono medium" text="sm zinc-4 dark:zinc-5">
             <FSkeleton v-if="totalsLoading" h="28px" w-14 />
             <span
               v-else-if="totals"
@@ -123,10 +112,7 @@ const { isDark } = useTheme()
         border="base dark:zinc-7 r-dashed r-1"
         flex="~ col"
       >
-        <div
-          flex="~ col"
-          translate-y="0.4"
-        >
+        <div flex="~ col" translate-y="0.4">
           <div uppercase font="medium" text="10px zinc-4 dark:zinc-5" leading-tight>
             <span v-if="allTime">Total earned</span>
             <span v-else>Earned</span>
@@ -139,14 +125,9 @@ const { isDark } = useTheme()
           </div>
         </div>
       </div>
-      <div
-        z-2 py-4 w-full
-        border="base dark:zinc-7 l-dashed l-1"
-      >
-        <div
-          flex="~ col"
-          translate-y="0.4"
-        >
+
+      <div z-2 py-4 w-full border="base dark:zinc-7 l-dashed l-1">
+        <div flex="~ col" translate-y="0.4">
           <div
             font="sans medium"
             text="10px zinc-4 dark:zinc-5"

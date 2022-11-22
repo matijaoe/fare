@@ -103,7 +103,9 @@ const isHovered = useElementHover(card)
         </div>
 
         <div>
-          {{ transactionCount }} {{ transactionCount.toString().at(-1) === '1' ? 'transaction' : 'transactions' }}
+          <!-- TODO: count is not correct, it counts all-time -->
+          <!-- should have seperate endpoint just as with totals -->
+          <!-- {{ transactionCount }} {{ transactionCount.toString().at(-1) === '1' ? 'transaction' : 'transactions' }} -->
         </div>
       </div>
 

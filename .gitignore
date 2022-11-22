@@ -7,3 +7,4 @@ dist
 .vercel
 prisma/docs
 plan.md
+.DS_STORE
