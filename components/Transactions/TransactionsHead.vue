@@ -18,7 +18,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
         flex-center flex-shrink-0
         text-2xl p-4 rounded-full ring="2 offset 2 current" transition
         :class="{
-          'bg-stone-2 text-stone-9': isLoading || net === 0,
+          'bg-zinc-2 text-zinc-9': isLoading || net === 0,
           'bg-green-1 text-green-9': net > 0,
           'bg-red-1 text-red-9': net < 0,
         }"
@@ -69,7 +69,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
           </div>
 
           <div
-            bg-stone-1 text-stone-9
+            bg-zinc-1 text-zinc-9
             ring="2 offset 2 current"
             flex-center flex-shrink-0
             p-2 rounded-full aspect-square
@@ -91,7 +91,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
           </div>
 
           <div
-            bg-stone-1 text-stone-9
+            bg-zinc-1 text-zinc-9
             ring="2 offset 2 current"
             flex-center flex-shrink-0
             p-2 rounded-full aspect-square

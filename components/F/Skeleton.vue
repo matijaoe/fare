@@ -8,19 +8,19 @@ const props = withDefaults(defineProps<{
 const styles = computed(() => {
   switch (props.variant) {
     case 'lighter':
-      return 'bg-stone-100'
+      return 'bg-zinc-100'
     case 'darker':
-      return 'bg-stone-300'
+      return 'bg-zinc-300'
     case 'default':
     default:
-      return 'bg-stone-200'
+      return 'bg-zinc-200'
   }
 })
 </script>
 
 <template>
   <div
-    class="max-w-sm animate-pulse rounded-md dark:bg-stone-7"
+    class="max-w-sm animate-pulse rounded-md dark:bg-zinc-7"
     :class="styles"
   />
 </template>
