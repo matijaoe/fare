@@ -37,7 +37,6 @@ const isHovered = useElementHover(card)
       :class="[bg50, borderClr3, text9]"
     >
       <TransitionFade>
-        <FSkeleton v-if="totalsLoading" w-20 h="32px" />
         <p
           v-if="!totalsLoading"
           order--1
@@ -73,7 +72,7 @@ const isHovered = useElementHover(card)
             </p>
             <div text-xl min-w-18 flex justify-start>
               <TransitionFade>
-                <FSkeleton v-if="totalsLoading" w-full h="28px" />
+                <FSkeleton v-if="totalsLoading" variant="lighter" w-full h="28px" />
                 <span
                   v-else-if="isDefined(totals)"
                   font-mono flex items-center
@@ -90,7 +89,7 @@ const isHovered = useElementHover(card)
             </p>
             <div text-xl min-w-18 flex justify-end>
               <TransitionFade>
-                <FSkeleton v-if="totalsLoading" w-full h="28px" />
+                <FSkeleton v-if="totalsLoading" variant="lighter" w-full h="28px" />
                 <span
                   v-else-if="isDefined(totals)"
                   font-mono flex items-center

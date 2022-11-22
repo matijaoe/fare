@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { get } from '@vueuse/core'
-
 onMounted(() => setBreadcrumbs([
   { label: 'Transactions', href: useRoute().path },
 ]))

@@ -16,7 +16,7 @@ const { query } = toRefs(useTransactionsStore())
   <div grid="~ cols-[100px_1fr_100px]" w-full>
     <div w-fit flex gap-2>
       <template v-if="!isAllTime">
-        <FTooltip content="Previous month" placement="top">
+        <FTooltip v-if="!isAllTime" content="Previous month" placement="top">
           <FButton
             icon-only
             circle
@@ -27,7 +27,7 @@ const { query } = toRefs(useTransactionsStore())
           />
         </FTooltip>
         <FTooltip
-          v-if="!isLatestMonth"
+          v-if="!isLatestMonth && !isAllTime"
           content="Next month"
           placement="top"
         >
@@ -43,7 +43,7 @@ const { query } = toRefs(useTransactionsStore())
       </template>
     </div>
 
-    <div flex="center" h-full>
+    <div flex justify-center h-full gap-2>
       <FTooltip
         content="Click to refresh"
         placement="top"

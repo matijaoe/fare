@@ -13,10 +13,8 @@ const sidebar = useSidebar()
 const { mdDown } = $(useBreakpoints())
 
 const route = useRoute()
-const isParentRoute = $computed(() => route.fullPath.startsWith(`/${item.route.name}`))
-const isActiveRoute = $computed(() => route.name === item.route.name!)
-
-// TODO: exact-active-class not matching accounts/:id
+const isParentRoute = $computed(() => route.name?.toString().split('-')[0] === item.route.name)
+const isActiveRoute = $computed(() => route.name === item.route.name)
 
 const isOpen = ref(false)
 const toggleChildren = () => set(isOpen, !isOpen.value)
@@ -45,6 +43,10 @@ const indentStyle = computed(() => {
 const handleNavClick = () => {
   return isActiveRoute && hasChildren ? toggleChildren() : mdDown ? sidebar.close() : ''
 }
+
+const isActive = $computed(() => isActiveRoute || isParentRoute)
+
+// hover:(bg-zinc-1 dark:bg-zinc-8/40)
 </script>
 
 <template>
@@ -53,8 +55,8 @@ const handleNavClick = () => {
       :to="item.route"
       flex="~ gap-2"
       items-center
-      class="color-base-lighter text-lg md:text-base hover:(bg-zinc-1 dark:bg-zinc-8/40)"
-      exact-active-class="bg-zinc-1 dark:bg-zinc-8/40"
+      class="color-base-lighter text-lg md:text-base "
+      :class="isActive ? 'bg-zinc-200 dark:bg-zinc-8/40' : 'hover:(bg-zinc-1 dark:bg-zinc-8/40)'"
       outline="none"
       @click="handleNavClick"
     >

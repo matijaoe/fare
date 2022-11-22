@@ -43,10 +43,10 @@ const items = [
     },
   },
   {
-    label: 'Configuration',
+    label: 'Config',
     icon: 'tabler:adjustments-alt',
     route: {
-      name: 'configuration',
+      name: 'config',
     },
   },
   // {
