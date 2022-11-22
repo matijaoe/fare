@@ -40,8 +40,7 @@ const shownAccounts = computed(() => {
           flex gap-4 items-center
           class="color-base-lighter"
         >
-          <span>€X,XXX.XX</span>
-          <FLoader text-4xl />
+          <FSkeleton class="h-60px w-60" />
         </div>
         <h4 v-else>
           {{ formattedTotalBalance }}

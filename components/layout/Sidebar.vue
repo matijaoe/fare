@@ -45,11 +45,13 @@ const formattedTotalBalance = useCurrencyFormat(balance)
           Balance
         </p>
         <div flex gap-2 items-center>
-          <p text-3xl font-display font-medium>
-            <span v-if="isBalanceLoading">€X,XXX.XX</span>
-            <span v-else>{{ formattedTotalBalance }}</span>
+          <FSkeleton
+            v-if="isBalanceLoading"
+            class="h-36px w-30"
+          />
+          <p v-else text-3xl font-display font-medium>
+            {{ formattedTotalBalance }}
           </p>
-          <FLoader v-if="isBalanceLoading" />
         </div>
       </div>
 

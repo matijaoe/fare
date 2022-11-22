@@ -38,13 +38,10 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
 
         <div flex items-center gap-5>
           <TransitionFade>
-            <div
+            <FSkeleton
               v-if="isLoading"
-              flex gap-4 items-center h-full
-              class="color-base-lighter"
-            >
-              <FSkeleton class="h-40px w-50" />
-            </div>
+              class="h-40px w-50"
+            />
             <p
               v-else-if="isDefined(totals)"
               text-4xl font="display medium"

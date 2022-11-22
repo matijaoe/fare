@@ -74,6 +74,7 @@ const { isDark } = useTheme()
           <div font="display medium" text-4xl uppercase flex justify-center>
             <FSkeleton
               v-if="totalsLoading"
+              variant="lighter"
               w-24 h="36px" py-2 py="0.5"
             />
             <span v-else-if="totals">
@@ -83,7 +84,11 @@ const { isDark } = useTheme()
         </FTooltip>
         <FTooltip mx-auto placement="right" content="Net">
           <p flex flex-col font="mono medium" text="sm zinc-4 dark:zinc-5">
-            <FSkeleton v-if="totalsLoading" h="28px" w-14 />
+            <FSkeleton
+              v-if="totalsLoading"
+              variant="lighter"
+              h="28px" w-14
+            />
             <span
               v-else-if="totals"
               class="filter-saturate-90"
@@ -118,7 +123,11 @@ const { isDark } = useTheme()
             <span v-else>Earned</span>
           </div>
           <div font-mono flex justify-center>
-            <FSkeleton v-if="totalsLoading" h="28px" w-18 />
+            <FSkeleton
+              v-if="totalsLoading"
+              variant="lighter"
+              h="28px" w-18
+            />
             <span v-else-if="totals">
               {{ totals.income > 0 ? '+' : '' }}{{ formattedIncome }}
             </span>
@@ -137,7 +146,11 @@ const { isDark } = useTheme()
             <span v-else>Spent</span>
           </div>
           <div font-mono flex justify-center>
-            <FSkeleton v-if="totalsLoading" h="28px" w-18 />
+            <FSkeleton
+              v-if="totalsLoading"
+              variant="lighter"
+              h="28px" w-18
+            />
             <span v-else-if="totals">
               {{ formattedExpense }}
             </span>
