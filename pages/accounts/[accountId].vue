@@ -11,7 +11,7 @@ const { data: account, isLoading } = useCashAccount(accountId)
 
 whenever(account, () => setBreadcrumbs([
   { label: 'Accounts', href: { name: 'accounts' } },
-  { label: account.value?.account.name ?? accountId, href: route.path },
+  { label: account.value?.account?.name ?? accountId, href: route.path },
 ]), { immediate: true })
 
 // TODO: add to types
@@ -20,8 +20,6 @@ const transactions = computed(() => isDefined(account)
       ...tr,
     }))
   : [])
-
-await useFetch<CashAccountWithAccount>(`/api/accounts/cash/${accountId}`, { key: `cash-account-${accountId}` })
 </script>
 
 <template>

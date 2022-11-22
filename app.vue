@@ -9,8 +9,6 @@ useHead({
 })
 
 setupShortcuts()
-
-useFetch('/api/accounts/cash/balance', { key: 'balance' })
 </script>
 
 <template>

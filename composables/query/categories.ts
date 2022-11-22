@@ -17,12 +17,10 @@ export const keysCategory = {
 
 export const useCategories = () => useQuery(keysCategory.all,
   () => $fetch<CategoryWithCount[]>('/api/categories'),
-  // { initialData: () => useCachedPayload<Category[]>('categories') },
 )
 
 export const useCategory = (id: string) => useQuery(keysCategory.detail(id),
   () => $fetch<Category>(`/api/categories/${id}`),
-  // { initialData: () => useCachedPayload<Category>(`category-${id}`) },
 )
 
 export const useCategoriesTotals = (from: Ref<string | undefined>, to: Ref<string | undefined>) => {
@@ -36,7 +34,6 @@ export const useCategoriesTotals = (from: Ref<string | undefined>, to: Ref<strin
 
       return $fetch<CategoryWithTotals[]>(url)
     },
-    // { initialData: () => useCachedPayload<CategoryWithTotals[]>(`categories-totals-${get(from)}-${get(to)}`) },
   )
 }
 

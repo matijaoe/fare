@@ -5,17 +5,8 @@ onMounted(() => setBreadcrumbs([
   { label: 'Transactions', href: useRoute().path },
 ]))
 
-const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
 const { transactions, query } = toRefs(useTransactionsStore())
 
-await useFetch(() => `/api/transactions/totals?from=${get(rangeFrom.value)}&to=${get(rangeTo)}`, {
-  key: `transactions-totals-${get(rangeFrom.value)}-${get(rangeTo)}`,
-})
-
-// // Fucks things up?
-// await useFetch(() => `/api/transactions?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
-//   key: `transactions-${get(rangeFrom)}-${get(rangeTo)}`,
-// })
 const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
 
 const transactionStore = useTransactionsStore()
