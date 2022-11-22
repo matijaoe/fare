@@ -6,7 +6,6 @@ import { db } from '~~/lib/db'
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
   if (!userId) {
-    console.log('🚫 No userId')
     return null
   }
 

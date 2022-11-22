@@ -1,10 +1,15 @@
-import { readUserId } from '~~/server/utils'
+import { StatusCodes } from 'http-status-codes'
+import { readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import type { TransactionTotalMonthly, TransactionTotalMonthlyObject } from '~~/models/resources/transaction'
 import { groupBy } from '~~/utils'
 
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
+
+  if (!userId) {
+    return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
+  }
 
   try {
     const totals = await db.$queryRaw<TransactionTotalMonthly[]>`

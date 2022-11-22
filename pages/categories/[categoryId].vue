@@ -11,8 +11,6 @@ whenever(category, () => setBreadcrumbs([
   { label: 'Categories', href: { name: 'categories' } },
   { label: category.value?.name || categoryId, href: route.path },
 ]), { immediate: true })
-
-await useFetch<Category>(`/api/categories/${categoryId}`, { key: `category-${categoryId}` })
 </script>
 
 <template>

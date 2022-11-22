@@ -2,7 +2,6 @@ import type { MoneyAccount, Prisma, Transaction } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
-import { $fetch } from 'ohmyfetch'
 import type { Ref } from 'vue'
 import type { TransactionTotalMonthlyObject, TransactionsTotalsPerRange } from '~~/models/resources/transaction'
 
@@ -33,7 +32,6 @@ export const useTransactions = (from: Ref<string | undefined>, to: Ref<string | 
 
       return $fetch<Transaction[]>(url)
     },
-    { initialData: () => useCachedPayload<Transaction[]>(`transactions-${get(from)}-${get(to)}`) ?? [] },
   )
 
 export const useTransactionCreate = () => {
@@ -88,8 +86,6 @@ export const useTransactionTotalsPerRange = (from: Ref<string | undefined>, to: 
 
     return $fetch<TransactionsTotalsPerRange>(url)
   },
-  { initialData: () => useCachedPayload<TransactionsTotalsPerRange>(`transactions-totals-${get(from)}-${get(to)}`) },
-
 )
 
 export const useTransactionTotalMonthly = () => useQuery(

@@ -1,5 +1,6 @@
 import type { TransactionType } from '@prisma/client'
-import { readUserId, useTransactionDateRange } from '~~/server/utils'
+import { StatusCodes } from 'http-status-codes'
+import { readUserId, sendCustomError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import type { CategoryTotalType, GroupedCategory } from '~~/models/resources/category'
 
@@ -35,6 +36,10 @@ const calculateCategoryTotals = (grupedCategories: GroupedCategory[]) => {
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
   const { dateQuery: date, hasDefinedRange } = useTransactionDateRange(event)
+
+  if (!userId) {
+    return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
+  }
 
   const groupedCategoriesAllTime = await db.transaction.groupBy({
     by: ['categoryId', 'type'],

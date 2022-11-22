@@ -5,7 +5,8 @@ const { isDark, toggleDark } = useTheme()
 const { user, signOut } = await useAuth()
 
 const signOutHandler = async () => {
-  await signOut()
+  // dont reload page, manually navigate
+  await signOut({ redirect: false })
   navigateTo({ name: 'login' })
 }
 </script>

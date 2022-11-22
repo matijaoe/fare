@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { get } from '@vueuse/core'
 import SectionWrapper from '~~/components/layout/SectionWrapper.vue'
-import type { CashAccountWithAccount } from '~~/models/resources/account'
 
 const route = useRoute()
 
@@ -11,7 +10,7 @@ const { data: account, isLoading } = useCashAccount(accountId)
 
 whenever(account, () => setBreadcrumbs([
   { label: 'Accounts', href: { name: 'accounts' } },
-  { label: account.value?.account.name ?? accountId, href: route.path },
+  { label: account.value?.account?.name ?? accountId, href: route.path },
 ]), { immediate: true })
 
 // TODO: add to types
@@ -20,13 +19,11 @@ const transactions = computed(() => isDefined(account)
       ...tr,
     }))
   : [])
-
-await useFetch<CashAccountWithAccount>(`/api/accounts/cash/${accountId}`, { key: `cash-account-${accountId}` })
 </script>
 
 <template>
   <LayoutPage>
-    <SectionWrapper :title="account?.account.name">
+    <SectionWrapper :title="account?.account?.name ?? 'Unknown'">
       <template v-if="account">
         <TransactionList v-if="transactions?.length" :transactions="transactions" :loading="isLoading" />
       </template>

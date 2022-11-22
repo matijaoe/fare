@@ -6,7 +6,6 @@ import { db } from '~~/lib/db'
 export default defineEventHandler(async (event) => {
   try {
     const data = await readBody<Prisma.UserCreateInput>(event)
-    console.log('data :>> ', data)
     const user = await db.user.create({
       data,
     })

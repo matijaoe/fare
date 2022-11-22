@@ -1,5 +1,6 @@
 import type { Prisma } from '@prisma/client'
-import { readUserId, sendInternalError } from '~~/server/utils'
+import { StatusCodes } from 'http-status-codes'
+import { readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 type GroupedTotal = Prisma.PickArray<Prisma.TransactionGroupByOutputType, 'type'[]> & {
@@ -8,6 +9,10 @@ type GroupedTotal = Prisma.PickArray<Prisma.TransactionGroupByOutputType, 'type'
 
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
+
+  if (!userId) {
+    return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
+  }
 
   try {
     const groupedTotals = await db.transaction.groupBy({

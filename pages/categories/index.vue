@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { Category } from '@prisma/client'
 import { get } from '@vueuse/core'
+import type { CategoryWithCount } from '~~/models/resources/category'
 import { useCategoryModal } from '~~/store/modal/category-modal.store'
 
 onMounted(() => setBreadcrumbs([
@@ -19,14 +21,6 @@ const shownCategories = computed(() => {
     const { totals } = findCategory(category.id) ?? {}
     return { ...category, totals }
   }) ?? []
-})
-
-await useFetch('/api/categories', {
-  key: 'categories',
-})
-
-await useFetch(`/api/categories/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
-  key: `categories-totals-${get(rangeFrom)}-${get(rangeTo)}`,
 })
 </script>
 

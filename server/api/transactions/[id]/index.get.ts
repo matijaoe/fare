@@ -5,11 +5,17 @@ import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
   const where = readParams<Prisma.TransactionWhereUniqueInput>(event)
+
+  const userId = readUserId(event)
+  if (!userId) {
+    return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'Unauthorized')
+  }
+
   try {
     const item = await db.transaction.findFirst({
       where: {
         ...where,
-        userId: readUserId(event),
+        userId,
       },
       include: {
         category: true,

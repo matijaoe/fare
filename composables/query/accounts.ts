@@ -2,7 +2,6 @@ import type { CashAccount, Prisma } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
-import { $fetch } from 'ohmyfetch'
 import type { Ref } from 'vue'
 import type { CashAccountWithAccount, CashAccountWithTotals, CashAccountsBalanceModel } from '~~/models/resources/account'
 
@@ -17,7 +16,6 @@ export const keysAccounts = {
 
 export const useCashAccount = (id: string) => useQuery(keysAccounts.detail(id),
   () => $fetch<CashAccountWithAccount>(`/api/accounts/cash/${unref(id)}`),
-  { initialData: () => useCachedPayload<CashAccountWithAccount>(`cash-account-${id}`) },
 )
 
 export const useCashAccounts = (payload?: { transactions?: boolean }) => {
@@ -25,7 +23,6 @@ export const useCashAccounts = (payload?: { transactions?: boolean }) => {
   return useQuery(
     keysAccounts.totals(),
     () => $fetch<CashAccountWithAccount[]>(`/api/accounts/cash?transactions=${transactions ?? 'false'}`),
-    { initialData: transactions !== 'true' ? useCachedPayload<CashAccountWithAccount[]>('cash-accounts') : null },
   )
 }
 
@@ -40,14 +37,12 @@ export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<str
 
       return $fetch<CashAccountWithTotals[]>(url)
     },
-    { initialData: () => useCachedPayload<CashAccountWithTotals[]>(`cash-accounts-totals-${get(from)}-${get(to)}`) },
   )
 }
 
 export const useCashAccountsBalance = () => useQuery(
   keysAccounts.balance(),
   () => $fetch<CashAccountsBalanceModel>('/api/accounts/cash/balance'),
-  { initialData: useCachedPayload<CashAccountsBalanceModel>('balance') },
 )
 
 export const useCashAccountCreate = () => {

@@ -8,6 +8,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return
   }
 
-  // If not authenticated, redirect to login ({ required: true} by default), else navigate to path (callbackUrl)
-  await useSession({ callbackUrl: to.path })
+  // If not authenticated, redirect to login ({ required: true } by default), else navigate to path (callbackUrl)
+  await useSession({
+    callbackUrl: to.path,
+  })
 })

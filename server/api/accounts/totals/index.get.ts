@@ -1,5 +1,6 @@
 import type { TransactionType } from '@prisma/client'
-import { readUserId, sendInternalError, useTransactionDateRange } from '~~/server/utils'
+import { StatusCodes } from 'http-status-codes'
+import { readUserId, sendCustomError, sendInternalError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import type { AccountTotalType, GroupedAccount } from '~~/models/resources/account'
 
@@ -36,6 +37,10 @@ const calculateAccountTotals = (groupedAccounts: GroupedAccount[]) => {
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
   const { dateQuery: date, hasDefinedRange } = useTransactionDateRange(event)
+
+  if (!userId) {
+    return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
+  }
 
   try {
     // Group by accounts and entry types

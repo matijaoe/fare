@@ -25,14 +25,6 @@ const shownAccounts = computed(() => {
     return { ...account, totals }
   }) ?? []
 })
-
-await useFetch('/api/accounts/cash?transactions=false', {
-  key: 'cash-accounts',
-})
-
-await useFetch(`/api/accounts/totals?from=${get(rangeFrom)}&to=${get(rangeTo)}`, {
-  key: `cash-accounts-totals-${get(rangeFrom)}-${get(rangeTo)}`,
-})
 </script>
 
 <template>

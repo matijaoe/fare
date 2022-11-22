@@ -4,7 +4,7 @@ import { computed } from 'vue'
 import type { CashAccountsQueryModel } from '~~/models/resources/account'
 
 export const useTransactionDateRange = (event: H3Event) => {
-  const { from, to, transactions } = useQuery(event) as CashAccountsQueryModel
+  const { from, to, transactions } = getQuery(event) as CashAccountsQueryModel
 
   const fromDate = from ? new Date(from) : undefined
   const toDate = to ? new Date(to) : undefined
