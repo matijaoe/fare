@@ -24,7 +24,7 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
 
       <div
         mt="60px"
-        overflow-hidden
+        overflow-y-auto
         :class="[mainContentWrapperHeight]"
       >
         <main mx-auto>

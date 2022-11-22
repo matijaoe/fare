@@ -1,10 +1,14 @@
 import type { Prisma } from '@prisma/client'
-import { readUserId, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
+import { readUserId, sendInternalError, useTransactionDateRange } from '~~/server/utils'
 
 export default defineEventHandler((event) => {
   const userId = readUserId(event)
   const { dateQuery: date } = useTransactionDateRange(event)
+
+  if (!userId) {
+    return null
+  }
 
   const accountInclude: Prisma.CashAccountArgs = {
     include: {

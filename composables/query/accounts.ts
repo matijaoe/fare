@@ -47,7 +47,6 @@ export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<str
 export const useCashAccountsBalance = () => useQuery(
   keysAccounts.balance(),
   () => $fetch<CashAccountsBalanceModel>('/api/accounts/cash/balance'),
-  // TODO: returns different balance
   // { initialData: useCachedPayload<CashAccountsBalanceModel>('balance') },
 )
 

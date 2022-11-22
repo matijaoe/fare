@@ -7,6 +7,7 @@ const app = useNuxtApp()
 </script>
 
 <template>
+  <pre>{{ app.payload.data }}</pre>
   <LayoutPage>
     <div flex flex-col gap-3>
       <Demo />
