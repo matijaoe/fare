@@ -6,6 +6,7 @@ import { db } from '~~/lib/db'
 
 export default NuxtAuthHandler({
   adapter: PrismaAdapter(db),
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     // @ts-expect-error Import is exported on .default during SSR, so we need to call it this way. May be fixed via Vite at some point
     GithubProvider.default({

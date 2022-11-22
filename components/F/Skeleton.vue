@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = withDefaults(defineProps<{
-  variant: 'lighter' | 'default' | 'darker'
+  variant?: 'lighter' | 'default' | 'darker'
 }>(), {
   variant: 'default',
 })

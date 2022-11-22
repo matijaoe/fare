@@ -36,10 +36,10 @@ const items = [
     },
   },
   {
-    label: 'FI',
-    icon: 'tabler:flame',
+    label: 'Progress',
+    icon: 'tabler:chart-area-line',
     route: {
-      name: 'fi',
+      name: 'progress',
     },
   },
   {
@@ -49,57 +49,11 @@ const items = [
       name: 'config',
     },
   },
-  // {
-  //   label: 'Progress',
-  //   icon: 'tabler:chart-area-line',
-  //   route: {
-  //     name: 'progress',
-  //   },
-  //   children: [
-  //     {
-  //       label: 'Coast FIRE',
-  //       icon: 'tabler:chart-area-line',
-  //       route: {
-  //         name: 'progress-fire',
-  //       },
-  //     },
-  //   ],
-  // },
-  // {
-  //   label: 'Tools',
-  //   icon: 'tabler:tools',
-  //   route: {
-  //     name: 'tools',
-  //   },
-  // },
-  // {
-  //   label: 'Resources',
-  //   icon: 'tabler:books',
-  //   route: {
-  //     name: 'resources',
-  //   },
-  // },
-  // {
-  //   label: 'Login page',
-  //   icon: 'tabler:lungs',
-  //   route: {
-  //     name: 'login',
-  //   },
-  // },
 ]
 </script>
 
 <template>
   <ul>
-    <NavItem v-for="item in items" :key="item.label" :item="item">
-      <ul v-if="item.children">
-        <NavItem
-          v-for="child in item.children"
-          :key="child.label"
-          :item="child"
-          :child-level="1"
-        />
-      </ul>
-    </NavItem>
+    <NavItem v-for="item in items" :key="item.label" :item="item" />
   </ul>
 </template>
