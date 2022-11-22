@@ -2,7 +2,6 @@ import type { CashAccount, Prisma } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
-import { $fetch } from 'ohmyfetch'
 import type { Ref } from 'vue'
 import type { CashAccountWithAccount, CashAccountWithTotals, CashAccountsBalanceModel } from '~~/models/resources/account'
 
@@ -16,7 +15,7 @@ export const keysAccounts = {
 }
 
 export const useCashAccount = (id: string) => useQuery(keysAccounts.detail(id),
-  () => $fetch<CashAccountWithAccount>(`/api/accounts/cash/${unref(id)}`),
+  () => $fetch<CashAccountWithAccount>(`/api/accounts/cast/${unref(id)}`),
 )
 
 export const useCashAccounts = (payload?: { transactions?: boolean }) => {

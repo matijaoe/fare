@@ -1,6 +1,3 @@
-import { $fetch } from 'ohmyfetch'
-
-
 // import type { Prisma, User } from '@prisma/client'
 // import { useMutation, useQueryClient } from 'vue-query'
 

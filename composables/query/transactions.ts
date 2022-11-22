@@ -2,7 +2,6 @@ import type { MoneyAccount, Prisma, Transaction } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
-import { $fetch } from 'ohmyfetch'
 import type { Ref } from 'vue'
 import type { TransactionTotalMonthlyObject, TransactionsTotalsPerRange } from '~~/models/resources/transaction'
 
