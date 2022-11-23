@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import type { Category } from '@prisma/client'
-
 const route = useRoute()
 
 const categoryId = route.params.categoryId as string
 
 const { data: category, isLoading } = useCategory(categoryId)
 
+const { transactions, searchQuery } = useTransactionFilters(
+  computed(() => category.value?.transactions),
+)
+
 whenever(category, () => setBreadcrumbs([
   { label: 'Categories', href: { name: 'categories' } },
   { label: category.value?.name || categoryId, href: route.path },
 ]), { immediate: true })
-
-const searchQuery = ref('')
 </script>
 
 <template>
@@ -28,13 +28,15 @@ const searchQuery = ref('')
         border="b-2 zinc-2 dark:zinc-9"
       />
       <TransactionList
-        :transactions="category?.transactions"
+        :transactions="transactions"
         :loading="isLoading"
       />
     </template>
 
     <template #content>
-      <h2>{{ category?.name }}</h2>
+      <h2 text-3xl font-bold>
+        {{ category?.name }}
+      </h2>
     </template>
   </LayoutPageWithList>
 </template>

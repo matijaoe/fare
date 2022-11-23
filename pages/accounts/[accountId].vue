@@ -7,19 +7,17 @@ const accountId = $computed(() => route.params.accountId as string)
 
 const { data: account, isLoading } = useCashAccount(accountId)
 
+const fullAccountTransactions = computed(() => isDefined(account)
+  ? [...get(account).paymentFromAccount, ...get(account).paymentToAccount]
+  : [],
+)
+
+const { transactions, searchQuery } = useTransactionFilters(fullAccountTransactions)
+
 whenever(account, () => setBreadcrumbs([
   { label: 'Accounts', href: { name: 'accounts' } },
   { label: account.value?.account?.name ?? accountId, href: route.path },
 ]), { immediate: true })
-
-// TODO: add to types
-const transactions = computed(() => isDefined(account)
-  ? [...get(account)?.paymentFromAccount, ...get(account)?.paymentToAccount].map(tr => ({
-      ...tr,
-    }))
-  : [])
-
-const searchQuery = ref('')
 </script>
 
 <template>
@@ -41,7 +39,9 @@ const searchQuery = ref('')
     </template>
 
     <template #content>
-      <h2>{{ account?.account.name }}</h2>
+      <h2 text-2xl font-bold>
+        {{ account?.account.name }}
+      </h2>
     </template>
   </LayoutPageWithList>
 </template>

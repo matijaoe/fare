@@ -3,16 +3,17 @@ onMounted(() => setBreadcrumbs([
   { label: 'Transactions', href: useRoute().path },
 ]))
 
-const { transactions, query } = toRefs(useTransactionsStore())
+const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
+const { data, isLoading } = useTransactions(rangeFrom, rangeTo)
 
-const transactionStore = useTransactionsStore()
+const { transactions, searchQuery } = useTransactionFilters(data)
 </script>
 
 <template>
   <LayoutPageWithList>
     <template #list>
       <FInput
-        v-model="transactionStore.searchQuery"
+        v-model="searchQuery"
         type="search"
         placeholder="Search"
         icon="tabler:search"
@@ -22,7 +23,7 @@ const transactionStore = useTransactionsStore()
       />
       <TransactionList
         :transactions="transactions"
-        :loading="query.isFetching"
+        :loading="isLoading"
       />
     </template>
 

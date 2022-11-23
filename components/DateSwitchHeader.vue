@@ -8,8 +8,6 @@ const {
   setToToday,
   formattedDate,
 } = toRefs(useDateRangeStore())
-
-const { query } = toRefs(useTransactionsStore())
 </script>
 
 <template>
@@ -55,7 +53,6 @@ const { query } = toRefs(useTransactionsStore())
           :icon="isAllTime ? 'tabler:timeline' : 'tabler:calendar'"
           keep-style-on-load
           min-w="!36"
-          @click="query.refetch()"
         >
           <p font="display medium" uppercase class="translate-y-0.2">
             {{ isAllTime ? 'All time' : formattedDate }}

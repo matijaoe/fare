@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
 import type { Ref } from 'vue'
-import type { TransactionTotalMonthlyObject, TransactionsTotalsPerRange } from '~~/models/resources/transaction'
+import type { TransactionTotalMonthlyObject, TransactionWithCategoryAndCashAccount, TransactionsTotalsPerRange } from '~~/models/resources/transaction'
 
 export const keysTransactions = {
   all: ['transactions'] as const,
@@ -22,7 +22,7 @@ export const useTransaction = (id: MaybeRef<string>) =>
   useQuery(keysTransactions.detail(id), () => $fetch<Transaction>(`/api/transactions/${unref(id)}`))
 
 export const useTransactions = (from: Ref<string | undefined>, to: Ref<string | undefined>) =>
-  useQuery<Transaction[]>(
+  useQuery(
     keysTransactions.range(from, to),
     () => {
       const fullRangeDefined = isDefined(from) && isDefined(to)
@@ -30,7 +30,7 @@ export const useTransactions = (from: Ref<string | undefined>, to: Ref<string | 
         ? `/api/transactions?from=${get(from)}&to=${get(to)}`
         : '/api/transactions'
 
-      return $fetch<Transaction[]>(url)
+      return $fetch<TransactionWithCategoryAndCashAccount[]>(url)
     },
   )
 

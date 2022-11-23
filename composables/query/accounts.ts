@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
 import type { Ref } from 'vue'
-import type { CashAccountWithAccount, CashAccountWithTotals, CashAccountsBalanceModel } from '~~/models/resources/account'
+import type { CashAccountWithAccount, CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount, CashAccountWithTotals, CashAccountsBalanceModel } from '~~/models/resources/account'
 
 export const keysAccounts = {
   all: ['cash-accounts'] as const,
@@ -15,7 +15,7 @@ export const keysAccounts = {
 }
 
 export const useCashAccount = (id: string) => useQuery(keysAccounts.detail(id),
-  () => $fetch<CashAccountWithAccount>(`/api/accounts/cash/${unref(id)}`),
+  () => $fetch<CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount>(`/api/accounts/cash/${unref(id)}`),
 )
 
 export const useCashAccounts = (payload?: { transactions?: boolean }) => {

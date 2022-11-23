@@ -4,6 +4,7 @@ const sidebar = useSidebar()
 const sidebarWidth = computed(() => 'w-screen md:w-240px')
 const headerWidth = computed(() => sidebar.isOpen ? 'sm:(w-[calc(100vw-240px)])' : 'w-screen')
 
+// TODO: weird small scroll on list page
 const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
 </script>
 
@@ -27,9 +28,8 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
       <div
         mt="60px"
         overflow-y-auto
-        :class="[mainContentWrapperHeight]"
       >
-        <main mx-auto>
+        <main mx-auto :class="[mainContentWrapperHeight]">
           <slot />
         </main>
       </div>
