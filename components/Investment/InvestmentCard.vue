@@ -2,23 +2,22 @@
 import type { AccountTotals, CashAccountWithAccount } from '~~/models/resources/account'
 
 import type Input from '~~/components/F/Input.vue'
+import type { InvestmentAccountWithAccount } from '~~/models/resources/investment-account'
+
 type Props = {
-  investmentAccount: CashAccountWithAccount
-  totals?: AccountTotals
-  totalsLoading?: boolean
+  investmentAccount: InvestmentAccountWithAccount
+  balanceLoading?: boolean
   allTime?: boolean
+  balance?: number
 }
 
 const props = defineProps<Props>()
-const cashAccountModal = useCashAccountModal()
+// const cashAccountModal = useCashAccountModal()
 
 const { bg1, color4 } = useAppColors(props.investmentAccount.account.color)
-
 const account = $computed(() => props.investmentAccount.account)
-const totals = $computed(() => props.totals)
 
-// TODO: skeleton instead of xxx
-const formattedBalance = totals?.balance != null ? useCurrencyFormat(totals.balance) : '€XXX.XX'
+const formattedBalance = props.balance != null ? useCurrencyFormat(props?.balance) : 0
 
 const card = ref<HTMLElement>()
 const isHovered = useElementHover(card)
@@ -36,7 +35,7 @@ const editBalanceInputEl = ref<InstanceType<typeof Input> | null>()
 const setEditMode = (value: boolean) => {
   isEditMode = value
   if (value) {
-    editBalance = totals?.balance ?? null
+    editBalance = props.balance ?? null
     // TODO: not focusing
     editBalanceInputEl.value?.inputEl?.focus()
   }
@@ -74,11 +73,11 @@ const setEditMode = (value: boolean) => {
         </div>
 
         <div>
-          <FTooltip content="Edit" placement="top">
+          <!-- <FTooltip content="Edit" placement="top">
             <button @click.stop="cashAccountModal.launch(account)">
               <Icon v-show="isHovered" text="zinc-6 dark:zinc-5" name="tabler:edit" />
             </button>
-          </FTooltip>
+          </FTooltip> -->
         </div>
       </div>
 
@@ -102,11 +101,11 @@ const setEditMode = (value: boolean) => {
             @click="setEditMode(true)"
           >
             <FSkeleton
-              v-if="totalsLoading"
+              v-if="balanceLoading"
               variant="lighter"
               w-24 h="36px" py-2 py="0.5"
             />
-            <span v-else-if="totals">
+            <span v-else>
               {{ formattedBalance }}
             </span>
           </div>

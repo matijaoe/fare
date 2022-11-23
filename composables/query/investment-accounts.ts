@@ -31,7 +31,7 @@ export const useInvestmentAccountCreate = () => {
 
 export const useInvestmentAccountsEntries = () => useQuery(
   keysInvestmentAccounts.entries(),
-  () => $fetch<InvestmentAccountWithEntries>('/api/accounts/investment/entries'),
+  () => $fetch<InvestmentAccountWithEntries[]>('/api/accounts/investment/entries'),
 )
 
 export const useInvestmentAccountsEntryCreate = () => {

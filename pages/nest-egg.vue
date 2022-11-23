@@ -4,32 +4,40 @@ import { get } from '@vueuse/core'
 const route = useRoute()
 
 onMounted(() => setBreadcrumbs([
-  { label: 'Accounts', href: { name: route.name ?? '🥺' } },
+  { label: 'Nest egg', href: { name: route.name ?? '🥺' } },
 ]))
 
-const cashAccountModal = useCashAccountModal()
-const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
+// TODO: transaction account modal
+// const cashAccountModal = useCashAccountModal()
+const { selectedMonth, isAllTime } = toRefs(useDateRangeStore())
 
+// TODO: nest egg balance
 const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
 const balance = computed(() => totalBalance.value?.balance ?? 0)
 const formattedTotalBalance = useCurrencyFormat(balance)
 
 const { data: investmentAccounts } = useInvestmentAccounts()
-watch(investmentAccounts, (val) => {
-  console.log(val)
-})
+const { data: investmentEntries, isLoading: isEntriesLoading } = useInvestmentAccountsEntries()
 
-const { data: cashAccounts } = useCashAccounts()
-const { data: accountTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
+const unifiedAccounts = $computed(() => {
+  const key = getYearMonthKey(isDefined(selectedMonth) ? new Date(selectedMonth.value) : new Date())
+  console.log('key :>> ', key)
 
-const shownAccounts = computed(() => {
-  const findAccount = (id: string) => accountTotals.value?.find(acc => acc.id === id)
+  const getBalance = (investmentAccountId: string) => {
+    const acc = investmentEntries.value?.find(acc => acc.investmentAccountId === investmentAccountId)
+    // TODO: if no balance, get latest old balance, but alert user about it
+    return acc?.balances?.[key]?.balance ?? 0
+  }
 
-  return cashAccounts.value?.map((account) => {
-    const { totals } = findAccount(account.id) ?? {}
-    return { ...account, totals }
+  return investmentAccounts.value?.map((account) => {
+    const balance = getBalance(account.id)
+    return { ...account, balance }
   }) ?? []
 })
+
+// TODO: more types
+const accountsStocks = computed(() => unifiedAccounts?.filter(({ type }) => type === 'Stocks'))
+const accountsCrypto = computed(() => unifiedAccounts?.filter(({ type }) => type === 'Crypto'))
 </script>
 
 <template>
@@ -59,23 +67,23 @@ const shownAccounts = computed(() => {
           <FButton
             variant="secondary"
             icon-placement="left"
-            @click="cashAccountModal.launch()"
           >
+            <!-- @click="cashAccountModal.launch()" -->
             Add account
           </FButton>
         </template>
 
         <div
-          v-if="shownAccounts?.length"
+          v-if="accountsStocks?.length"
           class="custom-grid" gap-3
         >
           <!-- TODO: keep an eye on this key...  -->
           <InvestmentCard
-            v-for="account in shownAccounts"
+            v-for="account in accountsStocks"
             :key="account"
             :investment-account="account"
-            :totals="account.totals"
-            :totals-loading="isTotalsLoading"
+            :balance="account.balance"
+            :balance-loading="isEntriesLoading"
             :all-time="isAllTime"
           />
         </div>
@@ -86,23 +94,23 @@ const shownAccounts = computed(() => {
           <FButton
             variant="secondary"
             icon-placement="left"
-            @click="cashAccountModal.launch()"
           >
+            <!-- @click="cashAccountModal.launch()" -->
             Add account
           </FButton>
         </template>
 
         <div
-          v-if="shownAccounts?.length"
+          v-if="accountsCrypto?.length"
           class="custom-grid" gap-3
         >
           <!-- TODO: keep an eye on this key...  -->
           <InvestmentCard
-            v-for="account in shownAccounts"
+            v-for="account in accountsCrypto"
             :key="account"
             :investment-account="account"
-            :totals="account.totals"
-            :totals-loading="isTotalsLoading"
+            :balance="account.balance"
+            :balance-loading="isEntriesLoading"
             :all-time="isAllTime"
           />
         </div>

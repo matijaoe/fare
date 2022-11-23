@@ -15,7 +15,7 @@ const formattedTotalBalance = useCurrencyFormat(balance)
 const { data: cashAccounts } = useCashAccounts()
 const { data: accountTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
 
-const shownAccounts = computed(() => {
+const unifiedAccounts = computed(() => {
   const findAccount = (id: string) => accountTotals.value?.find(acc => acc.id === id)
 
   return cashAccounts.value?.map((account) => {
@@ -58,12 +58,12 @@ const shownAccounts = computed(() => {
       </template>
 
       <div
-        v-if="shownAccounts?.length"
+        v-if="unifiedAccounts?.length"
         class="custom-grid" gap-3
       >
         <!-- TODO: keep an eye on this key...  -->
         <AccountCard
-          v-for="account in shownAccounts"
+          v-for="account in unifiedAccounts"
           :key="account"
           :cash-account="account"
           :totals="account.totals"

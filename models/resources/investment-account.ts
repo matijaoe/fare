@@ -5,7 +5,5 @@ export type InvestmentAccountWithAccount = InvestmentAccount & { account: MoneyA
 export type InvestmentAccountWithEntries = {
   investmentAccountId: string
   accountId: string
-  balances: Record<string, InvestmentAccountEntries>
+  balances: Record<string, InvestmentEntry>
 }
-
-export type InvestmentAccountEntries = Record<string, InvestmentEntry>
