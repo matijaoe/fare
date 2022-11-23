@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { get } from '@vueuse/core'
-import SectionWrapper from '~~/components/layout/SectionWrapper.vue'
 
 const route = useRoute()
 
@@ -19,14 +18,30 @@ const transactions = computed(() => isDefined(account)
       ...tr,
     }))
   : [])
+
+const searchQuery = ref('')
 </script>
 
 <template>
-  <LayoutPage>
-    <SectionWrapper :title="account?.account?.name ?? 'Unknown'">
-      <template v-if="account">
-        <TransactionList v-if="transactions?.length" :transactions="transactions" :loading="isLoading" />
-      </template>
-    </SectionWrapper>
-  </LayoutPage>
+  <LayoutPageWithList>
+    <template #list>
+      <FInput
+        v-model="searchQuery"
+        type="search"
+        placeholder="Search"
+        icon="tabler:search"
+        clearable
+        input-class="rounded-none !bg-white !py-5"
+        border="b-2 zinc-2 dark:zinc-9"
+      />
+      <TransactionList
+        :transactions="transactions"
+        :loading="isLoading"
+      />
+    </template>
+
+    <template #content>
+      <h2>{{ account?.account.name }}</h2>
+    </template>
+  </LayoutPageWithList>
 </template>

@@ -28,6 +28,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
 
   // Transactions
 
+  // TODO: have store only have this in it, the rest is from shared composable to be used throhgout componnets
   const query = useTransactions(rangeFrom, rangeTo)
 
   const filteredTransactions = computed(() => get(query.data)?.filter(search) ?? [])

@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { get } from '@vueuse/core'
 import type { Ref } from 'vue'
 import { keysTransactions } from './transactions'
-import type { CategoryWithCount, CategoryWithTotals } from '~~/models/resources/category'
+import type { CategoryWithCount, CategoryWithTotals, CategoryWithTransactions } from '~~/models/resources/category'
 
 export const keysCategory = {
   all: ['categories'] as const,
@@ -19,7 +19,7 @@ export const useCategories = () => useQuery(keysCategory.all,
 )
 
 export const useCategory = (id: string) => useQuery(keysCategory.detail(id),
-  () => $fetch<Category>(`/api/categories/${id}`),
+  () => $fetch<CategoryWithTransactions>(`/api/categories/${id}`),
 )
 
 export const useCategoriesTotals = (from: Ref<string | undefined>, to: Ref<string | undefined>) => {

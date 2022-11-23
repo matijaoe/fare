@@ -125,7 +125,7 @@ const isHovered = useElementHover(inputWrapper)
 
 <template>
   <FInputWrapper v-bind="wrapperProps" ref="inputWrapper" font-sans>
-    <div relative bg-red>
+    <div relative>
       <div
         v-if="isSlot('left')"
         absolute

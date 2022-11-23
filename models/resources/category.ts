@@ -1,8 +1,10 @@
-import type { Category, Prisma } from '@prisma/client'
+import type { Category, Prisma, Transaction } from '@prisma/client'
 
 const initalTotal = { income: 0, expense: 0, net: 0, totalNet: 0 }
 
 export type CategoryWithCount = Category & { _count: Prisma.CategoryCountOutputType }
+
+export type CategoryWithTransactions = Category & { transactions: Transaction[] }
 
 export type CategoryTotalType = keyof typeof initalTotal
 
