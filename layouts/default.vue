@@ -9,7 +9,7 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
 
 <template>
   <div>
-    <LayoutSidebar :class="[sidebarWidth]" z-200 />
+    <Sidebar :class="[sidebarWidth]" z-200 />
 
     <div :class="{ 'md:ml-240px': sidebar.isOpen }">
       <!-- TODO: decide how to incorporate header, and do we even need it for desktop -->

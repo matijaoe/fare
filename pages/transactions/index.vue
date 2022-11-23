@@ -13,9 +13,7 @@ const transactionStore = useTransactionsStore()
 <template>
   <div>
     <LayoutSectionWrapper>
-      <div
-        w-full flex="~ col xl:row 1" justify-between
-      >
+      <div w-full flex="~ col xl:row 1" justify-between>
         <div
           max-w="full xl:lg" flex-1
           border="r-2 zinc-2 dark:zinc-9"
@@ -25,6 +23,7 @@ const transactionStore = useTransactionsStore()
             type="search"
             placeholder="Search"
             icon="tabler:search"
+            clearable
             input-class="rounded-none !bg-white !py-5"
           />
           <TransactionList

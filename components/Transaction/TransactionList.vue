@@ -19,9 +19,7 @@ const items = computed({
 
 const { list, containerProps, wrapperProps } = useVirtualList(
   items,
-  {
-    itemHeight: 125,
-  },
+  { itemHeight: 125 },
 )
 </script>
 
@@ -47,14 +45,9 @@ const { list, containerProps, wrapperProps } = useVirtualList(
           <TransactionItem :item="item.data" />
         </button>
       </template>
-      <div
-        v-else
-        flex-center gap-4
-        min-h="244px"
-      >
-        <div
-          v-if="loading" flex gap-4 items-center
-        >
+
+      <div v-else flex-center gap-4 min-h="244px">
+        <div v-if="loading" flex gap-4 items-center>
           <FLoader />
           <p>Fetching transactions</p>
         </div>
@@ -62,9 +55,7 @@ const { list, containerProps, wrapperProps } = useVirtualList(
           v-else flex gap-4 items-center
         >
           <Icon name="tabler:cash-banknote-off" />
-          <p>
-            No transactions found
-          </p>
+          <p>No transactions found</p>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { InputHTMLAttributes } from 'vue'
-import _ from '~~/server/api/auth/[...]'
+import { set } from '@vueuse/core'
 
 type Props = {
   modelValue?: string | number
@@ -15,6 +15,7 @@ type Props = {
   label?: string
   hint?: string
   error?: string
+  clearable?: boolean
   inputProps?: InputHTMLAttributes
   inputClass?: string
 }
@@ -103,6 +104,8 @@ const value = computed({
   set: (val: string | number) => emit('update:modelValue', val),
 })
 
+const clearInput = () => set(value, '')
+
 const emits = {
   input: (e: Event) => emit('input', (e.target as HTMLInputElement).value),
   focus: () => emit('focus'),
@@ -111,19 +114,18 @@ const emits = {
 
 const inputEl = ref<HTMLInputElement>()
 
+// TODO
 defineExpose({
   inputEl,
-  weed: 420,
 })
+
+const inputWrapper = ref<HTMLDivElement>()
+const isHovered = useElementHover(inputWrapper)
 </script>
 
 <template>
-  <FInputWrapper v-bind="wrapperProps" font-sans>
-    <!-- <template v-if="$slots.label" #label>
-      <slot name="label" />
-    </template> -->
-
-    <div relative>
+  <FInputWrapper v-bind="wrapperProps" ref="inputWrapper" font-sans>
+    <div relative bg-red>
       <div
         v-if="isSlot('left')"
         absolute
@@ -158,7 +160,7 @@ defineExpose({
       >
 
       <div
-        v-if="loading || isSlot('right')"
+        v-if="loading || isSlot('right') || clearable"
         absolute
         pos="top-50% right-4"
         class="-translate-y-50%"
@@ -169,18 +171,19 @@ defineExpose({
         <slot v-if="loading" name="loading">
           <Icon name="tabler:loader-2" class="animate-spin" />
         </slot>
-        <slot v-else name="right">
+        <slot v-else-if="isSlot('right')" name="right">
           <Icon :name="icon" :class="[stateIconStyle]" />
         </slot>
+        <button
+          v-if="clearable && value"
+          type="button"
+          flex="center"
+          text-zinc-4
+          @click.stop="clearInput"
+        >
+          <Icon name="tabler:x" />
+        </button>
       </div>
     </div>
-    <!--
-    <template v-if="$slots.hint" #hint>
-      <slot name="hint" />
-    </template>
-
-    <template v-if="$slots.error" #error>
-      <slot name="error" />
-    </template> -->
   </FInputWrapper>
 </template>

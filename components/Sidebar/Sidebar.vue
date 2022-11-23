@@ -11,9 +11,7 @@ const formattedTotalBalance = useCurrencyFormat(balance)
 <template>
   <div
     absolute inset-0 h-screen overflow-y-auto
-    pt-4 font-mono
-    bg="white dark:zinc-9"
-    border="r-0 md:r-2 base"
+    pt-4 font-mono bg="white dark:zinc-9" border="r-0 md:r-2 base"
     flex="~ col gap-6"
     :class="{ '!hidden': !sidebar.isOpen }"
   >
@@ -23,8 +21,7 @@ const formattedTotalBalance = useCurrencyFormat(balance)
       </NuxtLink>
       <button
         v-if="mdDown"
-        grid content-center p-2
-        class="translate-x-2"
+        grid content-center p-2 class="translate-x-2"
       >
         <Icon
           name="tabler:x"
@@ -37,10 +34,7 @@ const formattedTotalBalance = useCurrencyFormat(balance)
     <NavList flex-1 />
 
     <div bg="zinc-1 dark:transparent">
-      <div
-        flex="~ col gap-0.5"
-        p="4 y-3"
-      >
+      <div flex="~ col gap-0.5" p="4 y-3">
         <p text="xs zinc-4" font="sans medium" uppercase>
           Balance
         </p>
@@ -54,9 +48,8 @@ const formattedTotalBalance = useCurrencyFormat(balance)
           </p>
         </div>
       </div>
-      <NavControls
-        py-4 max-w="fit" mx-auto
-      />
+
+      <SidebarControls py-4 max-w="fit" mx-auto />
     </div>
   </div>
 </template>
