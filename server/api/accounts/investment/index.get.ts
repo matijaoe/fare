@@ -1,24 +1,21 @@
-import type { Prisma } from '@prisma/client'
-import { readUserId, sendInternalError } from '~~/server/utils'
+import { StatusCodes } from 'http-status-codes'
 import { db } from '~~/lib/db'
+import { readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 
-// Get cash accounts, with transactions only from given month range
 export default defineEventHandler(async (event) => {
-  // TODO: temp disable
-  // const userId = readUserId(event)
-  // if (!userId) {
-  //   return null
-  // }
+  const userId = readUserId(event)
+  if (!userId) {
+    return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
+  }
 
   try {
     return db.investmentAccount.findMany({
       include: {
         account: true,
-        entries: true,
       },
       where: {
         account: {
-          // userId,
+          userId,
         },
       },
     })

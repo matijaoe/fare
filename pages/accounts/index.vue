@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { get } from '@vueuse/core'
-
 const route = useRoute()
 
 onMounted(() => setBreadcrumbs([

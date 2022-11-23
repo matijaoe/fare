@@ -1,4 +1,4 @@
-import type { MoneyAccount, CashAccount, Prisma, Transaction } from '@prisma/client'
+import type { CashAccount, MoneyAccount, Prisma, Transaction } from '@prisma/client'
 
 export type DateRange = {
   from?: string

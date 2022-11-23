@@ -14,6 +14,11 @@ const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalan
 const balance = computed(() => totalBalance.value?.balance ?? 0)
 const formattedTotalBalance = useCurrencyFormat(balance)
 
+const { data: investmentAccounts } = useInvestmentAccounts()
+watch(investmentAccounts, (val) => {
+  console.log(val)
+})
+
 const { data: cashAccounts } = useCashAccounts()
 const { data: accountTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(rangeFrom, rangeTo)
 

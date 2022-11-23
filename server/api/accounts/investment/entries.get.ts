@@ -1,29 +1,32 @@
-import { readUserId, sendInternalError } from '~~/server/utils'
+import { StatusCodes } from 'http-status-codes'
+import { readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import { getYearMonthKey } from '~~/utils'
 
-// Get cash accounts, with transactions only from given month range
 export default defineEventHandler(async (event) => {
-  // TODO: temp disable
-  // const userId = readUserId(event)
-  // if (!userId) {
-  //   return null
-  // }
+  const userId = readUserId(event)
+  if (!userId) {
+    return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
+  }
 
   try {
     const allAccounts = await db.investmentAccount.findMany({
       where: {
-        // userId,
+        account: {
+          userId,
+        },
       },
     })
 
     const investmentAccountBalances = await db.investmentEntry.findMany({
       where: {
-        // userId
+        account: {
+          account: {
+            userId,
+          },
+        },
       },
     })
-
-    console.log('🍉🍉🍉🍉 investmentAccountBalances :>> ', investmentAccountBalances)
 
     const resultAccounts = allAccounts.map((account) => {
       const balancesObj = investmentAccountBalances
@@ -44,7 +47,8 @@ export default defineEventHandler(async (event) => {
       }, {} as Record<string, { balance: number; date: Date }>)
 
       return {
-        ...account,
+        investmentAccountId: account.id,
+        accountId: account.accountId,
         balances: balancesObjWithLatestOnly,
       }
     })

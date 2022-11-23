@@ -7,6 +7,7 @@ type GroupedTotal = Prisma.PickArray<Prisma.TransactionGroupByOutputType, 'type'
   _sum: { amount: number | null }
 }
 
+// TODO: DO NOT USE, this is all just copy pasted from the cash accounts
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
 
