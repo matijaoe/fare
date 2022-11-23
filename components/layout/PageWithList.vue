@@ -1,22 +1,26 @@
 <script lang="ts" setup>
-const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
 </script>
 
 <template>
-  <div>
-    <LayoutSectionWrapper>
-      <div w-full flex="~ col xl:row 1" justify-between>
+  <div h-full flex flex-col flex-1>
+    <LayoutSectionWrapper flex flex-col>
+      <div
+
+        flex-1
+        w-full flex="~ col xl:row" justify-between
+      >
         <div
-          max-w="full xl:lg" flex-1
+          flex-1 h="[calc(100vh-60-44pxpx)]"
+          max-w="full xl:lg"
           border="r-2 zinc-2 dark:zinc-9"
         >
           <slot name="list" />
         </div>
 
         <div
+          flex-1 h="[calc(100vh-60px)]"
           p-6 pb-32 space-y-12 overflow-y-scroll
-          flex-1 order--1 xl:order-1
-          :class="mainContentWrapperHeight"
+          order--1 xl:order-1
         >
           <slot name="content" />
         </div>

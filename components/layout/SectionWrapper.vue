@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <section flex flex-col gap-5>
+  <section flex flex-col gap-5 flex-1 h-full>
     <div
       v-if="$slots.title || title || $slots.right || desc"
       flex items-start justify-between
