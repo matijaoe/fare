@@ -1,4 +1,5 @@
 import { db } from '~~/lib/db'
+import { sendInternalError } from '~~/server/utils'
 
 export default defineEventHandler(async (event) => {
   try {

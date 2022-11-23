@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const user = await db.cashAccount.findFirst({
+    const account = await db.cashAccount.findFirst({
       where,
       include: {
         paymentFromAccount: paymentAccountArgs,
@@ -44,11 +44,11 @@ export default defineEventHandler(async (event) => {
       },
     })
 
-    if (!user) {
+    if (!account) {
       return sendCustomError(event, StatusCodes.NOT_FOUND, 'Account not found')
     }
 
-    return user
+    return account
   } catch (err: unknown) {
     console.error(err)
     sendInternalError(event, err)

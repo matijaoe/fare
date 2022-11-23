@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/vue'
+import { TabGroup, TabList, TabPanels } from '@headlessui/vue'
 
 const config = useFireConfig()
 </script>

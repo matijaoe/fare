@@ -109,7 +109,6 @@ model MoneyAccount {
 
   CashAccount       CashAccount?
   InvestmentAccount InvestmentAccount?
-  AccountTimechart  AccountTimechart[]
 
   @@unique([name, userId])
 }
@@ -130,9 +129,7 @@ model CashAccount {
 }
 
 enum InvestmentType {
-  Stock
-  Bond
-  ETF
+  Stocks
   Crypto
   RealEstate
   Other
@@ -141,18 +138,20 @@ enum InvestmentType {
 model InvestmentAccount {
   id                   String         @id @default(cuid())
   accountId            String         @unique
-  expectedRateOfReturn Float?
+  expectedRateOfReturn Float
   type                 InvestmentType
+  description          String?        @db.Text
 
-  account MoneyAccount @relation(fields: [accountId], references: [id])
+  account MoneyAccount      @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  entries InvestmentEntry[]
 }
 
-model AccountTimechart {
-  accountId String
-  total     Float
-  date      DateTime
+model InvestmentEntry {
+  id                  String   @id @default(cuid())
+  investmentAccountId String
+  date                DateTime
+  balance             Float
+  currency            String?  @default("EUR")
 
-  account MoneyAccount @relation(fields: [accountId], references: [id])
-
-  @@unique([accountId, date])
+  account InvestmentAccount @relation(fields: [investmentAccountId], references: [id], onDelete: Cascade)
 }

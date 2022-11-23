@@ -54,7 +54,6 @@ const formattedTotalBalance = useCurrencyFormat(balance)
           </p>
         </div>
       </div>
-
       <NavControls
         py-4 max-w="fit" mx-auto
       />

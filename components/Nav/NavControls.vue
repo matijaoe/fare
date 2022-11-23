@@ -12,6 +12,9 @@ const signOutHandler = async () => {
 </script>
 
 <template>
+  <div text-sm pl-5>
+    {{ user.id }}
+  </div>
   <div
     v-bind="$attrs"
     mt-auto w-full px-3

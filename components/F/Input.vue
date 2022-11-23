@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { InputHTMLAttributes } from 'vue'
+import _ from '~~/server/api/auth/[...]'
 
 type Props = {
   modelValue?: string | number
@@ -107,6 +108,13 @@ const emits = {
   focus: () => emit('focus'),
   blur: () => emit('blur'),
 }
+
+const inputEl = ref<HTMLInputElement>()
+
+defineExpose({
+  inputEl,
+  weed: 420,
+})
 </script>
 
 <template>
@@ -131,6 +139,7 @@ const emits = {
       </div>
 
       <input
+        ref="inputEl"
         v-bind="inputProps"
         v-model="value"
         :type="type"

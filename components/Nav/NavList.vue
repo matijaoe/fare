@@ -22,6 +22,13 @@ const items = [
     },
   },
   {
+    label: 'Nest egg',
+    icon: 'tabler:egg',
+    route: {
+      name: 'nest-egg',
+    },
+  },
+  {
     label: 'Categories',
     icon: 'tabler:box-padding',
     route: {
@@ -35,6 +42,7 @@ const items = [
       name: 'net-worth',
     },
   },
+
   {
     label: 'Progress',
     icon: 'tabler:chart-area-line',
