@@ -30,7 +30,7 @@ const items = [
   },
   {
     label: 'Categories',
-    icon: 'tabler:box-padding',
+    icon: 'tabler:packages',
     route: {
       name: 'categories',
     },

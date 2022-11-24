@@ -5,13 +5,13 @@ const route = useRoute()
 
 const accountId = $computed(() => route.params.accountId as string)
 
-const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
+const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
 
-const { data: cashAccount } = useCashAccount(accountId)
-const { data: cashAccountWithTotals } = useCashAccountTotals(accountId, rangeFrom, rangeTo)
+const { data: cashAccount, isLoading: isAccountLoading } = useCashAccount(accountId)
+const { data: cashAccountWithTotals, isLoading: isTotalsLoading } = useCashAccountTotals(accountId, rangeFrom, rangeTo)
 
 const account = $computed(() => cashAccount.value?.account)
-const { data: accountWithTransactions, isLoading } = useCashAccountWithTransactions(accountId, rangeFrom, rangeTo)
+const { data: accountWithTransactions, isLoading: isTransactionsLoading } = useCashAccountWithTransactions(accountId, rangeFrom, rangeTo)
 
 const fullAccountTransactions = computed(() => {
   if (isDefined(accountWithTransactions)) {
@@ -28,9 +28,21 @@ whenever(cashAccount, () => setBreadcrumbs([
   { label: cashAccount.value?.account?.name ?? accountId, href: route.path },
 ]), { immediate: true })
 
-const { bg50, borderClr3, color9, color4, bg3, bg1 } = useAppColors(computed(() => cashAccount.value?.account.color))
+const { bg3 } = useAppColors(computed(() => cashAccount.value?.account.color))
 
 const modal = useCashAccountModal()
+
+const totals = computed(() => cashAccountWithTotals.value?.totals)
+
+const balance = computed(() => totals.value?.balance ?? 0)
+const net = computed(() => totals.value?.net ?? 0)
+const expense = computed(() => totals.value?.expense ?? 0)
+const income = computed(() => totals.value?.income ?? 0)
+
+const formattedBalance = useCurrencyFormat(balance, { signDisplay: 'exceptZero' })
+const formattedNet = useCurrencyFormat(net, { signDisplay: 'exceptZero' })
+const formattedExpense = useCurrencyFormat(expense, { signDisplay: 'exceptZero' })
+const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
 </script>
 
 <template>
@@ -47,7 +59,7 @@ const modal = useCashAccountModal()
       />
       <TransactionList
         :transactions="transactions"
-        :loading="isLoading"
+        :loading="isTransactionsLoading"
       />
     </template>
 
@@ -55,21 +67,111 @@ const modal = useCashAccountModal()
       <div>
         <div flex items-center justify-between>
           <div flex items-center gap-6>
-            <div
-              w-max aspect-square text-2xl p-4 rounded-full flex-center
-              :class="[bg3]"
-            >
+            <div class="w-75.2px h-75.2px" aspect-square text-4xl p-4 rounded-full flex-center :class="[bg3]">
               <Icon :name="account?.icon" />
             </div>
-            <h2 text-3xl font-bold>
-              {{ account?.name }}
-            </h2>
+            <div space-y-2>
+              <TransitionFade>
+                <FSkeleton
+                  v-if="isAccountLoading"
+                  class="h-36px w-100px"
+                />
+                <h2 v-else text-3xl font-bold>
+                  {{ account?.name }}
+                </h2>
+              </TransitionFade>
+              <FBadge icon="tabler:cash" color="green">
+                Cash account
+              </FBadge>
+            </div>
           </div>
           <FButton icon="tabler:edit" variant="subtle" @click="modal.launch(account)">
             Edit
           </FButton>
         </div>
-        <pre>{{ cashAccountWithTotals }}</pre>
+
+        <div mt-8>
+          <div flex items-end justify-between gap-4>
+            <div space-y-1 flex-1>
+              <span uppercase font="sans medium" text="xs zinc-4 dark:zinc-5">
+                Balance
+              </span>
+
+              <div flex items-center gap-5>
+                <TransitionFade>
+                  <FSkeleton
+                    v-if="isTotalsLoading"
+                    class="h-40px w-50"
+                  />
+                  <p
+                    v-else-if="isDefined(totals)"
+                    text-4xl font="display medium"
+                  >
+                    {{ formattedBalance }}
+                  </p>
+                </TransitionFade>
+              </div>
+            </div>
+
+            <div flex justify-center items-end gap-8 divide-x-2 font-mono>
+              <FTooltip content="Income" placement="top-end">
+                <div flex items-center gap-4 pl-5>
+                  <div text-lg text-right space-y="0.5">
+                    <TransitionFade>
+                      <FSkeleton v-if="isTotalsLoading" w-22 h="28px" />
+                      <span v-else-if="isDefined(totals)">
+                        {{ formattedIncome }}
+                      </span>
+                    </TransitionFade>
+                  </div>
+
+                  <div
+                    bg-zinc-1 text-zinc-9
+                    ring="2 offset 2 current"
+                    flex-center flex-shrink-0
+                    p-2 rounded-full aspect-square
+                  >
+                    <Icon name="tabler:arrow-down-left" sm />
+                  </div>
+                </div>
+              </FTooltip>
+
+              <FTooltip content="Expenses" placement="top-end">
+                <div flex items-center gap-4 pl-5>
+                  <div text="lg right" space-y="0.5">
+                    <TransitionFade>
+                      <FSkeleton v-if="isTotalsLoading" w-22 h="28px" />
+                      <span v-else-if="isDefined(totals)">
+                        {{ formattedExpense }}
+                      </span>
+                    </TransitionFade>
+                  </div>
+
+                  <div
+                    bg-zinc-1 text-zinc-9
+                    ring="2 offset 2 current"
+                    flex-center flex-shrink-0
+                    p-2 rounded-full aspect-square
+                  >
+                    <Icon name="tabler:arrow-up-right" sm />
+                  </div>
+                </div>
+              </FTooltip>
+            </div>
+          </div>
+
+          <div v-if="!isAllTime" font-mono mt-2>
+            <TransitionFade>
+              <FSkeleton v-if="isTotalsLoading" w-22 h="24px" />
+              <span
+                v-else-if="isDefined(totals)"
+                text-base text-right
+              >
+                {{ net > 0 ? '+' : '' }}{{ formattedNet }} this month
+              </span>
+            </TransitionFade>
+          </div>
+        </div>
       </div>
     </template>
   </LayoutPageWithList>

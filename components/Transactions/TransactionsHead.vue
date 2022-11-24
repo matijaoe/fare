@@ -3,7 +3,7 @@ const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
 const { data: totals, isLoading } = useTransactionTotalsPerRange(rangeFrom, rangeTo)
 
 const net = computed(() => totals.value?.net ?? 0)
-const expense = computed(() => isDefined(totals) ? -totals.value.expense : 0)
+const expense = computed(() => totals.value?.expense ?? 0)
 const income = computed(() => totals.value?.income ?? 0)
 
 const formattedNet = useCurrencyFormat(net, { signDisplay: 'exceptZero' })
@@ -63,7 +63,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
                 v-else-if="isDefined(totals)"
                 flex items-center
               >
-                {{ net > 0 ? '+' : '' }}{{ formattedIncome }}
+                {{ formattedIncome }}
               </span>
             </TransitionFade>
           </div>

@@ -15,7 +15,7 @@ const { bg50, borderClr3, color9, bg3 } = useAppColors(category.color)
 const formattedTotalNet = totals?.totalNet != null ? useCurrencyFormat(totals.totalNet) : '€XXX.XX'
 const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : '€XXX.XX'
 const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income, { signDisplay: 'always' }) : '€XXX.XX'
-const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.expense) : '€XXX.XX'
+const formattedExpense = totals?.expense != null ? useCurrencyFormat(totals.expense) : '€XXX.XX'
 
 const card = ref<HTMLElement>()
 const isHovered = useElementHover(card)
