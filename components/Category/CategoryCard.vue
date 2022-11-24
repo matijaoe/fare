@@ -17,8 +17,6 @@ const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signD
 const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income, { signDisplay: 'always' }) : '€XXX.XX'
 const formattedExpense = totals?.expense != null ? useCurrencyFormat(-totals.expense) : '€XXX.XX'
 
-const transactionCount = computed(() => category._count.transactions)
-
 const card = ref<HTMLElement>()
 const isHovered = useElementHover(card)
 </script>

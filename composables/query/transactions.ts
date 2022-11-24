@@ -38,10 +38,15 @@ export const useTransactionCreate = () => {
   const qc = useQueryClient()
 
   return useMutation((body: Prisma.TransactionUncheckedCreateInput) => $fetch<Transaction>('/api/transactions', { method: 'POST', body }), {
-    onSuccess: () => {
-      qc.invalidateQueries(keysAccounts.all)
-      qc.invalidateQueries(keysTransactions.ranges())
-      qc.invalidateQueries(keysTransactions.totals())
+    onSuccess: async () => {
+      await Promise.allSettled([
+        qc.invalidateQueries(keysTransactions.all),
+        qc.invalidateQueries(keysAccounts.detailsWithRange()),
+        qc.invalidateQueries(keysCategory.detailsWithRange()),
+      ])
+      qc.invalidateQueries(keysAccounts.totals())
+      qc.invalidateQueries(keysCategory.totals())
+      qc.invalidateQueries(keysAccounts.balance())
     },
   })
 }
@@ -54,10 +59,14 @@ export const useTransactionUpdate = (id: Ref<string | undefined>) => {
       body,
     }), {
     onSuccess: async () => {
-      await Promise.all([
-        qc.invalidateQueries(keysAccounts.all),
+      await Promise.allSettled([
         qc.invalidateQueries(keysTransactions.all),
+        qc.invalidateQueries(keysAccounts.detailsWithRange()),
+        qc.invalidateQueries(keysCategory.detailsWithRange()),
       ])
+      qc.invalidateQueries(keysAccounts.totals())
+      qc.invalidateQueries(keysCategory.totals())
+      qc.invalidateQueries(keysAccounts.balance())
     },
   })
 }
@@ -69,9 +78,15 @@ export const useTransactionDelete = (id: Ref<string | undefined>) => {
       method: 'DELETE',
       body: { userId },
     }), {
-    onSuccess: () => {
-      qc.invalidateQueries(keysAccounts.all)
-      qc.invalidateQueries(keysTransactions.all)
+    onSuccess: async () => {
+      await Promise.allSettled([
+        qc.invalidateQueries(keysTransactions.all),
+        qc.invalidateQueries(keysAccounts.detailsWithRange()),
+        qc.invalidateQueries(keysCategory.detailsWithRange()),
+      ])
+      qc.invalidateQueries(keysAccounts.totals())
+      qc.invalidateQueries(keysCategory.totals())
+      qc.invalidateQueries(keysAccounts.balance())
     },
   })
 }

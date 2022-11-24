@@ -84,7 +84,6 @@ const isCustom = $computed(() => !monthCountOptions.map(({ value }) => value).in
         type="line"
         flex-1
         w-full
-        :height="250"
         :labels="labels"
         :datasets="[datasets.expense, datasets.income, datasets.net]"
       />
@@ -92,7 +91,6 @@ const isCustom = $computed(() => !monthCountOptions.map(({ value }) => value).in
         type="bar"
         flex-1
         w-full
-        :height="250"
         :labels="labels"
         :datasets="[datasets.net]"
       />

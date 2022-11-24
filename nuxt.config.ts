@@ -35,7 +35,6 @@ export default defineNuxtConfig({
   vue: {
     compilerOptions: {
       comments: false,
-      // isCustomElement: (tag: string) => tag.endsWith('-chart'),
     },
   },
   vite: {

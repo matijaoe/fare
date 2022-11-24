@@ -7,12 +7,15 @@ import type { CategoryWithCount, CategoryWithTotals, CategoryWithTransactions } 
 
 export const keysCategory = {
   all: ['categories'] as const,
+  // totals
   totals: () => [...keysCategory.all, 'totals'] as const,
-  totalsRanges: () => [...keysCategory.all, 'totals', 'range'] as const,
-  totalsRange: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysCategory.all, 'totals', 'range', from, to] as const,
+  totalsRange: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysCategory.all, 'totals', from, to] as const,
+  // details
   details: () => [...keysCategory.all, 'detail'] as const,
   detail: (id: string) => [...keysCategory.all, 'detail', id] as const,
-  detailWithRange: (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysCategory.all, 'detail', id, 'transactions', from, to] as const,
+  // details with transactions
+  detailsWithRange: () => [...keysCategory.all, 'detail', 'transactions'] as const,
+  detailWithRange: (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysCategory.all, 'detail', 'transactions', id, from, to] as const,
 }
 
 export const useCategories = () => useQuery(keysCategory.all,

@@ -15,6 +15,10 @@ whenever(category, () => setBreadcrumbs([
   { label: 'Categories', href: { name: 'categories' } },
   { label: category.value?.name || categoryId, href: route.path },
 ]), { immediate: true })
+
+const { bg50, borderClr3, text9, bg3 } = useAppColors(category.value?.color)
+
+const modal = useCategoryModal()
 </script>
 
 <template>
@@ -36,9 +40,24 @@ whenever(category, () => setBreadcrumbs([
     </template>
 
     <template #content>
-      <h2 text-3xl font-bold>
-        {{ category?.name }}
-      </h2>
+      <div>
+        <div flex items-center justify-between>
+          <div flex items-center gap-6>
+            <div
+              w-max aspect-square text-3xl p-3 rounded-full flex-center
+              :class="[bg3]"
+            >
+              <Icon :name="category?.icon" />
+            </div>
+            <h2 text-3xl font-bold>
+              {{ category?.name }}
+            </h2>
+          </div>
+          <FButton icon="tabler:edit" variant="subtle" @click="modal.launch(category)">
+            Edit
+          </FButton>
+        </div>
+      </div>
     </template>
   </LayoutPageWithList>
 </template>

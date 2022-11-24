@@ -1,11 +1,15 @@
 <script lang="ts" setup>
 import type { ChartData, ChartDataset, ChartOptions } from 'chart.js'
 
-const props = defineProps<{
-  type: 'line' | 'bar' | 'pie'
+const props = withDefaults(defineProps<{
+  type?: 'line' | 'bar' | 'pie'
   datasets: ChartDataset[]
   labels: string[]
-}>()
+  height?: number
+}>(), {
+  type: 'line',
+  height: 250,
+})
 
 const buildDataset = (_dataset: ChartDataset[]): ChartData => ({
   labels: props.labels,
@@ -56,22 +60,24 @@ const options: ChartOptions = {
 </script>
 
 <template>
-  <bar-chart
-    v-if="type === 'bar'"
-    :height="250"
-    :chart-options="options"
-    :chart-data="data"
-  />
-  <line-chart
-    v-if="type === 'line'"
-    :height="250"
-    :chart-options="options"
-    :chart-data="data"
-  />
-  <pie-chart
-    v-if="type === 'pie'"
-    :height="250"
-    :chart-options="options"
-    :chart-data="data"
-  />
+  <div>
+    <bar-chart
+      v-if="type === 'bar'"
+      :height="height"
+      :chart-options="options"
+      :chart-data="data"
+    />
+    <line-chart
+      v-if="type === 'line'"
+      :height="height "
+      :chart-options="options"
+      :chart-data="data"
+    />
+    <pie-chart
+      v-if="type === 'pie'"
+      :height="height "
+      :chart-options="options"
+      :chart-data="data"
+    />
+  </div>
 </template>

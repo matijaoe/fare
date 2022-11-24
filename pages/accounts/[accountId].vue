@@ -7,7 +7,8 @@ const accountId = $computed(() => route.params.accountId as string)
 
 const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
 
-const { data: account } = useCashAccount(accountId)
+const { data: cashAccount } = useCashAccount(accountId)
+const account = $computed(() => cashAccount.value?.account)
 const { data: accountWithTransactions, isLoading } = useCashAccountWithTransactions(accountId, rangeFrom, rangeTo)
 
 const fullAccountTransactions = computed(() => {
@@ -20,10 +21,14 @@ const fullAccountTransactions = computed(() => {
 
 const { transactions, searchQuery } = useTransactionFilters(fullAccountTransactions)
 
-whenever(account, () => setBreadcrumbs([
+whenever(cashAccount, () => setBreadcrumbs([
   { label: 'Accounts', href: { name: 'accounts' } },
-  { label: account.value?.account?.name ?? accountId, href: route.path },
+  { label: cashAccount.value?.account?.name ?? accountId, href: route.path },
 ]), { immediate: true })
+
+const { bg50, borderClr3, text9, bg3 } = useAppColors(cashAccount.value?.account.color)
+
+const modal = useCashAccountModal()
 </script>
 
 <template>
@@ -45,9 +50,24 @@ whenever(account, () => setBreadcrumbs([
     </template>
 
     <template #content>
-      <h2 text-2xl font-bold>
-        {{ account?.account.name }}
-      </h2>
+      <div>
+        <div flex items-center justify-between>
+          <div flex items-center gap-6>
+            <div
+              w-max aspect-square text-3xl p-3 rounded-full flex-center
+              :class="[bg3]"
+            >
+              <Icon :name="account?.icon" />
+            </div>
+            <h2 text-3xl font-bold>
+              {{ account?.name }}
+            </h2>
+          </div>
+          <FButton icon="tabler:edit" variant="subtle" @click="modal.launch(account)">
+            Edit
+          </FButton>
+        </div>
+      </div>
     </template>
   </LayoutPageWithList>
 </template>

@@ -7,12 +7,17 @@ import type { CashAccountWithAccount, CashAccountWithAccountAndTransactionsWithC
 
 export const keysAccounts = {
   all: ['cash-accounts'] as const,
+  // total balance
   balance: () => [...keysAccounts.all, 'balance'] as const,
+  // account totals for range
   totals: () => [...keysAccounts.all, 'totals'] as const,
   totalsRange: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysAccounts.all, 'totals', from, to] as const,
+  // account details
   details: () => [...keysAccounts.all, 'detail'] as const,
   detail: (id: MaybeRef<string>) => [...keysAccounts.all, 'detail', unref(id)] as const,
-  detailWithRange: (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysAccounts.all, 'detail', id, 'transactions', from, to] as const,
+  // account with transactions
+  detailsWithRange: () => [...keysCategory.all, 'detail', 'transactions'] as const,
+  detailWithRange: (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysAccounts.all, 'detail', 'transactions', id, from, to] as const,
 }
 
 export const useCashAccount = (id: string) => useQuery(keysAccounts.detail(id),
