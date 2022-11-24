@@ -22,7 +22,7 @@ export const useInvestmentAccounts = () => useQuery(
 
 export const useInvestmentAccountCreate = () => {
   const qc = useQueryClient()
-  return useMutation((body: Prisma.InvestmentAccountUncheckedCreateInput) => $fetch<InvestmentAccount>('/api/accounts/investment', { method: 'POST', body }), {
+  return useMutation((body: { account: Prisma.MoneyAccountUncheckedCreateInput } & Prisma.InvestmentAccountCreateInput) => $fetch<InvestmentAccount>('/api/accounts/investment', { method: 'POST', body }), {
     onSuccess: () => {
       qc.invalidateQueries(keysInvestmentAccounts.all)
     },

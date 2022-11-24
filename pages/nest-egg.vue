@@ -37,6 +37,8 @@ const unifiedAccounts = $computed(() => {
 // TODO: more types
 const accountsStocks = computed(() => unifiedAccounts?.filter(({ type }) => type === 'Stocks'))
 const accountsCrypto = computed(() => unifiedAccounts?.filter(({ type }) => type === 'Crypto'))
+
+const modal = useInvestmentAccountModal()
 </script>
 
 <template>
@@ -66,6 +68,7 @@ const accountsCrypto = computed(() => unifiedAccounts?.filter(({ type }) => type
           <FButton
             variant="secondary"
             icon-placement="left"
+            @click="modal.launch()"
           >
             <!-- @click="cashAccountModal.launch()" -->
             Add account

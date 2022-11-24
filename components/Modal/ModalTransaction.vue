@@ -17,7 +17,7 @@ const isErrorShown = ref(false)
 watch(hasError, val => set(isErrorShown, !!val))
 
 const createTransactionHandler = async () => {
-  const userId = (await useAuth()).userId.value
+  const userId = (await useAuth()).userId.value as string | undefined
   if (userId) {
     createTransaction({ ...modal.form, userId }, {
       onSuccess: () => modal.hide(),
@@ -26,7 +26,7 @@ const createTransactionHandler = async () => {
 }
 
 const editTransactionHandler = async (values: Prisma.TransactionUncheckedUpdateInput) => {
-  const userId = (await useAuth()).userId.value
+  const userId = (await useAuth()).userId.value as string | undefined
   if (userId) {
     updateTransaction({ ...values, userId }, {
       onSuccess: () => modal.hide(),
@@ -35,7 +35,7 @@ const editTransactionHandler = async (values: Prisma.TransactionUncheckedUpdateI
 }
 
 const deleteTransactionHandler = async () => {
-  const userId = (await useAuth()).userId.value
+  const userId = (await useAuth()).userId.value as string | undefined
   if (userId) {
     deleteTransaction({ userId }, {
       onSuccess: () => modal.hide(),

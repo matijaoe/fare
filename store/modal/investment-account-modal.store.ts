@@ -1,27 +1,32 @@
-import type { Category } from '@prisma/client'
+import { InvestmentType } from '@prisma/client'
 import { toFormValidator } from '@vee-validate/zod'
 import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import * as zod from 'zod'
+import type { InvestmentAccountWithAccount } from '~~/models/resources/investment-account'
 import { toTitleCase } from '~~/utils'
 
 type ActionType = 'create' | 'edit'
 
-export const useCategoryModal = defineStore('modal-category', () => {
+export const useInvestmentAccountModal = defineStore('modal-investment-account', () => {
   // Modal type
   const modalType = ref<ActionType>('create')
   const isEdit = computed(() => modalType.value === 'edit')
   const isCreate = computed(() => modalType.value === 'create')
 
   // Values
-  const categoryId = ref<string>()
+  const accountId = ref<string>()
 
   const validationSchema = toFormValidator(
     zod.object({
       name: zod.string({ required_error: 'Name is required' }).trim().min(1, { message: 'Name is required' }).max(24, { message: 'Name is too long' }),
       color: zod.any().optional(),
       icon: zod.any().optional(),
+      description: zod.string().optional(),
+      expectedRateOfReturn: zod.number(),
+      // TODO: handle enums
+      // type: zod.string(),
     }),
   )
 
@@ -29,11 +34,17 @@ export const useCategoryModal = defineStore('modal-category', () => {
     name: string
     color: string | null
     icon: string | null
+    description: string | null
+    expectedRateOfReturn: number
+    // type: InvestmentType
   }>({
     validationSchema,
   })
 
   useField<string>('name')
+  useField<string | null>('description')
+  useField<number>('expectedRateOfReturn')
+  // useField<string>('type')
   useField<string | null>('color')
   useField<string | null>('icon')
 
@@ -70,16 +81,18 @@ export const useCategoryModal = defineStore('modal-category', () => {
     set: value => set(open, value),
   })
 
-  const setEditCategory = (category: Category) => {
-    const { id, name, color, icon } = category
-    set(categoryId, id)
+  const setEditAccount = (account: InvestmentAccountWithAccount) => {
+    // TODO: add type
+    const { description, expectedRateOfReturn } = account
+    const { id, name, color, icon } = account.account
+    set(accountId, id)
 
-    form.setValues({ name, color, icon })
+    form.setValues({ name, color, icon, description, expectedRateOfReturn })
   }
 
-  const launch = (category?: Category) => {
-    if (category) {
-      setEditCategory(category)
+  const launch = (account?: InvestmentAccountWithAccount) => {
+    if (account) {
+      setEditAccount(account)
       set(modalType, 'edit')
     } else {
       set(modalType, 'create')
@@ -91,7 +104,7 @@ export const useCategoryModal = defineStore('modal-category', () => {
   const reset = () => {
     form.resetForm()
     set(modalType, 'create')
-    set(categoryId, undefined)
+    set(accountId, undefined)
   }
 
   const hide = () => {
@@ -104,7 +117,7 @@ export const useCategoryModal = defineStore('modal-category', () => {
     isEdit,
     isCreate,
     // Value for edit
-    categoryId,
+    accountId,
     // Select item value
     colorObject,
     iconObject,
@@ -120,5 +133,5 @@ export const useCategoryModal = defineStore('modal-category', () => {
 })
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useCategoryModal, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useInvestmentAccountModal, import.meta.hot))
 }

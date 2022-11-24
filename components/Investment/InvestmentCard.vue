@@ -114,14 +114,15 @@ const setEditMode = (value: boolean) => {
     </div>
 
     <div
+      v-if="investmentAccount.description"
       mt-auto z-2 relative
       flex items-center justify-center
-      border="base dark:zinc-7 t-dashed t-2"
-      text="center lg"
+      text="lg"
       p-4
+      text-zinc-4
     >
       <p text-sm>
-        VWCE, BRK.B, S&P500
+        {{ investmentAccount.description }}
       </p>
     </div>
     <div
@@ -132,7 +133,7 @@ const setEditMode = (value: boolean) => {
       p-4
     >
       <p text-sm>
-        predicted 8% YoY growth
+        predicted {{ investmentAccount.expectedRateOfReturn }}% YoY growth
       </p>
     </div>
   </FCard>

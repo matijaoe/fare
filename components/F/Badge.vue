@@ -53,7 +53,7 @@ const sharedClasses = 'filter-saturate-70'
       border="1 base dark:transparent"
       flex gap-1 items-center justify-center
       uppercase
-      class="leading-tight"
+      class="leading-tight hover:border-current"
       :class="[radiusClass, sharedClasses]"
     >
       <Icon
