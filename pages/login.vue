@@ -24,7 +24,7 @@ whenever(isAuthenticated, () => {
 <template>
   <div class="auth-wrapper" />
   <div z-2 flex flex-col items-center flex-1>
-    <FLogo class="z-2" size="lg" />
+    <FLogo class="z-2" size="lg" darker />
 
     <div flex-1 grid place-content-center mt="-20vh">
       <div flex flex-col gap-2>
@@ -67,7 +67,7 @@ whenever(isAuthenticated, () => {
 
 @keyframes fade-in-grid {
   from {
-    background-position-y: 100%;
+    background-position-y: 60%;
   }
 
   to {

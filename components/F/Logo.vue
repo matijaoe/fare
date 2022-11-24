@@ -2,6 +2,7 @@
 const props = withDefaults(defineProps<{
   size?: 'md' | 'lg'
   minimal?: boolean
+  darker?: boolean
 }>(), {
   size: 'md',
 })
@@ -28,8 +29,7 @@ const sizeStyle = computed(() => {
   <div
     flex="~ gap-0.5" items-center
     font="sans black"
-    class="color-base-lighter"
-    :class="[sizeStyle.text]"
+    :class="[darker ? 'color-base' : 'color-base-lighter', sizeStyle.text]"
   >
     <Icon
       name="fluent-emoji-flat:hand-with-index-finger-and-thumb-crossed-medium-light"
