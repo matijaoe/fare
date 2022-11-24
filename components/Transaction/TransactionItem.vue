@@ -53,7 +53,7 @@ const transactionTooltip = computed(() => {
           <button
             v-if="item.fromAccount"
             @click.stop="navigateTo({
-              name: 'accounts-accountId',
+              name: 'accounts-cash-accountId',
               params: { accountId: item.fromAccountId },
             })"
           >
@@ -71,7 +71,7 @@ const transactionTooltip = computed(() => {
           <button
             v-if="item.toAccount"
             @click.stop="navigateTo({
-              name: 'accounts-accountId',
+              name: 'accounts-cash-accountId',
               params: { accountId: item.toAccountId },
             })"
           >

@@ -42,7 +42,13 @@ const deleteAccountHandler = async () => {
 
   if (userId) {
     deleteAccount({ userId }, {
-      onSuccess: () => modal.hide(),
+      onSuccess: () => {
+        modal.hide()
+        const route = useRoute()
+        if (route.name === 'accounts-accountId') {
+          navigateTo({ name: 'accounts' })
+        }
+      },
     })
   }
 }

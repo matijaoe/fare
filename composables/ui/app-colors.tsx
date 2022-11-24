@@ -1,6 +1,7 @@
+import type { ComputedRef, Ref } from 'vue'
 import { toTitleCase } from '~~/utils'
 
-export const useAppColors = (color?: string | null) => {
+export const useAppColors = (color?: Ref<string | undefined | null> | ComputedRef<string | undefined | null> | string | null) => {
   const availableColors = ref([
     'red',
     'orange',
@@ -127,8 +128,8 @@ export const useAppColors = (color?: string | null) => {
     },
   ]
 
-  const text9 = computed(() => {
-    switch (color) {
+  const color9 = computed(() => {
+    switch (unref(color)) {
       case 'red':
         return 'text-red-9'
       case 'orange':
@@ -171,7 +172,7 @@ export const useAppColors = (color?: string | null) => {
   })
 
   const color4 = computed(() => {
-    switch (color) {
+    switch (unref(color)) {
       case 'red':
         return 'text-red-4'
       case 'orange':
@@ -214,7 +215,7 @@ export const useAppColors = (color?: string | null) => {
   })
 
   const bg4 = computed(() => {
-    switch (color) {
+    switch (unref(color)) {
       case 'red':
         return 'bg-red-4'
       case 'orange':
@@ -257,7 +258,7 @@ export const useAppColors = (color?: string | null) => {
   })
 
   const color3 = computed(() => {
-    switch (color) {
+    switch (unref(color)) {
       case 'red':
         return 'text-red-3'
       case 'orange':
@@ -300,7 +301,7 @@ export const useAppColors = (color?: string | null) => {
   })
 
   const bg3 = computed(() => {
-    switch (color) {
+    switch (unref(color)) {
       case 'red':
         return 'bg-red-3'
       case 'orange':
@@ -343,7 +344,7 @@ export const useAppColors = (color?: string | null) => {
   })
 
   const borderClr2 = computed(() => {
-    switch (color) {
+    switch (unref(color)) {
       case 'red':
         return 'border-red-2'
       case 'orange':
@@ -386,7 +387,7 @@ export const useAppColors = (color?: string | null) => {
   })
 
   const color2 = computed(() => {
-    switch (color) {
+    switch (unref(color)) {
       case 'red':
         return 'text-red-2'
       case 'orange':
@@ -429,7 +430,7 @@ export const useAppColors = (color?: string | null) => {
   })
 
   const bg2 = computed(() => {
-    switch (color) {
+    switch (unref(color)) {
       case 'red':
         return 'bg-red-2'
       case 'orange':
@@ -472,7 +473,7 @@ export const useAppColors = (color?: string | null) => {
   })
 
   const borderClr3 = computed(() => {
-    switch (color) {
+    switch (unref(color)) {
       case 'red':
         return 'border-red-3'
       case 'orange':
@@ -515,7 +516,7 @@ export const useAppColors = (color?: string | null) => {
   })
 
   const bg1 = computed(() => {
-    switch (color) {
+    switch (unref(color)) {
       case 'red':
         return 'bg-red-1 dark:(bg-red-4 filter-saturate-40)'
       case 'orange':
@@ -558,7 +559,7 @@ export const useAppColors = (color?: string | null) => {
   })
 
   const bg50 = computed(() => {
-    switch (color) {
+    switch (unref(color)) {
       case 'red':
         return 'bg-red-50  dark:(bg-red-4 filter-saturate-40)'
       case 'orange':
@@ -603,7 +604,7 @@ export const useAppColors = (color?: string | null) => {
   return {
     colorOptions,
     availableColors,
-    text9,
+    color9,
     bg4,
     color4,
     bg3,

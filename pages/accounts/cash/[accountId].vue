@@ -8,6 +8,8 @@ const accountId = $computed(() => route.params.accountId as string)
 const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
 
 const { data: cashAccount } = useCashAccount(accountId)
+const { data: cashAccountWithTotals } = useCashAccountTotals(accountId, rangeFrom, rangeTo)
+
 const account = $computed(() => cashAccount.value?.account)
 const { data: accountWithTransactions, isLoading } = useCashAccountWithTransactions(accountId, rangeFrom, rangeTo)
 
@@ -26,7 +28,7 @@ whenever(cashAccount, () => setBreadcrumbs([
   { label: cashAccount.value?.account?.name ?? accountId, href: route.path },
 ]), { immediate: true })
 
-const { bg50, borderClr3, text9, bg3 } = useAppColors(cashAccount.value?.account.color)
+const { bg50, borderClr3, color9, color4, bg3, bg1 } = useAppColors(computed(() => cashAccount.value?.account.color))
 
 const modal = useCashAccountModal()
 </script>
@@ -54,7 +56,7 @@ const modal = useCashAccountModal()
         <div flex items-center justify-between>
           <div flex items-center gap-6>
             <div
-              w-max aspect-square text-3xl p-3 rounded-full flex-center
+              w-max aspect-square text-2xl p-4 rounded-full flex-center
               :class="[bg3]"
             >
               <Icon :name="account?.icon" />
@@ -67,6 +69,7 @@ const modal = useCashAccountModal()
             Edit
           </FButton>
         </div>
+        <pre>{{ cashAccountWithTotals }}</pre>
       </div>
     </template>
   </LayoutPageWithList>

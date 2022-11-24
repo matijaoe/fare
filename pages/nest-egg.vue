@@ -21,7 +21,6 @@ const { data: investmentEntries, isLoading: isEntriesLoading } = useInvestmentAc
 
 const unifiedAccounts = $computed(() => {
   const key = getYearMonthKey(isDefined(selectedMonth) ? new Date(selectedMonth.value) : new Date())
-  console.log('key :>> ', key)
 
   const getBalance = (investmentAccountId: string) => {
     const acc = investmentEntries.value?.find(acc => acc.investmentAccountId === investmentAccountId)

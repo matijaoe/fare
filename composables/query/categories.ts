@@ -2,14 +2,14 @@ import type { Category, Prisma } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { get } from '@vueuse/core'
 import type { Ref } from 'vue'
-import { keysTransactions } from './transactions'
-import type { CategoryWithCount, CategoryWithTotals, CategoryWithTransactions } from '~~/models/resources/category'
+import type { CategoryWithCount, CategoryWithTotals, CategoryWithTransactions, IndividualCategoryTotals } from '~~/models/resources/category'
 
 export const keysCategory = {
   all: ['categories'] as const,
   // totals
   totals: () => [...keysCategory.all, 'totals'] as const,
   totalsRange: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysCategory.all, 'totals', from, to] as const,
+  totalsIndividualRange: (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysCategory.all, 'totals', id, from, to] as const,
   // details
   details: () => [...keysCategory.all, 'detail'] as const,
   detail: (id: string) => [...keysCategory.all, 'detail', id] as const,
@@ -50,6 +50,18 @@ export const useCategoriesTotals = (from: Ref<string | undefined>, to: Ref<strin
   },
 )
 
+export const useCategoryTotals = (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => useQuery(
+  keysCategory.totalsIndividualRange(id, from, to),
+  () => {
+    const fullRangeDefined = isDefined(from) && isDefined(to)
+    const url = fullRangeDefined
+      ? `/api/categories/totals/${id}?from=${get(from)}&to=${get(to)}`
+      : `/api/categories/totals/${id}`
+
+    return $fetch<IndividualCategoryTotals>(url)
+  },
+)
+
 export const useCategoryCreate = () => {
   const qc = useQueryClient()
   return useMutation((body: Prisma.CategoryUncheckedCreateInput) => $fetch<Category>('/api/categories', { method: 'POST', body }), {
@@ -81,7 +93,6 @@ export const useCategoryDelete = (id: Ref<string | undefined>) => {
     }), {
     onSuccess: () => {
       qc.invalidateQueries(keysCategory.all)
-      qc.invalidateQueries(keysTransactions.all)
     },
   })
 }

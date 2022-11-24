@@ -5,6 +5,8 @@ const categoryId = route.params.categoryId as string
 
 const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
 const { data: category } = useCategory(categoryId)
+const { data: categoryWithTotals } = useCategoryTotals(categoryId, rangeFrom, rangeTo)
+
 const { data: categoryWithTransactions, isLoading } = useCategoryWithTransactions(categoryId, rangeFrom, rangeTo)
 
 const { transactions, searchQuery } = useTransactionFilters(
@@ -16,7 +18,7 @@ whenever(category, () => setBreadcrumbs([
   { label: category.value?.name || categoryId, href: route.path },
 ]), { immediate: true })
 
-const { bg50, borderClr3, text9, bg3 } = useAppColors(category.value?.color)
+const { bg3 } = useAppColors(computed(() => category.value?.color))
 
 const modal = useCategoryModal()
 </script>
@@ -44,7 +46,7 @@ const modal = useCategoryModal()
         <div flex items-center justify-between>
           <div flex items-center gap-6>
             <div
-              w-max aspect-square text-3xl p-3 rounded-full flex-center
+              w-max aspect-square text-2xl p-4 rounded-full flex-center
               :class="[bg3]"
             >
               <Icon :name="category?.icon" />
@@ -57,6 +59,7 @@ const modal = useCategoryModal()
             Edit
           </FButton>
         </div>
+        <pre> {{ categoryWithTotals }}</pre>
       </div>
     </template>
   </LayoutPageWithList>

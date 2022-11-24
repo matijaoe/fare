@@ -69,10 +69,6 @@ const unifiedAccounts = computed(() => {
           :totals="account.totals"
           :totals-loading="isTotalsLoading"
           :all-time="isAllTime"
-          @click="navigateTo({
-            name: 'accounts-accountId',
-            params: { accountId: account.id },
-          })"
         />
       </div>
     </LayoutSectionWrapper>

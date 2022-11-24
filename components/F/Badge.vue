@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const {
   bg1,
-  text9,
+  color9,
   color4,
   bg4,
 } = useAppColors(props.color)
@@ -35,13 +35,13 @@ const sharedClasses = 'filter-saturate-70'
       flex gap-1 items-center justify-center
       transition uppercase
       class="leading-tight hover:border-current"
-      :class="[radiusClass, sharedClasses, bg1, text9]"
+      :class="[radiusClass, sharedClasses, bg1, color9]"
     >
       <Icon
         v-if="icon"
         text="10px"
         :name="icon"
-        :class="[text9]"
+        :class="[color9]"
       />
       <slot />
     </div>

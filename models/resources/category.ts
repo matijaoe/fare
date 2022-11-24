@@ -16,6 +16,11 @@ export type CategoryWithTotals = CategoryWithCount & {
   totals: CategoryTotals
 }
 
+export type IndividualCategoryTotals = {
+  categoryId: string
+  totals: CategoryTotals
+}
+
 export type GroupedCategory = (Prisma.PickArray<Prisma.TransactionGroupByOutputType, ('type' | 'categoryId')[]> & {
   _sum: {
     amount: number | null

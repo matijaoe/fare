@@ -43,7 +43,13 @@ const deleteCategoryHandler = async () => {
 
   if (userId) {
     deleteCategory({ userId }, {
-      onSuccess: () => modal.hide(),
+      onSuccess: () => {
+        modal.hide()
+        const route = useRoute()
+        if (route.name === 'categories-categoryId') {
+          navigateTo({ name: 'categories' })
+        }
+      },
     })
   }
 }

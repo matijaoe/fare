@@ -10,7 +10,7 @@ const { category, totals } = defineProps<{
 
 const categoryModal = useCategoryModal()
 
-const { bg50, borderClr3, text9, bg3 } = useAppColors(category.color)
+const { bg50, borderClr3, color9, bg3 } = useAppColors(category.color)
 
 const formattedTotalNet = totals?.totalNet != null ? useCurrencyFormat(totals.totalNet) : '€XXX.XX'
 const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : '€XXX.XX'
@@ -32,7 +32,7 @@ const isHovered = useElementHover(card)
       p-2 pl-6
       border="~ !dotted !2 !l-0"
       rounded="r-full"
-      :class="[bg50, borderClr3, text9]"
+      :class="[bg50, borderClr3, color9]"
     >
       <TransitionFade>
         <p
@@ -48,17 +48,19 @@ const isHovered = useElementHover(card)
         </p>
       </TransitionFade>
 
-      <div ml-auto flex gap-3 items-center>
-        <h4 text-base font-medium>
-          {{ category.name }}
-        </h4>
-        <div
-          w-max aspect-square text-lg p-2 rounded-full flex-center
-          :class="[bg3]"
-        >
-          <Icon :name="category?.icon" />
+      <NuxtLink :to="`/categories/${category.id}`" class="group">
+        <div ml-auto flex gap-3 items-center>
+          <h4 text-base font-medium class="group-hover:underline">
+            {{ category.name }}
+          </h4>
+          <div
+            w-max aspect-square text-lg p-2 rounded-full flex-center
+            :class="[bg3]"
+          >
+            <Icon :name="category?.icon" />
+          </div>
         </div>
-      </div>
+      </NuxtLink>
     </div>
 
     <div flex items-end justify-between p-5 pr-1>
