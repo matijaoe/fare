@@ -81,7 +81,7 @@ export default defineEventHandler(async (event) => {
 
     if (!hadTransactionsAllTime) {
       return {
-        categoryId: categoryIdParam,
+        id: categoryIdParam,
         totals: initalTotal(),
       }
     }
@@ -103,7 +103,7 @@ export default defineEventHandler(async (event) => {
         }
 
     return {
-      categoryId: categoryIdParam,
+      id: categoryIdParam,
       totals,
     }
   }

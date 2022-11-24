@@ -1,85 +1,122 @@
-import { TransactionType } from '@prisma/client'
-import { sendInternalError } from '~~/server/utils'
+import type { TransactionType } from '@prisma/client'
+import { StatusCodes } from 'http-status-codes'
+import { readParams, readUserId, sendCustomError, sendInternalError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
-import type { AccountTotalType, CashAccountWithTotalsAndAccount, GroupedAccount } from '~~/models/resources/account'
+import type { AccountTotalType, GroupedAccount } from '~~/models/resources/account'
 
-const initalTotal = () => ({ income: 0, expense: 0, transferIn: 0, transferOut: 0, net: 0, transferNet: 0, balance: 0 })
+const initalTotal = () => ({ income: 0, expense: 0, net: 0, transferIn: 0, transferOut: 0, transferNet: 0, balance: 0 })
 
-export default defineEventHandler(async (event) => {
-  const { id: requestedAccountId } = event.context.params
-  try {
-    // Group by accounts and entry types
-    const groupByAccounts = await db.transaction.groupBy({
-      by: ['fromAccountId', 'toAccountId', 'type'],
-      _sum: {
-        amount: true,
-      },
-      orderBy: {
-        fromAccountId: 'asc',
-      },
-      where: {
-        OR: [
-          { fromAccountId: requestedAccountId },
-          { toAccountId: requestedAccountId },
-        ],
-      },
-    })
+const calculateAccountTotals = (groupedAccounts: GroupedAccount[]) => {
+  return groupedAccounts.reduce((totalsByAccount: Record<string, Record<AccountTotalType, number>>, curr: GroupedAccount) => {
+    const isType = (type: TransactionType) => curr.type === type
 
-    const cashAccount = await db.cashAccount.findFirst({
-      include: {
-        account: true,
-        paymentFromAccount: true,
-        paymentToAccount: true,
-      },
-      where: {
-        id: requestedAccountId,
-      },
-    })
-
-    if (!cashAccount) {
-      throw new Error('Account not found')
+    const setupInitialAccountValues = (key: string) => {
+      if (!totalsByAccount[key]) {
+        totalsByAccount[key] = initalTotal()
+      }
     }
 
-    const totals = groupByAccounts.reduce((totalsByAccount: Record<string, Record<AccountTotalType, number>>, curr: GroupedAccount) => {
-      const isType = (type: TransactionType) => curr.type === type
+    const addTransaction = (key: string, type: AccountTotalType) => {
+      setupInitialAccountValues(key)
+      totalsByAccount[key][type] += curr._sum.amount ?? 0
+    }
 
-      const setupInitialAccountValues = (key: string) => {
-        if (!totalsByAccount[key]) {
-          totalsByAccount[key] = initalTotal()
+    if (isType('Transfer') && curr.fromAccountId && curr.toAccountId && curr.fromAccountId !== curr.toAccountId) {
+      addTransaction(curr.fromAccountId, 'transferOut')
+      addTransaction(curr.toAccountId, 'transferIn')
+    } else if (isType('Expense') && curr.fromAccountId && !curr.toAccountId) {
+      addTransaction(curr.fromAccountId, 'expense')
+    } else if (isType('Income') && curr.toAccountId && !curr.fromAccountId) {
+      addTransaction(curr.toAccountId, 'income')
+    }
+
+    return totalsByAccount
+  }, {})
+}
+
+export default defineEventHandler(async (event) => {
+  const userId = readUserId(event)
+  if (!userId) {
+    return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
+  }
+
+  const { id: accountIdParam } = readParams<{ id: string }>(event)
+
+  const { dateQuery: date, hasDefinedRange } = useTransactionDateRange(event)
+  try {
+    // Group by accounts and entry types
+    const groupByAccountsAllTime = await db.transaction.groupBy({
+      by: ['fromAccountId', 'toAccountId', 'type'],
+      _sum: { amount: true },
+      orderBy: { fromAccountId: 'asc' },
+      where: { userId, OR: [{ fromAccountId: accountIdParam }, { toAccountId: accountIdParam }] },
+    })
+
+    const groupByAccountsRange = hasDefinedRange
+      ? await db.transaction.groupBy({
+        by: ['fromAccountId', 'toAccountId', 'type'],
+        _sum: { amount: true },
+        orderBy: { fromAccountId: 'asc' },
+        where: {
+          date,
+          userId,
+          OR: [{ fromAccountId: accountIdParam }, { toAccountId: accountIdParam }],
+        },
+
+      })
+      : null
+
+    const totalsAllTime = calculateAccountTotals(groupByAccountsAllTime)
+    const totalsInRange = groupByAccountsRange ? calculateAccountTotals(groupByAccountsRange) : null
+
+    const isForRange = hasDefinedRange && totalsInRange
+
+    // Totals for all time - net, expenses, income, transfer net, balance
+    const calcAccountTotals = () => {
+      const hadTransactionsAllTime = accountIdParam in totalsAllTime
+      const hasTransactionInRange = isForRange && accountIdParam in totalsInRange
+
+      if (!hadTransactionsAllTime) {
+        return {
+          id: accountIdParam,
+          totals: initalTotal(),
         }
       }
 
-      const addTransaction = (key: string, type: AccountTotalType) => {
-        setupInitialAccountValues(key)
-        totalsByAccount[key][type] += curr._sum.amount ?? 0
+      const allTimeAccountTotals = totalsAllTime[accountIdParam]
+
+      const totalNet = allTimeAccountTotals.income - allTimeAccountTotals.expense
+      const totalTransferNet = allTimeAccountTotals.transferIn - allTimeAccountTotals.transferOut
+      const totalBalance = totalNet + totalTransferNet
+
+      const ensuredTotalsInRange = hasTransactionInRange ? totalsInRange[accountIdParam] : initalTotal()
+
+      const totals = isForRange
+        ? {
+            ...ensuredTotalsInRange,
+            net: ensuredTotalsInRange.income - ensuredTotalsInRange.expense,
+            transferNet: ensuredTotalsInRange.transferIn - ensuredTotalsInRange.transferOut,
+            balance: totalBalance,
+          }
+        : {
+            ...allTimeAccountTotals,
+            net: totalNet,
+            transferNet: totalTransferNet,
+            balance: totalBalance,
+          }
+
+      return {
+        id: accountIdParam,
+        totals,
       }
+    }
 
-      if (isType(TransactionType.Transfer)) {
-        if (curr.fromAccountId) {
-          addTransaction(cashAccount.id, 'transferOut')
-        } else if (curr.toAccountId) {
-          addTransaction(cashAccount.id, 'transferIn')
-        }
-      } else if (isType(TransactionType.Expense)) {
-        addTransaction(cashAccount.id, 'expense')
-      } else if (isType(TransactionType.Income)) {
-        addTransaction(cashAccount.id, 'income')
-      }
+    const singleCashAccountWithTotals = calcAccountTotals()
 
-      return totalsByAccount
-    }, {})
-
-    const accountTotals = totals[cashAccount.id] ?? initalTotal()
-    accountTotals.net = accountTotals.income - accountTotals.expense
-    accountTotals.transferNet = accountTotals.transferIn - accountTotals.transferOut
-    accountTotals.balance = accountTotals.net + accountTotals.transferNet
-
-    return {
-      ...cashAccount,
-      totals: accountTotals,
-    } as CashAccountWithTotalsAndAccount
+    return singleCashAccountWithTotals
   } catch (err) {
     console.error(err)
     sendInternalError(event, err)
   }
 })
+

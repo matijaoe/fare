@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
 import type { Ref } from 'vue'
-import type { CashAccountWithAccount, CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount, CashAccountWithTotals, CashAccountsBalanceModel } from '~~/models/resources/account'
+import type { CashAccountWithAccount, CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount, CashAccountWithTotals, CashAccountsBalanceModel, IndividualCashAccountTotals } from '~~/models/resources/account'
 
 export const keysAccounts = {
   all: ['cash-accounts'] as const,
@@ -59,7 +59,6 @@ export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<str
   )
 }
 
-// TODO: rewrite api to not return full account data, and only totals and accountId, cos its not needed
 export const useCashAccountTotals = (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => {
   return useQuery(
     keysAccounts.totalsRange(from, to),
@@ -69,7 +68,7 @@ export const useCashAccountTotals = (id: string, from: Ref<string | undefined>, 
         ? `/api/accounts/totals/${id}?from=${get(from)}&to=${get(to)}`
         : `/api/accounts/totals/${id}`
 
-      return $fetch<CashAccountWithTotals>(url)
+      return $fetch<IndividualCashAccountTotals>(url)
     },
   )
 }

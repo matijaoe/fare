@@ -17,7 +17,7 @@ export type CategoryWithTotals = CategoryWithCount & {
 }
 
 export type IndividualCategoryTotals = {
-  categoryId: string
+  id: string
   totals: CategoryTotals
 }
 
