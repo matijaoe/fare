@@ -12,10 +12,23 @@ export const keysAccounts = {
   totalsRange: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysAccounts.all, 'totals', from, to] as const,
   details: () => [...keysAccounts.all, 'detail'] as const,
   detail: (id: MaybeRef<string>) => [...keysAccounts.all, 'detail', unref(id)] as const,
+  detailWithRange: (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysAccounts.all, 'detail', id, 'transactions', from, to] as const,
 }
 
 export const useCashAccount = (id: string) => useQuery(keysAccounts.detail(id),
-  () => $fetch<CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount>(`/api/accounts/cash/${unref(id)}`),
+  () => $fetch<CashAccountWithAccount>(`/api/accounts/cash/${unref(id)}`),
+)
+
+export const useCashAccountWithTransactions = (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => useQuery(
+  keysCategory.detailWithRange(id, from, to),
+  () => {
+    const fullRangeDefined = isDefined(from) && isDefined(to)
+    const url = fullRangeDefined
+      ? `/api/accounts/cash/${id}?transactions=true&from=${get(from)}&to=${get(to)}`
+      : `/api/accounts/cash/${id}?transactions=true`
+
+    return $fetch<CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount>(url)
+  },
 )
 
 export const useCashAccounts = (payload?: { transactions?: boolean }) => {

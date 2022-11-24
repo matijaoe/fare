@@ -5,12 +5,18 @@ const route = useRoute()
 
 const accountId = $computed(() => route.params.accountId as string)
 
-const { data: account, isLoading } = useCashAccount(accountId)
+const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
 
-const fullAccountTransactions = computed(() => isDefined(account)
-  ? [...get(account).paymentFromAccount, ...get(account).paymentToAccount]
-  : [],
-)
+const { data: account } = useCashAccount(accountId)
+const { data: accountWithTransactions, isLoading } = useCashAccountWithTransactions(accountId, rangeFrom, rangeTo)
+
+const fullAccountTransactions = computed(() => {
+  if (isDefined(accountWithTransactions)) {
+    const { paymentFromAccount, paymentToAccount } = get(accountWithTransactions)
+    return [...paymentFromAccount, ...paymentToAccount]
+  }
+  return []
+})
 
 const { transactions, searchQuery } = useTransactionFilters(fullAccountTransactions)
 

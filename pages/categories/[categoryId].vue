@@ -3,10 +3,12 @@ const route = useRoute()
 
 const categoryId = route.params.categoryId as string
 
-const { data: category, isLoading } = useCategory(categoryId)
+const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
+const { data: category } = useCategory(categoryId)
+const { data: categoryWithTransactions, isLoading } = useCategoryWithTransactions(categoryId, rangeFrom, rangeTo)
 
 const { transactions, searchQuery } = useTransactionFilters(
-  computed(() => category.value?.transactions),
+  computed(() => categoryWithTransactions.value?.transactions),
 )
 
 whenever(category, () => setBreadcrumbs([

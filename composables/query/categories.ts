@@ -12,6 +12,7 @@ export const keysCategory = {
   totalsRange: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysCategory.all, 'totals', 'range', from, to] as const,
   details: () => [...keysCategory.all, 'detail'] as const,
   detail: (id: string) => [...keysCategory.all, 'detail', id] as const,
+  detailWithRange: (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysCategory.all, 'detail', id, 'transactions', from, to] as const,
 }
 
 export const useCategories = () => useQuery(keysCategory.all,
@@ -19,22 +20,32 @@ export const useCategories = () => useQuery(keysCategory.all,
 )
 
 export const useCategory = (id: string) => useQuery(keysCategory.detail(id),
-  () => $fetch<CategoryWithTransactions>(`/api/categories/${id}`),
+  () => $fetch<Category>(`/api/categories/${id}`),
 )
 
-export const useCategoriesTotals = (from: Ref<string | undefined>, to: Ref<string | undefined>) => {
-  return useQuery(
-    keysCategory.totalsRange(from, to),
-    () => {
-      const fullRangeDefined = isDefined(from) && isDefined(to)
-      const url = fullRangeDefined
-        ? `/api/categories/totals?from=${get(from)}&to=${get(to)}`
-        : '/api/categories/totals'
+export const useCategoryWithTransactions = (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => useQuery(
+  keysCategory.detailWithRange(id, from, to),
+  () => {
+    const fullRangeDefined = isDefined(from) && isDefined(to)
+    const url = fullRangeDefined
+      ? `/api/categories/${id}?transactions=true&from=${get(from)}&to=${get(to)}`
+      : `/api/categories/${id}?transactions=true`
 
-      return $fetch<CategoryWithTotals[]>(url)
-    },
-  )
-}
+    return $fetch<CategoryWithTransactions>(url)
+  },
+)
+
+export const useCategoriesTotals = (from: Ref<string | undefined>, to: Ref<string | undefined>) => useQuery(
+  keysCategory.totalsRange(from, to),
+  () => {
+    const fullRangeDefined = isDefined(from) && isDefined(to)
+    const url = fullRangeDefined
+      ? `/api/categories/totals?from=${get(from)}&to=${get(to)}`
+      : '/api/categories/totals'
+
+    return $fetch<CategoryWithTotals[]>(url)
+  },
+)
 
 export const useCategoryCreate = () => {
   const qc = useQueryClient()

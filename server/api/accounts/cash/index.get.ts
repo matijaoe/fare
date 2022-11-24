@@ -2,14 +2,16 @@ import type { Prisma } from '@prisma/client'
 import { readUserId, sendInternalError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
-// Get cash accounts, with transactions only from given month range
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
   if (!userId) {
     return null
   }
 
-  const { dateQuery: date, withTransactions } = useTransactionDateRange(event)
+  const { dateQuery: date, hasDefinedRange } = useTransactionDateRange(event)
+
+  const { transactions } = getQuery(event) as { transactions?: string }
+  const withTransactions = (hasDefinedRange && transactions !== 'false') || transactions === 'true'
 
   const paymentAccountArgs: Prisma.TransactionFindManyArgs | boolean = withTransactions
     ? {

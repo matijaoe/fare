@@ -1,43 +1,43 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { readParams, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
+import { readParams, readUserId, sendCustomError, sendInternalError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
-  const where = readParams<Prisma.CategoryWhereUniqueInput>(event)
-
-  // TODO: pass date for transactions month range
-  // const { dateQuery: date } = useTransactionDateRange(event)
-
   const userId = readUserId(event)
   if (!userId) {
     return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'Unauthorized')
   }
 
-  const accountInclude: Prisma.CashAccountArgs = {
-    include: {
-      account: true,
-    },
-  }
+  const where = readParams<Prisma.CategoryWhereUniqueInput>(event)
+
+  const { dateQuery: date } = useTransactionDateRange(event)
+
+  const { transactions } = getQuery(event) as { transactions?: string }
+  const withTransactions = transactions === 'true'
 
   try {
     const item = await db.category.findFirst({
-      where,
+      where: {
+        ...where,
+        userId,
+      },
       include: {
-        transactions: {
+        // eslint-disable-next-line multiline-ternary
+        transactions: withTransactions ? {
           include: {
             category: true,
-            fromAccount: accountInclude,
-            toAccount: accountInclude,
+            fromAccount: { include: { account: true } },
+            toAccount: { include: { account: true } },
           },
           orderBy: {
             date: 'desc',
           },
           where: {
-            // date,
+            date,
             userId,
           },
-        },
+        } : false,
       },
     })
 

@@ -13,26 +13,22 @@ export default defineEventHandler(async (event) => {
   const where = readParams<Prisma.MoneyAccountWhereUniqueInput>(event)
   const { dateQuery: date } = useTransactionDateRange(event)
 
+  const { transactions } = getQuery(event) as { transactions?: string }
+  const withTransactions = transactions === 'true'
+
   const paymentAccountArgs: Prisma.TransactionFindManyArgs = {
     where: {
       // TODO: doesn't do anything yet, it seems
       date,
+      userId,
     },
     orderBy: {
       date: 'desc',
     },
     include: {
       category: true,
-      fromAccount: {
-        include: {
-          account: true,
-        },
-      },
-      toAccount: {
-        include: {
-          account: true,
-        },
-      },
+      fromAccount: { include: { account: true } },
+      toAccount: { include: { account: true } },
     },
   }
 
@@ -40,8 +36,8 @@ export default defineEventHandler(async (event) => {
     const account = await db.cashAccount.findFirst({
       where,
       include: {
-        paymentFromAccount: paymentAccountArgs,
-        paymentToAccount: paymentAccountArgs,
+        paymentFromAccount: withTransactions ? paymentAccountArgs : false,
+        paymentToAccount: withTransactions ? paymentAccountArgs : false,
         account: true,
       },
     })

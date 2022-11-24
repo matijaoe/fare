@@ -7,6 +7,10 @@ export default defineEventHandler(async (event) => {
   const where = readParams<Prisma.CategoryWhereUniqueInput>(event)
   const { userId } = await readBody<{ userId: string }>(event)
 
+  if (!userId) {
+    return null
+  }
+
   try {
     const res = await db.category.deleteMany({
       where: {
