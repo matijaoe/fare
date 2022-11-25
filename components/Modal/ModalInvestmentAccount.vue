@@ -10,7 +10,7 @@ const form = $computed(() => modal.form)
 const accountId = toRef(modal, 'accountId')
 
 const { mutate: createAccount, isLoading: isCreateLoading, isError: isErrorCreate, reset: resetCreate } = useInvestmentAccountCreate()
-// TODO: but how to update investment account - specifically the description? create new query and endpoint forit
+// TODO: but how to update investment account - specifically the description? create new query and endpoint for it
 const { mutate: updateAccount, isLoading: isUpdateLoading, isError: isErrorUpdate, reset: resetUpdate } = useAccountUpdate(accountId)
 const { mutate: deleteAccount, isLoading: isDeleteLoading, isError: isErrorDelete, reset: resetDelete } = useAccountDelete(accountId)
 
@@ -122,6 +122,7 @@ const modalConfig = computed(() => ({
       <FInput
         v-model="form.values.name"
         label="Name"
+        icon="tabler:text-size"
         placeholder="Account name"
         :invalid="!!form.errors.name"
         :error="form.errors.name"
@@ -129,6 +130,7 @@ const modalConfig = computed(() => ({
 
       <FTextarea
         v-model="form.values.description"
+        icon="tabler:text-plus"
         label="Description"
         placeholder="What is this account for?"
         :invalid="!!form.errors.description"
@@ -137,6 +139,7 @@ const modalConfig = computed(() => ({
 
       <FInput
         v-model="form.values.expectedRateOfReturn"
+        icon="tabler:percentage"
         type="number"
         label="Rate of return"
         placeholder="ex 9%"

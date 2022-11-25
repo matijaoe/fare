@@ -8,7 +8,7 @@ type Props = {
 }
 
 const props = defineProps<Props>()
-const cashAccountModal = useCashAccountModal()
+const modal = useCashAccountModal()
 
 const { bg1, color4 } = useAppColors(props.cashAccount.account.color)
 
@@ -61,7 +61,7 @@ const { isDark } = useTheme()
 
         <div>
           <FTooltip content="Edit" placement="top">
-            <button @click.stop="cashAccountModal.launch(account)">
+            <button @click.stop="modal.launch(account)">
               <Icon v-show="isHovered" text="zinc-6 dark:zinc-5" name="tabler:edit" />
             </button>
           </FTooltip>

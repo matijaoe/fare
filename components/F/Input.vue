@@ -128,12 +128,10 @@ const isHovered = useElementHover(inputWrapper)
     <div relative>
       <div
         v-if="isSlot('left')"
-        absolute
+        absolute pos="top-50% left-4"
+        flex items-center
         text="zinc-8"
-        pos="top-50% left-4"
         class="-translate-y-50%"
-        flex
-        items-center
       >
         <slot name="left">
           <Icon :name="icon" :class="[stateIconStyle]" />
@@ -161,12 +159,10 @@ const isHovered = useElementHover(inputWrapper)
 
       <div
         v-if="loading || isSlot('right') || clearable"
-        absolute
-        pos="top-50% right-4"
+        absolute pos="top-50% right-4"
+        flex items-center
         class="-translate-y-50%"
         :class="stateIconStyle"
-        flex
-        items-center
       >
         <slot v-if="loading" name="loading">
           <Icon name="tabler:loader-2" class="animate-spin" />

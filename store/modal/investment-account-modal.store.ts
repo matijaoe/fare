@@ -1,4 +1,3 @@
-import { InvestmentType } from '@prisma/client'
 import { toFormValidator } from '@vee-validate/zod'
 import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
@@ -23,7 +22,7 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
       name: zod.string({ required_error: 'Name is required' }).trim().min(1, { message: 'Name is required' }).max(24, { message: 'Name is too long' }),
       color: zod.any().optional(),
       icon: zod.any().optional(),
-      description: zod.string().optional(),
+      description: zod.any().optional(),
       expectedRateOfReturn: zod.number(),
       // TODO: handle enums
       // type: zod.string(),
@@ -53,11 +52,11 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
   const colorObject = computed({
     get: () => form.values.color
       ? {
-          label: toTitleCase(form.values.color),
-          value: form.values.color,
-          bg: `bg-${form.values.color}-5`,
-          text: `text-${form.values.color}-5`,
-        }
+        label: toTitleCase(form.values.color),
+        value: form.values.color,
+        bg: `bg-${form.values.color}-5`,
+        text: `text-${form.values.color}-5`,
+      }
       : null,
     set: obj => form.setFieldValue('color', obj?.value ?? null),
   })
@@ -65,9 +64,9 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
   const iconObject = computed({
     get: () => form.values.icon
       ? {
-          label: toTitleCase(form.values.icon?.split(':').at(-1) || 'None'),
-          value: form.values.icon,
-        }
+        label: toTitleCase(form.values.icon?.split(':').at(-1) || 'None'),
+        value: form.values.icon,
+      }
       : null,
     set: obj => form.setFieldValue('icon', obj?.value ?? null),
   })

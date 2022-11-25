@@ -36,7 +36,7 @@ export const useInvestmentAccountsEntries = () => useQuery(
 
 export const useInvestmentAccountsEntryCreate = () => {
   const qc = useQueryClient()
-  useMutation(
+  return useMutation(
     (body: Prisma.InvestmentEntryUncheckedCreateInput) => $fetch<InvestmentEntry>('/api/accounts/investment/entries', { method: 'POST', body }),
     {
       onSuccess: () => {

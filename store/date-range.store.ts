@@ -11,7 +11,7 @@ export const useDateRangeStore = defineStore('date-range', () => {
     month: 'MMMM',
   }
 
-  const selectedMonth = ref<Date | number>(now)
+  const selectedMonth = ref<Date>(now)
 
   const isAllTime = ref(false)
   const toggleAllTime = useToggle(isAllTime)

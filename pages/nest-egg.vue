@@ -19,24 +19,29 @@ const formattedTotalBalance = useCurrencyFormat(balance)
 const { data: investmentAccounts } = useInvestmentAccounts()
 const { data: investmentEntries, isLoading: isEntriesLoading } = useInvestmentAccountsEntries()
 
-const unifiedAccounts = $computed(() => {
+const unifiedAccounts = computed(() => {
   const key = getYearMonthKey(isDefined(selectedMonth) ? new Date(selectedMonth.value) : new Date())
 
-  const getBalance = (investmentAccountId: string) => {
+  const getBalances = (investmentAccountId: string) => {
     const acc = investmentEntries.value?.find(acc => acc.investmentAccountId === investmentAccountId)
     // TODO: if no balance, get latest old balance, but alert user about it
-    return acc?.balances?.[key]?.balance ?? 0
+    // return acc?.balances?.[key]?.balance ?? 0
+    return acc?.balances ?? {}
   }
 
   return investmentAccounts.value?.map((account) => {
-    const balance = getBalance(account.id)
-    return { ...account, balance }
+    const balances = getBalances(account.id)
+    return { ...account, balances }
   }) ?? []
 })
 
+watch(investmentEntries, () => {
+  console.log('investmentEntries', investmentEntries)
+})
+
 // TODO: more types
-const accountsStocks = computed(() => unifiedAccounts?.filter(({ type }) => type === 'Stocks'))
-const accountsCrypto = computed(() => unifiedAccounts?.filter(({ type }) => type === 'Crypto'))
+const accountsStocks = computed(() => unifiedAccounts.value?.filter(({ type }) => type === 'Stocks'))
+const accountsCrypto = computed(() => unifiedAccounts.value?.filter(({ type }) => type === 'Crypto'))
 
 const modal = useInvestmentAccountModal()
 </script>
@@ -84,7 +89,7 @@ const modal = useInvestmentAccountModal()
             v-for="account in accountsStocks"
             :key="account"
             :investment-account="account"
-            :balance="account.balance"
+            :balances="account.balances"
             :balance-loading="isEntriesLoading"
             :all-time="isAllTime"
           />
@@ -111,7 +116,7 @@ const modal = useInvestmentAccountModal()
             v-for="account in accountsCrypto"
             :key="account"
             :investment-account="account"
-            :balance="account.balance"
+            :balances="account.balances"
             :balance-loading="isEntriesLoading"
             :all-time="isAllTime"
           />
