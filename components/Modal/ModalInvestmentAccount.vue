@@ -143,6 +143,7 @@ const modalConfig = computed(() => ({
         type="number"
         label="Rate of return"
         placeholder="ex 9%"
+        :input-props="{ min: 0.1, step: 0.01 }"
         :invalid="!!form.errors.expectedRateOfReturn"
         :error="form.errors.expectedRateOfReturn"
       />

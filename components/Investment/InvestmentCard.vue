@@ -47,7 +47,11 @@ const percentageChange = computed(() => {
   if (!isNumber(currentBalance.value) || !isNumber(previousBalance.value)) {
     return null
   }
-  return (currentBalance.value - previousBalance.value) / previousBalance.value
+  const percentage = (currentBalance.value - previousBalance.value) / previousBalance.value
+  if (isNaN(percentage)) {
+    return 0
+  }
+  return percentage
 })
 
 const formattedBalance = currentBalanceEntry.value ? useCurrencyFormat(currentBalance as unknown as number) : null
@@ -59,6 +63,7 @@ const card = ref<HTMLElement>()
 const isHovered = useElementHover(card)
 
 // --------------- Edit balance ---------------
+
 const { mutate: createEntry, isLoading: isUpdateEntryLoading } = useInvestmentAccountsEntryCreate()
 
 let isEditMode = $ref(false)
@@ -137,11 +142,12 @@ const setEditMode = (value: boolean) => {
       >
         <div v-show="isEditMode" flex justify-center>
           <form @submit.prevent="editBalanceHandler">
+            <!-- TODO: icon is not showing, worked -->
             <FInput
               ref="editBalanceInputEl"
               v-model="balanceValue"
-              icon="tabler:currency-euro"
               type="number"
+              icon="tabler:cash"
               :input-props="{ step: 0.01 }"
               :loading="isUpdateEntryLoading"
               input-class="!max-w-150px !bg-transparent"
@@ -208,16 +214,21 @@ const setEditMode = (value: boolean) => {
       flex items-center justify-between gap-4
       border="base dark:zinc-7 t-dashed t-2"
       text="center lg"
-      p-4
-      text-sm
+      p-4 text-xs
     >
       <p v-if="percentageChange != null">
-        {{ formatPercentage(percentageChange, {
+        <span
+          font-bold
+          :class="{
+            'text-green-6': percentageChange > 0,
+            'text-red-6': percentageChange < 0,
+          }"
+        >{{ formatPercentage(percentageChange, {
           signDisplay: 'always',
-        }) }}
+        }) }}</span> since last month
       </p>
       <p ml-auto>
-        predicted {{ investmentAccount.expectedRateOfReturn }}% YoY growth
+        predicted <span font-bold>{{ investmentAccount.expectedRateOfReturn }}%</span> YoY
       </p>
     </div>
   </FCard>
