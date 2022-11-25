@@ -4,11 +4,12 @@ import { isNumber } from '@vueuse/core'
 import { getMonth } from 'date-fns'
 import type Input from '~~/components/F/Input.vue'
 import type { InvestmentAccountWithAccount } from '~~/models/resources/investment-account'
-import { formatDate } from '~~/utils'
+import { formatPercentage } from '~~/utils'
 
 type Props = {
   investmentAccount: InvestmentAccountWithAccount
   balanceLoading?: boolean
+  // TODO: all time is wrong, leaves things as is
   allTime?: boolean
   balances: Record<string, InvestmentEntry>
 }
@@ -17,51 +18,56 @@ const props = defineProps<Props>()
 
 const modal = useInvestmentAccountModal()
 
+const { isDark } = useTheme()
 const { bg1, color4 } = useAppColors(props.investmentAccount.account.color)
+
 const account = $computed(() => props.investmentAccount.account)
 
 const { selectedMonth } = toRefs(useDateRangeStore())
 
-// TODO: if no balance, get latest old balance, but alert user about it
+// --------------- Balances ---------------
+
 const sortedBalances = computed(() => {
   const balances = Object.values(props.balances ?? {})
-  return balances.sort((a, b) => new Date(b.date).getMilliseconds() - new Date(a.date).getMilliseconds())
+  // sort by newest
+  return balances.sort((a, b) => new Date(b.date) - new Date(a.date))
 })
 
-const currentMonthBalanceEntry = computed(() => props.balances?.[getYearMonthKey(selectedMonth.value)])
-const currentMonthBalance = computed(() => currentMonthBalanceEntry.value?.balance)
+const currentBalanceEntry = computed(() => props.balances?.[getYearMonthKey(selectedMonth.value)])
+const currentBalance = computed(() => currentBalanceEntry.value?.balance)
 
 const previousBalanceEntry = computed(() => {
-  const entriesBeforeSetDate = sortedBalances.value.filter(({ date }) => getMonth(new Date(date)) < getMonth(selectedMonth.value))
-  const [previous] = entriesBeforeSetDate
+  const [previous] = sortedBalances.value
+    .filter(({ date }) => getMonth(new Date(date)) < getMonth(selectedMonth.value))
   return previous ?? null
 })
+const previousBalance = computed(() => previousBalanceEntry.value?.balance)
 
 const percentageChange = computed(() => {
-  if (!isNumber(currentMonthBalance.value) || !isNumber(previousBalanceEntry.value?.balance)) {
+  if (!isNumber(currentBalance.value) || !isNumber(previousBalance.value)) {
     return null
   }
-  return (currentMonthBalance.value - previousBalanceEntry.value.balance) / previousBalanceEntry.value.balance
+  return (currentBalance.value - previousBalance.value) / previousBalance.value
 })
 
-const formattedBalance = currentMonthBalanceEntry.value ? useCurrencyFormat(currentMonthBalance as unknown as number) : null
+const formattedBalance = currentBalanceEntry.value ? useCurrencyFormat(currentBalance as unknown as number) : null
+const formattedPreviousBalance = previousBalanceEntry.value ? useCurrencyFormat(previousBalance as unknown as number) : null
+
+// --------------- Card hover ---------------
 
 const card = ref<HTMLElement>()
 const isHovered = useElementHover(card)
 
-const { isDark } = useTheme()
-
-let isEditMode = $ref(false)
-
+// --------------- Edit balance ---------------
 const { mutate: createEntry, isLoading: isUpdateEntryLoading } = useInvestmentAccountsEntryCreate()
 
+let isEditMode = $ref(false)
 let balanceValue = $ref<number | null>(null)
 
 const editBalanceHandler = () => {
-  if (balanceValue != null) {
-    const value = isNumber(balanceValue) ? balanceValue : parseFloat(balanceValue)
+  if (isNumber(balanceValue) && balanceValue !== currentBalance.value) {
     createEntry({
-      balance: typeof balanceValue === 'number' ? balanceValue : 0,
+      balance: balanceValue ?? 0,
       investmentAccountId: props.investmentAccount.id,
       date: selectedMonth.value,
     }, {
@@ -69,6 +75,8 @@ const editBalanceHandler = () => {
         isEditMode = false
       },
     })
+  } else {
+    isEditMode = false
   }
 }
 
@@ -76,7 +84,7 @@ const editBalanceInputEl = ref<InstanceType<typeof Input> | null>()
 const setEditMode = (value: boolean) => {
   isEditMode = value
   if (value) {
-    balanceValue = currentMonthBalanceEntry.value?.balance ?? previousBalanceEntry.value?.balance ?? null
+    balanceValue = currentBalanceEntry.value?.balance ?? previousBalanceEntry.value?.balance ?? null
     setTimeout(() => {
       editBalanceInputEl.value?.inputEl?.select()
     }, 0)
@@ -125,7 +133,7 @@ const setEditMode = (value: boolean) => {
 
       <div
         flex="1 ~ col gap-1" justify-center
-        mb--2 z-2 relative text-center
+        z-2 relative text-center
       >
         <div v-show="isEditMode" flex justify-center>
           <form @submit.prevent="editBalanceHandler">
@@ -141,6 +149,7 @@ const setEditMode = (value: boolean) => {
             />
           </form>
         </div>
+
         <FTooltip v-show="!isEditMode" mx-auto placement="right" content="Balance">
           <div
             font="display medium" text-4xl uppercase flex justify-center
@@ -151,27 +160,33 @@ const setEditMode = (value: boolean) => {
               variant="lighter"
               w-24 h="36px" py-2 py="0.5"
             />
-            <div v-else-if="currentMonthBalance && formattedBalance">
+            <div v-else-if="currentBalanceEntry">
               <p>{{ formattedBalance }}</p>
-              <p text-xs text-stone-4 font-mono font-light>
-                last updated {{ useDateFormat(currentMonthBalanceEntry.date) }}
-              </p>
             </div>
             <div v-else-if="previousBalanceEntry" flex flex-col items-center>
-              <p>{{ previousBalanceEntry.balance }}</p>
-              <p text-xs text-stone-4 font-mono font-light>
-                last updated {{ useDateFormat(previousBalanceEntry.date) }}
-              </p>
-              <FBadge color="red" type="solid" mt-2>
-                outdated
-              </FBadge>
+              <p>{{ formattedPreviousBalance }}</p>
             </div>
 
-            <p v-else text-sm text-zinc-3>
-              Not set
+            <p v-else text-lg text-zinc-3>
+              Click to set
             </p>
           </div>
         </FTooltip>
+
+        <div
+          v-if="currentBalanceEntry || previousBalanceEntry"
+          text-xs text-stone-4 font-mono font-light
+        >
+          <p v-if="currentBalanceEntry">
+            last updated on {{ useDateFormat(currentBalanceEntry.date) }}
+          </p>
+          <p v-else-if="previousBalanceEntry" relative>
+            last updated on {{ useDateFormat(previousBalanceEntry.date) }}
+            <FBadge color="red" type="solid" class="absolute bottom--8 left-50% -translate-x-50%">
+              outdated
+            </FBadge>
+          </p>
+        </div>
       </div>
     </div>
 
@@ -190,12 +205,18 @@ const setEditMode = (value: boolean) => {
 
     <div
       mt-auto z-2 relative
-      flex items-center justify-center
+      flex items-center justify-between gap-4
       border="base dark:zinc-7 t-dashed t-2"
       text="center lg"
       p-4
+      text-sm
     >
-      <p text-sm>
+      <p v-if="percentageChange != null">
+        {{ formatPercentage(percentageChange, {
+          signDisplay: 'always',
+        }) }}
+      </p>
+      <p ml-auto>
         predicted {{ investmentAccount.expectedRateOfReturn }}% YoY growth
       </p>
     </div>

@@ -83,6 +83,7 @@ export const useCashAccountCreate = () => {
   return useMutation((body: Prisma.MoneyAccountUncheckedCreateInput) => $fetch<CashAccount>('/api/accounts/cash', { method: 'POST', body }), {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
+      qc.invalidateQueries(keysInvestmentAccounts.basic())
     },
   })
 }
@@ -96,6 +97,7 @@ export const useAccountUpdate = (id: Ref<string | undefined>) => {
     }), {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
+      qc.invalidateQueries(keysInvestmentAccounts.basic())
     },
   })
 }
@@ -109,6 +111,7 @@ export const useAccountDelete = (id: Ref<string | undefined>) => {
     }), {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
+      qc.invalidateQueries(keysInvestmentAccounts.basic())
     },
   })
 }

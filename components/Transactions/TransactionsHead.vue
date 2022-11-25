@@ -6,7 +6,7 @@ const net = computed(() => totals.value?.net ?? 0)
 const expense = computed(() => totals.value?.expense ?? 0)
 const income = computed(() => totals.value?.income ?? 0)
 
-const formattedNet = useCurrencyFormat(net, { signDisplay: 'exceptZero' })
+const formattedNet = useCurrencyFormat(net, { signDisplay: 'always' })
 const formattedExpense = useCurrencyFormat(expense, { signDisplay: 'exceptZero' })
 const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
 </script>
