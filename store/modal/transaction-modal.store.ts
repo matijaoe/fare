@@ -4,7 +4,6 @@ import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import * as zod from 'zod'
-import { date } from 'zod'
 import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources'
 
 type ActionType = 'create' | 'edit'
@@ -30,10 +29,9 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
       description: zod.null().optional().or(zod.string()),
       categoryId: zod.null().optional().or(zod.string()),
       amount: zod.number({ required_error: 'Amount is required' }).min(0.01, { message: 'Amount must be greater than 0' }),
-      // TODO: handle as date
-      date: zod.date({ required_error: 'Date is required' }),
-    },
-    ))
+      // TODO: dates suck!
+      date: zod.date({ required_error: 'Date is required', invalid_type_error: 'Date is required' }),
+    }))
 
   // TODO:
   // handle from and to account via reactive validation schema

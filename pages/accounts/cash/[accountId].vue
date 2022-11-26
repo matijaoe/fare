@@ -68,7 +68,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
         <div flex items-center justify-between>
           <div flex items-center gap-6>
             <div class="w-75.2px h-75.2px" aspect-square text-4xl p-4 rounded-full flex-center :class="[bg3]">
-              <Icon :name="account?.icon" />
+              <Icon v-if="account" :name="account?.icon" />
             </div>
             <div space-y-2>
               <TransitionFade>

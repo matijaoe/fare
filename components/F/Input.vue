@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import type { InputHTMLAttributes } from 'vue'
 import { isNumber, set } from '@vueuse/core'
+import { format } from 'date-fns'
+import type { InputHTMLAttributes } from 'vue'
 
 type Props = {
-  modelValue?: string | number | Date | null | undefined
+  modelValue?: string | number | null | undefined
   type?: string
   icon?: string
   iconPlacement?: 'left' | 'right'
@@ -24,7 +25,7 @@ type Emits = {
   (e: 'input', value?: string | number | undefined | null): void
   (e: 'focus'): void
   (e: 'blur'): void
-  (e: 'update:modelValue', value?: string | number | Date | null | undefined): void
+  (e: 'update:modelValue', value?: string | number | null | undefined): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -103,7 +104,7 @@ const inputEl = ref<HTMLInputElement>()
 
 const value = computed({
   get: () => props.modelValue ?? '',
-  set: (val: string | number | Date | null | undefined) => {
+  set: (val: string | number | null | undefined) => {
     if (props.type === 'number') {
       const valueAsNumber = inputEl.value?.valueAsNumber
       if (!isNumber(valueAsNumber)) {
@@ -114,7 +115,7 @@ const value = computed({
       // TODO: not handling dates properly
     } else if (props.type === 'date') {
       const valueAsDate = inputEl.value?.valueAsDate
-      emit('update:modelValue', valueAsDate)
+      emit('update:modelValue', valueAsDate ? format(new Date(valueAsDate), 'yyyy-MM-dd') : null)
     } else {
       emit('update:modelValue', val)
     }

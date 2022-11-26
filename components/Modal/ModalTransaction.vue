@@ -2,6 +2,7 @@
 import { RadioGroup, RadioGroupOption } from '@headlessui/vue'
 import type { Prisma } from '@prisma/client'
 import { get, set } from '@vueuse/core'
+import { format, isDate } from 'date-fns'
 import type { CashAccountWithAccount } from '~~/models/resources'
 import type { SelectItem } from '~~/models/ui/select'
 
@@ -66,7 +67,6 @@ const modalConfig = computed(() => ({
 }))
 
 const onSubmit = form.handleSubmit((values) => {
-  console.log('submitting form', values)
   if (modal.isEdit) {
     editTransactionHandler(values)
   } else {
@@ -103,6 +103,11 @@ onLongPress(
     delay: 1000,
   },
 )
+
+const shownDate = computed({
+  get: () => form.values.date ? format(new Date(form.values.date), 'yyyy-MM-dd') : null,
+  set: (val: string | null) => form.setFieldValue('date', val ? new Date(val) : null),
+})
 </script>
 
 <template>
@@ -264,14 +269,11 @@ onLongPress(
             :error="form.errors.amount"
           />
 
-          <!-- TODO: date not showing -->
-          <!-- The specified value "Wed Nov 23 2022 01:00:00 GMT+0100 (Central European Standard Time)" does not conform to the required format, "yyyy-MM-dd". -->
           <FInput
-            v-model="form.values.date"
+            v-model="shownDate"
             type="date"
             icon="tabler:calendar"
             label="Date"
-            format="yyyy-MM-dd"
             :invalid="!!form.errors.date"
             :error="form.errors.date"
           />
