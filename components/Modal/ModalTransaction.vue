@@ -55,8 +55,8 @@ const { data: accounts } = useCashAccounts({ transactions: false })
 const categoryOptions = computed(() => get(categories)?.map(category => ({ ...category, label: category.name, value: category.id })) ?? [])
 const accountOptions = computed(() => get(accounts)?.map(cashAccount => ({ ...cashAccount, label: cashAccount.account.name, value: cashAccount.id })) ?? [])
 
-const fromAccountOptions = computed(() => get(accountOptions).filter((acc: SelectItem<CashAccountWithAccount>) => acc.id !== modal.form.toAccountId) ?? [])
-const toAccountOptions = computed(() => get(accountOptions).filter((acc: SelectItem<CashAccountWithAccount>) => acc.id !== modal.form.fromAccountId) ?? [])
+const fromAccountOptions = computed(() => get(accountOptions).filter((acc: SelectItem<CashAccountWithAccount>) => acc.id !== form.values.toAccountId) ?? [])
+const toAccountOptions = computed(() => get(accountOptions).filter((acc: SelectItem<CashAccountWithAccount>) => acc.id !== form.values.fromAccountId) ?? [])
 
 const modalConfig = computed(() => ({
   title: 'Transaction',
@@ -111,9 +111,6 @@ onLongPress(
     v-bind="modalConfig"
     @close="onClose"
   >
-    <pre bg-blue-2 overflow-scroll>
-    {{ form.values }}
-  </pre>
     <form mt-4 flex flex-col gap-3 @submit.prevent="onSubmit">
       <FAlert v-if="isErrorCreate" type="info">
         Something went wrong.
@@ -267,11 +264,14 @@ onLongPress(
             :error="form.errors.amount"
           />
 
+          <!-- TODO: date not showing -->
+          <!-- The specified value "Wed Nov 23 2022 01:00:00 GMT+0100 (Central European Standard Time)" does not conform to the required format, "yyyy-MM-dd". -->
           <FInput
             v-model="form.values.date"
             type="date"
             icon="tabler:calendar"
             label="Date"
+            format="yyyy-MM-dd"
             :invalid="!!form.errors.date"
             :error="form.errors.date"
           />
@@ -318,6 +318,7 @@ onLongPress(
               type="submit"
               icon="tabler:edit"
               :loading="isUpdateLoading"
+              :disabled="!modal.formValidBasedOnAccountIds"
             >
               <!-- :disabled="!modal.formValid" -->
               Edit
@@ -327,6 +328,7 @@ onLongPress(
               type="submit"
               icon="tabler:plus"
               :loading="isCreateLoading"
+              :disabled="!modal.formValidBasedOnAccountIds"
             >
               <!-- :disabled="!modal.formValid" -->
               Create

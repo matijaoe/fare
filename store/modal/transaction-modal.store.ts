@@ -4,6 +4,7 @@ import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import * as zod from 'zod'
+import { date } from 'zod'
 import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources'
 
 type ActionType = 'create' | 'edit'
@@ -23,14 +24,14 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     zod.object({
       type: zod.nativeEnum(TransactionType, { required_error: 'Type is required' }),
       // TODO: must be required but should be based off type
-      fromAccountId: zod.string({ invalid_type_error: 'Account is required', required_error: 'Account is required' }).optional(),
-      toAccountId: zod.string({ invalid_type_error: 'Account is required', required_error: 'Account is required' }).optional(),
+      fromAccountId: zod.any().optional(),
+      toAccountId: zod.any().optional(),
       name: zod.string({ required_error: 'Name is required' }).trim().min(1, { message: 'Name is required' }).max(24, { message: 'Name is too long' }),
       description: zod.null().optional().or(zod.string()),
       categoryId: zod.null().optional().or(zod.string()),
       amount: zod.number({ required_error: 'Amount is required' }).min(0.01, { message: 'Amount must be greater than 0' }),
       // TODO: handle as date
-      date: zod.string({ required_error: 'Date is required' }),
+      date: zod.date({ required_error: 'Date is required' }),
     },
     ))
 
@@ -50,6 +51,20 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     validationSchema,
   })
 
+  // lame solution but will do for now, gotta replace with real veevalidate/zod solution
+  const formValidBasedOnAccountIds = computed(() => {
+    const { type, fromAccountId, toAccountId } = form.values
+    if (type === 'Expense') {
+      return !!fromAccountId
+    }
+    if (type === 'Income') {
+      return !!toAccountId
+    }
+    if (type === 'Transfer') {
+      return !!fromAccountId && !!toAccountId
+    }
+  })
+
   const isType = (t: TransactionType) => form.values.type === t
 
   const isExpense = computed(() => isType('Expense'))
@@ -63,7 +78,7 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
   useField<string | null>('description')
   useField<string | null>('categoryId')
   useField<number>('amount')
-  useField<string>('date')
+  useField<Date>('date')
 
   const selectedTransactionType = computed(() => form.values.type)
 
@@ -138,6 +153,8 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     // Form
     form,
     reset,
+    // TODO: temp solution
+    formValidBasedOnAccountIds,
     // Transaction types
     isType,
     isExpense,

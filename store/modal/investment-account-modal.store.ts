@@ -31,8 +31,8 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
 
   const form = useForm<{
     name: string
-    color: string | undefined
-    icon: string | undefined
+    color: string | null
+    icon: string | null
     description: string | undefined
     expectedRateOfReturn: number | undefined
     type: InvestmentType | undefined
@@ -77,7 +77,6 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
   }
 
   const reset = () => {
-    // TODO: didnt reset name
     form.resetForm()
     set(modalType, 'create')
     set(_accountId, undefined)
