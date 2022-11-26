@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { InputHTMLAttributes } from 'vue'
-import { set } from '@vueuse/core'
+import { isNumber, set } from '@vueuse/core'
 
 type Props = {
-  modelValue?: string | number
+  modelValue?: string | number | null | undefined
   type?: string
   icon?: string
   iconPlacement?: 'left' | 'right'
@@ -21,10 +21,10 @@ type Props = {
 }
 
 type Emits = {
-  (e: 'input', value?: string | number): void
+  (e: 'input', value?: string | number | undefined | null): void
   (e: 'focus'): void
   (e: 'blur'): void
-  (e: 'update:modelValue', value?: string | number): void
+  (e: 'update:modelValue', value?: string | number | null | undefined): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -99,9 +99,22 @@ const stateStyle = computed(() => {
 
 const disabledStyle = computed(() => 'disabled:(bg-zinc-1 dark:bg-zinc-9/50 border-zinc-3 dark:border-zinc-7 opacity-50 cursor-not-allowed)')
 
+const inputEl = ref<HTMLInputElement>()
+
 const value = computed({
   get: () => props.modelValue ?? '',
-  set: (val: string | number) => emit('update:modelValue', val),
+  set: (val: string | number | null | undefined) => {
+    if (props.type === 'number') {
+      const valueAsNumber = inputEl.value?.valueAsNumber
+      if (!isNumber(valueAsNumber)) {
+        emit('update:modelValue', null)
+      } else {
+        emit('update:modelValue', isNaN(valueAsNumber) ? null : inputEl.value?.valueAsNumber)
+      }
+    } else {
+      emit('update:modelValue', val)
+    }
+  },
 })
 
 const clearInput = () => set(value, '')
@@ -111,8 +124,6 @@ const emits = {
   focus: () => emit('focus'),
   blur: () => emit('blur'),
 }
-
-const inputEl = ref<HTMLInputElement>()
 
 // TODO
 defineExpose({
