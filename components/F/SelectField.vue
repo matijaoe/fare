@@ -11,6 +11,7 @@ import type { SelectItemDefault } from '~~/models/ui'
 type Props = {
   items: SelectItemDefault[]
   modelValue?: SelectItemDefault
+  value?: string | number
   label?: string
   placeholder?: string
   invalid?: boolean
@@ -26,6 +27,7 @@ type Props = {
 
 type Emits = {
   (e: 'update:modelValue', value: SelectItemDefault | undefined): void
+  (e: 'update:value', value: number | string | undefined): void
 }
 
 const props = defineProps<Props>()
@@ -43,8 +45,11 @@ const wrapperProps = computed(() => ({
 }))
 
 const selectedItem = computed({
-  get: () => props.modelValue,
-  set: (value: SelectItemDefault | undefined) => emit('update:modelValue', value),
+  get: () => props?.modelValue ?? props.items.find(item => item.value === props.value) ?? undefined,
+  set: (value: SelectItemDefault | undefined) => {
+    emit('update:value', value?.value)
+    emit('update:modelValue', value)
+  },
 })
 
 const isSelected = (item: SelectItemDefault) => item.value === selectedItem.value?.value
@@ -55,6 +60,33 @@ const listboxButton = ref()
 const isHovered = useElementHover(listboxButton)
 
 const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
+
+const stateStyle = computed(() => {
+  const { invalid, positive } = props
+  if (invalid) {
+    return 'bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-5/60)) focus:(border-red-6 dark:border-red-5/60)'
+  }
+  if (positive) {
+    return 'bg-green-1/50 border-green-6 dark:(bg-green-9/25 border-green-5/60) focus:(border-green-6 dark:border-green-5/60)'
+  }
+  return 'bg-zinc-2 dark:bg-zinc-8 border-transparent focus:(border-zinc-8 dark:border-zinc-4) invalid:(bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-5/60) focus:(border-red-6 dark:border-red-5/60))'
+})
+
+const stateIconStyle = computed(() => {
+  const { invalid, positive, disabled } = props
+  if (invalid) {
+    return 'not-focus:(text-red-5)'
+  }
+  if (positive) {
+    return 'not-focus:(text-green-5)'
+  }
+  if (disabled) {
+    return 'text-zinc-3 dark:text-zinc-7'
+  }
+  return 'color-base-lighter'
+})
+
+const disabledStyle = computed(() => 'disabled:(bg-zinc-1 dark:bg-zinc-9/50 border-zinc-3 dark:border-zinc-7 opacity-50 cursor-not-allowed)')
 </script>
 
 <template>
@@ -77,8 +109,7 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
         flex="~ gap-3"
         items-center
         outline="none focus:none"
-        class="bg-zinc-2 dark:bg-zinc-8 border-transparent disabled:(bg-zinc-1 dark:bg-zinc-9/50 border-zinc-3 dark:border-zinc-7 opacity-50) focus-visible:(border-zinc-8 dark:border-zinc-3) leading-5"
-        :class="[open ? 'border-rounded-t-md' : 'border-rounded-md', selectClass]"
+        :class="[open ? 'border-rounded-t-md' : 'border-rounded-md', disabledStyle, stateStyle, selectClass]"
       >
         <div
           v-if="icon || $slots.left"
@@ -86,7 +117,7 @@ const widthStyle = computed(() => props.block ? 'max-w-full' : 'max-w-60')
           flex-center
         >
           <slot name="left">
-            <Icon :name="icon" class="color-base-lighter" />
+            <Icon :name="icon" :class="[stateIconStyle]" />
           </slot>
         </div>
         <span

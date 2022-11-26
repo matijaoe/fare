@@ -54,20 +54,6 @@ const isSlot = (name: 'left' | 'right') => {
   return usingProps || usingSlot
 }
 
-const stateIconStyle = computed(() => {
-  const { invalid, positive, disabled } = props
-  if (invalid) {
-    return 'not-focus:(text-red-5)'
-  }
-  if (positive) {
-    return 'not-focus:(text-green-5)'
-  }
-  if (disabled) {
-    return 'text-zinc-3 dark:text-zinc-7'
-  }
-  return 'color-base-lighter'
-})
-
 const paddingStyle = computed(() => {
   const { icon, iconPlacement, loading } = props
   const cn = []
@@ -89,12 +75,26 @@ const paddingStyle = computed(() => {
 const stateStyle = computed(() => {
   const { invalid, positive } = props
   if (invalid) {
-    return 'bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-5/60)) focus:(border-red-6 dark:border-red-5/60)'
+    return 'bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-5/60)) focus-visible:(border-red-6 dark:border-red-5/60)'
   }
   if (positive) {
-    return 'bg-green-1/50 border-green-6 dark:(bg-green-9/25 border-green-5/60) focus:(border-green-6 dark:border-green-5/60)'
+    return 'bg-green-1/50 border-green-6 dark:(bg-green-9/25 border-green-5/60) focus-visible:(border-green-6 dark:border-green-5/60)'
   }
-  return 'bg-zinc-2 dark:bg-zinc-8 border-transparent focus:(border-zinc-8 dark:border-zinc-4) invalid:(bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-5/60) focus:(border-red-6 dark:border-red-5/60))'
+  return 'bg-zinc-2 dark:bg-zinc-8 border-transparent focus-visible:(border-zinc-8 dark:border-zinc-4) invalid:(bg-red-1/50 border-red-6 dark:(bg-red-9/25 border-red-5/60) focus:(border-red-6 dark:border-red-5/60))'
+})
+
+const stateIconStyle = computed(() => {
+  const { invalid, positive, disabled } = props
+  if (invalid) {
+    return 'not-focus:(text-red-5)'
+  }
+  if (positive) {
+    return 'not-focus:(text-green-5)'
+  }
+  if (disabled) {
+    return 'text-zinc-3 dark:text-zinc-7'
+  }
+  return 'color-base-lighter'
 })
 
 const disabledStyle = computed(() => 'disabled:(bg-zinc-1 dark:bg-zinc-9/50 border-zinc-3 dark:border-zinc-7 opacity-50 cursor-not-allowed)')
@@ -125,11 +125,11 @@ const emits = {
   blur: () => emit('blur'),
 }
 
-// TODO
 defineExpose({
   inputEl,
 })
 
+// TODO: clear button on hover
 const inputWrapper = ref<HTMLDivElement>()
 const isHovered = useElementHover(inputWrapper)
 </script>

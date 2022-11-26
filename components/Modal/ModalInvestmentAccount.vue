@@ -22,10 +22,9 @@ const { colorOptions: colors } = useAppColors()
 
 const createAccountHandler = async (values: Prisma.MoneyAccountUncheckedCreateWithoutUserInput & Prisma.InvestmentAccountUncheckedCreateInput) => {
   // TODO: get type
-  const { description, expectedRateOfReturn, ...accountData } = values
+  const { description, expectedRateOfReturn, type, ...accountData } = values
 
   // TODO: temp
-  const type = InvestmentType.Stocks
   const investmentAccountData = { description, expectedRateOfReturn, type }
   const userId = (await useAuth()).userId.value as string | undefined
 
@@ -109,6 +108,14 @@ const modalConfig = computed(() => ({
   closable: true,
   panelClass: 'w-full !sm:min-w-xl',
 }))
+
+// InvestmentType.Stocks, InvestmentType.Crypto, InvestmentType.RealEstate, InvestmentType.Other
+const typeOptions = [
+  { label: 'Stocks', value: InvestmentType.Stocks },
+  { label: 'Crypto', value: InvestmentType.Crypto },
+  { label: 'Real Estate', value: InvestmentType.RealEstate },
+  { label: 'Other', value: InvestmentType.Other },
+]
 </script>
 
 <template>
@@ -140,16 +147,31 @@ const modalConfig = computed(() => ({
         :error="form.errors.description"
       />
 
-      <FInput
-        v-model="form.values.expectedRateOfReturn"
-        icon="tabler:percentage"
-        type="number"
-        label="Rate of return"
-        placeholder="ex 9%"
-        :input-props="{ min: 0.1, step: 0.01 }"
-        :invalid="!!form.errors.expectedRateOfReturn"
-        :error="form.errors.expectedRateOfReturn"
-      />
+      <div flex gap-2>
+        <FSelectField
+          v-model:value="form.values.type"
+          flex-1
+          block
+          placeholder="Select investment type"
+          label="Type"
+          icon="tabler:moneybag"
+          :items="typeOptions"
+          :invalid="!!form.errors.type"
+          :error="form.errors.type"
+        />
+
+        <FInput
+          v-model="form.values.expectedRateOfReturn"
+          flex-1
+          icon="tabler:percentage"
+          type="number"
+          label="Rate of return"
+          placeholder="ex 9%"
+          :input-props="{ min: 0.1, step: 0.01 }"
+          :invalid="!!form.errors.expectedRateOfReturn"
+          :error="form.errors.expectedRateOfReturn"
+        />
+      </div>
 
       <div flex gap-3>
         <FSelectField

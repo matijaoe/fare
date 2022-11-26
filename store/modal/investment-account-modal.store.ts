@@ -1,3 +1,4 @@
+import { InvestmentType } from '@prisma/client'
 import { toFormValidator } from '@vee-validate/zod'
 import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
@@ -25,8 +26,7 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
       icon: zod.any().optional(),
       description: zod.any().optional(),
       expectedRateOfReturn: zod.number({ required_error: 'Rate of return is required', invalid_type_error: 'Rate of return is required' }).min(0.1, { message: 'Expected rate of return must be greater than 0' }),
-      // TODO: handle enums
-      // type: zod.string(),
+      type: zod.nativeEnum(InvestmentType, { required_error: 'Type is required' }),
     }),
   )
 
@@ -35,16 +35,16 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
     color: string | null
     icon: string | null
     description: string | null
-    expectedRateOfReturn: number
-    // type: InvestmentType
+    expectedRateOfReturn: number | null
+    type: InvestmentType | null
   }>({
     validationSchema,
   })
 
   useField<string>('name')
   useField<string | null>('description')
-  useField<number>('expectedRateOfReturn')
-  // useField<string>('type')
+  useField<number | null>('expectedRateOfReturn')
+  useField<InvestmentType | null>('type')
   useField<string | null>('color')
   useField<string | null>('icon')
 
@@ -82,13 +82,12 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
   })
 
   const setEditAccount = (account: InvestmentAccountWithAccount) => {
-    // TODO: add type
-    const { description, expectedRateOfReturn, id: investmentAccountId } = account
+    const { description, expectedRateOfReturn, type, id: investmentAccountId } = account
     const { id, name, color, icon } = account.account
     set(_accountId, id)
     set(_investmentAccountId, investmentAccountId)
 
-    form.setValues({ name, color, icon, description, expectedRateOfReturn })
+    form.setValues({ name, color, icon, description, expectedRateOfReturn, type })
   }
 
   const launch = (account?: InvestmentAccountWithAccount) => {
@@ -103,9 +102,11 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
   }
 
   const reset = () => {
+    // TODO: didnt reset name
     form.resetForm()
     set(modalType, 'create')
     set(_accountId, undefined)
+    set(_investmentAccountId, undefined)
   }
 
   const hide = () => {
