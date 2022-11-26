@@ -128,7 +128,17 @@ const typeOptions = [
     @close="onClose"
   >
     <FAlert v-if="hasError" type="error" mb-3>
-      Something went wrong.
+      <div>
+        <p>Something went wrong</p>
+        <ul class="list-disc pl-3.5 mt-2">
+          <li v-if="isErrorUpdate" text-sm font-normal>
+            You probably did not change any information
+          </li>
+          <li v-if="isErrorCreate || isErrorUpdate" text-sm font-normal>
+            Account with the same name may already exists
+          </li>
+        </ul>
+      </div>
     </FAlert>
 
     <form flex flex-col gap-3 @submit.prevent="onSubmit">

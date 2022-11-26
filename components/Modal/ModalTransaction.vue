@@ -18,9 +18,6 @@ const { mutate: deleteTransaction, isLoading: isDeleteLoading, isError: isErrorD
 
 const hasError = computed(() => get(isErrorCreate) || get(isErrorUpdate) || get(isErrorDelete))
 
-const isErrorShown = ref(false)
-watch(hasError, val => set(isErrorShown, !!val))
-
 const createTransactionHandler = async (values: Prisma.TransactionCreateWithoutUserInput) => {
   const userId = (await useAuth()).userId.value as string | undefined
   if (userId) {
@@ -32,6 +29,7 @@ const createTransactionHandler = async (values: Prisma.TransactionCreateWithoutU
 
 const editTransactionHandler = async (values: Prisma.TransactionUncheckedUpdateInput) => {
   const userId = (await useAuth()).userId.value as string | undefined
+
   if (userId) {
     updateTransaction({ ...values, userId }, {
       onSuccess: () => modal.hide(),
@@ -117,8 +115,18 @@ const shownDate = computed({
     @close="onClose"
   >
     <form mt-4 flex flex-col gap-3 @submit.prevent="onSubmit">
-      <FAlert v-if="isErrorCreate" type="info">
-        Something went wrong.
+      <FAlert v-if="hasError" type="error">
+        <div flex flex-col items-start>
+          <p>Something went wrong</p>
+          <ul class="list-disc pl-3.5 mt-2">
+            <li v-if="isErrorUpdate" text-sm font-normal>
+              You probably did not change any information
+            </li>
+            <li v-else-if="isErrorCreate" text-sm font-normal>
+              Check your info and try again
+            </li>
+          </ul>
+        </div>
       </FAlert>
 
       <RadioGroup v-model="form.values.type">
