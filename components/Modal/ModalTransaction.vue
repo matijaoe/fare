@@ -7,19 +7,23 @@ import type { SelectItem } from '~~/models/ui/select'
 
 const modal = useTransactionModal()
 
+const form = $computed(() => modal.form)
+
+const transactionId = toRef(modal, 'transactionId')
+
 const { mutate: createTransaction, isLoading: isCreateLoading, isError: isErrorCreate, reset: resetCreate } = useTransactionCreate()
-const { mutate: updateTransaction, isLoading: isUpdateLoading, isError: isErrorUpdate, reset: resetUpdate } = useTransactionUpdate(toRef(modal, 'transactionId'))
-const { mutate: deleteTransaction, isLoading: isDeleteLoading, isError: isErrorDelete, reset: resetDelete } = useTransactionDelete(toRef(modal, 'transactionId'))
+const { mutate: updateTransaction, isLoading: isUpdateLoading, isError: isErrorUpdate, reset: resetUpdate } = useTransactionUpdate(transactionId)
+const { mutate: deleteTransaction, isLoading: isDeleteLoading, isError: isErrorDelete, reset: resetDelete } = useTransactionDelete(transactionId)
 
 const hasError = computed(() => get(isErrorCreate) || get(isErrorUpdate) || get(isErrorDelete))
 
 const isErrorShown = ref(false)
 watch(hasError, val => set(isErrorShown, !!val))
 
-const createTransactionHandler = async () => {
+const createTransactionHandler = async (values: Prisma.TransactionCreateWithoutUserInput) => {
   const userId = (await useAuth()).userId.value as string | undefined
   if (userId) {
-    createTransaction({ ...modal.form, userId }, {
+    createTransaction({ ...values, userId }, {
       onSuccess: () => modal.hide(),
     })
   }
@@ -61,12 +65,26 @@ const modalConfig = computed(() => ({
   panelClass: '!w-full !md:min-w-[600px]',
 }))
 
-const onSubmit = () => {
+const onSubmit = form.handleSubmit((values) => {
+  console.log('submitting form', values)
   if (modal.isEdit) {
-    editTransactionHandler(modal.form)
+    editTransactionHandler(values)
   } else {
-    createTransactionHandler()
+    createTransactionHandler(values)
   }
+}, (err) => {
+  console.log('Error submitting form', err)
+})
+
+const resetQueries = () => {
+  resetCreate()
+  resetUpdate()
+  resetDelete()
+}
+
+const onClose = () => {
+  modal.reset()
+  resetQueries()
 }
 
 const deleteBtn = ref<HTMLElement | null>(null)
@@ -91,14 +109,17 @@ onLongPress(
   <ModalBase
     v-model="modal.opened"
     v-bind="modalConfig"
-    @close="modal.hide"
+    @close="onClose"
   >
+    <pre bg-blue-2 overflow-scroll>
+    {{ form.values }}
+  </pre>
     <form mt-4 flex flex-col gap-3 @submit.prevent="onSubmit">
       <FAlert v-if="isErrorCreate" type="info">
         Something went wrong.
       </FAlert>
 
-      <RadioGroup v-model="modal.type">
+      <RadioGroup v-model="form.values.type">
         <div flex gap-2 text-center>
           <RadioGroupOption
             v-slot="{ checked }"
@@ -149,12 +170,14 @@ onLongPress(
         <div mt-4 flex flex-col gap-3>
           <FSelectField
             v-if="modal.isExpense || modal.isTransfer"
-            v-model="modal.selectedFromAccount"
+            v-model:value="form.values.fromAccountId"
             icon="tabler:arrow-up-right"
             label="From"
             placeholder="Pick an account"
             :items="fromAccountOptions"
             block
+            :invalid="!!form.errors.fromAccountId"
+            :error="form.errors.fromAccountId"
           >
             <template #option="{ item }">
               <div flex items-center gap-4>
@@ -179,12 +202,14 @@ onLongPress(
           </FSelectField>
           <FSelectField
             v-if="modal.isIncome || modal.isTransfer"
-            v-model="modal.selectedToAccount"
+            v-model:value="form.values.toAccountId"
             icon="tabler:arrow-down-left"
             label="To"
             placeholder="Pick an account"
             :items="toAccountOptions"
             block
+            :invalid="!!form.errors.toAccountId"
+            :error="form.errors.toAccountId"
           >
             <template #option="{ item }">
               <div flex items-center gap-4>
@@ -205,12 +230,14 @@ onLongPress(
 
           <FSelectField
             v-if="!modal.isTransfer"
-            v-model="modal.selectedCategory"
+            v-model:value="form.values.categoryId"
             :items="categoryOptions"
             icon="tabler:building-bank"
             label="Category"
             placeholder="Pick a category"
             block
+            :invalid="!!form.errors.categoryId"
+            :error="form.errors.categoryId"
           >
             <template #option="{ item }">
               <div flex items-center gap-4>
@@ -230,35 +257,41 @@ onLongPress(
           </FSelectField>
 
           <FInput
-            v-model="modal.amount"
+            v-model="form.values.amount"
             icon="tabler:currency-euro"
             label="Amount"
             type="number"
             placeholder="8.50"
-            :input-props="{ min: 0.10, step: 0.01 }"
+            :input-props="{ min: 0.01, step: 0.01 }"
+            :invalid="!!form.errors.amount"
+            :error="form.errors.amount"
           />
 
           <FInput
-            v-model="modal.date"
+            v-model="form.values.date"
             type="date"
             icon="tabler:calendar"
             label="Date"
+            :invalid="!!form.errors.date"
+            :error="form.errors.date"
           />
         </div>
 
         <div mt-4 flex flex-col gap-3>
           <FInput
-            v-model="modal.name"
+            v-model="form.values.name"
             icon="tabler:text-size"
             label="Name"
             placeholder="Lunch"
           />
           <FTextarea
-            v-model="modal.description"
+            v-model="form.values.description"
             icon="tabler:align-left"
             label="Description"
             placeholder="Quinoa salad"
             :rows="8"
+            :invalid="!!form.errors.description"
+            :error="form.errors.description"
           />
 
           <div flex justify-end gap-2 mt-4>
@@ -285,8 +318,8 @@ onLongPress(
               type="submit"
               icon="tabler:edit"
               :loading="isUpdateLoading"
-              :disabled="!modal.formValid"
             >
+              <!-- :disabled="!modal.formValid" -->
               Edit
             </FButton>
             <FButton
@@ -294,8 +327,8 @@ onLongPress(
               type="submit"
               icon="tabler:plus"
               :loading="isCreateLoading"
-              :disabled="!modal.formValid"
             >
+              <!-- :disabled="!modal.formValid" -->
               Create
             </FButton>
           </div>

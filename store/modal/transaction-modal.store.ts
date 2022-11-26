@@ -1,9 +1,10 @@
-import type { Category, Prisma, TransactionType } from '@prisma/client'
-import { get, set } from '@vueuse/core'
-import { format } from 'date-fns'
+import { TransactionType } from '@prisma/client'
+import { toFormValidator } from '@vee-validate/zod'
+import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import type { CashAccountWithAccount, TransactionWithCategoryAndCashAccount } from '~~/models/resources'
-import type { SelectItem } from '~~/models/ui'
+import { useField, useForm } from 'vee-validate'
+import * as zod from 'zod'
+import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources'
 
 type ActionType = 'create' | 'edit'
 
@@ -17,97 +18,64 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
   // Values
   const transactionId = ref<string>()
 
-  const name = ref<string>('')
-  const description = ref<string>('')
-  const amount = ref<number>()
-  const category = ref<Category>()
-  const date = ref<string>()
-  const fromAccount = ref<CashAccountWithAccount>()
-  const toAccount = ref<CashAccountWithAccount>()
+  // TODO:use zod instead of manually validating
+  const validationSchema = toFormValidator(
+    zod.object({
+      type: zod.nativeEnum(TransactionType, { required_error: 'Type is required' }),
+      // TODO: must be required but should be based off type
+      fromAccountId: zod.string({ invalid_type_error: 'Account is required', required_error: 'Account is required' }).optional(),
+      toAccountId: zod.string({ invalid_type_error: 'Account is required', required_error: 'Account is required' }).optional(),
+      name: zod.string({ required_error: 'Name is required' }).trim().min(1, { message: 'Name is required' }).max(24, { message: 'Name is too long' }),
+      description: zod.null().optional().or(zod.string()),
+      categoryId: zod.null().optional().or(zod.string()),
+      amount: zod.number({ required_error: 'Amount is required' }).min(0.01, { message: 'Amount must be greater than 0' }),
+      // TODO: handle as date
+      date: zod.string({ required_error: 'Date is required' }),
+    },
+    ))
 
-  const selectedCategory = computed({
-    get: () => isDefined(category)
-      ? { ...get(category), label: get(category).name, value: get(category).id }
-      : undefined,
-    set: (item?: SelectItem<Category>) => set(category, item),
+  // TODO:
+  // handle from and to account via reactive validation schema
+
+  const form = useForm<{
+    type: TransactionType
+    fromAccountId: string | null
+    toAccountId: string | null
+    name: string
+    description: string | null | undefined
+    categoryId: string | null
+    amount: number
+    date: Date
+  }>({
+    validationSchema,
   })
 
-  const selectedFromAccount = computed({
-    get: () => isDefined(fromAccount)
-      ? { ...get(fromAccount.value), label: get(fromAccount.value).account.name, value: get(fromAccount.value).id }
-      : undefined,
-    set: (item?: SelectItem<CashAccountWithAccount>) => set(fromAccount, item),
-  })
-
-  const selectedToAccount = computed({
-    get: () => isDefined(toAccount)
-      ? { ...get(toAccount.value), label: get(toAccount.value).account.name, value: get(toAccount.value).id }
-      : undefined,
-    set: (item?: SelectItem<CashAccountWithAccount>) => set(toAccount, item),
-  })
-
-  // Transaction type
-  const type = ref<TransactionType>('Expense')
-
-  const isType = (t: TransactionType) => get(type) === t
+  const isType = (t: TransactionType) => form.values.type === t
 
   const isExpense = computed(() => isType('Expense'))
   const isIncome = computed(() => isType('Income'))
   const isTransfer = computed(() => isType('Transfer'))
 
-  watch(type, () => {
+  useField<TransactionType>('type')
+  useField<string | null>('fromAccountId')
+  useField<string | null>('toAccountId')
+  useField<string>('name')
+  useField<string | null>('description')
+  useField<string | null>('categoryId')
+  useField<number>('amount')
+  useField<string>('date')
+
+  const selectedTransactionType = computed(() => form.values.type)
+
+  watch(selectedTransactionType, () => {
     if (isType('Transfer')) {
-      set(category, undefined)
+      form.setFieldValue('categoryId', null)
     } else if (isType('Expense')) {
-      set(toAccount, undefined)
+      form.setFieldValue('toAccountId', null)
     } else if (isType('Income')) {
-      set(fromAccount, undefined)
+      form.setFieldValue('fromAccountId', null)
     }
   })
-
-  // Form
-
-  // TODO: add validaton, currenly breaks if account not defined
-  const form = computed<Partial<Prisma.TransactionUncheckedCreateWithoutUserInput>>(() => ({
-    type: get(type),
-    name: get(name),
-    description: get(description),
-    amount: get(amount),
-    date: isDefined(date) ? new Date(get(date)).toISOString() : undefined,
-    categoryId: get(category)?.id,
-    fromAccountId: get(fromAccount)?.id,
-    toAccountId: get(toAccount)?.id,
-  }))
-
-  // lame solution but will do for now, gotta replace with real veevalidate/zod solution
-  const formValid = computed(() => {
-    const { type, amount, date, fromAccountId, toAccountId } = form.value
-    if (!type) {
-      return false
-    }
-    if (!amount || amount <= 0 || !date) {
-      return false
-    }
-    if (type === 'Expense') {
-      return !!fromAccountId
-    }
-    if (type === 'Income') {
-      return !!toAccountId
-    }
-    if (type === 'Transfer') {
-      return !!fromAccountId && !!toAccountId
-    }
-  })
-
-  const resetForm = () => {
-    set(name, '')
-    set(description, '')
-    set(amount, undefined)
-    set(date, format(new Date(), 'yyyy-MM-dd'))
-    set(category, undefined)
-    set(fromAccount, undefined)
-    set(toAccount, undefined)
-  }
 
   // Modal state
   const open = ref(false)
@@ -119,14 +87,16 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
   const setEditTransaction = (transaction: TransactionWithCategoryAndCashAccount) => {
     set(transactionId, transaction.id)
 
-    set(type, transaction.type)
-    set(name, transaction.name)
-    set(description, transaction.description)
-    set(amount, transaction.amount)
-    set(date, format(new Date(transaction.date), 'yyyy-MM-dd'))
-    set(category, transaction.category)
-    set(fromAccount, transaction.fromAccount)
-    set(toAccount, transaction.toAccount)
+    form.setValues({
+      type: transaction.type,
+      fromAccountId: transaction.fromAccountId,
+      toAccountId: transaction.toAccountId,
+      name: transaction.name,
+      description: transaction.description,
+      categoryId: transaction.categoryId,
+      amount: transaction.amount,
+      date: new Date(transaction.date),
+    })
   }
 
   const launchEdit = (transaction: TransactionWithCategoryAndCashAccount) => {
@@ -139,14 +109,18 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
   const launchNew = (transactionType?: TransactionType) => {
     set(modalType, 'create')
 
-    set(type, transactionType ?? 'Expense')
+    form.setFieldValue('type', transactionType ?? 'Expense')
+
+    // TODO: set opening month view on date picker to current month
 
     set(open, true)
   }
 
   const reset = () => {
-    resetForm()
-    set(type, 'create')
+    // resetForm()
+    form.resetForm()
+    // TODO: is this needed
+    // set(modalType, 'create')
     set(transactionId, undefined)
   }
 
@@ -161,22 +135,9 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     isCreate,
     // Value for edit
     transactionId,
-    // Values
-    type,
-    name,
-    description,
-    amount,
-    date,
-    category,
-    fromAccount,
-    toAccount,
-    // Select values
-    selectedCategory,
-    selectedFromAccount,
-    selectedToAccount,
     // Form
     form,
-    formValid,
+    reset,
     // Transaction types
     isType,
     isExpense,

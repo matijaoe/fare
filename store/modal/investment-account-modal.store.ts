@@ -5,7 +5,6 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import * as zod from 'zod'
 import type { InvestmentAccountWithAccount } from '~~/models/resources'
-import { toTitleCase } from '~~/utils'
 
 type ActionType = 'create' | 'edit'
 
@@ -22,9 +21,9 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
   const validationSchema = toFormValidator(
     zod.object({
       name: zod.string({ required_error: 'Name is required' }).trim().min(1, { message: 'Name is required' }).max(24, { message: 'Name is too long' }),
-      color: zod.any().optional(),
-      icon: zod.any().optional(),
-      description: zod.any().optional(),
+      color: zod.null().optional().or(zod.string()),
+      icon: zod.null().optional().or(zod.string()),
+      description: zod.null().optional().or(zod.string()),
       expectedRateOfReturn: zod.number({ required_error: 'Rate of return is required', invalid_type_error: 'Rate of return is required' }).min(0.1, { message: 'Expected rate of return must be greater than 0' }),
       type: zod.nativeEnum(InvestmentType, { required_error: 'Type is required' }),
     }),
@@ -32,19 +31,19 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
 
   const form = useForm<{
     name: string
-    color: string | null
-    icon: string | null
-    description: string | null
-    expectedRateOfReturn: number | null
-    type: InvestmentType | null
+    color: string | undefined
+    icon: string | undefined
+    description: string | undefined
+    expectedRateOfReturn: number | undefined
+    type: InvestmentType | undefined
   }>({
     validationSchema,
   })
 
   useField<string>('name')
   useField<string | null>('description')
-  useField<number | null>('expectedRateOfReturn')
-  useField<InvestmentType | null>('type')
+  useField<number>('expectedRateOfReturn')
+  useField<InvestmentType>('type')
   useField<string | null>('color')
   useField<string | null>('icon')
 
@@ -97,6 +96,7 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
     // Value for edit
     accountId: _accountId,
     investmentAccountId: _investmentAccountId,
+    // Select item value
     // Form
     form,
     reset,

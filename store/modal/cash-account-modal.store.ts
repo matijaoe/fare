@@ -4,7 +4,6 @@ import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import * as zod from 'zod'
-import { toTitleCase } from '~~/utils'
 
 type ActionType = 'create' | 'edit'
 
@@ -20,8 +19,8 @@ export const useCashAccountModal = defineStore('modal-account', () => {
   const validationSchema = toFormValidator(
     zod.object({
       name: zod.string({ required_error: 'Name is required' }).trim().min(1, { message: 'Name is required' }).max(24, { message: 'Name is too long' }),
-      color: zod.any().optional(),
-      icon: zod.any().optional(),
+      color: zod.null().or(zod.string()).optional(),
+      icon: zod.null().or(zod.string()).optional(),
     }),
   )
 
@@ -36,7 +35,7 @@ export const useCashAccountModal = defineStore('modal-account', () => {
   useField<string>('name')
   useField<string | null>('color')
   useField<string | null>('icon')
-  
+
   // Modal state
 
   const open = ref(false)

@@ -70,8 +70,11 @@ const onSubmit = form.handleSubmit((values) => {
   if (modal.isEdit) {
     editAccountHandler(values)
   } else {
+    // TODO: fix type error
     createAccountHandler(values)
   }
+}, (err) => {
+  console.log('Error submitting form', err)
 })
 
 const resetQueries = () => {

@@ -3,7 +3,7 @@ import type { InputHTMLAttributes } from 'vue'
 import { isNumber, set } from '@vueuse/core'
 
 type Props = {
-  modelValue?: string | number | null | undefined
+  modelValue?: string | number | Date | null | undefined
   type?: string
   icon?: string
   iconPlacement?: 'left' | 'right'
@@ -24,7 +24,7 @@ type Emits = {
   (e: 'input', value?: string | number | undefined | null): void
   (e: 'focus'): void
   (e: 'blur'): void
-  (e: 'update:modelValue', value?: string | number | null | undefined): void
+  (e: 'update:modelValue', value?: string | number | Date | null | undefined): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -103,7 +103,7 @@ const inputEl = ref<HTMLInputElement>()
 
 const value = computed({
   get: () => props.modelValue ?? '',
-  set: (val: string | number | null | undefined) => {
+  set: (val: string | number | Date | null | undefined) => {
     if (props.type === 'number') {
       const valueAsNumber = inputEl.value?.valueAsNumber
       if (!isNumber(valueAsNumber)) {
@@ -111,6 +111,10 @@ const value = computed({
       } else {
         emit('update:modelValue', isNaN(valueAsNumber) ? null : inputEl.value?.valueAsNumber)
       }
+      // TODO: not handling dates properly
+    // } else if (props.type === 'date') {
+    //   const valueAsDate = inputEl.value?.valueAsDate
+    //   emit('update:modelValue', valueAsDate)
     } else {
       emit('update:modelValue', val)
     }
