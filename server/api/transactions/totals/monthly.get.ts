@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import { readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
-import type { TransactionTotalMonthly, TransactionTotalMonthlyObject } from '~~/models/resources/transaction'
+import type { TransactionTotalMonthly, TransactionTotalMonthlyObject } from '~~/models/resources'
 import { groupBy } from '~~/utils'
 
 export default defineEventHandler(async (event) => {

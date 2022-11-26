@@ -2,7 +2,7 @@ import type { Category, Prisma } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { get } from '@vueuse/core'
 import type { Ref } from 'vue'
-import type { CategoryWithCount, CategoryWithTotals, CategoryWithTransactions, IndividualCategoryTotals } from '~~/models/resources/category'
+import type { CategoryWithCount, CategoryWithTotals, CategoryWithTransactions, IndividualCategoryTotals } from '~~/models/resources'
 
 export const keysCategory = {
   all: ['categories'] as const,

@@ -3,7 +3,7 @@ import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import * as zod from 'zod'
-import type { InvestmentAccountWithAccount } from '~~/models/resources/investment-account'
+import type { InvestmentAccountWithAccount } from '~~/models/resources'
 import { toTitleCase } from '~~/utils'
 
 type ActionType = 'create' | 'edit'
@@ -15,7 +15,8 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
   const isCreate = computed(() => modalType.value === 'create')
 
   // Values
-  const accountId = ref<string>()
+  const _accountId = ref<string>()
+  const _investmentAccountId = ref<string>()
 
   const validationSchema = toFormValidator(
     zod.object({
@@ -82,9 +83,10 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
 
   const setEditAccount = (account: InvestmentAccountWithAccount) => {
     // TODO: add type
-    const { description, expectedRateOfReturn } = account
+    const { description, expectedRateOfReturn, id: investmentAccountId } = account
     const { id, name, color, icon } = account.account
-    set(accountId, id)
+    set(_accountId, id)
+    set(_investmentAccountId, investmentAccountId)
 
     form.setValues({ name, color, icon, description, expectedRateOfReturn })
   }
@@ -103,7 +105,7 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
   const reset = () => {
     form.resetForm()
     set(modalType, 'create')
-    set(accountId, undefined)
+    set(_accountId, undefined)
   }
 
   const hide = () => {
@@ -116,7 +118,8 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
     isEdit,
     isCreate,
     // Value for edit
-    accountId,
+    accountId: _accountId,
+    investmentAccountId: _investmentAccountId,
     // Select item value
     colorObject,
     iconObject,

@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
 import type { Ref } from 'vue'
-import type { TransactionTotalMonthlyObject, TransactionWithCategoryAndCashAccount, TransactionsTotalsPerRange } from '~~/models/resources/transaction'
+import type { TransactionTotalMonthlyObject, TransactionWithCategoryAndCashAccount, TransactionsTotalsPerRange } from '~~/models/resources'
 
 export const keysTransactions = {
   all: ['transactions'] as const,

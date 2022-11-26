@@ -1,6 +1,6 @@
 import { get, set } from '@vueuse/core'
 import type { Ref } from 'vue'
-import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources/transaction'
+import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources'
 
 export const useTransactionFilters = (_transactions: Ref<TransactionWithCategoryAndCashAccount[] | undefined>) => {
   const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())

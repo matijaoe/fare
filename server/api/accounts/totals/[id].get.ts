@@ -2,7 +2,7 @@ import type { TransactionType } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
 import { readParams, readUserId, sendCustomError, sendInternalError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
-import type { AccountTotalType, GroupedAccount } from '~~/models/resources/account'
+import type { AccountTotalType, GroupedAccount } from '~~/models/resources'
 
 const initalTotal = () => ({ income: 0, expense: 0, net: 0, transferIn: 0, transferOut: 0, transferNet: 0, balance: 0 })
 

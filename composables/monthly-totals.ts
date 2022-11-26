@@ -1,7 +1,7 @@
 import type { TransactionType } from '@prisma/client'
 import { format, isThisYear } from 'date-fns'
 import type { Ref } from 'nuxt/dist/app/compat/capi'
-import type { TransactionTotalMonthlyObject } from '~~/models/resources/transaction'
+import type { TransactionTotalMonthlyObject } from '~~/models/resources'
 
 export const useMonthlyTotals = (totals: Ref<TransactionTotalMonthlyObject | undefined>, monthCount: Ref<number>) => {
   const months = $computed(() => Array.from({ length: monthCount.value }, (_, i) => {

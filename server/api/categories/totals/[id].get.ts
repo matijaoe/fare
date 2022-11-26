@@ -1,7 +1,7 @@
 import type { TransactionType } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
 import { db } from '~~/lib/db'
-import type { CategoryTotalType, GroupedCategory } from '~~/models/resources/category'
+import type { CategoryTotalType, GroupedCategory } from '~~/models/resources'
 import { readParams, readUserId, sendCustomError, useTransactionDateRange } from '~~/server/utils'
 
 const initalTotal = () => ({ income: 0, expense: 0, net: 0, totalNet: 0 })

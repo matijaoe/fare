@@ -1,7 +1,9 @@
 import type { InvestmentAccount, InvestmentEntry, Prisma } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
-import type { MaybeRef } from '@tanstack/vue-query/build/lib/types'
-import type { InvestmentAccountWithAccount, InvestmentAccountWithEntries } from '~~/models/resources/investment-account'
+import type { MaybeRef } from '@vueuse/core'
+import { get } from '@vueuse/core'
+import type { Ref } from 'vue'
+import type { InvestmentAccoundUpdateReq, InvestmentAccountWithAccount, InvestmentAccountWithEntries } from '~~/models/resources'
 
 export const keysInvestmentAccounts = {
   all: ['investment-accounts'] as const,
@@ -25,6 +27,15 @@ export const useInvestmentAccountCreate = () => {
   return useMutation((body: { account: Prisma.MoneyAccountUncheckedCreateInput } & Prisma.InvestmentAccountCreateInput) => $fetch<InvestmentAccount>('/api/accounts/investment', { method: 'POST', body }), {
     onSuccess: () => {
       qc.invalidateQueries(keysInvestmentAccounts.all)
+    },
+  })
+}
+
+export const useInvestmentAccountUpdate = (id: Ref<string | undefined>) => {
+  const qc = useQueryClient()
+  return useMutation((body: InvestmentAccoundUpdateReq) => $fetch< Record<'investmentAccount' | 'account', { count: number }>> (`/api/accounts/investment/${get(id)}`, { method: 'PATCH', body }), {
+    onSuccess: () => {
+      qc.invalidateQueries(keysInvestmentAccounts.basic())
     },
   })
 }

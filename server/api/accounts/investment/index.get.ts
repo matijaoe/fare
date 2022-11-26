@@ -14,9 +14,7 @@ export default defineEventHandler(async (event) => {
         account: true,
       },
       where: {
-        account: {
-          userId,
-        },
+        account: { userId },
       },
     })
   } catch (err) {

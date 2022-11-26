@@ -8,10 +8,11 @@ const modal = useInvestmentAccountModal()
 const form = $computed(() => modal.form)
 
 const accountId = toRef(modal, 'accountId')
+const investmentAccountId = toRef(modal, 'investmentAccountId')
 
 const { mutate: createAccount, isLoading: isCreateLoading, isError: isErrorCreate, reset: resetCreate } = useInvestmentAccountCreate()
 // TODO: but how to update investment account - specifically the description? create new query and endpoint for it
-const { mutate: updateAccount, isLoading: isUpdateLoading, isError: isErrorUpdate, reset: resetUpdate } = useAccountUpdate(accountId)
+const { mutate: updateAccount, isLoading: isUpdateLoading, isError: isErrorUpdate, reset: resetUpdate } = useInvestmentAccountUpdate(investmentAccountId)
 const { mutate: deleteAccount, isLoading: isDeleteLoading, isError: isErrorDelete, reset: resetDelete } = useAccountDelete(accountId)
 
 const hasError = computed(() => get(isErrorCreate) || get(isErrorUpdate) || get(isErrorDelete))
@@ -40,9 +41,11 @@ const editAccountHandler = async (values: Prisma.MoneyAccountUncheckedUpdateWith
   const userId = (await useAuth()).userId.value as string | undefined
   // TODO: handle full-on investment account update later
   const { description, expectedRateOfReturn, type, ...accountData } = values
+  const investmentAccountData = { description, expectedRateOfReturn, type }
+  const account = { ...accountData, userId }
 
   if (userId) {
-    updateAccount({ ...accountData, userId }, {
+    updateAccount({ account, ...investmentAccountData }, {
       onSuccess: () => modal.hide(),
     })
   }

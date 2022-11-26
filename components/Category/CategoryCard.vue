@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { CategoryTotals, CategoryWithCount } from '~~/models/resources/category'
+import type { CategoryTotals, CategoryWithCount } from '~~/models/resources'
 
 const { category, totals } = defineProps<{
   category: CategoryWithCount

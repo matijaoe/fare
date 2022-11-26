@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AccountTotals, CashAccountWithAccount } from '~~/models/resources/account'
+import type { AccountTotals, CashAccountWithAccount } from '~~/models/resources'
 type Props = {
   cashAccount: CashAccountWithAccount
   totals?: AccountTotals

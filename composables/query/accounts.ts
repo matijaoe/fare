@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
 import type { Ref } from 'vue'
-import type { CashAccountWithAccount, CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount, CashAccountWithTotals, CashAccountsBalanceModel, IndividualCashAccountTotals } from '~~/models/resources/account'
+import type { CashAccountWithAccount, CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount, CashAccountWithTotals, CashAccountsBalanceModel, IndividualCashAccountTotals } from '~~/models/resources'
 
 export const keysAccounts = {
   all: ['cash-accounts'] as const,

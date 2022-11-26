@@ -35,10 +35,6 @@ const unifiedAccounts = computed(() => {
   }) ?? []
 })
 
-watch(investmentEntries, () => {
-  console.log('investmentEntries', investmentEntries)
-})
-
 // TODO: more types
 const accountsStocks = computed(() => unifiedAccounts.value?.filter(({ type }) => type === 'Stocks'))
 const accountsCrypto = computed(() => unifiedAccounts.value?.filter(({ type }) => type === 'Crypto'))

@@ -11,21 +11,11 @@ export default defineEventHandler(async (event) => {
 
   try {
     const allAccounts = await db.investmentAccount.findMany({
-      where: {
-        account: {
-          userId,
-        },
-      },
+      where: { account: { userId } },
     })
 
     const investmentAccountBalances = await db.investmentEntry.findMany({
-      where: {
-        account: {
-          account: {
-            userId,
-          },
-        },
-      },
+      where: { account: { account: { userId } } },
     })
 
     const resultAccounts = allAccounts.map((account) => {

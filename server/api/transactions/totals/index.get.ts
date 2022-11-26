@@ -2,7 +2,7 @@ import type { TransactionType } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
 import { readUserId, sendCustomError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
-import type { TransactionsTotalsPerRange } from '~~/models/resources/transaction'
+import type { TransactionsTotalsPerRange } from '~~/models/resources'
 
 type TotalsForMonth = {
   type: TransactionType

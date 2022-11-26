@@ -2,7 +2,7 @@
 import { RadioGroup, RadioGroupOption } from '@headlessui/vue'
 import type { Prisma } from '@prisma/client'
 import { get, set } from '@vueuse/core'
-import type { CashAccountWithAccount } from '~~/models/resources/account'
+import type { CashAccountWithAccount } from '~~/models/resources'
 import type { SelectItem } from '~~/models/ui/select'
 
 const modal = useTransactionModal()

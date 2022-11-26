@@ -3,7 +3,7 @@ import type { InvestmentEntry } from '@prisma/client'
 import { isNumber } from '@vueuse/core'
 import { getMonth } from 'date-fns'
 import type Input from '~~/components/F/Input.vue'
-import type { InvestmentAccountWithAccount } from '~~/models/resources/investment-account'
+import type { InvestmentAccountWithAccount } from '~~/models/resources'
 import { formatPercentage } from '~~/utils'
 
 type Props = {
