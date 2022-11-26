@@ -118,7 +118,7 @@ const modalConfig = computed(() => ({
 
       <div flex gap-3>
         <FSelectField
-          v-model="modal.colorObject"
+          v-model:value="form.values.color"
           block
           :invalid="!!form.errors.color"
           :error="form.errors.color"
@@ -147,7 +147,7 @@ const modalConfig = computed(() => ({
         </FSelectField>
 
         <FSelectField
-          v-model="modal.iconObject"
+          v-model:value="form.values.icon"
           :items="icons"
           :invalid="!!form.errors.icon"
           :error="form.errors.icon"

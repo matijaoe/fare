@@ -36,31 +36,7 @@ export const useCashAccountModal = defineStore('modal-account', () => {
   useField<string>('name')
   useField<string | null>('color')
   useField<string | null>('icon')
-
-  // Select values
-
-  const colorObject = computed({
-    get: () => form.values.color
-      ? {
-          label: toTitleCase(form.values.color),
-          value: form.values.color,
-          bg: `bg-${form.values.color}-5`,
-          text: `text-${form.values.color}-5`,
-        }
-      : null,
-    set: obj => form.setFieldValue('color', obj?.value ?? null),
-  })
-
-  const iconObject = computed({
-    get: () => form.values.icon
-      ? {
-          label: toTitleCase(form.values.icon?.split(':').at(-1) || 'None'),
-          value: form.values.icon,
-        }
-      : null,
-    set: obj => form.setFieldValue('icon', obj?.value ?? null),
-  })
-
+  
   // Modal state
 
   const open = ref(false)
@@ -105,9 +81,6 @@ export const useCashAccountModal = defineStore('modal-account', () => {
     isCreate,
     // Value for edit
     accountId,
-    // Select item value
-    colorObject,
-    iconObject,
     // Form
     form,
     reset,

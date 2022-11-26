@@ -26,8 +26,8 @@ type Props = {
 }
 
 type Emits = {
-  (e: 'update:modelValue', value: SelectItemDefault | undefined): void
-  (e: 'update:value', value: number | string | undefined): void
+  (e: 'update:modelValue', value: SelectItemDefault | null): void
+  (e: 'update:value', value: number | string | null): void
 }
 
 const props = defineProps<Props>()
@@ -45,9 +45,9 @@ const wrapperProps = computed(() => ({
 }))
 
 const selectedItem = computed({
-  get: () => props?.modelValue ?? props.items.find(item => item.value === props.value) ?? undefined,
-  set: (value: SelectItemDefault | undefined) => {
-    emit('update:value', value?.value)
+  get: () => props?.modelValue ?? props.items.find(item => item.value === props.value) ?? null,
+  set: (value: SelectItemDefault | null) => {
+    emit('update:value', value?.value ?? null)
     emit('update:modelValue', value)
   },
 })

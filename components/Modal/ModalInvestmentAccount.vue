@@ -175,11 +175,10 @@ const typeOptions = [
 
       <div flex gap-3>
         <FSelectField
-          v-model="modal.colorObject"
-          block
+          v-model:value="form.values.color"
           :invalid="!!form.errors.color"
           :error="form.errors.color"
-          flex-1
+          block flex-1
           label="Color"
           :items="colors"
         >
@@ -204,13 +203,12 @@ const typeOptions = [
         </FSelectField>
 
         <FSelectField
-          v-model="modal.iconObject"
+          v-model:value="form.values.icon"
           :items="icons"
           :invalid="!!form.errors.icon"
           :error="form.errors.icon"
           label="Icon"
-          block
-          flex-1
+          block flex-1
         >
           <template #selected="{ item }">
             <div flex items-center gap-4>
