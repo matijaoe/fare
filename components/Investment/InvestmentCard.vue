@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { InvestmentEntry } from '@prisma/client'
 import { isNumber } from '@vueuse/core'
-import { getMonth } from 'date-fns'
+import { getMonth, isSameYear } from 'date-fns'
 import type Input from '~~/components/F/Input.vue'
 import type { InvestmentAccountWithAccount } from '~~/models/resources'
 import { formatPercentage } from '~~/utils'
@@ -30,7 +30,7 @@ const { selectedMonth } = toRefs(useDateRangeStore())
 const sortedBalances = computed(() => {
   const balances = Object.values(props.balances ?? {})
   // sort by newest
-  return balances.sort((a, b) => new Date(b.date) - new Date(a.date))
+  return balances.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 })
 
 const currentBalanceEntry = computed(() => props.balances?.[getYearMonthKey(selectedMonth.value)])
@@ -38,7 +38,7 @@ const currentBalance = computed(() => currentBalanceEntry.value?.balance)
 
 const previousBalanceEntry = computed(() => {
   const [previous] = sortedBalances.value
-    .filter(({ date }) => getMonth(new Date(date)) < getMonth(selectedMonth.value))
+    .filter(({ date }) => getMonth(new Date(date)) < getMonth(selectedMonth.value) && isSameYear(new Date(date), selectedMonth.value))
   return previous ?? null
 })
 const previousBalance = computed(() => previousBalanceEntry.value?.balance)
@@ -54,8 +54,8 @@ const percentageChange = computed(() => {
   return percentage
 })
 
-const formattedBalance = currentBalanceEntry.value ? useCurrencyFormat(currentBalance as unknown as number) : null
-const formattedPreviousBalance = previousBalanceEntry.value ? useCurrencyFormat(previousBalance as unknown as number) : null
+const formattedBalance = useCurrencyFormat(currentBalance as unknown as number)
+const formattedPreviousBalance = useCurrencyFormat(previousBalance as unknown as number)
 
 // --------------- Card hover ---------------
 

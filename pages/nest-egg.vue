@@ -7,14 +7,18 @@ onMounted(() => setBreadcrumbs([
   { label: 'Nest egg', href: { name: route.name ?? '🥺' } },
 ]))
 
-// TODO: transaction account modal
-// const cashAccountModal = useCashAccountModal()
-const { isAllTime } = toRefs(useDateRangeStore())
+const { isAllTime, monthQuery, isCurrentMonth } = toRefs(useDateRangeStore())
 
-// TODO: nest egg balance
 const { data: totalBalance, isLoading: isBalanceLoading } = useInvestmentsBalance()
+const { data: monthlyBalanceObj, isLoading: isMonthlyBalanceLoading } = useInvestmentsMonthlyBalance(monthQuery)
+
 const balance = computed(() => totalBalance.value?.balance ?? 0)
+
+// TODO: balance isnt always correct, sometimes outdated arent shown but are applied, should be shown as well
+const monthlyBalance = computed(() => monthlyBalanceObj.value?.balance ?? 0)
+
 const formattedTotalBalance = useCurrencyFormat(balance)
+const formattedMonthlyBalance = useCurrencyFormat(monthlyBalance)
 
 const { data: investmentAccounts } = useInvestmentAccounts()
 const { data: investmentEntries, isLoading: isEntriesLoading } = useInvestmentAccountsEntries()
@@ -40,22 +44,47 @@ const modal = useInvestmentAccountModal()
 
 <template>
   <LayoutPage>
-    <div flex="~ col gap-2" translate-y="0.4">
-      <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
-        Nest egg
-      </span>
+    <div flex items-center gap-8 divide-x-2 divide-stone-3>
+      <div
+        flex="~ col gap-2" translate-y="0.4"
+      >
+        <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
+          Total balance
+        </span>
 
-      <div text-6xl font="display medium">
-        <div
-          v-if="isBalanceLoading"
-          flex gap-4 items-center
-          class="color-base-lighter"
-        >
-          <FSkeleton class="h-60px w-60" />
+        <div font="display medium" text-6xl>
+          <div
+            v-if="isBalanceLoading"
+            flex gap-4 items-center
+          >
+            <FSkeleton class="h-60px w-60" />
+          </div>
+          <h4 v-else>
+            {{ formattedTotalBalance }}
+          </h4>
         </div>
-        <h4 v-else>
-          {{ formattedTotalBalance }}
-        </h4>
+      </div>
+
+      <div v-if="!isCurrentMonth" pl-8>
+        <div
+          flex="~ col gap-2" translate-y="0.4"
+        >
+          <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
+            At the time
+          </span>
+
+          <div font="display medium" text-6xl>
+            <div
+              v-if="isMonthlyBalanceLoading"
+              flex gap-4 items-center
+            >
+              <FSkeleton class="h-60px w-40" />
+            </div>
+            <h4 v-else text-zinc-4>
+              {{ formattedMonthlyBalance }}
+            </h4>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -67,7 +96,6 @@ const modal = useInvestmentAccountModal()
             icon-placement="left"
             @click="modal.launch()"
           >
-            <!-- @click="cashAccountModal.launch()" -->
             Add account
           </FButton>
         </template>
@@ -76,7 +104,6 @@ const modal = useInvestmentAccountModal()
           v-if="accountsStocks?.length"
           class="custom-grid" gap-3
         >
-          <!-- TODO: keep an eye on this key...  -->
           <InvestmentCard
             v-for="account in accountsStocks"
             :key="account"
@@ -94,7 +121,6 @@ const modal = useInvestmentAccountModal()
             variant="secondary"
             icon-placement="left"
           >
-            <!-- @click="cashAccountModal.launch()" -->
             Add account
           </FButton>
         </template>

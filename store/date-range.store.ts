@@ -1,5 +1,5 @@
 import { get, set } from '@vueuse/core'
-import { addMonths, format, isSameMonth, isThisYear, startOfMonth, subMonths } from 'date-fns'
+import { addMonths, format, isSameMonth, isThisMonth, isThisYear, startOfMonth, subMonths } from 'date-fns'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const useDateRangeStore = defineStore('date-range', () => {
@@ -32,7 +32,7 @@ export const useDateRangeStore = defineStore('date-range', () => {
     return format(date, isThisYear(date) ? formatType.month : formatType.monthYear)
   })
 
-  const isCurrentMonth = computed(() => isSameMonth(now, get(selectedMonth)))
+  const isCurrentMonth = computed(() => isThisMonth(get(selectedMonth)))
 
   const monthQuery = computed(() => !get(isAllTime) ? format(get(selectedMonth), formatType.yearMonth) : undefined)
 

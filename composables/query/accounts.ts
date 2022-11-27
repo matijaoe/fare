@@ -77,6 +77,7 @@ export const useCashAccountCreate = () => {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
       qc.invalidateQueries(keysInvestmentAccounts.details())
+      qc.invalidateQueries(keysInvestmentAccounts.balance())
     },
   })
 }
@@ -91,6 +92,7 @@ export const useAccountUpdate = (id: Ref<string | undefined>) => {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
       qc.invalidateQueries(keysInvestmentAccounts.details())
+      qc.invalidateQueries(keysInvestmentAccounts.balance())
     },
   })
 }
@@ -105,6 +107,7 @@ export const useAccountDelete = (id: Ref<string | undefined>) => {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
       qc.invalidateQueries(keysInvestmentAccounts.details())
+      qc.invalidateQueries(keysInvestmentAccounts.balance())
     },
   })
 }

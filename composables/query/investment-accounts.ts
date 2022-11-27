@@ -40,6 +40,7 @@ export const useInvestmentAccountUpdate = (id: Ref<string | undefined>) => {
   return useMutation((body: InvestmentAccoundUpdateReq) => $fetch< Record<'investmentAccount' | 'account', { count: number }>> (`/api/accounts/investment/${get(id)}`, { method: 'PATCH', body }), {
     onSuccess: () => {
       qc.invalidateQueries(keysInvestmentAccounts.details())
+      qc.invalidateQueries(keysInvestmentAccounts.balance())
     },
   })
 }
@@ -66,9 +67,8 @@ export const useInvestmentAccountsEntryCreate = () => {
     {
       onSuccess: () => {
         qc.invalidateQueries(keysInvestmentAccounts.entries())
+        qc.invalidateQueries(keysInvestmentAccounts.balance())
       },
     },
   )
 }
-
-// TODO: get balance of all investment accounts
