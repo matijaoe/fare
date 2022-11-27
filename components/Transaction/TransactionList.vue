@@ -16,33 +16,26 @@ const items = computed({
   get: () => props.transactions,
   set: (value: Transaction[]) => value,
 })
-
-const { list, containerProps, wrapperProps } = useVirtualList(
-  items,
-  { itemHeight: 125 },
-)
 </script>
 
 <template>
   <div
-    v-bind="containerProps"
     bg-white dark:bg-zinc-9
     overflow-y-auto
     :class="[mainContentWrapperHeight]"
   >
     <div
-      v-bind="wrapperProps"
       flex="~ col"
       divide="y-2 dashed zinc-2 dark:zinc-9"
     >
       <template v-if="hasTransactions">
         <button
-          v-for="item in list"
+          v-for="item in items"
           :key="JSON.stringify(item)"
           class="hover:bg-zinc-1/40 dark:hover:bg-zinc-8/40 last:(!border-b-2 !border-b-dashed)"
-          @click="transactionModal.launchEdit(item.data)"
+          @click="transactionModal.launchEdit(item)"
         >
-          <TransactionItem :item="item.data" />
+          <TransactionItem :item="item" />
         </button>
       </template>
 
