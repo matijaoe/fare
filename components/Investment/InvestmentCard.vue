@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { InvestmentEntry } from '@prisma/client'
 import { isNumber } from '@vueuse/core'
-import { getMonth, isSameYear } from 'date-fns'
+import { getMonth, isSameYear, isThisMonth, isThisYear } from 'date-fns'
 import type Input from '~~/components/F/Input.vue'
 import type { InvestmentAccountWithAccount } from '~~/models/resources'
 import { formatPercentage } from '~~/utils'
@@ -33,6 +33,7 @@ const sortedBalances = computed(() => {
   return balances.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 })
 
+// TODO: last updated date not correct, was working before
 const currentBalanceEntry = computed(() => props.balances?.[getYearMonthKey(selectedMonth.value)])
 const currentBalance = computed(() => currentBalanceEntry.value?.balance)
 
@@ -142,7 +143,6 @@ const setEditMode = (value: boolean) => {
       >
         <div v-show="isEditMode" flex justify-center>
           <form @submit.prevent="editBalanceHandler">
-            <!-- TODO: icon is not showing, worked -->
             <FInput
               ref="editBalanceInputEl"
               v-model="balanceValue"
@@ -184,10 +184,18 @@ const setEditMode = (value: boolean) => {
           text-xs text-zinc-4 font-mono font-light
         >
           <p v-if="currentBalanceEntry">
-            last updated on {{ useDateFormat(currentBalanceEntry.date) }}
+            last updated in {{ formatDate(currentBalanceEntry.date, {
+              year: isThisYear(currentBalanceEntry.date) ? undefined : 'numeric',
+              month: 'short',
+              dateStyle: undefined,
+            }) }}
           </p>
           <p v-else-if="previousBalanceEntry" relative>
-            last updated on {{ useDateFormat(previousBalanceEntry.date) }}
+            last updated in {{ formatDate(previousBalanceEntry.date, {
+              year: isThisYear(previousBalanceEntry.date) ? undefined : 'numeric',
+              month: 'short',
+              dateStyle: undefined,
+            }) }}
             <FBadge color="red" type="solid" class="absolute bottom--8 left-50% -translate-x-50%">
               outdated
             </FBadge>
@@ -196,7 +204,7 @@ const setEditMode = (value: boolean) => {
       </div>
     </div>
 
-    <div
+    <!-- <div
       v-if="investmentAccount.description"
       mt-auto z-2 relative
       flex items-center justify-center
@@ -207,7 +215,7 @@ const setEditMode = (value: boolean) => {
       <p text-sm>
         {{ investmentAccount.description }}
       </p>
-    </div>
+    </div> -->
 
     <div
       mt-auto z-2 relative
