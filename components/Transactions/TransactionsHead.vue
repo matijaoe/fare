@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
-const { data: totals, isLoading } = useTransactionTotalsPerRange(rangeFrom, rangeTo)
+const { monthQuery } = toRefs(useDateRangeStore())
+const { data: totals, isLoading } = useTransactionTotalsPerRange(monthQuery)
 
 const net = computed(() => totals.value?.net ?? 0)
 const expense = computed(() => totals.value?.expense ?? 0)

@@ -5,13 +5,13 @@ const route = useRoute()
 
 const accountId = $computed(() => route.params.accountId as string)
 
-const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
+const { isAllTime, monthQuery } = toRefs(useDateRangeStore())
 
 const { data: cashAccount, isLoading: isAccountLoading } = useCashAccount(accountId)
-const { data: cashAccountWithTotals, isLoading: isTotalsLoading } = useCashAccountTotals(accountId, rangeFrom, rangeTo)
+const { data: cashAccountWithTotals, isLoading: isTotalsLoading } = useCashAccountTotals(accountId, monthQuery)
 
 const account = $computed(() => cashAccount.value?.account)
-const { data: accountWithTransactions, isLoading: isTransactionsLoading } = useCashAccountWithTransactions(accountId, rangeFrom, rangeTo)
+const { data: accountWithTransactions, isLoading: isTransactionsLoading } = useCashAccountWithTransactions(accountId, monthQuery)
 
 const fullAccountTransactions = computed(() => {
   if (isDefined(accountWithTransactions)) {

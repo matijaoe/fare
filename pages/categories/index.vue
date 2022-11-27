@@ -9,10 +9,10 @@ onMounted(() => setBreadcrumbs([
 ]))
 
 const categoryModal = useCategoryModal()
-const { rangeFrom, rangeTo, isAllTime } = toRefs(useDateRangeStore())
+const { monthQuery, isAllTime } = toRefs(useDateRangeStore())
 
 const { data: categories } = useCategories()
-const { data: categoriesTotals, isLoading: isTotalsLoading } = useCategoriesTotals(rangeFrom, rangeTo)
+const { data: categoriesTotals, isLoading: isTotalsLoading } = useCategoriesTotals(monthQuery)
 
 const shownCategories = computed(() => {
   const findCategory = (id: string) => categoriesTotals.value?.find(cat => cat.id === id)

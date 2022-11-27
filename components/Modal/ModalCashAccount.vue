@@ -60,7 +60,7 @@ const onSubmit = form.handleSubmit((values) => {
     createAccountHandler(values)
   }
 }, (err) => {
-  console.log('Error submitting form', err)
+  console.error('Error submitting form', err)
 })
 
 const resetQueries = () => {
@@ -116,7 +116,7 @@ const modalConfig = computed(() => ({
             Account with the same name may already exists
           </li>
           <li v-if="isErrorDelete" text-sm font-normal>
-            Cannot delete account with transactions 
+            Cannot delete account with transactions
           </li>
         </ul>
       </div>

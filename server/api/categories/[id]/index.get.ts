@@ -1,6 +1,6 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { readParams, readUserId, sendCustomError, sendInternalError, useTransactionDateRange } from '~~/server/utils'
+import { getDateRange, readParams, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
   const where = readParams<Prisma.CategoryWhereUniqueInput>(event)
 
-  const { dateQuery: date } = useTransactionDateRange(event)
+  const { prismaRangeQuery: date } = getDateRange(event)
 
   const { transactions } = getQuery(event) as { transactions?: string }
   const withTransactions = transactions === 'true'

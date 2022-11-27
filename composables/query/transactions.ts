@@ -9,10 +9,10 @@ export const keysTransactions = {
   all: ['transactions'] as const,
   // Ranges
   ranges: () => [...keysTransactions.all, 'range'] as const,
-  range: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysTransactions.all, 'range', from, to] as const,
+  range: (month: Ref<string | undefined>) => [...keysTransactions.all, 'range', month] as const,
   // Totals
   totals: () => [...keysTransactions.all, 'totals'] as const,
-  total: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysTransactions.all, 'totals', from, to] as const,
+  total: (month: Ref<string | undefined>) => [...keysTransactions.all, 'totals', month] as const,
   // Details
   details: () => [...keysTransactions.all, 'detail'] as const,
   detail: (id: MaybeRef<string>) => [...keysTransactions.all, 'detail', id] as const,
@@ -21,13 +21,12 @@ export const keysTransactions = {
 export const useTransaction = (id: MaybeRef<string>) =>
   useQuery(keysTransactions.detail(id), () => $fetch<Transaction>(`/api/transactions/${unref(id)}`))
 
-export const useTransactions = (from: Ref<string | undefined>, to: Ref<string | undefined>) =>
+export const useTransactions = (month: Ref<string | undefined>) =>
   useQuery(
-    keysTransactions.range(from, to),
+    keysTransactions.range(month),
     () => {
-      const fullRangeDefined = isDefined(from) && isDefined(to)
-      const url = fullRangeDefined
-        ? `/api/transactions?from=${get(from)}&to=${get(to)}`
+      const url = isDefined(month)
+        ? `/api/transactions?month=${get(month)}`
         : '/api/transactions'
 
       return $fetch<TransactionWithCategoryAndCashAccount[]>(url)
@@ -91,12 +90,11 @@ export const useTransactionDelete = (id: Ref<string | undefined>) => {
   })
 }
 
-export const useTransactionTotalsPerRange = (from: Ref<string | undefined>, to: Ref<string | undefined>) => useQuery(
-  keysTransactions.total(from, to),
+export const useTransactionTotalsPerRange = (month: Ref<string | undefined>) => useQuery(
+  keysTransactions.total(month),
   () => {
-    const fullRangeDefined = isDefined(from) && isDefined(to)
-    const url = fullRangeDefined
-      ? `/api/transactions/totals?from=${get(from)}&to=${get(to)}`
+    const url = isDefined(month)
+      ? `/api/transactions/totals?month=${get(month)}`
       : '/api/transactions/totals'
 
     return $fetch<TransactionsTotalsPerRange>(url)

@@ -3,8 +3,8 @@ onMounted(() => setBreadcrumbs([
   { label: 'Transactions', href: useRoute().path },
 ]))
 
-const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
-const { data, isLoading } = useTransactions(rangeFrom, rangeTo)
+const { monthQuery } = toRefs(useDateRangeStore())
+const { data, isLoading } = useTransactions(monthQuery)
 
 const { transactions, searchQuery } = useTransactionFilters(data)
 </script>

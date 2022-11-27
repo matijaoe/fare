@@ -11,26 +11,25 @@ export const keysAccounts = {
   balance: () => [...keysAccounts.all, 'balance'] as const,
   // account totals for range
   totals: () => [...keysAccounts.all, 'totals'] as const,
-  totalsRange: (from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysAccounts.all, 'totals', from, to] as const,
-  totalsIndividualRange: (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysAccounts.all, 'totals', id, from, to] as const,
+  totalsRange: (month: Ref<string | undefined>) => [...keysAccounts.all, 'totals', month] as const,
+  totalsIndividualRange: (id: string, month: Ref<string | undefined>) => [...keysAccounts.all, 'totals', id, month] as const,
   // account details
   details: () => [...keysAccounts.all, 'detail'] as const,
   detail: (id: MaybeRef<string>) => [...keysAccounts.all, 'detail', unref(id)] as const,
   // account with transactions
-  detailsWithRange: () => [...keysCategory.all, 'detail', 'transactions'] as const,
-  detailWithRange: (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => [...keysAccounts.all, 'detail', 'transactions', id, from, to] as const,
+  detailsWithRange: () => [...keysAccounts.all, 'detail', 'transactions'] as const,
+  detailWithRange: (id: string, month: Ref<string | undefined>) => [...keysAccounts.all, 'detail', 'transactions', id, month] as const,
 }
 
 export const useCashAccount = (id: string) => useQuery(keysAccounts.detail(id),
   () => $fetch<CashAccountWithAccount>(`/api/accounts/cash/${unref(id)}`),
 )
 
-export const useCashAccountWithTransactions = (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => useQuery(
-  keysCategory.detailWithRange(id, from, to),
+export const useCashAccountWithTransactions = (id: string, month: Ref<string | undefined>) => useQuery(
+  keysAccounts.detailWithRange(id, month),
   () => {
-    const fullRangeDefined = isDefined(from) && isDefined(to)
-    const url = fullRangeDefined
-      ? `/api/accounts/cash/${id}?transactions=true&from=${get(from)}&to=${get(to)}`
+    const url = isDefined(month)
+      ? `/api/accounts/cash/${id}?transactions=true&month=${get(month)}`
       : `/api/accounts/cash/${id}?transactions=true`
 
     return $fetch<CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount>(url)
@@ -45,24 +44,22 @@ export const useCashAccounts = (payload?: { transactions?: boolean }) => {
   )
 }
 
-export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<string | undefined>) => useQuery(
-  keysAccounts.totalsRange(from, to),
+export const useCashAccountsTotals = (month: Ref<string | undefined>) => useQuery(
+  keysAccounts.totalsRange(month),
   () => {
-    const fullRangeDefined = isDefined(from) && isDefined(to)
-    const url = fullRangeDefined
-      ? `/api/accounts/totals?from=${get(from)}&to=${get(to)}`
+    const url = isDefined(month)
+      ? `/api/accounts/totals?month=${get(month)}`
       : '/api/accounts/totals'
 
     return $fetch<CashAccountWithTotals[]>(url)
   },
 )
 
-export const useCashAccountTotals = (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => useQuery(
-  keysAccounts.totalsRange(from, to),
+export const useCashAccountTotals = (id: string, month: Ref<string | undefined>) => useQuery(
+  keysAccounts.totalsIndividualRange(id, month),
   () => {
-    const fullRangeDefined = isDefined(from) && isDefined(to)
-    const url = fullRangeDefined
-      ? `/api/accounts/totals/${id}?from=${get(from)}&to=${get(to)}`
+    const url = isDefined(month)
+      ? `/api/accounts/totals/${id}?month=${get(month)}`
       : `/api/accounts/totals/${id}`
 
     return $fetch<IndividualCashAccountTotals>(url)
