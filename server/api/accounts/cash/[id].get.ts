@@ -1,7 +1,7 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { readParams, readUserId, sendCustomError, sendInternalError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
+import { getDateRange, readParams, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
@@ -10,8 +10,9 @@ export default defineEventHandler(async (event) => {
     return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No user id')
   }
 
+  const { prismaRangeQuery: date } = getDateRange(event)
+
   const where = readParams<Prisma.MoneyAccountWhereUniqueInput>(event)
-  const { dateQuery: date } = useTransactionDateRange(event)
 
   const { transactions } = getQuery(event) as { transactions?: string }
   const withTransactions = transactions === 'true'

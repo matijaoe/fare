@@ -5,7 +5,7 @@ import { getDateRange, readUserId, sendInternalError } from '~~/server/utils'
 export default defineEventHandler((event) => {
   const userId = readUserId(event)
 
-  const { monthRangeQuery: date } = getDateRange(event)
+  const { prismaRangeQuery: date } = getDateRange(event)
 
   if (!userId) {
     return null

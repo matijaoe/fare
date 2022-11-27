@@ -1,8 +1,8 @@
 import type { TransactionType } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { readUserId, sendCustomError, sendInternalError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import type { AccountTotalType, GroupedAccount } from '~~/models/resources'
+import { getDateRange, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 
 const initalTotal = () => ({ income: 0, expense: 0, net: 0, transferIn: 0, transferOut: 0, transferNet: 0, balance: 0 })
 
@@ -36,7 +36,7 @@ const calculateAccountTotals = (groupedAccounts: GroupedAccount[]) => {
 
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
-  const { dateQuery: date, hasDefinedRange } = useTransactionDateRange(event)
+  const { prismaRangeQuery: date, hasDefinedMonth } = getDateRange(event)
 
   if (!userId) {
     return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
       where: { userId },
     })
 
-    const groupByAccountsRange = hasDefinedRange
+    const groupByAccountsRange = hasDefinedMonth
       ? await db.transaction.groupBy({
         by: ['fromAccountId', 'toAccountId', 'type'],
         _sum: { amount: true },
@@ -66,7 +66,7 @@ export default defineEventHandler(async (event) => {
     const totalsAllTime = calculateAccountTotals(groupByAccountsAllTime)
     const totalsInRange = groupByAccountsRange ? calculateAccountTotals(groupByAccountsRange) : null
 
-    const isForRange = hasDefinedRange && totalsInRange
+    const isForRange = hasDefinedMonth && totalsInRange
 
     // Totals for all time - net, expenses, income, transfer net, balance
     return cashAccounts.map((account) => {
