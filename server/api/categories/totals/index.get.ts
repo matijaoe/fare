@@ -1,8 +1,8 @@
 import type { TransactionType } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { readUserId, sendCustomError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import type { CategoryTotalType, GroupedCategory } from '~~/models/resources'
+import { getDateRange, readUserId, sendCustomError } from '~~/server/utils'
 
 const initalTotal = () => ({ income: 0, expense: 0, net: 0, totalNet: 0 })
 
@@ -35,11 +35,11 @@ const calculateCategoryTotals = (grupedCategories: GroupedCategory[]) => {
 
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
-  const { dateQuery: date, hasDefinedRange } = useTransactionDateRange(event)
-
   if (!userId) {
     return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
   }
+
+  const { prismaRangeQuery: date, hasDefinedMonth } = getDateRange(event)
 
   const groupedCategoriesAllTime = await db.transaction.groupBy({
     by: ['categoryId', 'type'],
@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
     },
   })
 
-  const groupedCategoriesInRange = hasDefinedRange
+  const groupedCategoriesInRange = hasDefinedMonth
     ? await db.transaction.groupBy({
       by: ['categoryId', 'type'],
       _sum: { amount: true },
@@ -71,7 +71,7 @@ export default defineEventHandler(async (event) => {
   const totalsAllTime = calculateCategoryTotals(groupedCategoriesAllTime)
   const totalsInRange = groupedCategoriesInRange ? calculateCategoryTotals(groupedCategoriesInRange) : null
 
-  const isForRange = hasDefinedRange && totalsInRange
+  const isForRange = hasDefinedMonth && totalsInRange
 
   // For every category, construct object with totals
   return categories.map((category) => {

@@ -3,11 +3,11 @@ const route = useRoute()
 
 const categoryId = route.params.categoryId as string
 
-const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
+const { monthQuery } = toRefs(useDateRangeStore())
 const { data: category, isLoading: isCategoryLoading } = useCategory(categoryId)
-const { data: categoryWithTotals, isLoading: isTotalsLoading } = useCategoryTotals(categoryId, rangeFrom, rangeTo)
+const { data: categoryWithTotals, isLoading: isTotalsLoading } = useCategoryTotals(categoryId, monthQuery)
 
-const { data: categoryWithTransactions, isLoading: isTransactionsLoading } = useCategoryWithTransactions(categoryId, rangeFrom, rangeTo)
+const { data: categoryWithTransactions, isLoading: isTransactionsLoading } = useCategoryWithTransactions(categoryId, monthQuery)
 
 const { transactions, searchQuery } = useTransactionFilters(
   computed(() => categoryWithTransactions.value?.transactions),

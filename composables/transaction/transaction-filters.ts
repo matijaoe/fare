@@ -3,14 +3,14 @@ import type { Ref } from 'vue'
 import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources'
 
 export const useTransactionFilters = (_transactions: Ref<TransactionWithCategoryAndCashAccount[] | undefined>) => {
-  const { rangeFrom, rangeTo } = toRefs(useDateRangeStore())
+  const { monthQuery } = toRefs(useDateRangeStore())
 
   // Filters
   const searchQuery = ref('')
   const setSearchQuery = (value: string) => set(searchQuery, value)
   const clearSearchQuery = () => set(searchQuery, '')
 
-  watch([rangeFrom, rangeTo], clearSearchQuery)
+  watch(monthQuery, clearSearchQuery)
 
   const search = (transaction: TransactionWithCategoryAndCashAccount) => {
     const match = (str?: string | null) => !!str?.toLowerCase().includes(searchQuery.value.toLowerCase())

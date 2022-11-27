@@ -1,6 +1,6 @@
 import type { Prisma } from '@prisma/client'
-import { readUserId, sendInternalError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
+import { getDateRange, readUserId, sendInternalError } from '~~/server/utils'
 
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
@@ -8,10 +8,10 @@ export default defineEventHandler(async (event) => {
     return null
   }
 
-  const { dateQuery: date, hasDefinedRange } = useTransactionDateRange(event)
+  const { prismaRangeQuery: date, hasDefinedMonth } = getDateRange(event)
 
   const { transactions } = getQuery(event) as { transactions?: string }
-  const withTransactions = (hasDefinedRange && transactions !== 'false') || transactions === 'true'
+  const withTransactions = (hasDefinedMonth && transactions !== 'false') || transactions === 'true'
 
   const paymentAccountArgs: Prisma.TransactionFindManyArgs | boolean = withTransactions
     ? {

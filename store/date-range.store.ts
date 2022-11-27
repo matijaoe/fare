@@ -1,6 +1,6 @@
-import { acceptHMRUpdate, defineStore } from 'pinia'
 import { get, set } from '@vueuse/core'
-import { addMonths, endOfMonth, format, isSameMonth, isThisYear, startOfMonth, subMonths } from 'date-fns'
+import { addMonths, format, isSameMonth, isThisYear, startOfMonth, subMonths } from 'date-fns'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const useDateRangeStore = defineStore('date-range', () => {
   const now = $(useNow())
@@ -13,7 +13,6 @@ export const useDateRangeStore = defineStore('date-range', () => {
   }
 
   // TODO: save in local storage
-  // Start of month
   const selectedMonth = ref<Date>(startOfMonth(now))
 
   const isAllTime = ref(false)
@@ -28,11 +27,6 @@ export const useDateRangeStore = defineStore('date-range', () => {
 
   const isLatestMonth = computed(() => isSameMonth(get(selectedMonth), now))
 
-  const rangeFrom = computed(() => !get(isAllTime) ? format(startOfMonth(get(selectedMonth)), formatType.full) : undefined)
-  const rangeTo = computed(() => !get(isAllTime) ? format(endOfMonth(get(selectedMonth)), formatType.full) : undefined)
-
-  const hasDefinedRange = computed(() => get(rangeFrom) && get(rangeTo))
-
   const formattedDate = computed(() => {
     const date = get(selectedMonth)
     return format(date, isThisYear(date) ? formatType.month : formatType.monthYear)
@@ -40,10 +34,7 @@ export const useDateRangeStore = defineStore('date-range', () => {
 
   const isCurrentMonth = computed(() => isSameMonth(now, get(selectedMonth)))
 
-  // TODO: implement throughout
   const monthQuery = computed(() => !get(isAllTime) ? format(get(selectedMonth), formatType.yearMonth) : undefined)
-  // const monthStartDate = computed(() => startOfMonth(get(selectedMonth)))
-  // const monthEndDate = computed(() => endOfMonth(get(selectedMonth)))
 
   return {
     selectedMonth,
@@ -54,11 +45,7 @@ export const useDateRangeStore = defineStore('date-range', () => {
     setNextMonth,
     isLatestMonth,
     formattedDate,
-    rangeFrom,
-    rangeTo,
-    hasDefinedRange,
     isCurrentMonth,
-    // TODO: wip
     monthQuery,
   }
 })
