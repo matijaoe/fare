@@ -12,7 +12,7 @@ onMounted(() => setBreadcrumbs([
 const { selectedMonth, isAllTime } = toRefs(useDateRangeStore())
 
 // TODO: nest egg balance
-const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
+const { data: totalBalance, isLoading: isBalanceLoading } = useInvestmentsBalance()
 const balance = computed(() => totalBalance.value?.balance ?? 0)
 const formattedTotalBalance = useCurrencyFormat(balance)
 

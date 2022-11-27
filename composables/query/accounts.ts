@@ -45,33 +45,29 @@ export const useCashAccounts = (payload?: { transactions?: boolean }) => {
   )
 }
 
-export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<string | undefined>) => {
-  return useQuery(
-    keysAccounts.totalsRange(from, to),
-    () => {
-      const fullRangeDefined = isDefined(from) && isDefined(to)
-      const url = fullRangeDefined
-        ? `/api/accounts/totals?from=${get(from)}&to=${get(to)}`
-        : '/api/accounts/totals'
+export const useCashAccountsTotals = (from: Ref<string | undefined>, to: Ref<string | undefined>) => useQuery(
+  keysAccounts.totalsRange(from, to),
+  () => {
+    const fullRangeDefined = isDefined(from) && isDefined(to)
+    const url = fullRangeDefined
+      ? `/api/accounts/totals?from=${get(from)}&to=${get(to)}`
+      : '/api/accounts/totals'
 
-      return $fetch<CashAccountWithTotals[]>(url)
-    },
-  )
-}
+    return $fetch<CashAccountWithTotals[]>(url)
+  },
+)
 
-export const useCashAccountTotals = (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => {
-  return useQuery(
-    keysAccounts.totalsRange(from, to),
-    () => {
-      const fullRangeDefined = isDefined(from) && isDefined(to)
-      const url = fullRangeDefined
-        ? `/api/accounts/totals/${id}?from=${get(from)}&to=${get(to)}`
-        : `/api/accounts/totals/${id}`
+export const useCashAccountTotals = (id: string, from: Ref<string | undefined>, to: Ref<string | undefined>) => useQuery(
+  keysAccounts.totalsRange(from, to),
+  () => {
+    const fullRangeDefined = isDefined(from) && isDefined(to)
+    const url = fullRangeDefined
+      ? `/api/accounts/totals/${id}?from=${get(from)}&to=${get(to)}`
+      : `/api/accounts/totals/${id}`
 
-      return $fetch<IndividualCashAccountTotals>(url)
-    },
-  )
-}
+    return $fetch<IndividualCashAccountTotals>(url)
+  },
+)
 
 export const useCashAccountsBalance = () => useQuery(
   keysAccounts.balance(),
@@ -83,7 +79,7 @@ export const useCashAccountCreate = () => {
   return useMutation((body: Prisma.MoneyAccountUncheckedCreateInput) => $fetch<CashAccount>('/api/accounts/cash', { method: 'POST', body }), {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
-      qc.invalidateQueries(keysInvestmentAccounts.basic())
+      qc.invalidateQueries(keysInvestmentAccounts.details())
     },
   })
 }
@@ -97,7 +93,7 @@ export const useAccountUpdate = (id: Ref<string | undefined>) => {
     }), {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
-      qc.invalidateQueries(keysInvestmentAccounts.basic())
+      qc.invalidateQueries(keysInvestmentAccounts.details())
     },
   })
 }
@@ -111,7 +107,7 @@ export const useAccountDelete = (id: Ref<string | undefined>) => {
     }), {
     onSuccess: () => {
       qc.invalidateQueries(keysAccounts.all)
-      qc.invalidateQueries(keysInvestmentAccounts.basic())
+      qc.invalidateQueries(keysInvestmentAccounts.details())
     },
   })
 }

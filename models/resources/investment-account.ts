@@ -9,3 +9,9 @@ export type InvestmentAccountWithEntries = {
 }
 
 export type InvestmentAccoundUpdateReq = { account: Prisma.MoneyAccountUncheckedUpdateManyInput } & Prisma.InvestmentAccountUncheckedUpdateManyInput
+
+export type InvestmentsBalance = {
+  balance: number
+  snapshotDate: Date
+  monthQuery?: string
+}

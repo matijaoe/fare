@@ -1,13 +1,9 @@
-import type { Prisma } from '@prisma/client'
+import { endOfMonth, isBefore, isDate, isThisMonth } from 'date-fns'
 import { StatusCodes } from 'http-status-codes'
-import { readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
+import { readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
+import { groupBy } from '~~/utils'
 
-type GroupedTotal = Prisma.PickArray<Prisma.TransactionGroupByOutputType, 'type'[]> & {
-  _sum: { amount: number | null }
-}
-
-// TODO: DO NOT USE, this is all just copy pasted from the cash accounts
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
 
@@ -15,29 +11,45 @@ export default defineEventHandler(async (event) => {
     return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
   }
 
+  const today = new Date()
+
+  // TODO: extract into useTransactionDateRange, completely refactor it
+  const { month } = getQuery(event) as { month?: string }
+
+  // start of month, or todays date
+  const monthAsDate = month
+    ? isDate(new Date(month))
+      ? new Date(month)
+      : today
+    : today
+
+  const snapshotDate = !isThisMonth(monthAsDate) && isBefore(monthAsDate, today)
+    ? endOfMonth(monthAsDate)
+    : today
+
   try {
-    const groupedTotals = await db.transaction.groupBy({
-      by: ['type'],
-      _sum: { amount: true },
+    const entries = await db.investmentEntry.findMany({
       where: {
-        type: { in: ['Expense', 'Income'] },
-        userId,
+        account: { account: { userId } },
+        date: snapshotDate
+          ? { lte: snapshotDate }
+          : undefined,
+      },
+      orderBy: {
+        date: 'desc',
       },
     })
 
-    const balance = groupedTotals.reduce((total: number, curr: GroupedTotal) => {
-      switch (curr.type) {
-        case 'Expense':
-          total -= curr._sum.amount ?? 0
-          break
-        case 'Income':
-          total += curr._sum.amount ?? 0
-          break
-      }
-      return total
-    }, 0)
+    const groupedByAccount = groupBy(entries, 'investmentAccountId')
+    const balance = Object.values(groupedByAccount)
+      .map(entries => entries.sort((a, b) => b.date.getTime() - a.date.getTime()).at(0))
+      .reduce((total, curr) => total + (curr?.balance ?? 0), 0)
 
-    return { balance, timestamp: new Date() }
+    return {
+      balance,
+      snapshotDate,
+      monthQuery: month,
+    }
   } catch (err: unknown) {
     console.error(err)
     sendInternalError(event, err)
