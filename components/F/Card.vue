@@ -3,6 +3,7 @@ const props = defineProps<{
   paddingless?: boolean
   filled?: boolean
   white?: boolean
+  neobrutal?: boolean
 }>()
 
 const backgroundStyle = computed(() => {
@@ -22,8 +23,18 @@ const backgroundStyle = computed(() => {
     :class="[
       paddingless ? 'p-0' : 'p-5',
       backgroundStyle,
+      { neobrutal },
     ]"
   >
     <slot />
   </article>
 </template>
+
+<style scoped>
+.neobrutal {
+  box-shadow: 6px 6px 0 #e4e4e7;
+}
+.dark .neobrutal {
+  box-shadow: 6px 6px 0 #3f3f46;
+}
+</style>

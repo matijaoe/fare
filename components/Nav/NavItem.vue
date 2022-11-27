@@ -26,7 +26,7 @@ const handleNavClick = () => {
       flex="~ gap-2" items-center
       pl-6
       class="color-base-lighter text-lg md:text-base "
-      :class="isActive ? 'bg-zinc-200 dark:bg-zinc-8/40' : 'hover:(bg-zinc-1 dark:bg-zinc-8/40)'"
+      :class="isActive ? 'bg-zinc-2 dark:bg-zinc-8/40' : 'hover:(bg-zinc-1 dark:bg-zinc-8/40)'"
       outline="none"
       @click="handleNavClick"
     >

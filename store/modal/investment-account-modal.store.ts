@@ -76,6 +76,13 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
     set(open, true)
   }
 
+  const launchWithType = (type?: InvestmentType) => {
+    set(modalType, 'create')
+    form.setFieldValue('type', type)
+
+    set(open, true)
+  }
+
   const reset = () => {
     form.resetForm()
     set(modalType, 'create')
@@ -103,6 +110,7 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
     // Modal state
     opened,
     launch,
+    launchWithType,
     hide,
   }
 })

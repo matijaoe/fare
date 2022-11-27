@@ -113,7 +113,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
                 </div>
 
                 <div
-                  bg-zinc-1 text-zinc-9
+                  bg-zinc-2 text-zinc-9
                   ring="2 offset 2 current"
                   flex-center flex-shrink-0
                   p-2 rounded-full aspect-square
@@ -135,7 +135,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
                 </div>
 
                 <div
-                  bg-zinc-1 text-zinc-9
+                  bg-zinc-2 text-zinc-9
                   ring="2 offset 2 current"
                   flex-center flex-shrink-0
                   p-2 rounded-full aspect-square

@@ -106,6 +106,12 @@ const shownDate = computed({
   get: () => form.values.date ? format(new Date(form.values.date), 'yyyy-MM-dd') : null,
   set: (val: string | null) => form.setFieldValue('date', val ? new Date(val) : null),
 })
+
+const transactionTypeOptions = [
+  { label: 'Income', value: 'Income', checkedClass: 'bg-emerald-2 text-emerald-8', icon: 'tabler:arrow-up-right' },
+  { label: 'Expense', value: 'Expense', checkedClass: 'bg-rose-2 text-rose-8', icon: 'tabler:arrow-down-left' },
+  { label: 'Transfer', value: 'Transfer', checkedClass: 'bg-indigo-2 text-indigo-8', icon: 'tabler:arrows-exchange' },
+]
 </script>
 
 <template>
@@ -132,45 +138,25 @@ const shownDate = computed({
       <RadioGroup v-model="form.values.type">
         <div flex gap-2 text-center>
           <RadioGroupOption
+            v-for="option in transactionTypeOptions"
+            :key="option.value"
             v-slot="{ checked }"
-            flex-1
-            cursor="pointer"
-            value="Income"
+            :value="option.value"
+            flex-1 cursor="pointer"
+            class="focus:outline-none"
           >
             <div
-              p-6 font-display text-lg
-              border="2 base rounded-md"
-              :class="checked ? 'bg-green-1 text-green-8 !border-current' : 'bg-transparent hover:bg-zinc-1'"
+              p-6 font-display text-xl
+              border="2 rounded-md"
+              aspect="5/3"
+              grid place-content-center
+              relative overflow-hidden
+              :class="checked ? [option.checkedClass, 'border-current'] : 'bg-transparent hover:bg-zinc-1 border-base text-zinc-7'"
             >
-              Income
-            </div>
-          </RadioGroupOption>
-          <RadioGroupOption
-            v-slot="{ checked }"
-            flex-1
-            cursor="pointer"
-            value="Expense"
-          >
-            <div
-              p-6 font-display text-lg
-              border="2 base rounded-md"
-              :class="checked ? 'bg-zinc-2 text-zinc-8 !border-current' : 'bg-transparent hover:bg-zinc-1'"
-            >
-              Expense
-            </div>
-          </RadioGroupOption>
-          <RadioGroupOption
-            v-slot="{ checked }"
-            flex-1
-            cursor="pointer"
-            value="Transfer"
-          >
-            <div
-              p-6 font-display text-lg
-              border="2 base rounded-md"
-              :class="checked ? 'bg-indigo-1 text-indigo-8 !border-current' : 'bg-transparent hover:bg-zinc-1'"
-            >
-              Transfer
+              <Icon
+                :name="option.icon" absolute opacity-4 text-8xl class="top-50% left-50% translate--50%"
+              />
+              {{ option.label }}
             </div>
           </RadioGroupOption>
         </div>

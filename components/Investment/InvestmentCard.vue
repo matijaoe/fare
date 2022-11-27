@@ -102,27 +102,27 @@ const setEditMode = (value: boolean) => {
     ref="card"
     :white="!isDark"
     :filled="isDark"
-    paddingless
     aspect="2/1 sm:4/3"
+    paddingless
+    neobrutal
     flex="~ col"
     relative overflow-hidden
   >
     <div p-4 flex="1 ~ col">
       <div flex justify-between items-center w-full>
         <div flex items-center gap-4>
-          <div
-            w-10 h-10 flex-center absolute top--4 left--4 rounded-full
-            class="transform origin-center scale-1000 filter-saturate-80 opacity-80 sm:scale-600 dark:opacity-25"
-            :class="[bg1]"
-          />
-          <div flex items-center justify-start min-w-5>
+          <div flex items-center justify-start min-w-5 relative>
+            <div
+              absolute class="top--50% left-50% translate--50% filter-saturate-80 opacity-100 dark:opacity-25" w-full h-full p-30 rounded-full
+              :class="[bg1]"
+            />
             <Icon
               :name="account.icon ?? 'tabler:cash'"
               :class="[color4]"
               z-2
             />
           </div>
-          <p z-2 font="display medium" uppercase text-base>
+          <p z-2 font="display medium" uppercase text-base class="group-hover:underline">
             {{ account.name }}
           </p>
         </div>
@@ -181,7 +181,7 @@ const setEditMode = (value: boolean) => {
 
         <div
           v-if="currentBalanceEntry || previousBalanceEntry"
-          text-xs text-stone-4 font-mono font-light
+          text-xs text-zinc-4 font-mono font-light
         >
           <p v-if="currentBalanceEntry">
             last updated on {{ useDateFormat(currentBalanceEntry.date) }}
@@ -196,7 +196,7 @@ const setEditMode = (value: boolean) => {
       </div>
     </div>
 
-    <!-- <div
+    <div
       v-if="investmentAccount.description"
       mt-auto z-2 relative
       flex items-center justify-center
@@ -207,7 +207,7 @@ const setEditMode = (value: boolean) => {
       <p text-sm>
         {{ investmentAccount.description }}
       </p>
-    </div> -->
+    </div>
 
     <div
       mt-auto z-2 relative
@@ -220,8 +220,8 @@ const setEditMode = (value: boolean) => {
         <span
           font-bold
           :class="{
-            'text-green-6': percentageChange > 0,
-            'text-red-6': percentageChange < 0,
+            'text-emerald-5': percentageChange > 0,
+            'text-rose-5': percentageChange < 0,
           }"
         >{{ formatPercentage(percentageChange, {
           signDisplay: 'always',

@@ -10,7 +10,7 @@ const modal = useTransactionModal()
         icon="tabler:arrow-down-left"
         size="xl"
         circle
-        variant="success"
+        variant="emerald"
         class="!shadow-xl"
         @click="modal.launchNew('Income')"
       />
@@ -21,7 +21,7 @@ const modal = useTransactionModal()
         icon="tabler:arrow-up-right"
         size="xl"
         circle
-        variant="primary"
+        variant="rose"
         class="!shadow-xl"
         @click="modal.launchNew('Expense')"
       />

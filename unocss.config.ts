@@ -20,6 +20,9 @@ export default defineConfig({
     maxWidth: {
       default: '1440px',
     },
+    colors: {
+      accent: '#5D8D7B',
+    },
   },
   presets: [
     presetUno(),

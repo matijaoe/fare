@@ -131,7 +131,7 @@ model CashAccount {
 enum InvestmentType {
   Stocks
   Crypto
-  RealEstate
+  Property
   Other
 }
 

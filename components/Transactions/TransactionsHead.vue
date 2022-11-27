@@ -16,11 +16,11 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
     <div flex items-center gap-5>
       <div
         flex-center flex-shrink-0
-        text-2xl p-4 rounded-full ring="2 offset 2 current" transition
+        text-2xl p-4 rounded-full ring="2 offset-2" transition
         :class="{
-          'bg-zinc-2 text-zinc-9': isLoading || net === 0,
-          'bg-green-1 text-green-9': net > 0,
-          'bg-red-1 text-red-9': net < 0,
+          'bg-zinc-2 ring-zinc-8': isLoading || net === 0,
+          'bg-emerald-4 ring-emerald-3': net > 0,
+          'bg-rose-4 ring-rose-3': net < 0,
         }"
       >
         <TransitionFade>
@@ -69,7 +69,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
           </div>
 
           <div
-            bg-zinc-1 text-zinc-9
+            bg-zinc-2 text-zinc-9
             ring="2 offset 2 current"
             flex-center flex-shrink-0
             p-2 rounded-full aspect-square
@@ -91,7 +91,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
           </div>
 
           <div
-            bg-zinc-1 text-zinc-9
+            bg-zinc-2 text-zinc-9
             ring="2 offset 2 current"
             flex-center flex-shrink-0
             p-2 rounded-full aspect-square

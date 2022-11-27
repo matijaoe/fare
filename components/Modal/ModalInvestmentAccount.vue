@@ -112,11 +112,10 @@ const modalConfig = computed(() => ({
   panelClass: 'w-full !sm:min-w-xl',
 }))
 
-// InvestmentType.Stocks, InvestmentType.Crypto, InvestmentType.RealEstate, InvestmentType.Other
 const typeOptions = [
   { label: 'Stocks', value: InvestmentType.Stocks },
   { label: 'Crypto', value: InvestmentType.Crypto },
-  { label: 'Real Estate', value: InvestmentType.RealEstate },
+  { label: 'Property', value: InvestmentType.Property },
   { label: 'Other', value: InvestmentType.Other },
 ]
 </script>

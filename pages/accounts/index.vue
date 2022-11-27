@@ -6,6 +6,8 @@ onMounted(() => setBreadcrumbs([
 ]))
 
 const cashAccountModal = useCashAccountModal()
+
+const { isDark } = useTheme()
 const { monthQuery, isAllTime } = toRefs(useDateRangeStore())
 
 const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
@@ -59,17 +61,22 @@ const unifiedAccounts = computed(() => {
 
       <div
         v-if="unifiedAccounts?.length"
-        class="custom-grid" gap-3
+        class="custom-grid" gap-4
       >
-        <!-- TODO: keep an eye on this key...  -->
-        <AccountCard
-          v-for="account in unifiedAccounts"
-          :key="account"
-          :cash-account="account"
-          :totals="account.totals"
-          :totals-loading="isTotalsLoading"
-          :all-time="isAllTime"
-        />
+        <template v-if="unifiedAccounts?.length">
+          <!-- TODO: keep an eye on this key...  -->
+          <AccountCard
+            v-for="account in unifiedAccounts"
+            :key="account"
+            :cash-account="account"
+            :totals="account.totals"
+            :totals-loading="isTotalsLoading"
+            :all-time="isAllTime"
+          />
+        </template>
+        <AccountCardEmpty v-else>
+          Nothing here yet
+        </AccountCardEmpty>
       </div>
     </LayoutSectionWrapper>
   </LayoutPage>

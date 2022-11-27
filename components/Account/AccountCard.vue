@@ -33,20 +33,20 @@ const { isDark } = useTheme()
     :white="!isDark"
     :filled="isDark"
     paddingless
+    neobrutal
     aspect="2/1 sm:4/3"
     flex="~ col"
     relative overflow-hidden
   >
-    <div
-      w-10 h-10 flex-center absolute top--4 left--4 rounded-full
-      class="transform origin-center scale-1000 filter-saturate-80 opacity-80 sm:scale-600 dark:opacity-25"
-      :class="[bg1]"
-    />
     <div p-4 flex="1 ~ col">
       <div flex justify-between items-center w-full>
         <NuxtLink :to="`/accounts/cash/${cashAccount.id}`" class="group">
           <div flex items-center gap-4>
-            <div flex items-center justify-start min-w-5>
+            <div flex items-center justify-start min-w-5 relative>
+              <div
+                absolute class="top--50% left-50% translate--50% filter-saturate-80 opacity-100 dark:opacity-25" w-full h-full p-30 rounded-full
+                :class="[bg1]"
+              />
               <Icon
                 :name="account.icon ?? 'tabler:cash'"
                 :class="[color4]"
@@ -97,7 +97,7 @@ const { isDark } = useTheme()
               px-2 py-1 rounded-md
               :class="{
                 ' bg-zinc-1 text-zinc-7': totals.net === 0,
-                'bg-red-1 text-red-7': totals.net < 0,
+                'bg-rose-1 text-rose-7': totals.net < 0,
                 'bg-emerald-1 text-emerald-7': totals.net > 0,
               }"
             >
