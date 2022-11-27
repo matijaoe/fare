@@ -74,7 +74,7 @@ const onSubmit = form.handleSubmit((values) => {
     createAccountHandler(values)
   }
 }, (err) => {
-  console.log('Error submitting form', err)
+  console.error('Error submitting form', err)
 })
 
 const resetQueries = () => {

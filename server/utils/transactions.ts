@@ -21,7 +21,7 @@ export const useTransactionDateRange = (event: H3Event) => {
   return {
     startDate: fromDate,
     endDate: toDate,
-    dateQuery: dateQuery.value,
+    date: dateQuery.value,
     hasDefinedRange: hasDefinedRange.value,
   }
 }

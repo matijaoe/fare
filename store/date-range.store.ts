@@ -8,19 +8,21 @@ export const useDateRangeStore = defineStore('date-range', () => {
   const formatType = {
     full: 'yyyy-MM-dd',
     monthYear: 'MMM yy',
+    yearMonth: 'yyyy-MM',
     month: 'MMMM',
   }
 
-  const selectedMonth = ref<Date>(now)
+  // TODO: save in local storage
+  // Start of month
+  const selectedMonth = ref<Date>(startOfMonth(now))
 
   const isAllTime = ref(false)
-  const toggleAllTime = useToggle(isAllTime)
   const setAllTime = (value: boolean) => set(isAllTime, value)
 
   const setPreviousMonth = () => set(selectedMonth, subMonths(get(selectedMonth), 1))
   const setNextMonth = () => set(selectedMonth, addMonths(get(selectedMonth), 1))
   const setToToday = () => {
-    set(selectedMonth, now)
+    set(selectedMonth, startOfMonth(now))
     setAllTime(false)
   }
 
@@ -29,11 +31,6 @@ export const useDateRangeStore = defineStore('date-range', () => {
   const rangeFrom = computed(() => !get(isAllTime) ? format(startOfMonth(get(selectedMonth)), formatType.full) : undefined)
   const rangeTo = computed(() => !get(isAllTime) ? format(endOfMonth(get(selectedMonth)), formatType.full) : undefined)
 
-  const dateRange = computed(() => ({
-    from: rangeFrom,
-    to: rangeTo,
-  }))
-
   const hasDefinedRange = computed(() => get(rangeFrom) && get(rangeTo))
 
   const formattedDate = computed(() => {
@@ -41,23 +38,28 @@ export const useDateRangeStore = defineStore('date-range', () => {
     return format(date, isThisYear(date) ? formatType.month : formatType.monthYear)
   })
 
-  const isCurrentMonth = computed(() => isSameMonth(new Date(), get(selectedMonth)))
+  const isCurrentMonth = computed(() => isSameMonth(now, get(selectedMonth)))
+
+  // TODO: implement throughout
+  const monthQuery = computed(() => !get(isAllTime) ? format(get(selectedMonth), formatType.yearMonth) : undefined)
+  // const monthStartDate = computed(() => startOfMonth(get(selectedMonth)))
+  // const monthEndDate = computed(() => endOfMonth(get(selectedMonth)))
 
   return {
     selectedMonth,
     isAllTime,
-    toggleAllTime,
     setAllTime,
     setPreviousMonth,
     setToToday,
     setNextMonth,
     isLatestMonth,
     formattedDate,
-    dateRange,
     rangeFrom,
     rangeTo,
     hasDefinedRange,
     isCurrentMonth,
+    // TODO: wip
+    monthQuery,
   }
 })
 

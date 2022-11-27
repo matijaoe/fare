@@ -9,7 +9,7 @@ onMounted(() => setBreadcrumbs([
 
 // TODO: transaction account modal
 // const cashAccountModal = useCashAccountModal()
-const { selectedMonth, isAllTime } = toRefs(useDateRangeStore())
+const { isAllTime } = toRefs(useDateRangeStore())
 
 // TODO: nest egg balance
 const { data: totalBalance, isLoading: isBalanceLoading } = useInvestmentsBalance()
@@ -20,12 +20,8 @@ const { data: investmentAccounts } = useInvestmentAccounts()
 const { data: investmentEntries, isLoading: isEntriesLoading } = useInvestmentAccountsEntries()
 
 const unifiedAccounts = computed(() => {
-  const key = getYearMonthKey(isDefined(selectedMonth) ? new Date(selectedMonth.value) : new Date())
-
   const getBalances = (investmentAccountId: string) => {
     const acc = investmentEntries.value?.find(acc => acc.investmentAccountId === investmentAccountId)
-    // TODO: if no balance, get latest old balance, but alert user about it
-    // return acc?.balances?.[key]?.balance ?? 0
     return acc?.balances ?? {}
   }
 

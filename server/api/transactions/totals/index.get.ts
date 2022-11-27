@@ -1,8 +1,8 @@
 import type { TransactionType } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { readUserId, sendCustomError, useTransactionDateRange } from '~~/server/utils'
 import { db } from '~~/lib/db'
 import type { TransactionsTotalsPerRange } from '~~/models/resources'
+import { getDateRange, readUserId, sendCustomError } from '~~/server/utils'
 
 type TotalsForMonth = {
   type: TransactionType
@@ -12,15 +12,16 @@ type TotalsForMonth = {
 
 export default defineEventHandler(async (event) => {
   const userId = readUserId(event)
-  const { startDate, endDate, hasDefinedRange } = useTransactionDateRange(event)
 
   if (!userId) {
     return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
   }
 
+  const { hasDefinedMonth, monthAsDate, monthStart, monthEnd } = getDateRange(event)
+
   let sqlRes: TotalsForMonth[] = []
 
-  if (hasDefinedRange) {
+  if (hasDefinedMonth) {
     sqlRes = await db.$queryRaw`
       SELECT
         t.type, 
@@ -29,7 +30,7 @@ export default defineEventHandler(async (event) => {
       FROM
         Transaction t
       WHERE
-        t.date BETWEEN ${startDate} AND ${endDate}
+        MONTH(t.date) = MONTH(${monthAsDate})
         and
         t.userId = ${userId}
       GROUP BY
@@ -57,8 +58,8 @@ export default defineEventHandler(async (event) => {
   const net = income - expense
 
   return {
-    from: hasDefinedRange ? startDate : null,
-    to: hasDefinedRange ? endDate : null,
+    from: monthStart,
+    to: monthEnd,
     income,
     expense,
     net,

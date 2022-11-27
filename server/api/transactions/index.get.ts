@@ -1,10 +1,11 @@
 import type { Prisma } from '@prisma/client'
 import { db } from '~~/lib/db'
-import { readUserId, sendInternalError, useTransactionDateRange } from '~~/server/utils'
+import { getDateRange, readUserId, sendInternalError } from '~~/server/utils'
 
 export default defineEventHandler((event) => {
   const userId = readUserId(event)
-  const { dateQuery: date } = useTransactionDateRange(event)
+
+  const { monthRangeQuery: date } = getDateRange(event)
 
   if (!userId) {
     return null

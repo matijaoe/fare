@@ -1,7 +1,7 @@
-import { endOfMonth, isBefore, isDate, isThisMonth } from 'date-fns'
+import { isAfter } from 'date-fns'
 import { StatusCodes } from 'http-status-codes'
 import { db } from '~~/lib/db'
-import { readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
+import { getDateRange, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 import { groupBy } from '~~/utils'
 
 export default defineEventHandler(async (event) => {
@@ -11,29 +11,19 @@ export default defineEventHandler(async (event) => {
     return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
   }
 
+  const { monthAsDate, monthQuery, isCurrentMonth, monthEnd } = getDateRange(event)
+
   const today = new Date()
 
-  // TODO: extract into useTransactionDateRange, completely refactor it
-  const { month } = getQuery(event) as { month?: string }
-
-  // start of month, or todays date
-  const monthAsDate = month
-    ? isDate(new Date(month))
-      ? new Date(month)
-      : today
-    : today
-
-  const snapshotDate = !isThisMonth(monthAsDate) && isBefore(monthAsDate, today)
-    ? endOfMonth(monthAsDate)
-    : today
+  const snapshotDate = !monthAsDate || isCurrentMonth || isAfter(monthEnd!, today)
+    ? today
+    : monthEnd!
 
   try {
     const entries = await db.investmentEntry.findMany({
       where: {
         account: { account: { userId } },
-        date: snapshotDate
-          ? { lte: snapshotDate }
-          : undefined,
+        date: { lte: snapshotDate },
       },
       orderBy: {
         date: 'desc',
@@ -48,7 +38,7 @@ export default defineEventHandler(async (event) => {
     return {
       balance,
       snapshotDate,
-      monthQuery: month,
+      monthQuery,
     }
   } catch (err: unknown) {
     console.error(err)

@@ -62,21 +62,6 @@ const {
     </div>
     <div flex justify-self-end gap-2>
       <FTooltip
-        v-if="!isAllTime"
-        content="All time"
-        placement="top"
-      >
-        <FButton
-          icon-only
-          circle
-          size="md"
-          variant="outline"
-          icon="tabler:timeline"
-          @click="setAllTime(true)"
-        />
-      </FTooltip>
-
-      <FTooltip
         v-if="isAllTime || !isLatestMonth"
         content="Current month"
         placement="top"
@@ -88,6 +73,20 @@ const {
           variant="primary"
           icon="tabler:calendar"
           @click="setToToday"
+        />
+      </FTooltip>
+
+      <FTooltip
+        :content="isAllTime ? 'Monthly view' : 'All time'"
+        placement="top"
+      >
+        <FButton
+          icon-only
+          circle
+          size="md"
+          :variant="isAllTime ? 'indigo' : 'outline'"
+          icon="tabler:timeline"
+          @click="setAllTime(!isAllTime)"
         />
       </FTooltip>
     </div>

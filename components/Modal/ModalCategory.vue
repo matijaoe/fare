@@ -61,7 +61,7 @@ const onSubmit = form.handleSubmit((values) => {
     createCategoryHandler(values)
   }
 }, (err) => {
-  console.log('Error submitting form', err)
+  console.error('Error submitting form', err)
 })
 
 const resetQueries = () => {
