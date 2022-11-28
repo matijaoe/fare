@@ -11,7 +11,7 @@ const items = [
     label: 'Activity',
     icon: 'tabler:activity',
     route: {
-      name: 'transactions',
+      name: 'activity',
     },
   },
   {
@@ -40,14 +40,6 @@ const items = [
     icon: 'tabler:businessplan',
     route: {
       name: 'net-worth',
-    },
-  },
-
-  {
-    label: 'Progress',
-    icon: 'tabler:chart-area-line',
-    route: {
-      name: 'progress',
     },
   },
   {
