@@ -7,7 +7,6 @@ onMounted(() => setBreadcrumbs([
 
 const cashAccountModal = useCashAccountModal()
 
-const { isDark } = useTheme()
 const { monthQuery, isAllTime } = toRefs(useDateRangeStore())
 
 const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
@@ -59,40 +58,19 @@ const unifiedAccounts = computed(() => {
         </FButton>
       </template>
 
-      <div
-        v-if="unifiedAccounts?.length"
-        class="custom-grid" gap-4
+      <AccountGridSection
+        :loading="isAccountsLoading"
+        :has-accounts="unifiedAccounts?.length"
       >
-        <template v-if="isAccountsLoading">
-          <FSkeleton
-            v-for="i in 3"
-            :key="i"
-            aspect="2/1 sm:4/3"
-          />
-        </template>
-
-        <template v-else-if="unifiedAccounts?.length">
-          <!-- TODO: keep an eye on this key...  -->
-          <AccountCard
-            v-for="account in unifiedAccounts"
-            :key="account"
-            :cash-account="account"
-            :totals="account.totals"
-            :totals-loading="isTotalsLoading"
-            :all-time="isAllTime"
-          />
-        </template>
-        <AccountCardEmpty v-else>
-          Nothing here yet
-        </AccountCardEmpty>
-      </div>
+        <AccountCard
+          v-for="account in unifiedAccounts"
+          :key="account"
+          :cash-account="account"
+          :totals="account.totals"
+          :totals-loading="isTotalsLoading"
+          :all-time="isAllTime"
+        />
+      </AccountGridSection>
     </LayoutSectionWrapper>
   </LayoutPage>
 </template>
-
-<style scoped>
-.custom-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-}
-</style>

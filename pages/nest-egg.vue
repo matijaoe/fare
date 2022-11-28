@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 import { InvestmentType } from '@prisma/client'
 
-const route = useRoute()
-
 onMounted(() => setBreadcrumbs([
-  { label: 'Nest egg', href: { name: route.name ?? '🥺' } },
+  { label: 'Nest egg', href: { name: useRoute().name ?? '🥺' } },
 ]))
 
 const { isAllTime, monthQuery, isCurrentMonth } = toRefs(useDateRangeStore())
@@ -55,12 +53,12 @@ const sections = computed(() => ([
     title: 'Property',
     desc: 'All of your properties',
   },
-  // {
-  //   type: InvestmentType.Other,
-  //   title: 'Miscellaneous',
-  //   desc: 'All of your miscellaneous investments',
-  //   accounts: getAccountsForType(InvestmentType.Other),
-  // },
+  {
+    type: InvestmentType.Other,
+    title: 'Miscellaneous',
+    desc: 'All of your miscellaneous investments',
+    accounts: getAccountsForType(InvestmentType.Other),
+  },
 ]))
 </script>
 
@@ -73,10 +71,7 @@ const sections = computed(() => ([
         </span>
 
         <div font="display medium" text-6xl>
-          <div
-            v-if="isBalanceLoading"
-            flex gap-4 items-center
-          >
+          <div v-if="isBalanceLoading" flex gap-4 items-center>
             <FSkeleton class="h-60px w-60" />
           </div>
           <h4 v-else>
@@ -124,38 +119,21 @@ const sections = computed(() => ([
           </FButton>
         </template>
 
-        <div class="custom-grid" gap-4>
-          <template v-if="isAccountsLoading">
-            <FSkeleton
-              v-for="i in 3"
-              :key="i"
-              aspect="2/1 sm:4/3"
-            />
-          </template>
-
-          <template v-else-if="getAccountsForType(section.type)?.length">
-            <InvestmentCard
-              v-for="account in getAccountsForType(section.type)"
-              :key="account"
-              :investment-account="account"
-              :balances="account.balances"
-              :balance-loading="isEntriesLoading"
-              :all-time="isAllTime"
-            />
-          </template>
-
-          <AccountCardEmpty v-else>
-            Nothing here yet
-          </AccountCardEmpty>
-        </div>
+        <AccountGridSection
+          :loading="isAccountsLoading"
+          :has-accounts="getAccountsForType(section.type)?.length"
+        >
+          <InvestmentCard
+            v-for="account in getAccountsForType(section.type)"
+            :key="account"
+            :investment-account="account"
+            :balances="account.balances"
+            :balance-loading="isEntriesLoading"
+            :all-time="isAllTime"
+          />
+        </AccountGridSection>
       </LayoutSectionWrapper>
     </div>
   </LayoutPage>
 </template>
 
-<style scoped>
-.custom-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-}
-</style>
