@@ -1,3 +1,4 @@
+import { differenceInYears, getYear, parse } from 'date-fns'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const useFireConfig = defineStore('fire-configuration', () => {
@@ -13,9 +14,20 @@ export const useFireConfig = defineStore('fire-configuration', () => {
     pensionAccessibilityAg: null,
   })
 
+  const calculateAge = (dob: string): number => {
+    const date = parse(dob, 'yyyy-MM-dd', new Date())
+    return differenceInYears(new Date(), date)
+  }
+
+  const age = computed(() => {
+    const dob = pensionCalculations.birthDate
+    return dob ? calculateAge(dob) : null
+  })
+
   return {
     pensionCalculations,
     fiCalculations,
+    age,
   }
 })
 

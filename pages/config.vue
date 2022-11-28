@@ -2,16 +2,10 @@
 import { TabGroup, TabList, TabPanels } from '@headlessui/vue'
 
 const config = useFireConfig()
-
-const { formattedAverageAnnualRate } = toRefs(useNestEggStore())
 </script>
 
 <template>
   <LayoutPage>
-    <div v-if="formattedAverageAnnualRate" bg-blue-2>
-      {{ formattedAverageAnnualRate }}%
-    </div>
-
     <LayoutSectionWrapper>
       <!-- Tabs -->
       <TabGroup>
@@ -28,24 +22,66 @@ const { formattedAverageAnnualRate } = toRefs(useNestEggStore())
           <FTabPanel
             desc="Fine tune your FIRE plan"
           >
-            <FInput v-model="config.fiCalculations.monthlyExpenditure" type="number" />
+            <div grid grid-cols-3 gap-x-4 gap-y-6>
+              <FInput
+                v-model="config.fiCalculations.monthlyIncome"
+                label="Monthly income"
+                placeholder="3500"
+                icon="tabler:currency-euro"
+                type="number"
+              />
+
+              <FInput
+                v-model="config.fiCalculations.monthlyExpenditure"
+                label="Monthly expenditure"
+                placeholder="2250"
+                icon="tabler:currency-euro"
+                type="number"
+              />
+
+              <FInput
+                v-model="config.fiCalculations.safeWithdrawalRate"
+                label="Safe withdrawal rate"
+                placeholder="4%"
+                icon="tabler:percentage"
+                type="number"
+              />
+            </div>
           </FTabPanel>
 
           <FTabPanel
             desc="Your government pension parameters"
           >
-            <div grid grid-cols-3 gap-4>
+            <div grid grid-cols-3 gap-x-4 gap-y-6>
+              <FInput
+                v-model="config.pensionCalculations.birthDate"
+                label="Birth date"
+                placeholder="10.12.1999."
+                type="date"
+              />
+
               <FInput
                 v-model="config.pensionCalculations.retirementAge"
                 label="Retirement age"
                 placeholder="65"
                 type="number"
               />
+
+              <FInput
+                v-model="config.age"
+                label="Current age"
+                placeholder="65"
+                type="number"
+                disabled
+                :input-props="{ min: 1, max: 120 }"
+              />
+
               <FInput
                 v-model="config.pensionCalculations.pensionAccessibilityAg"
                 label="Pension accessability age"
                 placeholder="55"
                 type="number"
+                :input-props="{ min: 20, max: 100 }"
               />
             </div>
           </FTabPanel>
