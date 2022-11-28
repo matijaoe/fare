@@ -110,32 +110,11 @@ const setEditMode = (value: boolean) => {
     relative overflow-hidden
   >
     <div p-4 flex="1 ~ col">
-      <div flex justify-between items-center w-full>
-        <div flex items-center gap-4>
-          <div flex items-center justify-start min-w-5 relative>
-            <div
-              absolute class="top--50% left-50% translate--50% filter-saturate-80 opacity-100 dark:opacity-25" w-full h-full p-30 rounded-full
-              :class="[bg1]"
-            />
-            <Icon
-              :name="account.icon ?? 'tabler:cash'"
-              :class="[color4]"
-              z-2
-            />
-          </div>
-          <p z-2 font="display medium" uppercase text-base class="group-hover:underline">
-            {{ account.name }}
-          </p>
-        </div>
-
-        <div>
-          <FTooltip content="Edit" placement="top">
-            <button @click.stop="modal.launch(investmentAccount)">
-              <Icon v-show="isHovered" text="zinc-6 dark:zinc-5" name="tabler:edit" />
-            </button>
-          </FTooltip>
-        </div>
-      </div>
+      <AccountCardHead
+        :account="account"
+        :show-edit="isHovered"
+        @edit="modal.launch(investmentAccount)"
+      />
 
       <div
         flex="1 ~ col gap-1" justify-center
@@ -231,9 +210,7 @@ const setEditMode = (value: boolean) => {
             'text-emerald-5': percentageChange > 0,
             'text-rose-5': percentageChange < 0,
           }"
-        >{{ formatPercentage(percentageChange, {
-          signDisplay: 'always',
-        }) }}</span> since last month
+        >{{ formatPercentage(percentageChange, { signDisplay: 'always' }) }}</span> since last month
       </p>
       <p ml-auto>
         predicted <span font-bold>{{ investmentAccount.expectedRateOfReturn }}%</span> YoY

@@ -25,19 +25,33 @@ const isHovered = useElementHover(card)
   <FCard
     ref="card"
     white
-    class="!pl-0 pb-0"
+    paddingless
+    class="!pt-5"
   >
     <div
       flex justify-between items-center
-      p-2 pl-6
-      border="~ !dotted !2 !l-0"
-      rounded="r-full"
+      px-6 py-2
+      border="~ dotted y-2 x-0"
       :class="[bg50, borderClr3, color9]"
     >
+      <NuxtLink :to="`/categories/${category.id}`" class="group" mr-auto>
+        <div ml-auto flex gap-3 items-center>
+          <div
+            w-max aspect-square text-lg p-2 rounded-full flex-center
+            :class="[bg3]"
+          >
+            <Icon :name="category?.icon" />
+          </div>
+          <h4 text-base font-medium class="group-hover:underline">
+            {{ category.name }}
+          </h4>
+        </div>
+      </NuxtLink>
+
       <TransitionFade>
         <p
           v-if="!totalsLoading"
-          order--1
+          ml-auto
           class="translate-y-.25"
           text-2xl
           font="display medium"
@@ -47,23 +61,9 @@ const isHovered = useElementHover(card)
             : (totals?.net > 0 ? '+' : '') }}{{ allTime ? formattedTotalNet : formattedNet }}
         </p>
       </TransitionFade>
-
-      <NuxtLink :to="`/categories/${category.id}`" class="group">
-        <div ml-auto flex gap-3 items-center>
-          <h4 text-base font-medium class="group-hover:underline">
-            {{ category.name }}
-          </h4>
-          <div
-            w-max aspect-square text-lg p-2 rounded-full flex-center
-            :class="[bg3]"
-          >
-            <Icon :name="category?.icon" />
-          </div>
-        </div>
-      </NuxtLink>
     </div>
 
-    <div flex items-end justify-between p-5 pr-1>
+    <div flex items-end justify-between p-6>
       <div flex gap-14 items-end>
         <div flex justify-start items-center gap-8>
           <div>

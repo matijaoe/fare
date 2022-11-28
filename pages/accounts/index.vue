@@ -85,9 +85,9 @@ const unifiedAccounts = computed(() => {
 
       <AccountGridSection
         :loading="isAccountsLoading"
-        :has-accounts="unifiedAccounts?.length"
+        :has-accounts="!!unifiedAccounts?.length"
       >
-        <AccountCard
+        <AccountCardCash
           v-for="account in unifiedAccounts"
           :key="account"
           :cash-account="account"

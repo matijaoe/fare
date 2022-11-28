@@ -23,12 +23,10 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
           'bg-rose-4 ring-rose-3': net < 0,
         }"
       >
-        <TransitionFade>
-          <FLoader v-if="isLoading" />
-          <Icon v-else-if="net > 0" name="tabler:trending-up" />
-          <Icon v-else-if="net < 0" name="tabler:trending-down" />
-          <Icon v-else name="tabler:equal" />
-        </TransitionFade>
+        <FLoader v-if="isLoading" />
+        <Icon v-else-if="net > 0" name="tabler:trending-up" />
+        <Icon v-else-if="net < 0" name="tabler:trending-down" />
+        <Icon v-else name="tabler:equal" />
       </div>
 
       <div space-y-1 flex-1>
@@ -37,18 +35,16 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
         </span>
 
         <div flex items-center gap-5>
-          <TransitionFade>
-            <FSkeleton
-              v-if="isLoading"
-              class="h-40px w-50"
-            />
-            <p
-              v-else-if="isDefined(totals)"
-              text-4xl font="display medium"
-            >
-              {{ net > 0 ? '+' : '' }}{{ formattedNet }}
-            </p>
-          </TransitionFade>
+          <FSkeleton
+            v-if="isLoading"
+            class="h-40px w-50"
+          />
+          <p
+            v-else-if="isDefined(totals)"
+            text-4xl font="display medium"
+          >
+            {{ net > 0 ? '+' : '' }}{{ formattedNet }}
+          </p>
         </div>
       </div>
     </div>
@@ -57,15 +53,13 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
       <FTooltip content="Income" placement="top-end">
         <div flex items-center gap-4>
           <div text-lg text-right space-y="0.5">
-            <TransitionFade>
-              <FSkeleton v-if="isLoading" w-22 h="28px" />
-              <span
-                v-else-if="isDefined(totals)"
-                flex items-center
-              >
-                {{ formattedIncome }}
-              </span>
-            </TransitionFade>
+            <FSkeleton v-if="isLoading" w-22 h="28px" />
+            <span
+              v-else-if="isDefined(totals)"
+              flex items-center
+            >
+              {{ formattedIncome }}
+            </span>
           </div>
 
           <div
@@ -82,12 +76,10 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
       <FTooltip content="Expenses" placement="top-end">
         <div flex items-center gap-4 pl-5>
           <div text="lg right" space-y="0.5">
-            <TransitionFade>
-              <FSkeleton v-if="isLoading" w-22 h="28px" />
-              <span v-else-if="isDefined(totals)">
-                {{ formattedExpense }}
-              </span>
-            </TransitionFade>
+            <FSkeleton v-if="isLoading" w-22 h="28px" />
+            <span v-else-if="isDefined(totals)">
+              {{ formattedExpense }}
+            </span>
           </div>
 
           <div

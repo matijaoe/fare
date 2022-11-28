@@ -62,6 +62,10 @@ const items = [
 
 <template>
   <ul>
-    <NavItem v-for="item in items" :key="item.label" :item="item" />
+    <SidebarNavItem
+      v-for="item in items"
+      :key="item.label"
+      :item="item"
+    />
   </ul>
 </template>

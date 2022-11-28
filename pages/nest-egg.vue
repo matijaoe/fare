@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { InvestmentType } from '@prisma/client'
+import AccountCardInvestment from '~~/components/Account/AccountCardInvestment.vue'
 
 onMounted(() => setBreadcrumbs([
   { label: 'Nest egg', href: { name: useRoute().name ?? '🥺' } },
@@ -121,9 +122,9 @@ const sections = computed(() => ([
 
         <AccountGridSection
           :loading="isAccountsLoading"
-          :has-accounts="getAccountsForType(section.type)?.length"
+          :has-accounts="!!getAccountsForType(section.type)?.length"
         >
-          <InvestmentCard
+          <AccountCardInvestment
             v-for="account in getAccountsForType(section.type)"
             :key="account"
             :investment-account="account"

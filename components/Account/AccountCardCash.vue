@@ -39,34 +39,12 @@ const { isDark } = useTheme()
     relative overflow-hidden
   >
     <div p-4 flex="1 ~ col">
-      <div flex justify-between items-center w-full>
-        <NuxtLink :to="`/accounts/cash/${cashAccount.id}`" class="group">
-          <div flex items-center gap-4>
-            <div flex items-center justify-start min-w-5 relative>
-              <div
-                absolute class="top--50% left-50% translate--50% filter-saturate-80 opacity-100 dark:opacity-25" w-full h-full p-30 rounded-full
-                :class="[bg1]"
-              />
-              <Icon
-                :name="account.icon ?? 'tabler:cash'"
-                :class="[color4]"
-                z-2
-              />
-            </div>
-            <p z-2 font="display medium" uppercase text-base class="group-hover:underline">
-              {{ account.name }}
-            </p>
-          </div>
-        </NuxtLink>
-
-        <div>
-          <FTooltip content="Edit" placement="top">
-            <button @click.stop="modal.launch(account)">
-              <Icon v-show="isHovered" text="zinc-6 dark:zinc-5" name="tabler:edit" />
-            </button>
-          </FTooltip>
-        </div>
-      </div>
+      <AccountCardHead
+        :account="account"
+        :to="`/accounts/cash/${cashAccount.id}`"
+        :show-edit="isHovered"
+        @edit="modal.launch(account)"
+      />
 
       <div
         flex="1 ~ col gap-1" justify-center

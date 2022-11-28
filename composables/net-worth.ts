@@ -1,4 +1,4 @@
-export const useNetWorth = createSharedComposable(() => {
+export const useNetWorth = () => {
   const { data: cashBalance, isLoading: isLoadingCashBalance } = useCashAccountsBalance()
   const { data: investmentsBalance, isLoading: isLoadingInvestmentsBalance } = useInvestmentsBalance()
 
@@ -8,4 +8,4 @@ export const useNetWorth = createSharedComposable(() => {
   const netWorthFormatted = useCurrencyFormat(netWorth)
 
   return { netWorth, netWorthFormatted, isLoading }
-})
+}

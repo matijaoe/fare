@@ -2,7 +2,7 @@
 const sidebar = useSidebar()
 const { mdDown } = useBreakpoints()
 
-const { isLoading: isNetWorthLoading, netWorthFormatted } = useNetWorth()
+const { isLoading: isNetWorthLoading, netWorthFormatted, netWorth } = useNetWorth()
 </script>
 
 <template>
@@ -28,7 +28,7 @@ const { isLoading: isNetWorthLoading, netWorthFormatted } = useNetWorth()
       </button>
     </div>
 
-    <NavList flex-1 />
+    <SidebarNavList flex-1 />
 
     <div bg="zinc-1 dark:transparent">
       <div flex="~ col gap-0.5" p="4 y-3">
@@ -40,7 +40,7 @@ const { isLoading: isNetWorthLoading, netWorthFormatted } = useNetWorth()
             v-if="isNetWorthLoading"
             class="h-36px w-30"
           />
-          <p v-else text-3xl font-display font-medium>
+          <p v-else-if="netWorth" text-3xl font-display font-medium>
             {{ netWorthFormatted }}
           </p>
         </div>
