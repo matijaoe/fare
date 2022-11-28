@@ -6,37 +6,20 @@ onMounted(() => setBreadcrumbs([
   { label: 'Nest egg', href: { name: useRoute().name ?? '🥺' } },
 ]))
 
-const { isAllTime, monthQuery, isCurrentMonth } = toRefs(useDateRangeStore())
+const { isAllTime, isCurrentMonth } = toRefs(useDateRangeStore())
 
-const { data: totalBalance, isLoading: isBalanceLoading } = useInvestmentsBalance()
-const { data: monthlyBalanceObj, isLoading: isMonthlyBalanceLoading } = useInvestmentsMonthlyBalance(monthQuery)
-
-const balance = computed(() => totalBalance.value?.balance ?? 0)
-
-// TODO: balance isnt always correct, sometimes outdated arent shown but are applied, should be shown as well
-const monthlyBalance = computed(() => monthlyBalanceObj.value?.balance ?? 0)
-
-const formattedTotalBalance = useCurrencyFormat(balance)
-const formattedMonthlyBalance = useCurrencyFormat(monthlyBalance)
-
-const { data: investmentAccounts, isLoading: isAccountsLoading } = useInvestmentAccounts()
-const { data: investmentEntries, isLoading: isEntriesLoading } = useInvestmentAccountsEntries()
-
-const unifiedAccounts = computed(() => {
-  const getBalances = (investmentAccountId: string) => {
-    const acc = investmentEntries.value?.find(acc => acc.investmentAccountId === investmentAccountId)
-    return acc?.balances ?? {}
-  }
-
-  return investmentAccounts.value?.map((account) => {
-    const balances = getBalances(account.id)
-    return { ...account, balances }
-  }) ?? []
-})
+const {
+  formattedMonthlyBalance,
+  formattedTotalBalance,
+  isBalanceLoading,
+  isMonthlyBalanceLoading,
+  isAccountsLoading,
+  isEntriesLoading,
+  getAccountsForType,
+  formattedAverageAnnualRate,
+} = toRefs(useNestEggStore())
 
 const modal = useInvestmentAccountModal()
-
-const getAccountsForType = (type: InvestmentType) => unifiedAccounts.value?.filter(acc => acc.type === type) ?? []
 
 const sections = computed(() => ([
   {
@@ -58,14 +41,13 @@ const sections = computed(() => ([
     type: InvestmentType.Other,
     title: 'Miscellaneous',
     desc: 'All of your miscellaneous investments',
-    accounts: getAccountsForType(InvestmentType.Other),
   },
 ]))
 </script>
 
 <template>
   <LayoutPage>
-    <div flex items-center gap-8 divide-x-2 divide-zinc-3>
+    <div flex items-center gap-8>
       <div flex="~ col gap-2" translate-y="0.4">
         <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
           Nest egg
@@ -75,30 +57,45 @@ const sections = computed(() => ([
           <div v-if="isBalanceLoading" flex gap-4 items-center>
             <FSkeleton class="h-60px w-60" />
           </div>
-          <h4 v-else>
+          <p v-else>
             {{ formattedTotalBalance }}
-          </h4>
+          </p>
         </div>
       </div>
 
-      <div v-if="!isCurrentMonth && !isAllTime" pl-8>
+      <div v-if="!isCurrentMonth && !isAllTime" pl-8 border="l-2 zinc-2">
         <div flex="~ col gap-2" translate-y="0.4">
           <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
             At the time
           </span>
 
-          <div font="display medium" text-6xl>
+          <div font="display medium" text-6xl text-zinc-4>
             <div
               v-if="isMonthlyBalanceLoading"
               flex gap-4 items-center
             >
               <FSkeleton class="h-60px w-40" />
             </div>
-            <h4 v-else text-zinc-4>
+            <p v-else>
               {{ formattedMonthlyBalance }}
-            </h4>
+            </p>
           </div>
         </div>
+      </div>
+
+      <div
+        v-if="formattedAverageAnnualRate"
+        ml-auto
+        flex="~ col gap-2" translate-y="0.4"
+        text-right
+      >
+        <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
+          Avg annual rate
+        </span>
+
+        <p font="display medium" text-3xl>
+          {{ formattedAverageAnnualRate }}
+        </p>
       </div>
     </div>
 

@@ -45,9 +45,9 @@ const unifiedAccounts = computed(() => {
           >
             <FSkeleton class="h-60px w-60" />
           </div>
-          <h4 v-else>
+          <p v-else>
             {{ formattedTotalBalance }}
-          </h4>
+          </p>
         </div>
       </div>
 
@@ -64,9 +64,9 @@ const unifiedAccounts = computed(() => {
             >
               <FSkeleton class="h-60px w-40" />
             </div>
-            <h4 v-else text-zinc-4>
+            <p v-else text-zinc-4>
               {{ formattedMonthlyBalance }}
-            </h4>
+            </p>
           </div>
         </div>
       </div>

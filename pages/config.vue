@@ -2,10 +2,16 @@
 import { TabGroup, TabList, TabPanels } from '@headlessui/vue'
 
 const config = useFireConfig()
+
+const { formattedAverageAnnualRate } = toRefs(useNestEggStore())
 </script>
 
 <template>
   <LayoutPage>
+    <div v-if="formattedAverageAnnualRate" bg-blue-2>
+      {{ formattedAverageAnnualRate }}%
+    </div>
+
     <LayoutSectionWrapper>
       <!-- Tabs -->
       <TabGroup>

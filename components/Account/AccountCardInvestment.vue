@@ -19,7 +19,6 @@ const props = defineProps<Props>()
 const modal = useInvestmentAccountModal()
 
 const { isDark } = useTheme()
-const { bg1, color4 } = useAppColors(props.investmentAccount.account.color)
 
 const account = $computed(() => props.investmentAccount.account)
 
@@ -210,7 +209,7 @@ const setEditMode = (value: boolean) => {
             'text-emerald-5': percentageChange > 0,
             'text-rose-5': percentageChange < 0,
           }"
-        >{{ formatPercentage(percentageChange, { signDisplay: 'always' }) }}</span> since last month
+        >{{ formatPercentage(percentageChange) }}</span> since last month
       </p>
       <p ml-auto>
         predicted <span font-bold>{{ investmentAccount.expectedRateOfReturn }}%</span> YoY

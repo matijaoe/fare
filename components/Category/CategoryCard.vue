@@ -30,7 +30,7 @@ const isHovered = useElementHover(card)
   >
     <div
       flex justify-between items-center
-      px-6 py-2
+      px-6 py-3
       border="~ dotted y-2 x-0"
       :class="[bg50, borderClr3, color9]"
     >
