@@ -72,7 +72,7 @@ const { isDark } = useTheme()
         flex="1 ~ col gap-1" justify-center
         mb--2 z-2 relative text-center
       >
-        <FTooltip mx-auto placement="right" content="Balance">
+        <FTooltip mx-auto placement="right" content="Total balance">
           <div font="display medium" text-4xl uppercase flex justify-center>
             <FSkeleton
               v-if="totalsLoading"
@@ -84,7 +84,7 @@ const { isDark } = useTheme()
             </span>
           </div>
         </FTooltip>
-        <FTooltip mx-auto placement="right" content="Net">
+        <FTooltip mx-auto placement="right" :content="allTime ? 'All-time net' : 'Monthly net'">
           <p flex flex-col font="mono medium" text="sm zinc-4 dark:zinc-5">
             <FSkeleton
               v-if="totalsLoading"

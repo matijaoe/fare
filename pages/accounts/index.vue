@@ -1,17 +1,20 @@
 <script lang="ts" setup>
-const route = useRoute()
-
 onMounted(() => setBreadcrumbs([
-  { label: 'Accounts', href: { name: route.name ?? '🥺' } },
+  { label: 'Accounts', href: { name: useRoute().name ?? '🥺' } },
 ]))
 
 const cashAccountModal = useCashAccountModal()
 
-const { monthQuery, isAllTime } = toRefs(useDateRangeStore())
+const { monthQuery, isAllTime, isCurrentMonth } = toRefs(useDateRangeStore())
 
 const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
+const { data: monthlyBalanceObj, isLoading: isMonthlyBalanceLoading } = useCashAccountsMonthlyBalance(monthQuery)
+
 const balance = computed(() => totalBalance.value?.balance ?? 0)
+const monthlyBalance = computed(() => monthlyBalanceObj.value?.balance ?? 0)
+
 const formattedTotalBalance = useCurrencyFormat(balance)
+const formattedMonthlyBalance = useCurrencyFormat(monthlyBalance)
 
 const { data: cashAccounts, isLoading: isAccountsLoading } = useCashAccounts()
 const { data: accountTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(monthQuery)
@@ -28,22 +31,44 @@ const unifiedAccounts = computed(() => {
 
 <template>
   <LayoutPage>
-    <div flex="~ col gap-2" translate-y="0.4">
-      <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
-        Total balance
-      </span>
+    <div flex items-center gap-8 divide-x-2 divide-zinc-3>
+      <div flex="~ col gap-2" translate-y="0.4">
+        <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
+          Total balance
+        </span>
 
-      <div text-6xl font="display medium">
-        <div
-          v-if="isBalanceLoading"
-          flex gap-4 items-center
-          class="color-base-lighter"
-        >
-          <FSkeleton class="h-60px w-60" />
+        <div text-6xl font="display medium">
+          <div
+            v-if="isBalanceLoading"
+            flex gap-4 items-center
+            class="color-base-lighter"
+          >
+            <FSkeleton class="h-60px w-60" />
+          </div>
+          <h4 v-else>
+            {{ formattedTotalBalance }}
+          </h4>
         </div>
-        <h4 v-else>
-          {{ formattedTotalBalance }}
-        </h4>
+      </div>
+
+      <div v-if="!isCurrentMonth && !isAllTime" pl-8>
+        <div flex="~ col gap-2" translate-y="0.4">
+          <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
+            At the time
+          </span>
+
+          <div font="display medium" text-6xl>
+            <div
+              v-if="isMonthlyBalanceLoading"
+              flex gap-4 items-center
+            >
+              <FSkeleton class="h-60px w-40" />
+            </div>
+            <h4 v-else text-zinc-4>
+              {{ formattedMonthlyBalance }}
+            </h4>
+          </div>
+        </div>
       </div>
     </div>
 

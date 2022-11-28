@@ -9,6 +9,7 @@ export const keysAccounts = {
   all: ['cash-accounts'] as const,
   // total balance
   balance: () => [...keysAccounts.all, 'balance'] as const,
+  balanceRange: (month: Ref<string | undefined>) => [...keysAccounts.all, 'balance', month] as const,
   // account totals for range
   totals: () => [...keysAccounts.all, 'totals'] as const,
   totalsRange: (month: Ref<string | undefined>) => [...keysAccounts.all, 'totals', month] as const,
@@ -69,6 +70,10 @@ export const useCashAccountTotals = (id: string, month: Ref<string | undefined>)
 export const useCashAccountsBalance = () => useQuery(
   keysAccounts.balance(),
   () => $fetch<CashAccountsBalanceModel>('/api/accounts/cash/balance'),
+)
+export const useCashAccountsMonthlyBalance = (month: Ref<string | undefined>) => useQuery(
+  keysAccounts.balanceRange(month),
+  () => $fetch<CashAccountsBalanceModel>(`/api/accounts/cash/balance?month=${get(month)}`),
 )
 
 export const useCashAccountCreate = () => {
