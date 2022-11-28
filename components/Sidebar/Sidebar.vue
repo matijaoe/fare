@@ -2,10 +2,7 @@
 const sidebar = useSidebar()
 const { mdDown } = useBreakpoints()
 
-const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
-
-const balance = computed(() => totalBalance.value?.balance ?? 0)
-const formattedTotalBalance = useCurrencyFormat(balance)
+const { isLoading: isNetWorthLoading, netWorthFormatted } = useNetWorth()
 </script>
 
 <template>
@@ -36,15 +33,15 @@ const formattedTotalBalance = useCurrencyFormat(balance)
     <div bg="zinc-1 dark:transparent">
       <div flex="~ col gap-0.5" p="4 y-3">
         <p text="xs zinc-4" font="sans medium" uppercase>
-          Balance
+          Net worth
         </p>
         <div flex gap-2 items-center>
           <FSkeleton
-            v-if="isBalanceLoading"
+            v-if="isNetWorthLoading"
             class="h-36px w-30"
           />
           <p v-else text-3xl font-display font-medium>
-            {{ formattedTotalBalance }}
+            {{ netWorthFormatted }}
           </p>
         </div>
       </div>

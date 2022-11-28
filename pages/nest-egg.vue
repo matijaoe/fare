@@ -67,7 +67,7 @@ const sections = computed(() => ([
     <div flex items-center gap-8 divide-x-2 divide-zinc-3>
       <div flex="~ col gap-2" translate-y="0.4">
         <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
-          Total balance
+          Nest egg
         </span>
 
         <div font="display medium" text-6xl>
