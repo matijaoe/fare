@@ -14,7 +14,7 @@ const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalan
 const balance = computed(() => totalBalance.value?.balance ?? 0)
 const formattedTotalBalance = useCurrencyFormat(balance)
 
-const { data: cashAccounts } = useCashAccounts()
+const { data: cashAccounts, isLoading: isAccountsLoading } = useCashAccounts()
 const { data: accountTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(monthQuery)
 
 const unifiedAccounts = computed(() => {
@@ -63,7 +63,15 @@ const unifiedAccounts = computed(() => {
         v-if="unifiedAccounts?.length"
         class="custom-grid" gap-4
       >
-        <template v-if="unifiedAccounts?.length">
+        <template v-if="isAccountsLoading">
+          <FSkeleton
+            v-for="i in 3"
+            :key="i"
+            aspect="2/1 sm:4/3"
+          />
+        </template>
+
+        <template v-else-if="unifiedAccounts?.length">
           <!-- TODO: keep an eye on this key...  -->
           <AccountCard
             v-for="account in unifiedAccounts"

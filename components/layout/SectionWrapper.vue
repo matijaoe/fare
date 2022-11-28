@@ -10,7 +10,7 @@ defineProps<{
   <section flex flex-col gap-5>
     <div
       v-if="$slots.title || title || $slots.right || desc"
-      flex items-start justify-between
+      flex items-center justify-between
     >
       <div v-if="$slots.title || title || desc" space-y-1>
         <slot name="title">

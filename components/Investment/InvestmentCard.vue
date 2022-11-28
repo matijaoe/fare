@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { InvestmentEntry } from '@prisma/client'
 import { isNumber } from '@vueuse/core'
-import { getMonth, isSameYear, isThisMonth, isThisYear } from 'date-fns'
+import { getMonth, isSameYear, isThisYear } from 'date-fns'
 import type Input from '~~/components/F/Input.vue'
 import type { InvestmentAccountWithAccount } from '~~/models/resources'
 import { formatPercentage } from '~~/utils'
@@ -39,7 +39,7 @@ const currentBalance = computed(() => currentBalanceEntry.value?.balance)
 
 const previousBalanceEntry = computed(() => {
   const [previous] = sortedBalances.value
-    .filter(({ date }) => getMonth(new Date(date)) < getMonth(selectedMonth.value) && isSameYear(new Date(date), selectedMonth.value))
+    .filter(({ date }) => getMonth(new Date(date)) < getMonth(new Date(selectedMonth.value)) && isSameYear(new Date(date), selectedMonth.value))
   return previous ?? null
 })
 const previousBalance = computed(() => previousBalanceEntry.value?.balance)
@@ -185,14 +185,14 @@ const setEditMode = (value: boolean) => {
         >
           <p v-if="currentBalanceEntry">
             last updated in {{ formatDate(currentBalanceEntry.date, {
-              year: isThisYear(currentBalanceEntry.date) ? undefined : 'numeric',
+              year: isThisYear(new Date(currentBalanceEntry.date)) ? undefined : 'numeric',
               month: 'short',
               dateStyle: undefined,
             }) }}
           </p>
           <p v-else-if="previousBalanceEntry" relative>
             last updated in {{ formatDate(previousBalanceEntry.date, {
-              year: isThisYear(previousBalanceEntry.date) ? undefined : 'numeric',
+              year: isThisYear(new Date(previousBalanceEntry.date)) ? undefined : 'numeric',
               month: 'short',
               dateStyle: undefined,
             }) }}

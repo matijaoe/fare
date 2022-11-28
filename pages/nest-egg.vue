@@ -1,11 +1,12 @@
 <script lang="ts" setup>
+import { InvestmentType } from '@prisma/client'
+
 const route = useRoute()
 
 onMounted(() => setBreadcrumbs([
   { label: 'Nest egg', href: { name: route.name ?? '🥺' } },
 ]))
 
-const { isDark } = useTheme()
 const { isAllTime, monthQuery, isCurrentMonth } = toRefs(useDateRangeStore())
 
 const { data: totalBalance, isLoading: isBalanceLoading } = useInvestmentsBalance()
@@ -19,7 +20,7 @@ const monthlyBalance = computed(() => monthlyBalanceObj.value?.balance ?? 0)
 const formattedTotalBalance = useCurrencyFormat(balance)
 const formattedMonthlyBalance = useCurrencyFormat(monthlyBalance)
 
-const { data: investmentAccounts } = useInvestmentAccounts()
+const { data: investmentAccounts, isLoading: isAccountsLoading } = useInvestmentAccounts()
 const { data: investmentEntries, isLoading: isEntriesLoading } = useInvestmentAccountsEntries()
 
 const unifiedAccounts = computed(() => {
@@ -34,12 +35,33 @@ const unifiedAccounts = computed(() => {
   }) ?? []
 })
 
-// TODO: more types
-const accountsStocks = computed(() => unifiedAccounts.value?.filter(({ type }) => type === 'Stocks'))
-const accountsCrypto = computed(() => unifiedAccounts.value?.filter(({ type }) => type === 'Crypto'))
-const accountsProperty = computed(() => unifiedAccounts.value?.find(({ type }) => type === 'Property'))
-
 const modal = useInvestmentAccountModal()
+
+const getAccountsForType = (type: InvestmentType) => unifiedAccounts.value?.filter(acc => acc.type === type) ?? []
+
+const sections = computed(() => ([
+  {
+    type: InvestmentType.Stocks,
+    title: 'Stocks, ETF\'s & bonds',
+    desc: 'Actively tracked investment accounts',
+  },
+  {
+    type: InvestmentType.Crypto,
+    title: 'Crypto',
+    desc: 'Actively tracked crypto accounts',
+  },
+  {
+    type: InvestmentType.Property,
+    title: 'Property',
+    desc: 'All of your properties',
+  },
+  // {
+  //   type: InvestmentType.Other,
+  //   title: 'Miscellaneous',
+  //   desc: 'All of your miscellaneous investments',
+  //   accounts: getAccountsForType(InvestmentType.Other),
+  // },
+]))
 </script>
 
 <template>
@@ -85,21 +107,35 @@ const modal = useInvestmentAccountModal()
     </div>
 
     <div space-y-20>
-      <LayoutSectionWrapper title="Stocks, ETF's & bonds" desc="Actively tracked investment accounts" mt-3>
+      <LayoutSectionWrapper
+        v-for="section in sections"
+        :key="section.type"
+        :title="section.title"
+        :desc="section.desc"
+        mt-3
+      >
         <template #right>
           <FButton
             variant="secondary"
             icon-placement="left"
-            @click="modal.launchWithType('Stocks')"
+            @click="modal.launchWithType(section.type)"
           >
             Add account
           </FButton>
         </template>
 
         <div class="custom-grid" gap-4>
-          <template v-if="accountsStocks?.length">
+          <template v-if="isAccountsLoading">
+            <FSkeleton
+              v-for="i in 3"
+              :key="i"
+              aspect="2/1 sm:4/3"
+            />
+          </template>
+
+          <template v-else-if="getAccountsForType(section.type)?.length">
             <InvestmentCard
-              v-for="account in accountsStocks"
+              v-for="account in getAccountsForType(section.type)"
               :key="account"
               :investment-account="account"
               :balances="account.balances"
@@ -107,62 +143,7 @@ const modal = useInvestmentAccountModal()
               :all-time="isAllTime"
             />
           </template>
-          <AccountCardEmpty v-else>
-            Nothing here yet
-          </AccountCardEmpty>
-        </div>
-      </LayoutSectionWrapper>
 
-      <LayoutSectionWrapper title="Crypto" desc="Actively tracked crypto accounts" mt-3>
-        <template #right>
-          <FButton
-            variant="secondary"
-            icon-placement="left"
-            @click="modal.launchWithType('Crypto')"
-          >
-            Add account
-          </FButton>
-        </template>
-
-        <div class="custom-grid" gap-4>
-          <template v-if="accountsCrypto?.length">
-            <InvestmentCard
-              v-for="account in accountsCrypto"
-              :key="account"
-              :investment-account="account"
-              :balances="account.balances"
-              :balance-loading="isEntriesLoading"
-              :all-time="isAllTime"
-            />
-          </template>
-          <AccountCardEmpty v-else>
-            Nothing here yet
-          </AccountCardEmpty>
-        </div>
-      </LayoutSectionWrapper>
-
-      <LayoutSectionWrapper title="Property" desc="All of your properties" mt-3>
-        <template #right>
-          <FButton
-            variant="secondary"
-            icon-placement="left"
-            @click="modal.launchWithType('Property')"
-          >
-            Add account
-          </FButton>
-        </template>
-
-        <div class="custom-grid" gap-4>
-          <template v-if="accountsProperty?.length">
-            <InvestmentCard
-              v-for="account in accountsProperty"
-              :key="account"
-              :investment-account="account"
-              :balances="account.balances"
-              :balance-loading="isEntriesLoading"
-              :all-time="isAllTime"
-            />
-          </template>
           <AccountCardEmpty v-else>
             Nothing here yet
           </AccountCardEmpty>

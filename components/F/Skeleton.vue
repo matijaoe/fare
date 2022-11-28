@@ -13,7 +13,7 @@ const styles = computed(() => {
       return 'bg-zinc-300'
     case 'default':
     default:
-      return 'bg-zinc-200'
+      return 'bg-zinc-200/60'
   }
 })
 </script>
