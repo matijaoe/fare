@@ -19,7 +19,6 @@ export default defineEventHandler(async (event) => {
 
   const paymentAccountArgs: Prisma.TransactionFindManyArgs = {
     where: {
-      // TODO: doesn't do anything yet, it seems
       date,
       userId,
     },

@@ -1,4 +1,4 @@
-import { differenceInYears, getYear, parse } from 'date-fns'
+import { differenceInYears, parse } from 'date-fns'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const useFireConfig = defineStore('fire-configuration', () => {

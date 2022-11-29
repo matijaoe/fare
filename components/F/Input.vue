@@ -112,7 +112,6 @@ const value = computed({
       } else {
         emit('update:modelValue', isNaN(valueAsNumber) ? null : inputEl.value?.valueAsNumber)
       }
-      // TODO: not handling dates properly
     } else if (props.type === 'date') {
       const valueAsDate = inputEl.value?.valueAsDate
       emit('update:modelValue', valueAsDate ? format(new Date(valueAsDate), 'yyyy-MM-dd') : null)

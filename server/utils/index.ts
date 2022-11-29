@@ -22,7 +22,6 @@ export const sendCustomError = (
   sendError(event, error)
 }
 
-// TODO: create global server routes error interceptors
 export const sendInternalError = (
   event: CompatibilityEvent,
   originalError: any,

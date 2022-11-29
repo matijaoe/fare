@@ -10,16 +10,13 @@ type Props = {
 const props = defineProps<Props>()
 const modal = useCashAccountModal()
 
-const { bg1, color4 } = useAppColors(props.cashAccount.account.color)
-
 const account = $computed(() => props.cashAccount.account)
 const totals = $computed(() => props.totals)
 
-// TODO: skeleton instead of xxx
-const formattedBalance = totals?.balance != null ? useCurrencyFormat(totals.balance) : '€XXX.XX'
-const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : '€XXX.XX'
-const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income, { signDisplay: 'always' }) : '€XXX.XX'
-const formattedExpense = totals?.expense != null ? useCurrencyFormat(totals.expense) : '€XXX.XX'
+const formattedBalance = totals?.balance != null ? useCurrencyFormat(totals.balance) : null
+const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : null
+const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income, { signDisplay: 'always' }) : null
+const formattedExpense = totals?.expense != null ? useCurrencyFormat(totals.expense) : null
 
 const card = ref<HTMLElement>()
 const isHovered = useElementHover(card)

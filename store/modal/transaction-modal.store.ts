@@ -33,8 +33,7 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
       date: zod.date({ required_error: 'Date is required', invalid_type_error: 'Date is required' }),
     }))
 
-  // TODO:
-  // handle from and to account via reactive validation schema
+  // TODO: handle from and to account via reactive validation schema
 
   const form = useForm<{
     type: TransactionType

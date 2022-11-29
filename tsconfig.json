@@ -3,9 +3,9 @@
   "compilerOptions": {
     "strict": true,
     "types": [
-      "vite/runtime",
+      "vite/runtime"
     ],
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
   }
 }

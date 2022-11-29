@@ -11,7 +11,6 @@ const accountId = toRef(modal, 'accountId')
 const investmentAccountId = toRef(modal, 'investmentAccountId')
 
 const { mutate: createAccount, isLoading: isCreateLoading, isError: isErrorCreate, reset: resetCreate } = useInvestmentAccountCreate()
-// TODO: but how to update investment account - specifically the description? create new query and endpoint for it
 const { mutate: updateAccount, isLoading: isUpdateLoading, isError: isErrorUpdate, reset: resetUpdate } = useInvestmentAccountUpdate(investmentAccountId)
 const { mutate: deleteAccount, isLoading: isDeleteLoading, isError: isErrorDelete, reset: resetDelete } = useAccountDelete(accountId)
 
@@ -21,10 +20,8 @@ const { allIcons: icons } = useIcons()
 const { colorOptions: colors } = useAppColors()
 
 const createAccountHandler = async (values: Prisma.MoneyAccountUncheckedCreateWithoutUserInput & Prisma.InvestmentAccountUncheckedCreateInput) => {
-  // TODO: get type
   const { description, expectedRateOfReturn, type, ...accountData } = values
 
-  // TODO: temp
   const investmentAccountData = { description, expectedRateOfReturn, type }
   const userId = (await useAuth()).userId.value as string | undefined
 
@@ -38,7 +35,6 @@ const createAccountHandler = async (values: Prisma.MoneyAccountUncheckedCreateWi
 
 const editAccountHandler = async (values: Prisma.MoneyAccountUncheckedUpdateWithoutUserInput & Prisma.InvestmentAccountUncheckedUpdateInput) => {
   const userId = (await useAuth()).userId.value as string | undefined
-  // TODO: handle full-on investment account update later
   const { description, expectedRateOfReturn, type, ...accountData } = values
   const investmentAccountData = { description, expectedRateOfReturn, type }
   const account = { ...accountData, userId }
