@@ -34,7 +34,7 @@
 - [UnoCSS](https://github.com/unocss/unocss)
 - [Headless UI](https://headlessui.com/)
 - [Pinia](https://pinia.vuejs.org/)
-- [Chart.js](https://www.chartjs.org/)
+- [Charts.js](https://www.chartjs.org/)
 - [Prisma](https://www.prisma.io/)
 - [PlanetScale](https://planetscale.com/)
 
