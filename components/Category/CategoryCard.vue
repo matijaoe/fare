@@ -35,7 +35,7 @@ const { isDark } = useTheme()
       px-6 py-3
       border="~ dotted y-2 x-0 dark:0"
       class="dark:bg-zinc-50/4"
-      :class="[{ bg3: !isDark, color9: !isDark, borderClr3: !isDark }]"
+      :class="isDark ? [] : [bg50, borderClr3, color9]"
     >
       <NuxtLink :to="`/categories/${category.id}`" class="group" mr-auto>
         <div ml-auto flex gap-3 items-center>
