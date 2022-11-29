@@ -2,7 +2,7 @@ import type { TransactionType } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
 import { db } from '~~/lib/db'
 import type { AccountTotalType, GroupedAccount } from '~~/models/resources'
-import { readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
+import { readParams, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 
 const initalTotal = () => ({ income: 0, expense: 0, net: 0, transferIn: 0, transferOut: 0, transferNet: 0, balance: 0 })
 
@@ -40,41 +40,45 @@ export default defineEventHandler(async (event) => {
     return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
   }
 
+  const { id: accountIdParam } = readParams<{ id: string }>(event)
+
   try {
     // Group by accounts and entry types
     const groupByAccountsAllTime = await db.transaction.groupBy({
       by: ['fromAccountId', 'toAccountId', 'type'],
       _sum: { amount: true },
       orderBy: { fromAccountId: 'asc' },
-      where: { userId },
+      where: { userId, OR: [{ fromAccountId: accountIdParam }, { toAccountId: accountIdParam }] },
     })
-
-    // Fetch all cash accounts - could this better be done from client and pinia store/vue query?
-    const cashAccounts = await db.cashAccount.findMany({})
 
     const totalsAllTime = calculateAccountTotals(groupByAccountsAllTime)
 
-    return cashAccounts.map((cashAccount) => {
-      const hadTransactionsAllTime = cashAccount.id in totalsAllTime
+    // Totals for all time - net, expenses, income, transfer net, balance
+    const calcAccountTotals = () => {
+      const hadTransactionsAllTime = accountIdParam in totalsAllTime
 
       if (!hadTransactionsAllTime) {
         return {
-          ...cashAccount,
+          id: accountIdParam,
           totals: initalTotal(),
         }
       }
 
-      const allTimeAccountTotals = totalsAllTime[cashAccount.id]
+      const allTimeAccountTotals = totalsAllTime[accountIdParam]
 
       const totalNet = allTimeAccountTotals.income - allTimeAccountTotals.expense
       const totalTransferNet = allTimeAccountTotals.transferIn - allTimeAccountTotals.transferOut
       const totalBalance = totalNet + totalTransferNet
 
       return {
-        ...cashAccount,
+        id: accountIdParam,
         balance: totalBalance,
       }
-    })
+    }
+
+    const singleCashAccountWithTotals = calcAccountTotals()
+
+    return singleCashAccountWithTotals
   } catch (err) {
     console.error(err)
     sendInternalError(event, err)

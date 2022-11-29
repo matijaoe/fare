@@ -9,6 +9,7 @@ const { isAllTime, monthQuery } = toRefs(useDateRangeStore())
 
 const { data: cashAccount, isLoading: isAccountLoading } = useCashAccount(accountId)
 const { data: cashAccountWithTotals, isLoading: isTotalsLoading } = useCashAccountTotals(accountId, monthQuery)
+const { data: cashAccountWithBalance, isLoading: isBalanceLoading } = useCashAccountTotalsBalance(accountId)
 
 const account = $computed(() => cashAccount.value?.account)
 const { data: accountWithTransactions, isLoading: isTransactionsLoading } = useCashAccountWithTransactions(accountId, monthQuery)
@@ -23,18 +24,13 @@ const fullAccountTransactions = computed(() => {
 
 const { transactions, searchQuery } = useTransactionFilters(fullAccountTransactions)
 
-whenever(cashAccount, () => setBreadcrumbs([
-  { label: 'Accounts', href: { name: 'accounts' } },
-  { label: cashAccount.value?.account?.name ?? accountId, href: route.path },
-]), { immediate: true })
-
 const { bg3 } = useAppColors(computed(() => cashAccount.value?.account.color))
 
 const modal = useCashAccountModal()
 
 const totals = computed(() => cashAccountWithTotals.value?.totals)
 
-const balance = computed(() => totals.value?.balance ?? 0)
+const balance = computed(() => cashAccountWithBalance.value?.balance ?? 0)
 const net = computed(() => totals.value?.net ?? 0)
 const expense = computed(() => totals.value?.expense ?? 0)
 const income = computed(() => totals.value?.income ?? 0)
@@ -43,6 +39,11 @@ const formattedBalance = useCurrencyFormat(balance, { signDisplay: 'exceptZero' 
 const formattedNet = useCurrencyFormat(net, { signDisplay: 'exceptZero' })
 const formattedExpense = useCurrencyFormat(expense, { signDisplay: 'exceptZero' })
 const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
+
+whenever(cashAccount, () => setBreadcrumbs([
+  { label: 'Accounts', href: { name: 'accounts' } },
+  { label: cashAccount.value?.account?.name ?? accountId, href: route.path },
+]), { immediate: true })
 </script>
 
 <template>
@@ -100,11 +101,11 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
               <div flex items-center gap-5>
                 <TransitionFade>
                   <FSkeleton
-                    v-if="isTotalsLoading"
+                    v-if="isBalanceLoading"
                     class="h-40px w-50"
                   />
                   <p
-                    v-else-if="isDefined(totals)"
+                    v-else-if="cashAccountWithBalance"
                     text-4xl font="display medium"
                   >
                     {{ formattedBalance }}
@@ -119,7 +120,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
                   <div text-lg text-right space-y="0.5">
                     <TransitionFade>
                       <FSkeleton v-if="isTotalsLoading" w-22 h="28px" />
-                      <span v-else-if="isDefined(totals)">
+                      <span v-else-if="totals">
                         {{ formattedIncome }}
                       </span>
                     </TransitionFade>
@@ -141,7 +142,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
                   <div text="lg right" space-y="0.5">
                     <TransitionFade>
                       <FSkeleton v-if="isTotalsLoading" w-22 h="28px" />
-                      <span v-else-if="isDefined(totals)">
+                      <span v-else-if="totals">
                         {{ formattedExpense }}
                       </span>
                     </TransitionFade>
@@ -164,7 +165,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
             <TransitionFade>
               <FSkeleton v-if="isTotalsLoading" w-22 h="24px" />
               <span
-                v-else-if="isDefined(totals)"
+                v-else-if="totals"
                 text-base text-right
               >
                 {{ net > 0 ? '+' : '' }}{{ formattedNet }} this month

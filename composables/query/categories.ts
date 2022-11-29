@@ -10,7 +10,7 @@ export const keysCategory = {
   // totals
   totals: () => [...keysCategory.all, 'totals'] as const,
   totalsRange: (month: Ref<string | undefined>) => [...keysCategory.all, 'totals', month] as const,
-  totalsIndividualRange: (id: string, month: Ref<string | undefined>) => [...keysCategory.all, 'totals', id, month] as const,
+  totalsRangeIndividual: (id: string, month: Ref<string | undefined>) => [...keysCategory.all, 'totals', id, month] as const,
   // details
   details: () => [...keysCategory.all, 'detail'] as const,
   detail: (id: string) => [...keysCategory.all, 'detail', id] as const,
@@ -82,7 +82,7 @@ export const useCategoriesTotals = (month: Ref<string | undefined>) => {
 export const useCategoryTotals = (id: string, month: Ref<string | undefined>) => {
   const qc = useQueryClient()
   return useQuery(
-    keysCategory.totalsIndividualRange(id, month),
+    keysCategory.totalsRangeIndividual(id, month),
     () => {
       const url = isDefined(month)
         ? `/api/categories/totals/${id}?month=${get(month)}`

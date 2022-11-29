@@ -4,7 +4,7 @@ import { db } from '~~/lib/db'
 import type { AccountTotalType, GroupedAccount } from '~~/models/resources'
 import { getDateRange, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 
-const initalTotal = () => ({ income: 0, expense: 0, net: 0, transferIn: 0, transferOut: 0, transferNet: 0, balance: 0 })
+const initalTotal = () => ({ income: 0, expense: 0, net: 0, transferIn: 0, transferOut: 0, transferNet: 0 })
 
 const calculateAccountTotals = (groupedAccounts: GroupedAccount[]) => {
   return groupedAccounts.reduce((totalsByAccount: Record<string, Record<AccountTotalType, number>>, curr: GroupedAccount) => {
@@ -60,7 +60,6 @@ export default defineEventHandler(async (event) => {
       })
       : null
 
-    // Fetch all cash accounts - could this better be done from client and pinia store/vue query?
     const cashAccounts = await db.cashAccount.findMany({})
 
     const totalsAllTime = calculateAccountTotals(groupByAccountsAllTime)
@@ -68,42 +67,39 @@ export default defineEventHandler(async (event) => {
 
     const isForRange = hasDefinedMonth && totalsInRange
 
-    // Totals for all time - net, expenses, income, transfer net, balance
-    return cashAccounts.map((account) => {
-      const hadTransactionsAllTime = account.id in totalsAllTime
-      const hasTransactionInRange = isForRange && account.id in totalsInRange
+    // Totals for all time - net, expenses, income, transfer net
+    return cashAccounts.map((cashAccount) => {
+      const hadTransactionsAllTime = cashAccount.id in totalsAllTime
+      const hasTransactionInRange = isForRange && cashAccount.id in totalsInRange
 
       if (!hadTransactionsAllTime) {
         return {
-          ...account,
+          ...cashAccount,
           totals: initalTotal(),
         }
       }
 
-      const allTimeAccountTotals = totalsAllTime[account.id]
+      const allTimeAccountTotals = totalsAllTime[cashAccount.id]
 
       const totalNet = allTimeAccountTotals.income - allTimeAccountTotals.expense
       const totalTransferNet = allTimeAccountTotals.transferIn - allTimeAccountTotals.transferOut
-      const totalBalance = totalNet + totalTransferNet
 
-      const ensuredTotalsInRange = hasTransactionInRange ? totalsInRange[account.id] : initalTotal()
+      const ensuredTotalsInRange = hasTransactionInRange ? totalsInRange[cashAccount.id] : initalTotal()
 
       const totals = isForRange
         ? {
             ...ensuredTotalsInRange,
             net: ensuredTotalsInRange.income - ensuredTotalsInRange.expense,
             transferNet: ensuredTotalsInRange.transferIn - ensuredTotalsInRange.transferOut,
-            balance: totalBalance,
           }
         : {
             ...allTimeAccountTotals,
             net: totalNet,
             transferNet: totalTransferNet,
-            balance: totalBalance,
           }
 
       return {
-        ...account,
+        ...cashAccount,
         totals,
       }
     })

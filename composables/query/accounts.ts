@@ -4,7 +4,7 @@ import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
 import type { Ref } from 'vue'
 import { keysTransactions } from './transactions'
-import type { CashAccountWithAccount, CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount, CashAccountWithTotals, CashAccountsBalanceModel, IndividualCashAccountTotals, TransactionWithCategoryAndCashAccount } from '~~/models/resources'
+import type { CashAccountWithAccount, CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount, CashAccountWithBalance, CashAccountWithTotals, CashAccountsBalanceModel, IndividualCashAccountTotals, IndividualCashAccountWithBalance, TransactionWithCategoryAndCashAccount } from '~~/models/resources'
 
 export const keysAccounts = {
   all: ['cash-accounts'] as const,
@@ -14,8 +14,10 @@ export const keysAccounts = {
   // account totals for range
   totals: () => [...keysAccounts.all, 'totals'] as const,
   totalsBalance: () => [...keysAccounts.all, 'totals', 'balance'] as const,
+  // TODO
+  totalsBalanceIndividual: (id: string) => [...keysAccounts.all, 'totals', 'balance', id] as const,
   totalsRange: (month: Ref<string | undefined>) => [...keysAccounts.all, 'totals', month] as const,
-  totalsIndividualRange: (id: string, month: Ref<string | undefined>) => [...keysAccounts.all, 'totals', id, month] as const,
+  totalsRangeIndividual: (id: string, month: Ref<string | undefined>) => [...keysAccounts.all, 'totals', id, month] as const,
   // account details
   details: () => [...keysAccounts.all, 'detail'] as const,
   detail: (id: MaybeRef<string>) => [...keysAccounts.all, 'detail', unref(id)] as const,
@@ -91,12 +93,11 @@ export const useCashAccountsTotals = (month: Ref<string | undefined>) => {
   )
 }
 
-// TODO: separate endpoint for accounts with only current balance
-export const useCashAccountsTotalBalancePer = () => {
+export const useCashAccountsTotalsBalance = () => {
   return useQuery(
     keysAccounts.totalsBalance(),
     () => {
-      return $fetch<{ id: string; balance: number }[]>('/api/accounts/totals/balance')
+      return $fetch<CashAccountWithBalance[]>('/api/accounts/totals/balance')
     },
   )
 }
@@ -104,7 +105,7 @@ export const useCashAccountsTotalBalancePer = () => {
 export const useCashAccountTotals = (id: string, month: Ref<string | undefined>) => {
   const qc = useQueryClient()
   return useQuery(
-    keysAccounts.totalsIndividualRange(id, month),
+    keysAccounts.totalsRangeIndividual(id, month),
     () => {
       const url = isDefined(month)
         ? `/api/accounts/totals/${id}?month=${get(month)}`
@@ -115,6 +116,20 @@ export const useCashAccountTotals = (id: string, month: Ref<string | undefined>)
     {
       initialData: () => {
         return qc.getQueryData<CashAccountWithTotals[]>(keysAccounts.totalsRange(month))?.find(acc => acc.id === id)
+      },
+    },
+  )
+}
+export const useCashAccountTotalsBalance = (id: string) => {
+  const qc = useQueryClient()
+  return useQuery(
+    keysAccounts.totalsBalanceIndividual(id),
+    () => {
+      return $fetch<IndividualCashAccountWithBalance>(`/api/accounts/totals/${id}/balance`)
+    },
+    {
+      initialData: () => {
+        return qc.getQueryData<CashAccountWithBalance[]>(keysAccounts.totalsBalance())?.find(acc => acc.id === id)
       },
     },
   )

@@ -17,12 +17,12 @@ const formattedTotalBalance = useCurrencyFormat(balance)
 const formattedMonthlyBalance = useCurrencyFormat(monthlyBalance)
 
 const { data: cashAccounts, isLoading: isAccountsLoading } = useCashAccounts()
-const { data: accountTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(monthQuery)
-const { data: accountTotalsBalance, isLoading: isTotalsBalanceLoading } = useCashAccountsTotalBalancePer()
+const { data: accountsTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(monthQuery)
+const { data: accountsTotalsBalance, isLoading: isTotalsBalanceLoading } = useCashAccountsTotalsBalance()
 
 const unifiedAccounts = computed(() => {
-  const findAccountTotals = (id: string) => accountTotals.value?.find(acc => acc.id === id)
-  const findAccountTotalsBalance = (id: string) => accountTotalsBalance.value?.find(acc => acc.id === id)
+  const findAccountTotals = (id: string) => accountsTotals.value?.find(acc => acc.id === id)
+  const findAccountTotalsBalance = (id: string) => accountsTotalsBalance.value?.find(acc => acc.id === id)
 
   return cashAccounts.value?.map((account) => {
     const { totals } = findAccountTotals(account.id) ?? {}
