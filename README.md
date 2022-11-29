@@ -1,80 +1,73 @@
-<p align="center">
-<img src="https://user-images.githubusercontent.com/11247099/140462375-7b7ac4db-35b7-453c-8a05-13d8d20282c4.png" width="600"/>
-</p>
 
-<h2 align="center">
-<a href="https://github.com/antfu/vitesse">Vitesse</a> for Nuxt 3
-</h2><br>
+    🚧 work in progress 🚧
 
-<pre align="center">
-🧪 Working in Progress
-</pre>
+# 🫰🏻 FARE
 
-<p align="center">
-<br>
-<a href="https://vitesse-nuxt3.netlify.app/">🖥 Online Preview</a>
-<br><br>
-<a href="https://stackblitz.com/github/antfu/vitesse-nuxt3"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt=""></a>
-</p>
+>Platform for attaining financial independence
 
-## Features
 
-- [💚 Nuxt 3](https://v3.nuxtjs.org) - SSR, ESR, File-based routing, components auto importing, modules, etc.
+## 👀 sneak peek
 
-- ⚡️ Vite - Instant HMR
+<img width="1580" alt="CleanShot 2022-11-29 at 19 16 06@2x" src="https://user-images.githubusercontent.com/46557266/204613005-51e43e6d-39df-4722-a0a0-ccd6631dd2eb.png">
 
-- 🎨 [UnoCSS](https://github.com/antfu/unocss) - The instant on-demand atomic CSS engine.
 
-- 😃 Use icons from any icon sets in Pure CSS, powered by [UnoCSS](https://github.com/antfu/unocss)
 
-- 🔥 The `<script setup>` syntax
+## ⚡ Features
+- *coming soon*
 
-- 🍍 [State Management via Pinia](https://pinia.esm.dev), see [./composables/user.ts](./composables/user.ts)
 
-- 📑 [Layout system](./layouts)
 
-- 📥 APIs auto importing - for Composition API, VueUse and custom composables.
 
-- 🏎 Zero-config cloud functions and deploy
+## 🛠️ Stack
 
-- 🦾 TypeScript, of course
 
-## Plugins
+- [Nuxt 3](https://nuxt.com/)
+- [Vue](https://vuejs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [TanStack Query](https://tanstack.com/query/v4)
+- [VueUse](https://vueuse.org/)
+- [UnoCSS](https://github.com/unocss/unocss)
+- [Headless UI](https://headlessui.com/)
+- [Pinia](https://pinia.vuejs.org/)
+- [Chart.js](https://www.chartjs.org/)
+- [Prisma](https://www.prisma.io/)
+- [PlanetScale](https://planetscale.com/)
 
-### Nuxt Modules
+&nbsp;
 
-- [VueUse](https://github.com/vueuse/vueuse) - collection of useful composition APIs.
-- [ColorMode](https://github.com/nuxt-community/color-mode-module) - dark and Light mode with auto detection made easy with Nuxt.
-- [UnoCSS](https://github.com/antfu/unocss) - the instant on-demand atomic CSS engine.
-- [Pinia](https://pinia.esm.dev/) - intuitive, type safe, light and flexible Store for Vue.
+## Setup
 
-## IDE
-
-We recommend using [VS Code](https://code.visualstudio.com/) with [Volar](https://github.com/johnsoncodehk/volar) to get the best experience (You might want to disable Vetur if you have it).
-
-## Variations
-
-- [vitesse](https://github.com/antfu/vitesse) - Opinionated Vite Starter Template
-- [vitesse-lite](https://github.com/antfu/vitesse-lite) - Lightweight version of Vitesse
-- [vitesse-nuxt-bridge](https://github.com/antfu/vitesse-nuxt-bridge) - Vitesse for Nuxt 2 with Bridge
-- [vitesse-webext](https://github.com/antfu/vitesse-webext) - WebExtension Vite starter template
-
-## Try it now!
-
-### Online
-
-<a href="https://stackblitz.com/github/antfu/vitesse-nuxt3"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt=""></a>
-
-### GitHub Template
-
-[Create a repo from this template on GitHub](https://github.com/antfu/vitesse-nuxt3/generate).
-
-### Clone to local
-
-If you prefer to do it manually with the cleaner git history
+Make sure to install the dependencies:
 
 ```bash
-npx degit antfu/vitesse-nuxt3 my-nuxt3-app
-cd my-nuxt3-app
-pnpm i # If you don't have pnpm installed, run: npm install -g pnpm
+# yarn
+yarn install
+# npm
+npm install
+# pnpm
+pnpm install --shamefully-hoist
 ```
+
+## Development Server
+
+Start the development server on http://localhost:3000
+
+```bash
+pnpm run dev
+```
+
+## Production
+
+Build the application for production:
+
+```bash
+pnpm run build
+```
+
+Locally preview production build:
+
+```bash
+pnpm run preview
+```
+
+Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
