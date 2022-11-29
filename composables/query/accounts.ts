@@ -13,11 +13,10 @@ export const keysAccounts = {
   balanceRange: (month: Ref<string | undefined>) => [...keysAccounts.all, 'balance', month] as const,
   // account totals for range
   totals: () => [...keysAccounts.all, 'totals'] as const,
-  totalsBalance: () => [...keysAccounts.all, 'totals', 'balance'] as const,
-  // TODO
-  totalsBalanceIndividual: (id: string) => [...keysAccounts.all, 'totals', 'balance', id] as const,
   totalsRange: (month: Ref<string | undefined>) => [...keysAccounts.all, 'totals', month] as const,
   totalsRangeIndividual: (id: string, month: Ref<string | undefined>) => [...keysAccounts.all, 'totals', id, month] as const,
+  totalsBalance: () => [...keysAccounts.all, 'totals', 'balance'] as const,
+  totalsBalanceIndividual: (id: string) => [...keysAccounts.all, 'totals', 'balance', id] as const,
   // account details
   details: () => [...keysAccounts.all, 'detail'] as const,
   detail: (id: MaybeRef<string>) => [...keysAccounts.all, 'detail', unref(id)] as const,
@@ -79,7 +78,6 @@ export const useCashAccountWithTransactions = (id: string, month: Ref<string | u
   )
 }
 
-// TODO: separate endpoint for accounts with only current balance
 export const useCashAccountsTotals = (month: Ref<string | undefined>) => {
   return useQuery(
     keysAccounts.totalsRange(month),

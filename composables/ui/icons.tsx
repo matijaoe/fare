@@ -112,6 +112,7 @@ export const useIcons = () => {
     { label: '', value: 'tabler:book-2' },
     { label: '', value: 'tabler:pumpkin-scary' },
     { label: '', value: 'tabler:bolt' },
+    { label: '', value: 'tabler:home' },
     { label: '', value: 'tabler:home-bolt' },
     { label: '', value: 'tabler:server-bolt' },
     { label: '', value: 'tabler:device-mobile' },

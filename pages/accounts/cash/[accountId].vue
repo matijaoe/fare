@@ -91,7 +91,7 @@ whenever(cashAccount, () => setBreadcrumbs([
           </FButton>
         </div>
 
-        <div mt-8>
+        <div mt-8 space-y-2>
           <div flex items-end justify-between gap-4>
             <div space-y-1 flex-1>
               <span uppercase font="sans medium" text="xs zinc-4 dark:zinc-5">
@@ -102,7 +102,7 @@ whenever(cashAccount, () => setBreadcrumbs([
                 <TransitionFade>
                   <FSkeleton
                     v-if="isBalanceLoading"
-                    class="h-40px w-50"
+                    class="h-40px w-40"
                   />
                   <p
                     v-else-if="cashAccountWithBalance"
@@ -161,15 +161,19 @@ whenever(cashAccount, () => setBreadcrumbs([
             </div>
           </div>
 
-          <div v-if="!isAllTime" font-mono mt-2>
+          <div v-if="!isAllTime" flex items-center gap-5>
             <TransitionFade>
-              <FSkeleton v-if="isTotalsLoading" w-22 h="24px" />
-              <span
-                v-else-if="totals"
-                text-base text-right
+              <FSkeleton
+                v-if="isBalanceLoading"
+                class="h-40px w-60"
+              />
+              <p
+                v-else-if="formattedNet"
+                text-4xl text-zinc-4
+                font="display medium"
               >
-                {{ net > 0 ? '+' : '' }}{{ formattedNet }} this month
-              </span>
+                {{ net > 0 ? '+' : '' }}{{ formattedNet }} <span text-base>this month</span>
+              </p>
             </TransitionFade>
           </div>
         </div>
