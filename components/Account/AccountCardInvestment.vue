@@ -18,8 +18,6 @@ const props = defineProps<Props>()
 
 const modal = useInvestmentAccountModal()
 
-const { isDark } = useTheme()
-
 const account = $computed(() => props.investmentAccount.account)
 
 const { selectedMonth } = toRefs(useDateRangeStore())
@@ -100,8 +98,7 @@ const setEditMode = (value: boolean) => {
 <template>
   <FCard
     ref="card"
-    :white="!isDark"
-    :filled="isDark"
+    white
     aspect="2/1 sm:4/3"
     paddingless
     neobrutal

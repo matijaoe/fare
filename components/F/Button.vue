@@ -26,7 +26,7 @@ const variantStyle = computed(() => {
   switch (props.variant) {
     // TODO: focus states with outlines
     case 'primary':
-      return 'bg-zinc-9 text-zinc-2 hover:not-disabled:(bg-zinc-8) focus-visible:not-disabled:(bg-zinc-8) dark:(bg-zinc-3 text-zinc-8 hover:not-disabled:(bg-zinc-2) focus-visible:not-disabled:(bg-zinc-1))'
+      return 'bg-zinc-9 text-zinc-2 hover:not-disabled:(bg-zinc-8) focus-visible:not-disabled:(bg-zinc-8) dark:(bg-zinc-3 text-zinc-8 hover:not-disabled:(bg-zinc-1) focus-visible:not-disabled:(bg-zinc-1))'
     case 'secondary':
       return 'bg-zinc-2 text-zinc-9 hover:not-disabled:(bg-zinc-3/75) focus-visible:not-disabled:(bg-zinc-3/75) dark:(bg-zinc-8 text-zinc-2 hover:not-disabled:(bg-zinc-7) focus-visible:not-disabled:(bg-zinc-7))'
     case 'subtle':
@@ -34,27 +34,27 @@ const variantStyle = computed(() => {
     case 'outline':
       return 'bg-transparent text-zinc-9 !border-zinc-9 hover:not-disabled:(bg-zinc-2/50) focus-visible:not-disabled:(bg-zinc-1) dark:(text-zinc-2 !border-zinc-7 hover:not-disabled:(bg-zinc-8 text-zinc-2) focus-visible:not-disabled:(bg-zinc-8 text-zinc-2))'
     case 'danger':
-      return 'bg-red-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-red-4/95) dark:(bg-red-5 filter-saturate-80 hover:not-disabled:(bg-red-5 filter-saturate-95) focus-visible:not-disabled:(bg-red-4))'
+      return 'bg-red-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-red-4/95) dark:(bg-red-5 filter-saturate-70 hover:not-disabled:(bg-red-5 filter-saturate-95) focus-visible:not-disabled:(bg-red-4))'
     case 'warning':
-      return 'bg-amber-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-amber-4/95) dark:(bg-amber-5 filter-saturate-80 hover:not-disabled:(bg-amber-5 filter-saturate-95) focus-visible:not-disabled:(bg-amber-5))'
+      return 'bg-amber-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-amber-4/95) dark:(bg-amber-5 filter-saturate-70 hover:not-disabled:(bg-amber-5 filter-saturate-95) focus-visible:not-disabled:(bg-amber-5))'
     case 'success':
-      return 'bg-green-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-green-4/95) dark:(bg-green-5 filter-saturate-80 hover:not-disabled:(bg-green-5 filter-saturate-95) focus-visible:not-disabled:(bg-green-4))'
+      return 'bg-green-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-green-4/95) dark:(bg-green-5 filter-saturate-70 hover:not-disabled:(bg-green-5 filter-saturate-95) focus-visible:not-disabled:(bg-green-4))'
     case 'info':
-      return 'bg-sky-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-sky-4/95) dark:(bg-sky-5 filter-saturate-80 hover:not-disabled:(bg-sky-5 filter-saturate-95) focus-visible:not-disabled:(bg-sky-4))'
+      return 'bg-sky-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-sky-4/95) dark:(bg-sky-5 filter-saturate-70 hover:not-disabled:(bg-sky-5 filter-saturate-95) focus-visible:not-disabled:(bg-sky-4))'
     case 'indigo':
-      return 'bg-indigo-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-indigo-4/95) dark:(bg-indigo-5 filter-saturate-80 hover:not-disabled:(bg-indigo-5 filter-saturate-95) focus-visible:not-disabled:(bg-indigo-4))'
+      return 'bg-indigo-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-indigo-4/95) dark:(bg-indigo-5 filter-saturate-70 hover:not-disabled:(bg-indigo-5 filter-saturate-95) focus-visible:not-disabled:(bg-indigo-4))'
     case 'teal':
-      return 'bg-teal-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-teal-4/95) dark:(bg-teal-5 filter-saturate-80 hover:not-disabled:(bg-teal-5 filter-saturate-95) focus-visible:not-disabled:(bg-teal-4))'
+      return 'bg-teal-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-teal-4/95) dark:(bg-teal-5 filter-saturate-70 hover:not-disabled:(bg-teal-5 filter-saturate-95) focus-visible:not-disabled:(bg-teal-4))'
     case 'lime':
-      return 'bg-lime-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-lime-4/95) dark:(bg-lime-5 filter-saturate-80 hover:not-disabled:(bg-lime-5 filter-saturate-95) focus-visible:not-disabled:(bg-lime-4))'
+      return 'bg-lime-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-lime-4/95) dark:(bg-lime-5 filter-saturate-70 hover:not-disabled:(bg-lime-5 filter-saturate-95) focus-visible:not-disabled:(bg-lime-4))'
     case 'emerald':
-      return 'bg-emerald-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-emerald-4/95) dark:(bg-lime-5 filter-saturate-80 hover:not-disabled:(bg-lime-5 filter-saturate-95) focus-visible:not-disabled:(bg-lime-4))'
+      return 'bg-emerald-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-emerald-4/95) dark:(bg-lime-5 filter-saturate-70 hover:not-disabled:(bg-lime-5 filter-saturate-95) focus-visible:not-disabled:(bg-lime-4))'
     case 'rose':
-      return 'bg-rose-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-rose-4/95) dark:(bg-rose-5 filter-saturate-80 hover:not-disabled:(bg-rose-5 filter-saturate-95) focus-visible:not-disabled:(bg-rose-4))'
+      return 'bg-rose-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-rose-4/95) dark:(bg-rose-5 filter-saturate-70 hover:not-disabled:(bg-rose-5 filter-saturate-95) focus-visible:not-disabled:(bg-rose-4))'
     case 'zinc':
-      return 'bg-zinc-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-zinc-4/95) dark:(bg-zinc-5 filter-saturate-80 hover:not-disabled:(bg-zinc-5 filter-saturate-95) focus-visible:not-disabled:(bg-zinc-4))'
+      return 'bg-zinc-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-zinc-4/95) dark:(bg-zinc-5 filter-saturate-70 hover:not-disabled:(bg-zinc-5 filter-saturate-95) focus-visible:not-disabled:(bg-zinc-4))'
     case 'custom':
-      return 'bg-[#5D8D7B] text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-zinc-4/95) dark:(bg-zinc-5 filter-saturate-80 hover:not-disabled:(bg-zinc-5 filter-saturate-95) focus-visible:not-disabled:(bg-zinc-4))'
+      return 'bg-[#5D8D7B] text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-zinc-4/95) dark:(bg-zinc-5 filter-saturate-70 hover:not-disabled:(bg-zinc-5 filter-saturate-95) focus-visible:not-disabled:(bg-zinc-4))'
   }
 })
 

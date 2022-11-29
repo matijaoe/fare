@@ -8,7 +8,7 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
       <div w-full flex="~ col xl:row 1" justify-between>
         <div
           max-w="full xl:lg" flex-1
-          border="r-2 zinc-2 dark:zinc-9"
+          border="r-2" border-base
         >
           <slot name="list" />
         </div>

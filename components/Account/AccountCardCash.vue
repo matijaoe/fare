@@ -22,15 +22,12 @@ const formattedExpense = totals?.expense != null ? useCurrencyFormat(totals.expe
 
 const card = ref<HTMLElement>()
 const isHovered = useElementHover(card)
-
-const { isDark } = useTheme()
 </script>
 
 <template>
   <FCard
     ref="card"
-    :white="!isDark"
-    :filled="isDark"
+    white
     paddingless
     neobrutal
     aspect="2/1 sm:4/3"

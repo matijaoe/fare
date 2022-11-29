@@ -36,7 +36,7 @@ const unifiedAccounts = computed(() => {
 
 <template>
   <LayoutPage>
-    <div flex items-center gap-8 divide-x-2 divide-zinc-3>
+    <div flex items-center gap-8 divide-x-2 divide-zinc-2 dark:divide-zinc-8>
       <div flex="~ col gap-2" translate-y="0.4">
         <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
           Total balance
@@ -69,7 +69,7 @@ const unifiedAccounts = computed(() => {
             >
               <FSkeleton class="h-60px w-40" />
             </div>
-            <p v-else text-zinc-4>
+            <p v-else text-zinc-4 dark:text-zinc-6>
               {{ formattedMonthlyBalance }}
             </p>
           </div>

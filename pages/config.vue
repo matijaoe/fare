@@ -9,7 +9,7 @@ const config = useFireConfig()
     <LayoutSectionWrapper>
       <!-- Tabs -->
       <TabGroup>
-        <TabList flex gap-2 pb-3 border-b-2 border-b-zinc-2>
+        <TabList flex gap-2 pb-3 border="b-2" border-base>
           <FTab>
             FIRE
           </FTab>

@@ -42,8 +42,9 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
         placeholder="Search"
         icon="tabler:search"
         clearable
-        input-class="rounded-none !bg-white !py-5"
-        border="b-2 zinc-2 dark:zinc-9"
+        input-class="rounded-none !bg-white !dark:bg-zinc-9 !py-5"
+        border="b-2"
+        border-base
       />
       <TransactionList
         :transactions="transactions"
@@ -56,7 +57,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
         <div flex items-center justify-between>
           <div flex items-center gap-6>
             <div class="w-75.2px h-75.2px" aspect-square text-4xl p-4 rounded-full flex-center :class="[bg3]">
-              <Icon v-if="category" :name="category?.icon" />
+              <Icon v-if="category" :name="category?.icon" dark:text-white />
             </div>
             <div space-y-2>
               <TransitionFade>
@@ -100,7 +101,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
             </div>
           </div>
 
-          <div flex justify-center items-end gap-8 divide-x-2 font-mono>
+          <div flex justify-center items-end gap-8 divide-x-2 divide-zinc-2 dark:divide-zinc-8 font-mono>
             <FTooltip content="Income" placement="top-end">
               <div flex items-center gap-4>
                 <div text-lg text-right space-y="0.5">

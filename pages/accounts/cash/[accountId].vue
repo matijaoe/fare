@@ -55,8 +55,8 @@ whenever(cashAccount, () => setBreadcrumbs([
         placeholder="Search"
         icon="tabler:search"
         clearable
-        input-class="rounded-none !bg-white !py-5"
-        border="b-2 zinc-2 dark:zinc-9"
+        input-class="rounded-none !bg-white !dark:bg-zinc-9 !py-5"
+        border="b-2" border-base
       />
       <TransactionList
         :transactions="transactions"
@@ -69,7 +69,7 @@ whenever(cashAccount, () => setBreadcrumbs([
         <div flex items-center justify-between>
           <div flex items-center gap-6>
             <div class="w-75.2px h-75.2px" aspect-square text-4xl p-4 rounded-full flex-center :class="[bg3]">
-              <Icon v-if="account" :name="account?.icon ?? 'tabler:cash'" />
+              <Icon v-if="account" :name="account?.icon ?? 'tabler:cash'" dark:text-white />
             </div>
             <div space-y-2>
               <TransitionFade>
@@ -114,7 +114,7 @@ whenever(cashAccount, () => setBreadcrumbs([
               </div>
             </div>
 
-            <div flex justify-center items-end gap-8 divide-x-2 font-mono>
+            <div flex justify-center items-end gap-8 divide-x-2 divide-zinc-2 dark:divide-zinc-8 font-mono>
               <FTooltip content="Income" placement="top-end">
                 <div flex items-center gap-4 pl-5>
                   <div text-lg text-right space-y="0.5">
@@ -169,7 +169,7 @@ whenever(cashAccount, () => setBreadcrumbs([
               />
               <p
                 v-else-if="formattedNet"
-                text-4xl text-zinc-4
+                text-4xl text-zinc-4 dark:text-zinc-6
                 font="display medium"
               >
                 {{ net > 0 ? '+' : '' }}{{ formattedNet }} <span text-base>this month</span>

@@ -173,7 +173,7 @@ const disabledStyle = computed(() => 'disabled:(bg-zinc-1 dark:bg-zinc-9/50 bord
           :class="[widthStyle]"
           py-1
           outline="none focus:none"
-          border="2 t-0 rounded-b-md zinc-2 dark:zinc-8"
+          border="2 t-0 rounded-b-md" border-base
           max-h="sm:!193px"
           overflow-y="auto"
         >

@@ -26,13 +26,13 @@ const items = computed({
   >
     <div
       flex="~ col"
-      divide="y-2 dashed zinc-2 dark:zinc-9"
+      divide="y-2 dashed zinc-2 dark:zinc-8"
     >
       <template v-if="hasTransactions">
         <button
           v-for="item in items"
           :key="JSON.stringify(item)"
-          class="hover:bg-zinc-1/40 dark:hover:bg-zinc-8/40 last:(!border-b-2 !border-b-dashed)"
+          class="hover:bg-zinc-1/40 dark:hover:bg-zinc-8/40 last:(!border-b-2 !border-b-dashed border-zinc-2 dark:border-zinc-8)"
           @click="transactionModal.launchEdit(item)"
         >
           <TransactionItem :item="item" />

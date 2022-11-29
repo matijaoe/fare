@@ -8,7 +8,7 @@ const { isLoading: isNetWorthLoading, netWorthFormatted, netWorth } = useNetWort
 <template>
   <div
     absolute inset-0 h-screen overflow-y-auto
-    pt-4 font-mono bg="white dark:zinc-9" border="r-0 md:r-2 base"
+    pt-4 font-mono bg="white dark:zinc-9" border="r-0 md:r-2" border-base
     flex="~ col gap-6"
     :class="{ '!hidden': !sidebar.isOpen }"
   >
@@ -30,8 +30,8 @@ const { isLoading: isNetWorthLoading, netWorthFormatted, netWorth } = useNetWort
 
     <SidebarNavList flex-1 />
 
-    <div bg="zinc-1 dark:transparent">
-      <div flex="~ col gap-0.5" p="4 y-3">
+    <div bg="zinc-1 dark:zinc-8/40" border="t-2" border-base>
+      <div flex="~ col gap-0.5" p="4 t-7 y-3">
         <p text="xs zinc-4" font="sans medium" uppercase>
           Net worth
         </p>

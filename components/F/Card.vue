@@ -18,7 +18,7 @@ const backgroundStyle = computed(() => {
 
 <template>
   <article
-    border="rounded-md 2 base"
+    border="rounded-md 2" border-base
     class="transition-shadow text-color-base"
     :class="[
       paddingless ? 'p-0' : 'p-5',
@@ -35,6 +35,6 @@ const backgroundStyle = computed(() => {
   box-shadow: 6px 6px 0 #e4e4e7;
 }
 .dark .neobrutal {
-  box-shadow: 6px 6px 0 #3f3f46;
+  box-shadow: 6px 6px 0 #27272a;
 }
 </style>

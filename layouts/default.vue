@@ -21,7 +21,8 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
         z-100
         pos="fixed top-0 right-0"
         p="x-6 y-2"
-        border="b-2 base"
+        border="b-2"
+        border-base
         class="bg-base"
       />
 

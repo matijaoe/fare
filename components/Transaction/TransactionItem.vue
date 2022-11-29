@@ -131,8 +131,8 @@ const transactionTooltip = computed(() => {
         font="display semibold" text-3xl
         flex items-center gap-1
         :class="{
-          'text-emerald-5': isIncome,
-          'text-indigo-5': isTransfer,
+          'text-emerald-5 dark:filter-saturate-70': isIncome,
+          'text-indigo-5 dark:filter-saturate-70': isTransfer,
         }"
       >
         <span v-if="isExpense">-</span>

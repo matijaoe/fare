@@ -63,13 +63,13 @@ const sections = computed(() => ([
         </div>
       </div>
 
-      <div v-if="!isCurrentMonth && !isAllTime" pl-8 border="l-2 zinc-2">
+      <div v-if="!isCurrentMonth && !isAllTime" pl-8 border="l-2 zinc-2 dark:zinc-8">
         <div flex="~ col gap-2" translate-y="0.4">
-          <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
+          <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-7" class="leading-tight">
             At the time
           </span>
 
-          <div font="display medium" text-6xl text-zinc-4>
+          <div font="display medium" text-6xl text-zinc-4 dark:text-zinc-6>
             <div
               v-if="isMonthlyBalanceLoading"
               flex gap-4 items-center

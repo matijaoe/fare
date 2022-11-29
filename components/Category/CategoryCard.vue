@@ -19,6 +19,8 @@ const formattedExpense = totals?.expense != null ? useCurrencyFormat(totals.expe
 
 const card = ref<HTMLElement>()
 const isHovered = useElementHover(card)
+
+const { isDark } = useTheme()
 </script>
 
 <template>
@@ -31,8 +33,9 @@ const isHovered = useElementHover(card)
     <div
       flex justify-between items-center
       px-6 py-3
-      border="~ dotted y-2 x-0"
-      :class="[bg50, borderClr3, color9]"
+      border="~ dotted y-2 x-0 dark:0"
+      class="dark:bg-zinc-50/4"
+      :class="[{ bg3: !isDark, color9: !isDark, borderClr3: !isDark }]"
     >
       <NuxtLink :to="`/categories/${category.id}`" class="group" mr-auto>
         <div ml-auto flex gap-3 items-center>
@@ -40,7 +43,7 @@ const isHovered = useElementHover(card)
             w-max aspect-square text-lg p-2 rounded-full flex-center
             :class="[bg3]"
           >
-            <Icon :name="category?.icon" />
+            <Icon :name="category?.icon" dark:text-zinc-9 />
           </div>
           <h4 text-base font-medium class="group-hover:underline">
             {{ category.name }}

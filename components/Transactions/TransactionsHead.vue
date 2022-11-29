@@ -16,11 +16,11 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
     <div flex items-center gap-5>
       <div
         flex-center flex-shrink-0
-        text-2xl p-4 rounded-full ring="2 offset-2" transition
+        text-2xl p-4 rounded-full ring="2 offset-2 dark:(0 offset-0)" transition
         :class="{
-          'bg-zinc-2 ring-zinc-8': isLoading || net === 0,
-          'bg-emerald-4 ring-emerald-3': net > 0,
-          'bg-rose-4 ring-rose-3': net < 0,
+          'bg-zinc-2 ring-zinc-8 dark:text-zinc-9 dark:filter-saturate-70': isLoading || net === 0,
+          'bg-emerald-4 ring-emerald-3 dark:text-white dark:filter-saturate-70': net > 0,
+          'bg-rose-4 ring-rose-3 dark:text-white dark:filter-saturate-70': net < 0,
         }"
       >
         <FLoader v-if="isLoading" />
@@ -49,7 +49,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
       </div>
     </div>
 
-    <div flex justify-center items-end gap-8 divide-x-2 font-mono>
+    <div flex justify-center items-end gap-8 divide-x-2 divide-zinc-2 dark:divide-zinc-8 font-mono>
       <FTooltip content="Income" placement="top-end">
         <div flex items-center gap-4>
           <div text-lg text-right space-y="0.5">

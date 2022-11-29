@@ -36,12 +36,13 @@ const items = [
     },
   },
   {
-    label: 'Net worth',
-    icon: 'tabler:businessplan',
+    label: 'FI',
+    icon: 'tabler:flame',
     route: {
-      name: 'net-worth',
+      name: 'fi',
     },
   },
+  // TODO: milestones
   {
     label: 'Config',
     icon: 'tabler:adjustments-alt',
