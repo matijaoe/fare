@@ -15,7 +15,7 @@ const { mutate: deleteCategory, isLoading: isDeleteLoading, isError: isErrorDele
 
 const hasError = computed(() => get(isErrorCreate) || get(isErrorUpdate) || get(isErrorDelete))
 
-const { allIcons: icons } = useIcons()
+const { categoryIcons: icons } = useIcons()
 const { colorOptions: colors } = useAppColors()
 
 const createCategoryHandler = async (values: Prisma.CategoryCreateWithoutUserInput) => {
@@ -114,6 +114,7 @@ const modalConfig = computed(() => ({
       <FInput
         v-model="form.values.name"
         label="Name"
+        icon="tabler:text-size"
         placeholder="Category name"
         :invalid="!!form.errors.name"
         :error="form.errors.name"
@@ -157,15 +158,19 @@ const modalConfig = computed(() => ({
           block flex-1
         >
           <template #selected="{ item }">
-            <div flex items-center gap-4>
+            <div flex items-center gap-4 justify-between>
               <Icon :name="item.value" />
-              <span>{{ item.label }}</span>
+              <p opacity-40 text-sm line-clamp-1>
+                {{ (item.value as string).split(':').at(-1) }}
+              </p>
             </div>
           </template>
           <template #option="{ item }">
-            <div flex items-center gap-4>
+            <div flex items-center gap-4 justify-between>
               <Icon :name="item.value" />
-              <span>{{ item.label }}</span>
+              <p opacity-40 text-sm line-clamp-1>
+                {{ (item.value as string).split(':').at(-1) }}
+              </p>
             </div>
           </template>
         </FSelectField>

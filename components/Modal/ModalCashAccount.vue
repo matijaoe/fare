@@ -126,6 +126,7 @@ const modalConfig = computed(() => ({
       <FInput
         v-model="form.values.name"
         label="Name"
+        icon="tabler:text-size"
         placeholder="Account name"
         :invalid="!!form.errors.name"
         :error="form.errors.name"
@@ -171,15 +172,19 @@ const modalConfig = computed(() => ({
           flex-1
         >
           <template #selected="{ item }">
-            <div flex items-center gap-4>
+            <div flex items-center gap-4 justify-between>
               <Icon :name="item.value" />
-              <span>{{ item.label }}</span>
+              <p opacity-40 text-sm line-clamp-1>
+                {{ (item.value as string).split(':').at(-1) }}
+              </p>
             </div>
           </template>
           <template #option="{ item }">
-            <div flex items-center gap-4>
+            <div flex items-center gap-4 justify-between>
               <Icon :name="item.value" />
-              <span>{{ item.label }}</span>
+              <p opacity-40 text-sm line-clamp-1>
+                {{ (item.value as string).split(':').at(-1) }}
+              </p>
             </div>
           </template>
         </FSelectField>

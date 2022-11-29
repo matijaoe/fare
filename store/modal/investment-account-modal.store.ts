@@ -25,7 +25,7 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
       icon: zod.null().optional().or(zod.string()),
       description: zod.null().optional().or(zod.string()),
       expectedRateOfReturn: zod.number({ required_error: 'Rate of return is required', invalid_type_error: 'Rate of return is required' }).min(0.1, { message: 'Expected rate of return must be greater than 0' }),
-      type: zod.nativeEnum(InvestmentType, { required_error: 'Type is required' }),
+      type: zod.nativeEnum(InvestmentType, { required_error: 'Type is required', invalid_type_error: 'Type is required' }),
     }),
   )
 

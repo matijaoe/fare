@@ -109,10 +109,10 @@ const modalConfig = computed(() => ({
 }))
 
 const typeOptions = [
-  { label: 'Stocks', value: InvestmentType.Stocks },
-  { label: 'Crypto', value: InvestmentType.Crypto },
-  { label: 'Property', value: InvestmentType.Property },
-  { label: 'Other', value: InvestmentType.Other },
+  { label: 'Stocks', value: InvestmentType.Stocks, icon: 'tabler:chart-line' },
+  { label: 'Crypto', value: InvestmentType.Crypto, icon: 'tabler:coin-bitcoin' },
+  { label: 'Property', value: InvestmentType.Property, icon: 'tabler:building-community' },
+  { label: 'Other', value: InvestmentType.Other, icon: 'tabler:square-asterisk' },
 ]
 </script>
 
@@ -166,7 +166,19 @@ const typeOptions = [
           :items="typeOptions"
           :invalid="!!form.errors.type"
           :error="form.errors.type"
-        />
+        >
+          <template #selected="{ item }">
+            <div flex items-center gap-4>
+              <span>{{ item.label }}</span>
+            </div>
+          </template>
+          <template #option="{ item }">
+            <div flex items-center gap-4>
+              <Icon :icon="item.icon" />
+              <span>{{ item.label }}</span>
+            </div>
+          </template>
+        </FSelectField>
 
         <FInput
           v-model="form.values.expectedRateOfReturn"
@@ -178,6 +190,7 @@ const typeOptions = [
           :input-props="{ min: 0.1, step: 0.01 }"
           :invalid="!!form.errors.expectedRateOfReturn"
           :error="form.errors.expectedRateOfReturn"
+          hint="Predicted yearly return of your investment"
         />
       </div>
 
@@ -219,15 +232,19 @@ const typeOptions = [
           block flex-1
         >
           <template #selected="{ item }">
-            <div flex items-center gap-4>
+            <div flex items-center gap-4 justify-between>
               <Icon :name="item.value" />
-              <span>{{ item.label }}</span>
+              <p opacity-40 text-sm line-clamp-1>
+                {{ (item.value as string).split(':').at(-1) }}
+              </p>
             </div>
           </template>
           <template #option="{ item }">
-            <div flex items-center gap-4>
+            <div flex items-center gap-4 justify-between>
               <Icon :name="item.value" />
-              <span>{{ item.label }}</span>
+              <p opacity-40 text-sm line-clamp-1>
+                {{ (item.value as string).split(':').at(-1) }}
+              </p>
             </div>
           </template>
         </FSelectField>

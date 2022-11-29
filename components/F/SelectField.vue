@@ -188,12 +188,12 @@ const disabledStyle = computed(() => 'disabled:(bg-zinc-1 dark:bg-zinc-9/50 bord
             <li
               w-full
               text="zinc-7 dark:zinc-3"
-              p="y-2 x-4 r-13"
+              p="y-2 x-4"
               relative
               class="relative cursor-default select-none"
               :class="[
                 active && !(selected || isSelected(item)) ? 'bg-zinc-1 dark:bg-zinc-8/50 color-base' : '',
-                selected || isSelected(item) ? 'bg-zinc-2/40 dark:bg-zinc-8 color-base' : '',
+                selected || isSelected(item) ? 'bg-zinc-2/40 dark:bg-zinc-8 color-base pr-12' : '',
                 item.disabled ? '!text-zinc-3 !dark:text-zinc-7' : '',
               ]"
             >
@@ -206,7 +206,6 @@ const disabledStyle = computed(() => 'disabled:(bg-zinc-1 dark:bg-zinc-9/50 bord
                 v-if="selected || isSelected(item)"
                 pr-4
                 text-color-base
-                bg-zinc-1
                 absolute
                 pos="inset-y-0 right-0"
                 class="flex items-center"
