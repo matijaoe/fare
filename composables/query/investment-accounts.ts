@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
 import type { Ref } from 'vue'
-import type { InvestmentAccoundUpdateReq, InvestmentAccountWithAccount, InvestmentAccountWithEntries, InvestmentsBalance } from '~~/models/resources'
+import type { InvestmentAccountUpdateReq, InvestmentAccountWithAccount, InvestmentAccountWithEntries, InvestmentsBalance } from '~~/models/resources'
 
 export const keysInvestmentAccounts = {
   all: ['investment-accounts'] as const,
@@ -37,7 +37,7 @@ export const useInvestmentAccountCreate = () => {
 
 export const useInvestmentAccountUpdate = (id: Ref<string | undefined>) => {
   const qc = useQueryClient()
-  return useMutation((body: InvestmentAccoundUpdateReq) => $fetch< Record<'investmentAccount' | 'account', { count: number }>> (`/api/accounts/investment/${get(id)}`, { method: 'PATCH', body }), {
+  return useMutation((body: InvestmentAccountUpdateReq) => $fetch< Record<'investmentAccount' | 'account', { count: number }>> (`/api/accounts/investment/${get(id)}`, { method: 'PATCH', body }), {
     onSuccess: () => {
       qc.invalidateQueries(keysInvestmentAccounts.details())
       qc.invalidateQueries(keysInvestmentAccounts.balance())

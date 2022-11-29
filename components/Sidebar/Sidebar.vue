@@ -38,7 +38,7 @@ const { isLoading: isNetWorthLoading, netWorthFormatted, netWorth } = useNetWort
         <div flex gap-2 items-center>
           <FSkeleton
             v-if="isNetWorthLoading"
-            class="h-36px w-30"
+            class="h-30px w-30" m="t-0.5 b-1"
           />
           <p v-else-if="netWorth" text-3xl font-display font-medium>
             {{ netWorthFormatted }}

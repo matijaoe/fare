@@ -44,18 +44,20 @@ const signOutHandler = async () => {
         </template>
       </FButton>
     </FTooltip>
-    <FTooltip content="Settings">
-      <FButton
-        variant="secondary"
-        size="lg"
-        circle
-        :class="{ '!p-4': smDown }"
-        icon-only
-      >
-        <template #icon>
-          <Icon name="tabler:settings" text="xl sm:base" />
-        </template>
-      </FButton>
+    <FTooltip content="Source code">
+      <a href="https://github.com/mat2ja/fare" target="_blank">
+        <FButton
+          variant="secondary"
+          size="lg"
+          circle
+          :class="{ '!p-4': smDown }"
+          icon-only
+        >
+          <template #icon>
+            <Icon name="tabler:brand-github" text="xl sm:base" />
+          </template>
+        </FButton>
+      </a>
     </FTooltip>
     <FTooltip content="Sign out">
       <FButton

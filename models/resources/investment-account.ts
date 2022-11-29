@@ -8,7 +8,7 @@ export type InvestmentAccountWithEntries = {
   balances: Record<string, InvestmentEntry>
 }
 
-export type InvestmentAccoundUpdateReq = { account: Prisma.MoneyAccountUncheckedUpdateManyInput } & Prisma.InvestmentAccountUncheckedUpdateManyInput
+export type InvestmentAccountUpdateReq = { account: Prisma.MoneyAccountUncheckedUpdateManyInput } & Prisma.InvestmentAccountUncheckedUpdateManyInput
 
 export type InvestmentsBalance = {
   balance: number

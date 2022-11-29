@@ -54,7 +54,7 @@ const { isDark } = useTheme()
             <FSkeleton
               v-if="balanceLoading"
               variant="lighter"
-              w-24 h="36px" py-2 py="0.5"
+              w-24 h="36px" mb-1
             />
             <span v-else-if="balance">
               {{ formattedBalance }}
@@ -66,7 +66,7 @@ const { isDark } = useTheme()
             <FSkeleton
               v-if="totalsLoading"
               variant="lighter"
-              h="28px" w-14
+              h="28px" w="51px"
             />
             <span
               v-else-if="totals"
@@ -105,10 +105,10 @@ const { isDark } = useTheme()
             <FSkeleton
               v-if="totalsLoading"
               variant="lighter"
-              h="28px" w-18
+              h="18px" m="t-0.75 b-1.75" w-18
             />
             <span v-else-if="totals">
-              {{ totals.income > 0 ? '+' : '' }}{{ formattedIncome }}
+              {{ formattedIncome }}
             </span>
           </div>
         </div>
@@ -128,7 +128,7 @@ const { isDark } = useTheme()
             <FSkeleton
               v-if="totalsLoading"
               variant="lighter"
-              h="28px" w-18
+              h="18px" m="t-1 b-1.5" w-18
             />
             <span v-else-if="totals">
               {{ formattedExpense }}

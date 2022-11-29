@@ -30,6 +30,20 @@ export const useCashAccounts = (payload?: { transactions?: boolean }) => {
   return useQuery(
     keysAccounts.details(),
     () => $fetch<CashAccountWithAccount[]>(`/api/accounts/cash?transactions=${transactions ?? 'false'}`),
+    {
+      placeholderData: Array(3).fill({
+        id: '',
+        accountId: '',
+        account: {
+          id: '',
+          name: '',
+          userId: '',
+          color: '',
+          icon: '',
+          createdAt: new Date(),
+        },
+      } as CashAccountWithAccount),
+    },
   )
 }
 

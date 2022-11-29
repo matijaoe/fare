@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { CashAccountWithBalance, CashAccountWithTotals } from '~~/models/resources'
+
 onMounted(() => setBreadcrumbs([
   { label: 'Accounts', href: { name: useRoute().name ?? '🥺' } },
 ]))
@@ -27,7 +29,7 @@ const unifiedAccounts = computed(() => {
   return cashAccounts.value?.map((account) => {
     const { totals } = findAccountTotals(account.id) ?? {}
     const { balance } = findAccountTotalsBalance(account.id) ?? {}
-    return { ...account, totals, balance }
+    return { ...account, totals, balance } as CashAccountWithTotals & CashAccountWithBalance
   }) ?? []
 })
 </script>

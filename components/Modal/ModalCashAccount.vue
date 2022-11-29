@@ -45,7 +45,8 @@ const deleteAccountHandler = async () => {
       onSuccess: () => {
         modal.hide()
         const route = useRoute()
-        if (route.name === 'accounts-accountId') {
+        console.log('route.name :>> ', route.name)
+        if (route.name === 'accounts-cash-accountId') {
           navigateTo({ name: 'accounts' })
         }
       },

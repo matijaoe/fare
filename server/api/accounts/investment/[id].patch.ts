@@ -1,13 +1,13 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
 import { db } from '~~/lib/db'
-import type { InvestmentAccoundUpdateReq } from '~~/models/resources'
+import type { InvestmentAccountUpdateReq } from '~~/models/resources'
 import { readParams, sendCustomError, sendInternalError, setResStatus } from '~~/server/utils'
 
 export default defineEventHandler(async (event) => {
   const { id: investmentAccountId } = readParams<Prisma.InvestmentAccountWhereUniqueInput>(event)
 
-  const { account: accountData, ...investmentData } = await readBody<InvestmentAccoundUpdateReq>(event)
+  const { account: accountData, ...investmentData } = await readBody<InvestmentAccountUpdateReq>(event)
 
   const userId = accountData?.userId as string | undefined
 
