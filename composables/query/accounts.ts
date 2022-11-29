@@ -57,9 +57,9 @@ export const useCashAccountWithTransactions = (id: string, month: Ref<string | u
     {
       initialData: () => {
         const cashAccountWithAccount = qc.getQueryData<CashAccountWithAccount[]>(keysAccounts.details())?.find(acc => acc.id === id) ?? {}
-        const allTransactions = qc.getQueryData<TransactionWithCategoryAndCashAccount[]>(keysTransactions.range(month))?.filter(t => t.fromAccountId === id || t.toAccountId === id)
+        const transactions = qc.getQueryData<TransactionWithCategoryAndCashAccount[]>(keysTransactions.range(month))?.filter(t => t.fromAccountId === id || t.toAccountId === id)
 
-        if (!allTransactions) {
+        if (!transactions) {
           return undefined
         }
 
