@@ -3,17 +3,22 @@
 
 # 🫰🏻 FARE
 
->Platform for attaining financial independence
+> Platform for attaining financial independence
 
+&nbsp;
 
-## 👀 sneak peek
+👀 _sneak peek_
 
 <img width="1580" alt="CleanShot 2022-11-29 at 19 16 06@2x" src="https://user-images.githubusercontent.com/46557266/204613005-51e43e6d-39df-4722-a0a0-ccd6631dd2eb.png">
 
 
 
-## ⚡ Features
-- *coming soon*
+## ✨ Features
+- detailed personal finance tracking
+- balance and cashflow records for any time in the past
+- first class data synchronization all throughout
+- dark mode
+- 🔜 *more info coming soon*
 
 
 
@@ -33,7 +38,6 @@
 - [Prisma](https://www.prisma.io/)
 - [PlanetScale](https://planetscale.com/)
 
-&nbsp;
 
 ## Setup
 
