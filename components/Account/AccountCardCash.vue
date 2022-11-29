@@ -3,6 +3,8 @@ import type { AccountTotals, CashAccountWithAccount } from '~~/models/resources'
 type Props = {
   cashAccount: CashAccountWithAccount
   totals?: AccountTotals
+  balance?: number
+  balanceLoading?: boolean
   totalsLoading?: boolean
   allTime?: boolean
 }
@@ -13,7 +15,9 @@ const modal = useCashAccountModal()
 const account = $computed(() => props.cashAccount.account)
 const totals = $computed(() => props.totals)
 
-const formattedBalance = totals?.balance != null ? useCurrencyFormat(totals.balance) : null
+const formattedBalance = props?.balance != null ? useCurrencyFormat(props.balance) : null
+
+// todo: remove balance from totals throughout the app
 const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : null
 const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income, { signDisplay: 'always' }) : null
 const formattedExpense = totals?.expense != null ? useCurrencyFormat(totals.expense) : null
@@ -50,11 +54,11 @@ const { isDark } = useTheme()
         <FTooltip mx-auto placement="right" content="Total balance">
           <div font="display medium" text-4xl uppercase flex justify-center>
             <FSkeleton
-              v-if="totalsLoading"
+              v-if="balanceLoading"
               variant="lighter"
               w-24 h="36px" py-2 py="0.5"
             />
-            <span v-else-if="totals">
+            <span v-else-if="balance">
               {{ formattedBalance }}
             </span>
           </div>

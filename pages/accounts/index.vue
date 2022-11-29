@@ -18,13 +18,16 @@ const formattedMonthlyBalance = useCurrencyFormat(monthlyBalance)
 
 const { data: cashAccounts, isLoading: isAccountsLoading } = useCashAccounts()
 const { data: accountTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(monthQuery)
+const { data: accountTotalsBalance, isLoading: isTotalsBalanceLoading } = useCashAccountsTotalBalancePer()
 
 const unifiedAccounts = computed(() => {
-  const findAccount = (id: string) => accountTotals.value?.find(acc => acc.id === id)
+  const findAccountTotals = (id: string) => accountTotals.value?.find(acc => acc.id === id)
+  const findAccountTotalsBalance = (id: string) => accountTotalsBalance.value?.find(acc => acc.id === id)
 
   return cashAccounts.value?.map((account) => {
-    const { totals } = findAccount(account.id) ?? {}
-    return { ...account, totals }
+    const { totals } = findAccountTotals(account.id) ?? {}
+    const { balance } = findAccountTotalsBalance(account.id) ?? {}
+    return { ...account, totals, balance }
   }) ?? []
 })
 </script>
@@ -93,6 +96,8 @@ const unifiedAccounts = computed(() => {
           :cash-account="account"
           :totals="account.totals"
           :totals-loading="isTotalsLoading"
+          :balance="account.balance"
+          :balance-loading="isTotalsBalanceLoading"
           :all-time="isAllTime"
         />
       </AccountGridSection>

@@ -13,6 +13,7 @@ export const keysAccounts = {
   balanceRange: (month: Ref<string | undefined>) => [...keysAccounts.all, 'balance', month] as const,
   // account totals for range
   totals: () => [...keysAccounts.all, 'totals'] as const,
+  totalsBalance: () => [...keysAccounts.all, 'totals', 'balance'] as const,
   totalsRange: (month: Ref<string | undefined>) => [...keysAccounts.all, 'totals', month] as const,
   totalsIndividualRange: (id: string, month: Ref<string | undefined>) => [...keysAccounts.all, 'totals', id, month] as const,
   // account details
@@ -76,6 +77,7 @@ export const useCashAccountWithTransactions = (id: string, month: Ref<string | u
   )
 }
 
+// TODO: separate endpoint for accounts with only current balance
 export const useCashAccountsTotals = (month: Ref<string | undefined>) => {
   return useQuery(
     keysAccounts.totalsRange(month),
@@ -85,6 +87,16 @@ export const useCashAccountsTotals = (month: Ref<string | undefined>) => {
         : '/api/accounts/totals'
 
       return $fetch<CashAccountWithTotals[]>(url)
+    },
+  )
+}
+
+// TODO: separate endpoint for accounts with only current balance
+export const useCashAccountsTotalBalancePer = () => {
+  return useQuery(
+    keysAccounts.totalsBalance(),
+    () => {
+      return $fetch<{ id: string; balance: number }[]>('/api/accounts/totals/balance')
     },
   )
 }
