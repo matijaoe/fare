@@ -9,7 +9,7 @@ const { isLoading: isNetWorthLoading, netWorth, netWorthFormatted } = useNetWort
 <template>
   <LayoutPage>
     <div grid grid-cols-4>
-      <FCard padingless class="!p-1">
+      <FCard white padingless class="!p-1">
         <div flex="~ col gap-0.5" p="4 y-3">
           <p text="xs zinc-4" font="sans medium" uppercase>
             Net worth

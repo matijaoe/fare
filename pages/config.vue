@@ -45,6 +45,7 @@ const config = useFireConfig()
                 placeholder="4%"
                 icon="tabler:percentage"
                 type="number"
+                :input-props="{ min: 0, max: 100 }"
               />
             </div>
           </FTabPanel>
@@ -65,6 +66,7 @@ const config = useFireConfig()
                 label="Retirement age"
                 placeholder="65"
                 type="number"
+                :input-props="{ min: 10, max: 120 }"
               />
 
               <FInput
@@ -81,7 +83,7 @@ const config = useFireConfig()
                 label="Pension accessability age"
                 placeholder="55"
                 type="number"
-                :input-props="{ min: 20, max: 100 }"
+                :input-props="{ min: 20, max: 120 }"
               />
             </div>
           </FTabPanel>

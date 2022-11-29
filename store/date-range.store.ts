@@ -12,8 +12,7 @@ export const useDateRangeStore = defineStore('date-range', () => {
     month: 'MMMM',
   }
 
-  // TODO: save in local storage
-  const selectedMonth = ref<Date>(startOfMonth(now))
+  const selectedMonth = ref(startOfMonth(now))
 
   const isAllTime = ref(false)
   const setAllTime = (value: boolean) => set(isAllTime, value)

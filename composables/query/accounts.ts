@@ -3,7 +3,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRef } from '@vueuse/core'
 import { get } from '@vueuse/core'
 import type { Ref } from 'vue'
-import type { CashAccountWithAccount, CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount, CashAccountWithTotals, CashAccountsBalanceModel, IndividualCashAccountTotals } from '~~/models/resources'
+import { keysTransactions } from './transactions'
+import type { CashAccountWithAccount, CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount, CashAccountWithTotals, CashAccountsBalanceModel, IndividualCashAccountTotals, TransactionWithCategoryAndCashAccount } from '~~/models/resources'
 
 export const keysAccounts = {
   all: ['cash-accounts'] as const,
@@ -22,59 +23,104 @@ export const keysAccounts = {
   detailWithRange: (id: string, month: Ref<string | undefined>) => [...keysAccounts.all, 'detail', 'transactions', id, month] as const,
 }
 
-export const useCashAccount = (id: string) => useQuery(keysAccounts.detail(id),
-  () => $fetch<CashAccountWithAccount>(`/api/accounts/cash/${unref(id)}`),
-)
-
-export const useCashAccountWithTransactions = (id: string, month: Ref<string | undefined>) => useQuery(
-  keysAccounts.detailWithRange(id, month),
-  () => {
-    const url = isDefined(month)
-      ? `/api/accounts/cash/${id}?transactions=true&month=${get(month)}`
-      : `/api/accounts/cash/${id}?transactions=true`
-
-    return $fetch<CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount>(url)
-  },
-)
-
 export const useCashAccounts = (payload?: { transactions?: boolean }) => {
   const transactions = payload?.transactions?.toString() ?? 'false'
   return useQuery(
-    keysAccounts.totals(),
+    keysAccounts.details(),
     () => $fetch<CashAccountWithAccount[]>(`/api/accounts/cash?transactions=${transactions ?? 'false'}`),
   )
 }
 
-export const useCashAccountsTotals = (month: Ref<string | undefined>) => useQuery(
-  keysAccounts.totalsRange(month),
-  () => {
-    const url = isDefined(month)
-      ? `/api/accounts/totals?month=${get(month)}`
-      : '/api/accounts/totals'
+export const useCashAccount = (id: string) => {
+  const qc = useQueryClient()
+  return useQuery(keysAccounts.detail(id),
+    () => $fetch<CashAccountWithAccount>(`/api/accounts/cash/${unref(id)}`),
+    {
+      initialData: () => {
+        return qc.getQueryData<CashAccountWithAccount[]>(keysAccounts.details())?.find(acc => acc.id === id)
+      },
+    },
+  )
+}
 
-    return $fetch<CashAccountWithTotals[]>(url)
-  },
-)
+export const useCashAccountWithTransactions = (id: string, month: Ref<string | undefined>) => {
+  const qc = useQueryClient()
+  return useQuery(
+    keysAccounts.detailWithRange(id, month),
+    () => {
+      const url = isDefined(month)
+        ? `/api/accounts/cash/${id}?transactions=true&month=${get(month)}`
+        : `/api/accounts/cash/${id}?transactions=true`
 
-export const useCashAccountTotals = (id: string, month: Ref<string | undefined>) => useQuery(
-  keysAccounts.totalsIndividualRange(id, month),
-  () => {
-    const url = isDefined(month)
-      ? `/api/accounts/totals/${id}?month=${get(month)}`
-      : `/api/accounts/totals/${id}`
+      return $fetch<CashAccountWithAccountAndTransactionsWithCategoryAndCashAccount>(url)
+    },
+    {
+      initialData: () => {
+        const cashAccountWithAccount = qc.getQueryData<CashAccountWithAccount[]>(keysAccounts.details())?.find(acc => acc.id === id) ?? {}
+        const allTransactions = qc.getQueryData<TransactionWithCategoryAndCashAccount[]>(keysTransactions.range(month))?.filter(t => t.fromAccountId === id || t.toAccountId === id)
 
-    return $fetch<IndividualCashAccountTotals>(url)
-  },
-)
+        if (!allTransactions) {
+          return undefined
+        }
 
-export const useCashAccountsBalance = () => useQuery(
-  keysAccounts.balance(),
-  () => $fetch<CashAccountsBalanceModel>('/api/accounts/cash/balance'),
-)
-export const useCashAccountsMonthlyBalance = (month: Ref<string | undefined>) => useQuery(
-  keysAccounts.balanceRange(month),
-  () => $fetch<CashAccountsBalanceModel>(`/api/accounts/cash/balance?month=${get(month)}`),
-)
+        const paymentFromAccount = transactions.filter(t => t.fromAccountId === id)
+        const paymentToAccount = transactions.filter(t => t.toAccountId === id)
+
+        return {
+          ...cashAccountWithAccount,
+          paymentFromAccount,
+          paymentToAccount,
+        }
+      },
+    },
+  )
+}
+
+export const useCashAccountsTotals = (month: Ref<string | undefined>) => {
+  return useQuery(
+    keysAccounts.totalsRange(month),
+    () => {
+      const url = isDefined(month)
+        ? `/api/accounts/totals?month=${get(month)}`
+        : '/api/accounts/totals'
+
+      return $fetch<CashAccountWithTotals[]>(url)
+    },
+  )
+}
+
+export const useCashAccountTotals = (id: string, month: Ref<string | undefined>) => {
+  const qc = useQueryClient()
+  return useQuery(
+    keysAccounts.totalsIndividualRange(id, month),
+    () => {
+      const url = isDefined(month)
+        ? `/api/accounts/totals/${id}?month=${get(month)}`
+        : `/api/accounts/totals/${id}`
+
+      return $fetch<IndividualCashAccountTotals>(url)
+    },
+    {
+      initialData: () => {
+        return qc.getQueryData<CashAccountWithTotals[]>(keysAccounts.totalsRange(month))?.find(acc => acc.id === id)
+      },
+    },
+  )
+}
+
+export const useCashAccountsBalance = () => {
+  return useQuery(
+    keysAccounts.balance(),
+    () => $fetch<CashAccountsBalanceModel>('/api/accounts/cash/balance'),
+  )
+}
+
+export const useCashAccountsMonthlyBalance = (month: Ref<string | undefined>) => {
+  return useQuery(
+    keysAccounts.balanceRange(month),
+    () => $fetch<CashAccountsBalanceModel>(`/api/accounts/cash/balance?month=${get(month)}`),
+  )
+}
 
 export const useCashAccountCreate = () => {
   const qc = useQueryClient()
