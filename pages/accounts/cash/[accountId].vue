@@ -172,7 +172,7 @@ whenever(cashAccount, () => setBreadcrumbs([
                 text-4xl text-zinc-4 dark:text-zinc-6
                 font="display medium"
               >
-                {{ net > 0 ? '+' : '' }}{{ formattedNet }} <span text-base>this month</span>
+                {{ formattedNet }} <span text-base>this month</span>
               </p>
             </TransitionFade>
           </div>

@@ -96,9 +96,9 @@ const transactionTooltip = computed(() => {
           :content="timeAgo"
           placement="top"
         >
-          <div ml-auto font="normal">
+          <time ml-auto font="normal">
             {{ formattedDate }}
-          </div>
+          </time>
         </FTooltip>
 
         <FTooltip

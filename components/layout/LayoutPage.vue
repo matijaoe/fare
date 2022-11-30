@@ -4,7 +4,7 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
 
 <template>
   <div
-    p="4 b-30 md:(x-8 t-7)"
+    p="4 b-30 md:(x-8 t-8)"
     overflow-y-auto
   >
     <div space-y-10 mx-auto>

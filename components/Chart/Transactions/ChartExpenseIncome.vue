@@ -27,7 +27,7 @@ const buildDataset = (_dataset: ChartDataset[]): ChartData => ({
 
 const data = computed<ChartData>(() => buildDataset(props.datasets))
 
-const options: ChartOptions = {
+const lineBarOptions: ChartOptions = {
   responsive: true,
   maintainAspectRatio: true,
   scales: {
@@ -49,8 +49,9 @@ const options: ChartOptions = {
         label: (ctx: any) => {
           const label = ctx.dataset.label || ''
           const value = parseInt(ctx.parsed.y)
-          const absValue = Math.abs(value)
-          return `${label}: ${value < 0 ? '-' : ''}€${absValue}`
+          return `${label}: ${formatCurrency(value, {
+            signDisplay: 'auto',
+          })}`
         },
       },
     },
@@ -64,19 +65,13 @@ const options: ChartOptions = {
     <bar-chart
       v-if="type === 'bar'"
       :height="height"
-      :chart-options="options"
+      :chart-options="lineBarOptions"
       :chart-data="data"
     />
     <line-chart
       v-if="type === 'line'"
       :height="height "
-      :chart-options="options"
-      :chart-data="data"
-    />
-    <pie-chart
-      v-if="type === 'pie'"
-      :height="height "
-      :chart-options="options"
+      :chart-options="lineBarOptions"
       :chart-data="data"
     />
   </div>

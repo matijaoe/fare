@@ -10,3 +10,11 @@ export const formatPercentage = (value: number, options?: MaybeRef<Intl.NumberFo
     ...options,
   }).format(value)
 }
+
+export const formatCurrency = (value: number, options?: MaybeRef<Intl.NumberFormatOptions>) => {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: 'EUR',
+    ...options,
+  })?.format(value)
+}

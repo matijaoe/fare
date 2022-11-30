@@ -12,7 +12,7 @@ setupShortcuts()
 </script>
 
 <template>
-  <!-- <NuxtLoadingIndicator /> -->
+  <NuxtLoadingIndicator :height="2" />
 
   <ModalGlobalModals />
 
