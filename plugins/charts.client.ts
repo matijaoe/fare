@@ -6,7 +6,6 @@ import {
   Chart as ChartJS,
   Legend, LineElement,
   LinearScale,
-  Plugin,
   PointElement,
   Title,
   Tooltip,

@@ -43,7 +43,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
             v-else-if="isDefined(totals)"
             text-4xl font="display medium"
           >
-            {{ net > 0 ? '+' : '' }}{{ formattedNet }}
+            {{ formattedNet }}
           </p>
         </div>
       </div>

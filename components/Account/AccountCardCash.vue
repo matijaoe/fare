@@ -17,7 +17,7 @@ const totals = $computed(() => props.totals)
 
 const formattedBalance = props?.balance != null ? useCurrencyFormat(props.balance) : null
 const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : null
-const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income, { signDisplay: 'always' }) : null
+const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income) : null
 const formattedExpense = totals?.expense != null ? useCurrencyFormat(totals.expense) : null
 
 const card = ref<HTMLElement>()
@@ -75,7 +75,7 @@ const isHovered = useElementHover(card)
                 'bg-emerald-1 text-emerald-7': totals.net > 0,
               }"
             >
-              {{ totals.net > 0 ? '+' : '' }}{{ formattedNet }}
+              {{ formattedNet }}
             </span>
           </p>
         </FTooltip>

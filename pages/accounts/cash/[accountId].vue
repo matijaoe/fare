@@ -35,10 +35,10 @@ const net = computed(() => totals.value?.net ?? 0)
 const expense = computed(() => totals.value?.expense ?? 0)
 const income = computed(() => totals.value?.income ?? 0)
 
-const formattedBalance = useCurrencyFormat(balance, { signDisplay: 'exceptZero' })
+const formattedBalance = useCurrencyFormat(balance)
 const formattedNet = useCurrencyFormat(net, { signDisplay: 'exceptZero' })
-const formattedExpense = useCurrencyFormat(expense, { signDisplay: 'exceptZero' })
-const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
+const formattedExpense = useCurrencyFormat(expense)
+const formattedIncome = useCurrencyFormat(income)
 
 whenever(cashAccount, () => setBreadcrumbs([
   { label: 'Accounts', href: { name: 'accounts' } },

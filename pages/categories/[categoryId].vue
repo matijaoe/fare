@@ -29,8 +29,8 @@ const expense = computed(() => totals.value?.expense ?? 0)
 const income = computed(() => totals.value?.income ?? 0)
 
 const formattedNet = useCurrencyFormat(net, { signDisplay: 'exceptZero' })
-const formattedExpense = useCurrencyFormat(expense, { signDisplay: 'exceptZero' })
-const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
+const formattedExpense = useCurrencyFormat(expense)
+const formattedIncome = useCurrencyFormat(income)
 </script>
 
 <template>
@@ -95,7 +95,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
                   v-else-if="isDefined(totals)"
                   text-4xl font="display medium"
                 >
-                  {{ net > 0 ? '+' : '' }}{{ formattedNet }}
+                  {{ formattedNet }}
                 </p>
               </TransitionFade>
             </div>

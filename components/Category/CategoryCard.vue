@@ -14,7 +14,7 @@ const { bg50, borderClr3, color9, bg3 } = useAppColors(category.color)
 
 const formattedTotalNet = totals?.totalNet != null ? useCurrencyFormat(totals.totalNet) : null
 const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : null
-const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income, { signDisplay: 'always' }) : null
+const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income) : null
 const formattedExpense = totals?.expense != null ? useCurrencyFormat(totals.expense) : null
 
 const card = ref<HTMLElement>()
@@ -59,9 +59,7 @@ const { isDark } = useTheme()
           text-2xl
           font="display medium"
         >
-          {{ allTime
-            ? (totals?.totalNet > 0 ? '+' : '')
-            : (totals?.net > 0 ? '+' : '') }}{{ allTime ? formattedTotalNet : formattedNet }}
+          {{ allTime ? formattedTotalNet : formattedNet }}
         </p>
       </TransitionFade>
     </div>
