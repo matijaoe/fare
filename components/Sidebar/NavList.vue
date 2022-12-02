@@ -29,6 +29,13 @@ const items = [
     },
   },
   {
+    label: 'Net worth',
+    icon: 'tabler:chart-line',
+    route: {
+      name: 'net-worth',
+    },
+  },
+  {
     label: 'Categories',
     icon: 'tabler:packages',
     route: {

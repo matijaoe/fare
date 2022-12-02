@@ -22,7 +22,7 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
   const validationSchema = toFormValidator(
     zod.object({
       type: zod.nativeEnum(TransactionType, { required_error: 'Type is required' }),
-      // TODO: must be required but should be based off type
+      // TODO: must be required but should be based off Type
       fromAccountId: zod.any().optional(),
       toAccountId: zod.any().optional(),
       name: zod.string({ invalid_type_error: 'Name should be a string' }).trim().min(1, { message: 'Name is too short' }).max(24, { message: 'Name is too long' }).optional(),

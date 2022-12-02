@@ -6,7 +6,7 @@ onMounted(() => setBreadcrumbs([
   { label: 'Nest egg', href: { name: useRoute().name ?? '🥺' } },
 ]))
 
-const { isAllTime, isCurrentMonth } = toRefs(useDateRangeStore())
+const { isAllTime } = toRefs(useDateRangeStore())
 
 const {
   formattedMonthlyBalance,
@@ -48,40 +48,24 @@ const sections = computed(() => ([
 <template>
   <LayoutPage>
     <div flex items-center gap-8>
-      <div flex="~ col gap-2" translate-y="0.4">
-        <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
-          Nest egg
-        </span>
+      <BalanceShownWrapper>
+        <template #current>
+          <BalanceBasic
+            label="Nest egg"
+            :loading="isBalanceLoading"
+            :balance="formattedTotalBalance"
+          />
+        </template>
 
-        <div font="display medium" text-6xl>
-          <div v-if="isBalanceLoading" flex gap-4 items-center>
-            <FSkeleton class="h-60px w-60" />
-          </div>
-          <p v-else>
-            {{ formattedTotalBalance }}
-          </p>
-        </div>
-      </div>
-
-      <div v-if="!isCurrentMonth && !isAllTime" pl-8 border="l-2 zinc-2 dark:zinc-8">
-        <div flex="~ col gap-2" translate-y="0.4">
-          <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-7" class="leading-tight">
-            At the time
-          </span>
-
-          <div font="display medium" text-6xl text-zinc-4 dark:text-zinc-6>
-            <div
-              v-if="isMonthlyBalanceLoading"
-              flex gap-4 items-center
-            >
-              <FSkeleton class="h-60px w-40" />
-            </div>
-            <p v-else>
-              {{ formattedMonthlyBalance }}
-            </p>
-          </div>
-        </div>
-      </div>
+        <template #old>
+          <BalanceBasic
+            label="At the time"
+            :loading="isMonthlyBalanceLoading"
+            :balance="formattedMonthlyBalance"
+            dimmed
+          />
+        </template>
+      </BalanceShownWrapper>
 
       <div
         v-if="formattedAverageAnnualRate"

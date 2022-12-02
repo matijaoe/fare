@@ -7,7 +7,7 @@ onMounted(() => setBreadcrumbs([
 
 const cashAccountModal = useCashAccountModal()
 
-const { monthQuery, isAllTime, isCurrentMonth } = toRefs(useDateRangeStore())
+const { monthQuery, isAllTime } = toRefs(useDateRangeStore())
 
 const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
 const { data: monthlyBalanceObj, isLoading: isMonthlyBalanceLoading } = useCashAccountsMonthlyBalance(monthQuery)
@@ -36,46 +36,24 @@ const unifiedAccounts = computed(() => {
 
 <template>
   <LayoutPage>
-    <div flex items-center gap-8 divide-x-2 divide-zinc-2 dark:divide-zinc-8>
-      <div flex="~ col gap-2" translate-y="0.4">
-        <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
-          Total balance
-        </span>
+    <BalanceShownWrapper>
+      <template #current>
+        <BalanceBasic
+          label="Total balance"
+          :loading="isBalanceLoading"
+          :balance="formattedTotalBalance"
+        />
+      </template>
 
-        <div text-6xl font="display medium">
-          <div
-            v-if="isBalanceLoading"
-            flex gap-4 items-center
-            class="color-base-lighter"
-          >
-            <FSkeleton class="h-60px w-60" />
-          </div>
-          <p v-else>
-            {{ formattedTotalBalance }}
-          </p>
-        </div>
-      </div>
-
-      <div v-if="!isCurrentMonth && !isAllTime" pl-8>
-        <div flex="~ col gap-2" translate-y="0.4">
-          <span uppercase font="sans medium" text="sm zinc-4 dark:zinc-5" class="leading-tight">
-            At the time
-          </span>
-
-          <div font="display medium" text-6xl>
-            <div
-              v-if="isMonthlyBalanceLoading"
-              flex gap-4 items-center
-            >
-              <FSkeleton class="h-60px w-40" />
-            </div>
-            <p v-else text-zinc-4 dark:text-zinc-6>
-              {{ formattedMonthlyBalance }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+      <template #old>
+        <BalanceBasic
+          label="At the time"
+          :loading="isMonthlyBalanceLoading"
+          :balance="formattedMonthlyBalance"
+          dimmed
+        />
+      </template>
+    </BalanceShownWrapper>
 
     <LayoutSectionWrapper title="Cash accounts" desc="Actively tracked accounts" mt-3>
       <template #right>

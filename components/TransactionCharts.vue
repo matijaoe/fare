@@ -8,9 +8,27 @@ const resetMonthCount = () => monthCount.value = 6
 const { labels, expenseTotals, incomeTotals, netTotals } = $(useMonthlyTotals(useTransactionTotalMonthly().data, monthCount))
 
 const datasets = $computed<Record<'expense' | 'income' | 'net', ChartDataset>>(() => ({
-  expense: { label: 'Expenses', data: expenseTotals, backgroundColor: '#FB7185', borderColor: '#FB7185' },
-  income: { label: 'Income', data: incomeTotals, backgroundColor: '#34D399', borderColor: '#34D399' },
-  net: { label: 'Savings', data: netTotals, backgroundColor: '#fbbf24', borderColor: '#fbbf24' },
+  expense: {
+    label: 'Expenses',
+    data: expenseTotals,
+    backgroundColor: '#fb7185',
+    borderColor: '#e11d48',
+    borderWidth: 3,
+  },
+  income: {
+    label: 'Income',
+    data: incomeTotals,
+    backgroundColor: '#34D399',
+    borderColor: '#059669',
+    borderWidth: 3,
+  },
+  net: {
+    label: 'Savings',
+    data: netTotals,
+    backgroundColor: '#fbbf24',
+    borderColor: '#d97706',
+    borderWidth: 3,
+  },
 }))
 
 const datasetArrExpenseIncomeNetHidden = $computed<ChartDataset[]>(() => ([
