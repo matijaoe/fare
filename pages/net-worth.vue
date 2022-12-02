@@ -11,6 +11,10 @@ const {
   formattedCashBalance: formattedCashBalanceMonthly,
   formattedInvestmentsBalance: formattedInvestmentsBalanceMonthly,
 } = useNetWorthMonthly()
+
+// TODO: add more content
+// percentage of growth?
+// table of predicted net worth?
 </script>
 
 <template>

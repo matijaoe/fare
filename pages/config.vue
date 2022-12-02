@@ -24,16 +24,16 @@ const config = useFireConfig()
           >
             <div grid grid-cols-3 gap-x-4 gap-y-6>
               <FInput
-                v-model="config.fiCalculations.monthlyIncome"
-                label="Monthly income"
+                v-model="config.fiCalculations.yearlyIncome"
+                label="Yearly income"
                 placeholder="3500"
                 icon="tabler:currency-euro"
                 type="number"
               />
 
               <FInput
-                v-model="config.fiCalculations.monthlyExpenditure"
-                label="Monthly expenditure"
+                v-model="config.fiCalculations.yearlyExpenditure"
+                label="Yearly expenditure"
                 placeholder="2250"
                 icon="tabler:currency-euro"
                 type="number"

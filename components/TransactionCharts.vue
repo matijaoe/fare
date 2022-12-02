@@ -120,8 +120,7 @@ const isCustom = $computed(() => !monthCountOptions.map(({ value }) => value).in
         type="bar"
         flex-1
         w-full
-        :labels="labels"
-        :datasets="[datasets.net]"
+       :datasets="[datasets.net]"
       />
     </div>
   </div>

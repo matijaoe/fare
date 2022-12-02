@@ -1,15 +1,23 @@
-import { differenceInYears, parse } from 'date-fns'
+import { differenceInYears, format, parse } from 'date-fns'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const useFireConfig = defineStore('fire-configuration', () => {
   const fiCalculations = reactive({
-    monthlyIncome: null,
-    monthlyExpenditure: null,
+    yearlyIncome: 45000,
+    yearlyExpenditure: 25000,
+    yearlyInvestments: 14000,
     safeWithdrawalRate: 4,
   })
 
+  const yearlyCashSavings = computed(() => {
+    const income = fiCalculations.yearlyIncome ?? 0
+    const expenditure = fiCalculations.yearlyExpenditure ?? 0
+    const investments = fiCalculations.yearlyInvestments ?? 0
+    return income - expenditure - investments
+  })
+
   const pensionCalculations = reactive({
-    birthDate: null,
+    birthDate: format(new Date('1999-12-10'), 'yyyy-MM-dd'),
     retirementAge: null,
     pensionAccessibilityAg: null,
   })
@@ -28,6 +36,7 @@ export const useFireConfig = defineStore('fire-configuration', () => {
     pensionCalculations,
     fiCalculations,
     age,
+    yearlyCashSavings,
   }
 })
 

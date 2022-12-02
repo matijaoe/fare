@@ -4,3 +4,4 @@ export const getYearMonthKey = (date: Date) => {
 }
 
 export const monthsToYears = (months: number) => months / 12
+export const yearsToMonths = (years: number) => years * 12

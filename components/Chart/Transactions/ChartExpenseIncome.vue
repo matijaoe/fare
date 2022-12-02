@@ -35,7 +35,7 @@ const lineBarOptions: ChartOptions = {
       ticks: {
         callback: (value: any) => {
           const absValue = Math.abs(value)
-          return `${value < 0 ? '-' : ''}€${absValue}`
+          return formatCurrency(absValue)
         },
       },
     },
@@ -49,9 +49,7 @@ const lineBarOptions: ChartOptions = {
         label: (ctx: any) => {
           const label = ctx.dataset.label || ''
           const value = parseInt(ctx.parsed.y)
-          return `${label}: ${formatCurrency(value, {
-            signDisplay: 'auto',
-          })}`
+          return `${label}: ${formatCurrency(value)}`
         },
       },
     },
