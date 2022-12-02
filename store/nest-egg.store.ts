@@ -19,6 +19,8 @@ export const useNestEggStore = defineStore('nest-egg', () => {
   const { data: investmentAccounts, isLoading: isAccountsLoading } = useInvestmentAccounts()
   const { data: investmentEntries, isLoading: isEntriesLoading } = useInvestmentAccountsEntries()
 
+  const investmentAccountsCount = computed(() => investmentAccounts.value?.length ?? 0)
+
   const getAccountMonthlyBalances = (investmentAccountId: string) => {
     const acc = investmentEntries.value?.find(acc => acc.investmentAccountId === investmentAccountId)
     return acc?.balances ?? {}
@@ -61,6 +63,7 @@ export const useNestEggStore = defineStore('nest-egg', () => {
     // for config
     averageAnnualRate,
     formattedAverageAnnualRate,
+    investmentAccountsCount,
   }
 })
 

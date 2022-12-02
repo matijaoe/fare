@@ -9,9 +9,9 @@ defineProps<{
 
 <template>
   <article flex="~ col gap-2">
-    <BalanceLabel>
+    <BasicLabel>
       {{ label }}
-    </BalanceLabel>
+    </BasicLabel>
 
     <div font="display medium" text-6xl>
       <div v-if="loading" flex gap-4 items-center>

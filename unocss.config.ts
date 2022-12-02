@@ -14,6 +14,7 @@ export default defineConfig({
     'bg-base': 'bg-zinc-50 dark:bg-zinc-9',
     'color-base': 'text-zinc-9 dark:text-zinc-3',
     'color-base-lighter': 'text-zinc-7 dark:text-zinc-3/80',
+    'text-dimmed': 'text-zinc-4 dark:text-zinc-5',
     'flex-center': 'flex items-center justify-center',
   },
   theme: {

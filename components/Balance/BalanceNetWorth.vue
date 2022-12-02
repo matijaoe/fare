@@ -12,9 +12,9 @@ defineProps<{
 <template>
   <article>
     <div flex="~ col gap-2">
-      <BalanceLabel>
+      <BasicLabel>
         {{ label }}
-      </BalanceLabel>
+      </BasicLabel>
       <div flex gap-2 items-center>
         <FSkeleton
           v-if="loading"
