@@ -6,7 +6,6 @@ import { getDateRange, readUserId, sendCustomError } from '~~/server/utils'
 
 type TotalsForMonth = {
   type: TransactionType
-  currency: string
   total: number
 }
 
@@ -25,7 +24,6 @@ export default defineEventHandler(async (event) => {
     sqlRes = await db.$queryRaw`
       SELECT
         t.type, 
-        t.currency,
         sum(amount) as total
       FROM
         Transaction t
@@ -34,20 +32,19 @@ export default defineEventHandler(async (event) => {
         and
         t.userId = ${userId}
       GROUP BY
-        1, 2
+        1
     `
   } else {
     sqlRes = await db.$queryRaw`
       SELECT
         t.type, 
-        t.currency,
         sum(amount) as total
       FROM
         Transaction t
       WHERE
         t.userId = ${userId}
       GROUP BY
-        1, 2
+        1
     `
   }
 

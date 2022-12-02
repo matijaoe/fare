@@ -16,14 +16,13 @@ export default defineEventHandler(async (event) => {
       SELECT 
         DATE_FORMAT(t.date, '%Y-%m') as date,
         t.type,
-        t.currency,
         sum(t.amount) as total
       FROM 
         Transaction t
       WHERE
         t.userId = ${userId}
       GROUP BY 
-        1, 2, 3
+        1, 2
       HAVING 
         t.type in ('Expense', 'Income')
       ORDER BY 

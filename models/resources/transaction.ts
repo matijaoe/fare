@@ -11,7 +11,6 @@ export type TransactionWithCategoryAndCashAccount = Transaction &
 export type TransactionTotalMonthly = {
   date: string
   type: Omit<TransactionType, 'Transfer'>
-  currency: string
   total: number
 }
 

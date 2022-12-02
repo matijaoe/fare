@@ -24,13 +24,12 @@ export const useMonthlyTotals = (totals: Ref<TransactionTotalMonthlyObject | und
       const transactionsForMonth = getTransactionsForMonth(date)
       const total = transactionsForMonth.reduce((acc, curr) => acc + curr.total, 0)
 
-      const { type, currency } = transactionsForMonth[0] ?? {}
+      const { type } = transactionsForMonth[0] ?? {}
       return {
         label,
         date,
         total,
         type,
-        currency,
       }
     }) ?? []
   }

@@ -18,14 +18,13 @@ export default defineEventHandler(async (event) => {
     ? today
     : monthEnd!
 
-  let totals: { type: Omit<TransactionType, 'Transfer'>; currency: string; total: number }[] = []
+  let totals: { type: Omit<TransactionType, 'Transfer'>; total: number }[] = []
 
   try {
     if (hasDefinedMonth) {
       totals = await db.$queryRaw`
         SELECT 
           t.type,
-          t.currency,
           SUM(t.amount) as total
         FROM 
           Transaction t
@@ -34,7 +33,7 @@ export default defineEventHandler(async (event) => {
           AND
           t.date < ${monthEnd}
         GROUP BY 
-          1, 2
+          1
         HAVING 
           t.type in ('Expense', 'Income')
       `
@@ -42,14 +41,13 @@ export default defineEventHandler(async (event) => {
       totals = await db.$queryRaw`
         SELECT 
           t.type,
-          t.currency,
           SUM(t.amount) as total
         FROM 
           Transaction t
         WHERE
           t.userId = ${userId} 
         GROUP BY 
-          1, 2
+          1
         HAVING 
           t.type in ('Expense', 'Income')
       `

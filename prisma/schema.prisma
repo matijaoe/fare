@@ -30,6 +30,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -40,6 +41,8 @@ model Session {
 
   // relations
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
@@ -60,7 +63,6 @@ model User {
 }
 
 model UserConfig {
-  // TODO: setup currency only in user account
   currency                String?   @default("EUR")
   userId                  String    @unique
   monthlyIncome           Float?
@@ -100,7 +102,6 @@ model Transaction {
   name          String
   description   String?
   amount        Float
-  currency      String?         @default("EUR")
   date          DateTime        @default(now())
   userId        String
   categoryId    String?
@@ -111,6 +112,11 @@ model Transaction {
   category    Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   fromAccount CashAccount? @relation("paymentFromAccount", fields: [fromAccountId], references: [id], onDelete: Restrict)
   toAccount   CashAccount? @relation("paymentToAccount", fields: [toAccountId], references: [id], onDelete: Restrict)
+
+  @@index([toAccountId])
+  @@index([fromAccountId])
+  @@index([categoryId])
+  @@index([userId])
 }
 
 model MoneyAccount {
@@ -127,6 +133,7 @@ model MoneyAccount {
   InvestmentAccount InvestmentAccount?
 
   @@unique([name, userId])
+  @@index([userId])
 }
 
 enum CashAccountType {
@@ -167,7 +174,8 @@ model InvestmentEntry {
   investmentAccountId String
   date                DateTime
   balance             Float
-  currency            String?  @default("EUR")
 
   account InvestmentAccount @relation(fields: [investmentAccountId], references: [id], onDelete: Cascade)
+
+  @@index([investmentAccountId])
 }
