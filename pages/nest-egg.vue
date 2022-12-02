@@ -17,7 +17,7 @@ const {
   isEntriesLoading,
   getAccountsForType,
   formattedAverageAnnualRate,
-} = toRefs(useNestEggStore())
+} = useNestEgg()
 
 const modal = useInvestmentAccountModal()
 

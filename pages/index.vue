@@ -13,7 +13,7 @@ const {
 const { data: cashAccounts } = useCashAccounts()
 const cashAccountsCount = computed(() => cashAccounts.value?.length ?? 0)
 
-const { investmentAccountsCount, formattedAverageAnnualRate } = toRefs(useNestEggStore())
+const { investmentAccountsCount, formattedAverageAnnualRate } = useNestEgg()
 </script>
 
 <template>
@@ -28,11 +28,14 @@ const { investmentAccountsCount, formattedAverageAnnualRate } = toRefs(useNestEg
           :investments="formattedInvestmentsBalance"
         />
 
-        <ChartNetWorthPie
-          :height="100"
-          :has-legend="false"
-          responsive
-        />
+        <div flex justify-center align-center>
+          <ClientOnly>
+            <ChartNetWorthPie
+              :height="300"
+              :has-legend="false"
+            />
+          </ClientOnly>
+        </div>
 
         <div mt-auto>
           <div mt-6>

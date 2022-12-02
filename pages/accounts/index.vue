@@ -8,15 +8,12 @@ onMounted(() => setBreadcrumbs([
 const cashAccountModal = useCashAccountModal()
 
 const { monthQuery, isAllTime } = toRefs(useDateRangeStore())
-
-const { data: totalBalance, isLoading: isBalanceLoading } = useCashAccountsBalance()
-const { data: monthlyBalanceObj, isLoading: isMonthlyBalanceLoading } = useCashAccountsMonthlyBalance(monthQuery)
-
-const balance = computed(() => totalBalance.value?.balance ?? 0)
-const monthlyBalance = computed(() => monthlyBalanceObj.value?.balance ?? 0)
-
-const formattedTotalBalance = useCurrencyFormat(balance)
-const formattedMonthlyBalance = useCurrencyFormat(monthlyBalance)
+const {
+  formattedTotalBalance,
+  formattedMonthlyBalance,
+  isBalanceLoading,
+  isMonthlyBalanceLoading,
+} = useBalanceCash()
 
 const { data: cashAccounts, isLoading: isAccountsLoading } = useCashAccounts()
 const { data: accountsTotals, isLoading: isTotalsLoading } = useCashAccountsTotals(monthQuery)

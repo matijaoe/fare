@@ -1,7 +1,6 @@
 import type { InvestmentType } from '@prisma/client'
-import { acceptHMRUpdate, defineStore } from 'pinia'
 
-export const useNestEggStore = defineStore('nest-egg', () => {
+export const useNestEgg = () => {
   const { monthQuery } = toRefs(useDateRangeStore())
 
   const { data: totalBalance, isLoading: isBalanceLoading } = useInvestmentsBalance()
@@ -45,8 +44,10 @@ export const useNestEggStore = defineStore('nest-egg', () => {
     }, 0)
 
     const result = (multiplied / balance.value) / 100
-    return isNaN(result) ? null : result
+    return isNaN(result) ? 0 : result
   })
+
+  const averageMonthlyRate = computed(() => averageAnnualRate.value / 12)
 
   const formattedAverageAnnualRate = computed(() => averageAnnualRate.value ? formatPercentage(averageAnnualRate.value) : null)
 
@@ -62,11 +63,11 @@ export const useNestEggStore = defineStore('nest-egg', () => {
     getAccountsForType,
     // for config
     averageAnnualRate,
+    averageMonthlyRate,
     formattedAverageAnnualRate,
     investmentAccountsCount,
+    balance,
+    monthlyBalance,
   }
-})
-
-if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useNestEggStore, import.meta.hot))
 }
+
