@@ -42,10 +42,10 @@ const {
           />
         </template>
       </BalanceShownWrapper>
-
-      <div flex-1 flex flex-col items-end justify-center>
-        <ChartNetWorthPie :height="400" />
-      </div>
     </div>
+
+    <LayoutSectionWrapper title="Pie chart">
+      <ChartNetWorthPie />
+    </LayoutSectionWrapper>
   </LayoutPage>
 </template>

@@ -27,7 +27,7 @@ const sizeStyle = computed(() => {
 
 <template>
   <div
-    flex="~ gap-0.5" items-center
+    flex="~ gap-1" items-center
     font="sans black"
     :class="[darker ? 'color-base' : 'color-base-lighter', sizeStyle.text]"
   >

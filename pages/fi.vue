@@ -16,7 +16,7 @@ const yearCountInputValue = computed<string>({
   },
 })
 
-const { compoundedNetWorthForNextYears: compoundedValues } = $(useFireCalculation(yearCount))
+const { compoundedNetWorthForNextYears: compoundedValues, netWorthGoal } = $(useFireCalculation(yearCount))
 const fireConfig = useFireConfig()
 
 const isYearsCalculated = computed(() => {
@@ -64,29 +64,27 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
 
 <template>
   <LayoutPage>
-    <div
+    <LayoutSectionWrapper
       v-if="isYearsCalculated"
+      title="FI chart"
       flex flex-col gap-4
     >
-      <div text-xl font-bold text-blue-500>
-        {{ yearCount }}
-      </div>
-
+      <ChartExpenseIncome
+        :height="220"
+        :labels="labels"
+        :datasets="[datasets.total, datasets.cash, datasets.investments]"
+      />
       <input v-model="yearCountInputValue" type="range" :step="1" :max="80" :min="3">
-
-      <ClientOnly>
-        <ChartExpenseIncome
-          :height="200"
-          :labels="labels"
-          :datasets="[datasets.total, datasets.cash, datasets.investments]"
-        />
-      </ClientOnly>
 
       <div>
         yearly cash savings {{ fireConfig.yearlyCashSavings }}
       </div>
 
-      <div v-for="nw in compoundedNetWorthForNextYears" :key="nw.months" bg-blue-2>
+      <div>
+        netWorthGoal: {{ netWorthGoal }}
+      </div>
+
+      <div v-for="nw in compoundedValues" :key="nw.months" bg-blue-2>
         <div>
           {{ nw.months }} months ({{ nw.months / 12 }} years)
         </div>
@@ -106,6 +104,6 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
           JUST INTEREST: {{ nw.earnedPureInterest }}
         </div>
       </div>
-    </div>
+    </LayoutSectionWrapper>
   </LayoutPage>
 </template>

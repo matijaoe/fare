@@ -15,6 +15,13 @@ const items = [
     },
   },
   {
+    label: 'Categories',
+    icon: 'tabler:packages',
+    route: {
+      name: 'categories',
+    },
+  },
+  {
     label: 'Accounts',
     icon: 'tabler:wallet',
     route: {
@@ -33,13 +40,6 @@ const items = [
     icon: 'tabler:chart-line',
     route: {
       name: 'net-worth',
-    },
-  },
-  {
-    label: 'Categories',
-    icon: 'tabler:packages',
-    route: {
-      name: 'categories',
     },
   },
   {
