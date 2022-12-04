@@ -16,7 +16,7 @@ const items = [
   },
   {
     label: 'Categories',
-    icon: 'tabler:packages',
+    icon: 'tabler:category-2',
     route: {
       name: 'categories',
     },

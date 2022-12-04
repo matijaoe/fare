@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { set } from '@vueuse/core'
 import type { NavItemModel } from '~/models/ui'
 
 const { item } = defineProps<{

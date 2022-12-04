@@ -19,8 +19,8 @@ const formattedIncome = useCurrencyFormat(income)
         text-2xl p-4 rounded-full ring="2 offset-2 dark:(0 offset-0)" transition
         :class="{
           'bg-zinc-2 ring-zinc-8 dark:text-zinc-9 dark:filter-saturate-70': isLoading || net === 0,
-          'bg-emerald-4 ring-emerald-3 dark:text-white dark:filter-saturate-70': net > 0,
-          'bg-rose-4 ring-rose-3 dark:text-white dark:filter-saturate-70': net < 0,
+          'bg-emerald-4 ring-emerald-2 !ring-offset-0 !ring-5 dark:text-white dark:filter-saturate-70': net > 0,
+          'bg-rose-4 ring-rose-2 !ring-offset-0 !ring-5 dark:text-white dark:filter-saturate-70': net < 0,
         }"
       >
         <FLoader v-if="isLoading" />

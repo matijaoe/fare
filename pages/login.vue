@@ -11,9 +11,16 @@ const signInHandler = async (provider: string) => {
 }
 
 type ProviderId = 'github' | 'google'
-const providerIcons: Record<ProviderId, string> = {
-  github: 'tabler:brand-github',
-  google: 'tabler:brand-google',
+
+const providerButtons: Record<ProviderId, { icon: string; class?: string | string[] }> = {
+  github: {
+    icon: 'mdi:github',
+    class: 'bg-#171516 text-white',
+  },
+  google: {
+    icon: 'mdi:google',
+    class: 'bg-#4285F4 text-white',
+  },
 }
 
 whenever(isAuthenticated, () => {
@@ -23,24 +30,38 @@ whenever(isAuthenticated, () => {
 
 <template>
   <div class="auth-wrapper" />
-  <div z-2 flex flex-col items-center flex-1>
+  <div z-2 flex flex-col items-center flex-1 py-10>
     <FLogo class="z-2" size="lg" darker />
 
-    <div flex-1 grid place-content-center mt="-20vh">
+    <div
+      v-if="providers"
+      flex-1 grid place-content-center
+    >
       <div flex flex-col gap-2>
-        <FButton
-          v-for="provider in providers"
-          :key="provider.id"
-          size="lg"
-          @click="signInHandler(provider.id)"
+        <template
+          v-for="[key, value] in Object.entries(providers) "
+          :key="key"
         >
-          <div flex items-center justify-start gap-3>
-            <Icon :name="providerIcons[provider.id as ProviderId]" />
-            <p>Sign in with {{ provider.name }}</p>
-          </div>
-        </FButton>
+          <FButton
+            v-if="value"
+            variant="empty"
+            size="lg"
+            class="!pl-7"
+            :class="providerButtons[key as ProviderId].class"
+            @click="signInHandler(key)"
+          >
+            <div flex items-center justify-start gap-3>
+              <Icon :name="providerButtons[key as ProviderId].icon" text-xl />
+              <p>Sign in with {{ value.name }}</p>
+            </div>
+          </FButton>
+        </template>
       </div>
     </div>
+
+    <p font-medium text-2xl mt-auto>
+      Plan for your future, today.
+    </p>
   </div>
 </template>
 

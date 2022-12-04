@@ -53,6 +53,8 @@ const variantStyle = computed(() => {
       return 'bg-rose-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-rose-4/95) dark:(bg-rose-5 filter-saturate-70 hover:not-disabled:(bg-rose-5 filter-saturate-95) focus-visible:not-disabled:(bg-rose-4))'
     case 'zinc':
       return 'bg-zinc-4 text-zinc-9 !border-zinc-9/50 hover:not-disabled:(filter-saturate-110) focus-visible:not-disabled:(bg-zinc-4/95) dark:(bg-zinc-5 filter-saturate-70 hover:not-disabled:(bg-zinc-5 filter-saturate-95) focus-visible:not-disabled:(bg-zinc-4))'
+    case 'empty':
+      return ''
   }
 })
 
