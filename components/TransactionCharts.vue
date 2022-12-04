@@ -56,7 +56,7 @@ const isCustom = $computed(() => !monthCountOptions.map(({ value }) => value).in
       <div />
       <div flex gap-2 justify-center>
         <FTooltip content="Subtract month">
-          <FButton :disabled="monthCount > 1" size="sm" variant="secondary" @click="monthCount--">
+          <FButton :disabled="monthCount <= 1" size="sm" variant="secondary" @click="monthCount--">
             -
           </FButton>
         </FTooltip>
@@ -120,7 +120,7 @@ const isCustom = $computed(() => !monthCountOptions.map(({ value }) => value).in
         type="bar"
         flex-1
         w-full
-       :datasets="[datasets.net]"
+        :datasets="[datasets.net]"
       />
     </div>
   </div>

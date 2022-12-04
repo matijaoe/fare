@@ -182,19 +182,6 @@ const transactionTypeOptions = [
                 </FBadge>
               </div>
             </template>
-            <template #selected="{ item }">
-              <div
-                flex
-                items-center
-                justify-between
-                gap-4
-              >
-                {{ item.label }}
-                <FBadge :color="item.account.color">
-                  {{ item.label }}
-                </FBadge>
-              </div>
-            </template>
           </FSelectField>
           <FSelectField
             v-if="modal.isIncome || modal.isTransfer"
@@ -209,14 +196,6 @@ const transactionTypeOptions = [
           >
             <template #option="{ item }">
               <div flex items-center gap-4>
-                <FBadge :color="item.account.color">
-                  {{ item.label }}
-                </FBadge>
-              </div>
-            </template>
-            <template #selected="{ item }">
-              <div flex items-center justify-between gap-4>
-                {{ item.label }}
                 <FBadge :color="item.account.color">
                   {{ item.label }}
                 </FBadge>
@@ -237,14 +216,6 @@ const transactionTypeOptions = [
           >
             <template #option="{ item }">
               <div flex items-center gap-4>
-                <FBadge :color="item.color">
-                  {{ item.label }}
-                </FBadge>
-              </div>
-            </template>
-            <template #selected="{ item }">
-              <div flex items-center justify-between gap-4>
-                {{ item.label }}
                 <FBadge :color="item.color">
                   {{ item.label }}
                 </FBadge>

@@ -1,3 +1,4 @@
+import { isDef } from '@vueuse/core'
 import type { Ref } from 'vue'
 import { calcCompoundInterestWithMonthlyContributions, monthsToYears } from '~~/utils'
 
@@ -69,9 +70,30 @@ export const useFireCalculation = (yearCount: Ref<number>) => {
     }
   }
 
+  const timeToNetWorthGoal = computed(() => {
+    if (!netWorthGoal.value) {
+      return null
+    }
+
+    // TODO: reuse already calculated values
+
+    for (let i = 0; ; i++) {
+      const months = i
+      const nwData = getCompoundedNetWorth(months)
+      if (nwData.total >= netWorthGoal.value) {
+        return months
+      }
+      if (months > yearsToMonths(120)) {
+        return null
+      }
+    }
+  })
+
   // TODO: something aint right
   const compoundedNetWorthForNextYears = computed(() => {
-    return [...Array.from({ length: 1 + yearCount.value }, (_, i) => {
+    const years = isDefined(timeToNetWorthGoal) ? monthsToYears(timeToNetWorthGoal.value) + 1 : yearCount.value
+    // TODO: dont use year count but use timeToNetWorthGoal
+    return [...Array.from({ length: 1 + years }, (_, i) => {
       const months = i * 12
       return months
     })]
@@ -90,6 +112,7 @@ export const useFireCalculation = (yearCount: Ref<number>) => {
     getCompoundedNestEgg,
     getCompoundedNetWorth,
     moneyTillNetWorthGoal,
+    timeToNetWorthGoal,
   }
 }
 

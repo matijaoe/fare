@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { ChartDataset } from 'chart.js'
-import { addYears, format } from 'date-fns'
+import { addMonths, addYears, format } from 'date-fns'
 
 const yearCount = ref(10)
 const yearCountInputValue = computed<string>({
@@ -16,7 +16,7 @@ const yearCountInputValue = computed<string>({
   },
 })
 
-const { compoundedNetWorthForNextYears: compoundedValues, netWorthGoal } = $(useFireCalculation(yearCount))
+const { compoundedNetWorthForNextYears: compoundedValues, netWorthGoal, timeToNetWorthGoal } = $(useFireCalculation(yearCount))
 const fireConfig = useFireConfig()
 
 const isYearsCalculated = computed(() => {
@@ -60,6 +60,26 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
     borderWidth: 3,
   },
 }))
+
+const monthsToYearsAndMonths = (months: number) => {
+  const years = Math.floor(months / 12)
+  const remainingMonths = months % 12
+  return `${years} years and ${remainingMonths} months`
+}
+
+const fiDate = computed(() => {
+  if (timeToNetWorthGoal == null) {
+    return null
+  }
+
+  const fiDate = addMonths(new Date(), timeToNetWorthGoal)
+  const fiAge = new Date(fiDate).getFullYear() - new Date(fireConfig.pensionCalculations.birthDate).getFullYear()
+
+  return {
+    date: fiDate,
+    age: fiAge,
+  }
+})
 </script>
 
 <template>
@@ -69,6 +89,9 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
       title="FI chart"
       flex flex-col gap-4
     >
+      <div v-if="(timeToNetWorthGoal && fiDate)">
+        {{ monthsToYearsAndMonths(timeToNetWorthGoal) }} until Financial Independence (by the age of {{ fiDate.age }} - {{ format(fiDate.date, 'MMM yyyy') }})
+      </div>
       <ChartExpenseIncome
         :height="220"
         :labels="labels"
