@@ -5,7 +5,7 @@ export const useFireConfig = defineStore('fire-configuration', () => {
   const fiCalculations = reactive({
     yearlyIncome: 45000,
     yearlyExpenditure: 25000,
-    yearlyInvestments: 14000,
+    yearlyInvestments: 2000,
     safeWithdrawalRate: 4,
   })
 

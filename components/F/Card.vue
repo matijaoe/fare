@@ -11,7 +11,7 @@ const backgroundStyle = computed(() => {
     return 'bg-white dark:bg-zinc-9'
   }
   return props.filled
-    ? 'bg-zinc-2 dark:bg-zinc-8 border-transparent'
+    ? 'bg-zinc-1 dark:bg-zinc-8 border-transparent'
     : 'bg-transparent border-zinc-2 dark:border-zinc-8'
 })
 </script>

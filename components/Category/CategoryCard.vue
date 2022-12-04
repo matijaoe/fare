@@ -68,9 +68,9 @@ const { isDark } = useTheme()
       <div flex gap-14 items-end>
         <div flex justify-start items-center gap-8>
           <div>
-            <p font="sans medium" text="10px zinc-4 dark:zinc-5" leading-tight uppercase>
+            <BasicLabel size="xs">
               Earned
-            </p>
+            </BasicLabel>
             <div text-xl min-w-18 flex justify-start>
               <TransitionFade>
                 <FSkeleton v-if="totalsLoading" variant="lighter" w-full h="28px" />
@@ -85,9 +85,9 @@ const { isDark } = useTheme()
           </div>
 
           <div pl-5>
-            <p font="sans medium" text="10px right zinc-4 dark:zinc-5" leading-tight uppercase>
+            <BasicLabel size="xs">
               Spent
-            </p>
+            </BasicLabel>
             <div text-xl min-w-18 flex justify-end>
               <TransitionFade>
                 <FSkeleton v-if="totalsLoading" variant="lighter" w-full h="28px" />

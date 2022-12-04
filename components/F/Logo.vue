@@ -29,7 +29,7 @@ const sizeStyle = computed(() => {
   <div
     flex="~ gap-1" items-center
     font="sans black"
-    :class="[darker ? 'color-base' : 'color-base-lighter', sizeStyle.text]"
+    :class="[darker ? 'text-zinc-9 dark:text-zinc-3' : 'text-zinc-7 dark:text-zinc-3', sizeStyle.text]"
   >
     <Icon
       name="fluent-emoji-flat:hand-with-index-finger-and-thumb-crossed-medium-light"

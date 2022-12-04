@@ -7,8 +7,8 @@ const expense = computed(() => totals.value?.expense ?? 0)
 const income = computed(() => totals.value?.income ?? 0)
 
 const formattedNet = useCurrencyFormat(net, { signDisplay: 'always' })
-const formattedExpense = useCurrencyFormat(expense, { signDisplay: 'exceptZero' })
-const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
+const formattedExpense = useCurrencyFormat(expense)
+const formattedIncome = useCurrencyFormat(income)
 </script>
 
 <template>
@@ -63,7 +63,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
           </div>
 
           <div
-            bg-zinc-2 text-zinc-9
+            bg-emerald-2 text-emerald-9
             ring="2 offset 2 current"
             flex-center flex-shrink-0
             p-2 rounded-full aspect-square
@@ -83,7 +83,7 @@ const formattedIncome = useCurrencyFormat(income, { signDisplay: 'exceptZero' })
           </div>
 
           <div
-            bg-zinc-2 text-zinc-9
+            bg-rose-2 text-rose-9
             ring="2 offset 2 current"
             flex-center flex-shrink-0
             p-2 rounded-full aspect-square

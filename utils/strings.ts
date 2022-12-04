@@ -12,3 +12,9 @@ export const formatDate = (date: Date | string, options?: MaybeRef<Intl.DateTime
   }).format(new Date(date))
 }
 
+export const handlePlural = (n: number, word: string) => {
+  if (n === 1) {
+    return word
+  }
+  return `${word}s`
+}

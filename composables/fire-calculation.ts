@@ -1,4 +1,3 @@
-import { isDef } from '@vueuse/core'
 import type { Ref } from 'vue'
 import { calcCompoundInterestWithMonthlyContributions, monthsToYears } from '~~/utils'
 
@@ -93,7 +92,7 @@ export const useFireCalculation = (yearCount: Ref<number>) => {
   const compoundedNetWorthForNextYears = computed(() => {
     const years = isDefined(timeToNetWorthGoal) ? monthsToYears(timeToNetWorthGoal.value) + 1 : yearCount.value
     // TODO: dont use year count but use timeToNetWorthGoal
-    return [...Array.from({ length: 1 + years }, (_, i) => {
+    return [...Array.from({ length: 1 + years + yearCount.value }, (_, i) => {
       const months = i * 12
       return months
     })]

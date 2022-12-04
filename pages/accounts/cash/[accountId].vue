@@ -127,7 +127,7 @@ whenever(cashAccount, () => setBreadcrumbs([
                   </div>
 
                   <div
-                    bg-zinc-2 text-zinc-9
+                    bg-emerald-2 text-emerald-9
                     ring="2 offset 2 current"
                     flex-center flex-shrink-0
                     p-2 rounded-full aspect-square
@@ -149,7 +149,7 @@ whenever(cashAccount, () => setBreadcrumbs([
                   </div>
 
                   <div
-                    bg-zinc-2 text-zinc-9
+                    bg-rose-2 text-rose-9
                     ring="2 offset 2 current"
                     flex-center flex-shrink-0
                     p-2 rounded-full aspect-square

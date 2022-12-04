@@ -4,7 +4,7 @@ import { isNumber } from '@vueuse/core'
 import { getMonth, isSameYear, isThisYear } from 'date-fns'
 import type Input from '~~/components/F/Input.vue'
 import type { InvestmentAccountWithAccount } from '~~/models/resources'
-import { formatPercentage } from '~~/utils'
+import { formatDate, formatPercentage } from '~~/utils'
 
 type Props = {
   investmentAccount: InvestmentAccountWithAccount
@@ -26,11 +26,9 @@ const { selectedMonth } = toRefs(useDateRangeStore())
 
 const sortedBalances = computed(() => {
   const balances = Object.values(props.balances ?? {})
-  // sort by newest
   return balances.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 })
 
-// TODO: last updated date not correct, was working before
 const currentBalanceEntry = computed(() => props.balances?.[getYearMonthKey(selectedMonth.value)])
 const currentBalance = computed(() => currentBalanceEntry.value?.balance)
 
@@ -93,6 +91,12 @@ const setEditMode = (value: boolean) => {
     }, 0)
   }
 }
+
+const formatLastUpdatedDate = (date: Date) => formatDate(date, {
+  year: isThisYear(new Date(date)) ? undefined : 'numeric',
+  month: 'short',
+  dateStyle: undefined,
+})
 </script>
 
 <template>
@@ -159,18 +163,10 @@ const setEditMode = (value: boolean) => {
           text-xs text-zinc-4 font-mono font-light
         >
           <p v-if="currentBalanceEntry">
-            last updated in {{ formatDate(currentBalanceEntry.date, {
-              year: isThisYear(new Date(currentBalanceEntry.date)) ? undefined : 'numeric',
-              month: 'short',
-              dateStyle: undefined,
-            }) }}
+            last updated in {{ formatLastUpdatedDate(currentBalanceEntry.date) }}
           </p>
           <p v-else-if="previousBalanceEntry" relative>
-            last updated in {{ formatDate(previousBalanceEntry.date, {
-              year: isThisYear(new Date(previousBalanceEntry.date)) ? undefined : 'numeric',
-              month: 'short',
-              dateStyle: undefined,
-            }) }}
+            last updated in {{ formatLastUpdatedDate(previousBalanceEntry.date) }}
             <FBadge color="red" type="solid" class="absolute bottom--8 left-50% -translate-x-50%">
               outdated
             </FBadge>
