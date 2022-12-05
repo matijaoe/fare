@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = withDefaults(defineProps<{
-  size: 'xs' | 'sm' | 'default'
+  size?: 'xs' | 'sm' | 'default'
 }>(), {
   size: 'default',
 })

@@ -46,21 +46,21 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
     data: netWorthTotals,
     backgroundColor: '#818cf8',
     borderColor: '#6366f1',
-    borderWidth: 3,
+    order: 3,
   },
   cash: {
     label: 'Cash',
     data: cashTotals,
     backgroundColor: '#34D399',
     borderColor: '#059669',
-    borderWidth: 3,
+    order: 2,
   },
   investments: {
     label: 'Nest egg',
     data: nestEggTotals,
     backgroundColor: '#fbbf24',
     borderColor: '#d97706',
-    borderWidth: 3,
+    order: 1,
   },
 }))
 
@@ -111,7 +111,7 @@ const fiDate = computed(() => {
       </div>
 
       <div max-w="1000px" mx-auto>
-        <ChartExpenseIncome
+        <ChartNetWorth
           :height="220"
           :labels="labels"
           :datasets="[datasets.total, datasets.cash, datasets.investments]"
