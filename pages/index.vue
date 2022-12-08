@@ -10,10 +10,12 @@ const {
   formattedInvestmentsBalance,
 } = useNetWorth()
 
+const { netWorthGoal, timeToNetWorthGoal, fiDate, isTimeToLoading } = $(useFireCalculation())
+
 const { data: cashAccounts } = useCashAccounts()
 const cashAccountsCount = computed(() => cashAccounts.value?.length ?? 0)
 
-const { investmentAccountsCount, formattedAverageAnnualRate } = useNestEgg()
+const { investmentAccountsCount, formattedAverageAnnualRate, isAccountsLoading: isAvgAnnualRateLoading } = useNestEgg()
 </script>
 
 <template>
@@ -53,7 +55,7 @@ const { investmentAccountsCount, formattedAverageAnnualRate } = useNestEgg()
             :loading="isNetWorthLoading"
             :balance="formattedCashBalance"
           />
-          <div>
+          <div v-if="(!isNetWorthLoading && cashAccountsCount > 0)">
             {{ cashAccountsCount }} accounts
           </div>
           <div mt-auto>
@@ -71,7 +73,7 @@ const { investmentAccountsCount, formattedAverageAnnualRate } = useNestEgg()
             :loading="isNetWorthLoading"
             :balance="formattedInvestmentsBalance"
           />
-          <div>
+          <div v-if="(!isNetWorthLoading && investmentAccountsCount > 0)">
             {{ investmentAccountsCount }} accounts
           </div>
 
@@ -88,6 +90,7 @@ const { investmentAccountsCount, formattedAverageAnnualRate } = useNestEgg()
       <div grid grid-rows-4 gap-4>
         <FCard white flex flex-col gap-2>
           <div flex items-start justify-between>
+            <FSkeleton v-if="isAvgAnnualRateLoading" class="w-28 h-40px" />
             <p font-semibold text-4xl>
               {{ formattedAverageAnnualRate }}
             </p>
@@ -118,6 +121,37 @@ const { investmentAccountsCount, formattedAverageAnnualRate } = useNestEgg()
                 </p>
               </div>
             </FTooltip>
+          </div>
+        </FCard>
+
+        <FCard white row-span-2 flex flex-col gap-2>
+          <div flex flex-col items-start>
+            You can achieve Financial Independence in
+            <div font-bold text-4xl mt-2>
+              <FSkeleton v-if="isTimeToLoading" class="w-40 h-40px" />
+              <span
+                v-else-if="timeToNetWorthGoal"
+              >
+                {{ monthsToYearsAndMonthsString(timeToNetWorthGoal) }}
+              </span>
+            </div>
+
+            <div font-semibold text-lg mt-2>
+              <FSkeleton v-if="isTimeToLoading" class="w-30 h-28px" />
+              <span
+                v-else-if="fiDate"
+              >
+                by the age of {{ fiDate.age }}
+              </span>
+            </div>
+          </div>
+
+          <div mt-auto>
+            <div mt-6>
+              <NuxtLink class="underline" :to="{ name: 'fi' }">
+                Explore FI
+              </NuxtLink>
+            </div>
           </div>
         </FCard>
       </div>

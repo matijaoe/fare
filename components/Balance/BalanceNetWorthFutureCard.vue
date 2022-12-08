@@ -51,7 +51,7 @@ defineProps<{
             now
           </template>
         </div>
-        <time pl-2 font-medium>
+        <time pl-2 font-medium w="44px">
           {{ format(addMonths(new Date(), data.months), 'yyyy') }}
         </time>
       </div>

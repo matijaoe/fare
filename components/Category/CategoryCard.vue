@@ -51,7 +51,7 @@ const { isDark } = useTheme()
         </div>
       </NuxtLink>
 
-      <TransitionFade>
+      <transition-fade>
         <p
           v-if="!totalsLoading"
           ml-auto
@@ -61,7 +61,7 @@ const { isDark } = useTheme()
         >
           {{ allTime ? formattedTotalNet : formattedNet }}
         </p>
-      </TransitionFade>
+      </transition-fade>
     </div>
 
     <div flex items-end justify-between p-6>

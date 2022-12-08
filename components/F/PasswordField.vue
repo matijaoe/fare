@@ -5,6 +5,8 @@ type Props = {
   icon?: string
   iconPlacement?: 'left' | 'right'
   loading?: boolean
+  disabled?: boolean
+  readonly?: boolean
 }
 
 type Emits = {
@@ -39,8 +41,8 @@ const emits = {
 <template>
   <FInput
     v-model="value"
+    v-bind="$props"
     :type="visible ? 'text' : 'password'"
-    :loading="loading"
     icon-placement="right"
     v-on="emits"
   >

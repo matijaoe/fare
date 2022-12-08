@@ -1,9 +1,11 @@
+import { addMonths } from 'date-fns'
 import type { Ref } from 'vue'
 import { calcCompoundInterestWithMonthlyContributions, monthsToYears } from '~~/utils'
 
-export const useFireCalculation = (yearCount: Ref<number>) => {
+export const useFireCalculation = (_yearCount?: Ref<number>) => {
   const {
     balance: cashBalance,
+    isBalanceLoading,
   } = useBalanceCash()
 
   const fireConfig = useFireConfig()
@@ -88,6 +90,27 @@ export const useFireCalculation = (yearCount: Ref<number>) => {
     }
   })
 
+  const fiDate = computed(() => {
+    if (timeToNetWorthGoal.value == null) {
+      return null
+    }
+
+    const fiDate = addMonths(new Date(), timeToNetWorthGoal.value)
+    const fiAge = new Date(fiDate).getFullYear() - new Date(fireConfig.pensionCalculations.birthDate).getFullYear()
+
+    return {
+      date: fiDate,
+      age: fiAge,
+    }
+  })
+
+  // TODO: could be forever loading if null - should be done with state
+  const isTimeToLoading = computed(() => {
+    return isBalanceLoading.value || !isDefined(timeToNetWorthGoal) || !isDefined(netWorthGoal)
+  })
+
+  const yearCount = computed(() => _yearCount?.value ?? 0)
+
   // TODO: something aint right
   const compoundedNetWorthForNextYears = computed(() => {
     const years = isDefined(timeToNetWorthGoal) ? monthsToYears(timeToNetWorthGoal.value) + 1 : yearCount.value
@@ -112,6 +135,8 @@ export const useFireCalculation = (yearCount: Ref<number>) => {
     getCompoundedNetWorth,
     moneyTillNetWorthGoal,
     timeToNetWorthGoal,
+    fiDate,
+    isTimeToLoading,
   }
 }
 

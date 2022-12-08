@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { ChartDataset } from 'chart.js'
 import { addMonths, addYears, format } from 'date-fns'
-import { handlePlural } from '../utils'
+import { monthsToYearsAndMonthsString } from '../utils'
 
 const yearCount = ref(0)
 // add boolean for toggling for continuos contributions
@@ -19,8 +19,7 @@ const yearCountInputValue = computed<string>({
   },
 })
 
-const { compoundedNetWorthForNextYears: compoundedValues, netWorthGoal, timeToNetWorthGoal } = $(useFireCalculation(yearCount))
-const fireConfig = useFireConfig()
+const { compoundedNetWorthForNextYears: compoundedValues, netWorthGoal, timeToNetWorthGoal, fiDate } = $(useFireCalculation(yearCount))
 
 const isYearsCalculated = computed(() => {
   return compoundedValues?.every(
@@ -53,45 +52,16 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
     data: cashTotals,
     backgroundColor: '#34D399',
     borderColor: '#059669',
-    order: 2,
+    order: 1,
   },
   investments: {
     label: 'Nest egg',
     data: nestEggTotals,
     backgroundColor: '#fbbf24',
     borderColor: '#d97706',
-    order: 1,
+    order: 2,
   },
 }))
-
-const monthsToYearsAndMonths = (months: number) => {
-  const years = Math.floor(months / 12)
-  const remainingMonths = months % 12
-  if (!years && !remainingMonths) {
-    return '0 months'
-  }
-  if (!years) {
-    return `${remainingMonths} months`
-  }
-  if (!remainingMonths) {
-    return `${years} years`
-  }
-  return `${years} ${handlePlural(years, 'year')} and ${remainingMonths} ${handlePlural(remainingMonths, 'month')}`
-}
-
-const fiDate = computed(() => {
-  if (timeToNetWorthGoal == null) {
-    return null
-  }
-
-  const fiDate = addMonths(new Date(), timeToNetWorthGoal)
-  const fiAge = new Date(fiDate).getFullYear() - new Date(fireConfig.pensionCalculations.birthDate).getFullYear()
-
-  return {
-    date: fiDate,
-    age: fiAge,
-  }
-})
 </script>
 
 <template>
@@ -106,8 +76,8 @@ const fiDate = computed(() => {
       >
         <!--  - {{ format(fiDate.date, 'MMM yyyy') }} -->
         You can achieve Financial Independence in
-        <span font-bold text-4xl mt-2>{{ monthsToYearsAndMonths(timeToNetWorthGoal) }}</span>
-        <span font-bold text-xl mt-1>by the age of {{ fiDate.age }}</span>
+        <span font-bold text-4xl mt-2>{{ monthsToYearsAndMonthsString(timeToNetWorthGoal) }}</span>
+        <span font-semibold text-xl mt-1>by the age of {{ fiDate.age }}</span>
       </div>
 
       <div max-w="1000px" mx-auto>

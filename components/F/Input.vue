@@ -13,6 +13,7 @@ type Props = {
   invalid?: boolean
   positive?: boolean
   disabled?: boolean
+  readonly?: boolean
   label?: string
   hint?: string
   error?: string
@@ -99,6 +100,7 @@ const stateIconStyle = computed(() => {
 })
 
 const disabledStyle = computed(() => 'disabled:(bg-zinc-1 dark:bg-zinc-9/50 border-zinc-3 dark:border-zinc-7 opacity-50 cursor-not-allowed)')
+const readonlyStyle = computed(() => 'read-only:(bg-zinc-1 dark:bg-zinc-9/50 border-zinc-3 dark:border-zinc-7 focus:(outline-none ring-none))')
 
 const inputEl = ref<HTMLInputElement>()
 
@@ -159,7 +161,7 @@ const isHovered = useElementHover(inputWrapper)
         v-model="value"
         :type="type"
         :placeholder="placeholder"
-        :readonly="loading"
+        :readonly="loading || readonly"
         :disabled="disabled"
         h="41px" w-full
         p="y-2.5 x-4"
@@ -168,7 +170,7 @@ const isHovered = useElementHover(inputWrapper)
         flex="~ gap-4" items-center
         outline="none focus:none"
         class="leading-5 placeholder-zinc-5/60 placeholder-shown:font-normal"
-        :class="[disabledStyle, paddingStyle, stateStyle, inputClass]"
+        :class="[disabledStyle, readonlyStyle, paddingStyle, stateStyle, inputClass]"
         v-on="emits"
       >
 

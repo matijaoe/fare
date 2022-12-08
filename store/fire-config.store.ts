@@ -5,7 +5,8 @@ export const useFireConfig = defineStore('fire-configuration', () => {
   const fiCalculations = reactive({
     yearlyIncome: 45000,
     yearlyExpenditure: 25000,
-    yearlyInvestments: 2000,
+    // net is investments + savings
+    yearlyInvestments: 16000,
     safeWithdrawalRate: 4,
   })
 
@@ -14,6 +15,11 @@ export const useFireConfig = defineStore('fire-configuration', () => {
     const expenditure = fiCalculations.yearlyExpenditure ?? 0
     const investments = fiCalculations.yearlyInvestments ?? 0
     return income - expenditure - investments
+  })
+
+  const yearlyNet = computed(() => {
+    const { yearlyIncome, yearlyExpenditure } = fiCalculations
+    return yearlyIncome - yearlyExpenditure
   })
 
   const pensionCalculations = reactive({
@@ -37,6 +43,7 @@ export const useFireConfig = defineStore('fire-configuration', () => {
     fiCalculations,
     age,
     yearlyCashSavings,
+    yearlyNet,
   }
 })
 

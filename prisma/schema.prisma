@@ -52,6 +52,15 @@ model User {
   emailVerified DateTime?
   image         String?
 
+  currency                String?   @default("EUR")
+  monthlyIncome           Float?
+  monthlyExpenditure      Float?
+  monthlyInvestment       Float?
+  safeWithdrawalRate      Float?
+  birthDate               DateTime?
+  retirementAge           Int?
+  pensionAccessabilityAge Int?
+
   // opposite relations
   accounts      Account[]
   sessions      Session[]
@@ -59,21 +68,6 @@ model User {
   transactions  Transaction[]
   moneyAccounts MoneyAccount[]
   categories    Category[]
-  config        UserConfig[]
-}
-
-model UserConfig {
-  currency                String?   @default("EUR")
-  userId                  String    @unique
-  monthlyIncome           Float?
-  monthlyExpenditure      Float?
-  safeWithdrwalRate       Float?
-  birthDate               DateTime?
-  retirementAge           Int?
-  pensionAccessabilityAge Int?
-
-  // relations
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Category {

@@ -18,7 +18,7 @@ const config = useFireConfig()
           </FTab>
         </TabList>
 
-        <TabPanels as="div" max-w-3xl>
+        <TabPanels as="div" max-w-4xl>
           <FTabPanel
             desc="Fine tune your FIRE plan"
           >
@@ -40,12 +40,39 @@ const config = useFireConfig()
               />
 
               <FInput
+                v-model="config.yearlyNet"
+                readonly
+                label="Yearly net"
+                placeholder="5000"
+                icon="tabler:currency-euro"
+                type="number"
+              />
+
+              <FInput
                 v-model="config.fiCalculations.safeWithdrawalRate"
                 label="Safe withdrawal rate"
                 placeholder="4%"
                 icon="tabler:percentage"
                 type="number"
                 :input-props="{ min: 0, max: 100 }"
+              />
+
+              <FInput
+                v-model="config.fiCalculations.yearlyInvestments"
+                label="Yearly investments"
+                placeholder="2250"
+                icon="tabler:currency-euro"
+                :input-props="{ min: 0, max: config.yearlyNet }"
+                type="number"
+              />
+
+              <FInput
+                v-model="config.yearlyCashSavings"
+                readonly
+                label="Yearly savings"
+                placeholder="5000"
+                icon="tabler:currency-euro"
+                type="number"
               />
             </div>
           </FTabPanel>
@@ -74,7 +101,7 @@ const config = useFireConfig()
                 label="Current age"
                 placeholder="65"
                 type="number"
-                disabled
+                readonly
                 :input-props="{ min: 1, max: 120 }"
               />
 

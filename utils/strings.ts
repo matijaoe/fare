@@ -18,3 +18,18 @@ export const handlePlural = (n: number, word: string) => {
   }
   return `${word}s`
 }
+
+export const monthsToYearsAndMonthsString = (months: number) => {
+  const years = Math.floor(months / 12)
+  const remainingMonths = months % 12
+  if (!years && !remainingMonths) {
+    return '0 months'
+  }
+  if (!years) {
+    return `${remainingMonths} months`
+  }
+  if (!remainingMonths) {
+    return `${years} years`
+  }
+  return `${years} ${handlePlural(years, 'year')} and ${remainingMonths} ${handlePlural(remainingMonths, 'month')}`
+}
