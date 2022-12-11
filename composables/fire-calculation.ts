@@ -9,7 +9,6 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
   } = useBalanceCash()
 
   const fireConfig = useFireConfig()
-
   const {
     balance: investmentsBalance,
     averageAnnualRate: annualRate,
@@ -37,8 +36,8 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
   })
 
   const getCompoundedNestEgg = (months: number) => {
-    const yearlyInvestments = fireConfig.fiCalculations.yearlyInvestments ?? 0
-    const monthlyContribution = yearlyInvestments / 12
+    const yearlyInvestment = fireConfig.fiCalculations.yearlyInvestment ?? 0
+    const monthlyContribution = yearlyInvestment / 12
 
     const compoundedNestEgg = calcCompoundInterestWithMonthlyContributions({
       principal: investmentsBalance.value,
@@ -58,8 +57,8 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
     const totalCash = cashBalance.value + (monthlySavings * months)
     const total = compoundedNestEgg + totalCash
 
-    const yearlyInvestments = fireConfig.fiCalculations.yearlyInvestments ?? 0
-    const monthlyContribution = yearlyInvestments / 12
+    const yearlyInvestment = fireConfig.fiCalculations.yearlyInvestment ?? 0
+    const monthlyContribution = yearlyInvestment / 12
 
     const earnedPureInterest = compoundedNestEgg - investmentsBalance.value - (monthlyContribution * months)
 

@@ -56,10 +56,10 @@ model User {
   yearlyIncome            Float?
   yearlyExpenditure       Float?
   yearlyInvestment        Float?
-  safeWithdrawalRate      Decimal?  @db.Decimal(4, 2)
+  safeWithdrawalRate      Float?
   birthDate               DateTime?
   retirementAge           Int?
-  pensionAccessabilityAge Int?
+  pensionAccessibilityAge Int?
 
   // opposite relations
   accounts      Account[]

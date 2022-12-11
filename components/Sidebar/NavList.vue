@@ -50,13 +50,6 @@ const items = [
     },
   },
   // TODO: milestones
-  {
-    label: 'Config',
-    icon: 'tabler:adjustments-alt',
-    route: {
-      name: 'config',
-    },
-  },
 ]
 </script>
 

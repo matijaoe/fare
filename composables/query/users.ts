@@ -20,9 +20,12 @@ export const useUser = (id: MaybeRef<string | undefined>) => useQuery(
 export const useUserUpdate = (id: MaybeRef<string | undefined>) => {
   const qc = useQueryClient()
   return useMutation(
-    (body: Prisma.UserUncheckedUpdateInput) => $fetch<User>(`/api/users/${unref(id)}`, {
+    (data: Prisma.UserUncheckedUpdateInput) => $fetch<User>(`/api/users/${unref(id)}`, {
       method: 'PATCH',
-      body,
+      body: {
+        ...data,
+        id: unref(id),
+      },
     }),
     {
       onSuccess: () => {

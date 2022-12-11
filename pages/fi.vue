@@ -1,6 +1,8 @@
 <script lang="ts" setup>
+import { TabGroup } from '@headlessui/vue'
+import { useQueryClient } from '@tanstack/vue-query'
 import type { ChartDataset } from 'chart.js'
-import { addMonths, addYears, format } from 'date-fns'
+import { addYears, format } from 'date-fns'
 import { monthsToYearsAndMonthsString } from '../utils'
 
 const yearCount = ref(0)
@@ -18,6 +20,19 @@ const yearCountInputValue = computed<string>({
     return 2
   },
 })
+
+const config = useFireConfig()
+const { userId } = await useAuth()
+const { mutate: updateUser, isLoading: isUpdateLoading } = useUserUpdate(userId)
+
+const updateUserHandler = () => {
+  updateUser(
+    Object.keys(config.all).reduce((acc, key) => {
+      acc[key] = config.all?.[key] ?? null
+      return acc
+    }, {} as Record<string, string>),
+  )
+}
 
 const { compoundedNetWorthForNextYears: compoundedValues, netWorthGoal, timeToNetWorthGoal, fiDate } = $(useFireCalculation(yearCount))
 
@@ -110,7 +125,123 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
 
           <input v-model="yearCountInputValue" py-4 w-full type="range" :step="1" :max="30" :min="3">
 
-          <div />
+          <TabGroup>
+            <TabList flex-1 flex gap-2 pb-3 border="b-2" border-base>
+              <FTab>
+                FIRE
+              </FTab>
+              <FTab>
+                Pension
+              </FTab>
+              <FButton
+                v-if="config.hasChanged"
+                ml-auto
+                variant="success" size="sm"
+                :loading="isUpdateLoading"
+                @click="updateUserHandler"
+              >
+                Save
+              </FButton>
+            </TabList>
+
+            <TabPanels v-if="config" as="div" max-w-4xl>
+              <FTabPanel
+                desc="Fine tune your FIRE plan"
+              >
+                <div grid grid-cols-3 gap-x-4 gap-y-6>
+                  <FInput
+                    v-model="config.fiCalculations.yearlyIncome"
+                    label="Yearly income"
+                    placeholder="3500"
+                    icon="tabler:currency-euro"
+                    type="number"
+                  />
+
+                  <FInput
+                    v-model="config.fiCalculations.yearlyExpenditure"
+                    label="Yearly expenditure"
+                    placeholder="2250"
+                    icon="tabler:currency-euro"
+                    type="number"
+                  />
+
+                  <FInput
+                    v-model="config.yearlyNet"
+                    readonly
+                    label="Yearly net"
+                    placeholder="5000"
+                    icon="tabler:currency-euro"
+                    type="number"
+                  />
+
+                  <FInput
+                    v-model="config.fiCalculations.safeWithdrawalRate"
+                    label="Safe withdrawal rate"
+                    placeholder="4%"
+                    icon="tabler:percentage"
+                    type="number"
+                    :input-props="{ min: 0, max: 100 }"
+                  />
+
+                  <FInput
+                    v-model="config.fiCalculations.yearlyInvestment"
+                    label="Yearly investments"
+                    placeholder="2250"
+                    icon="tabler:currency-euro"
+                    :input-props="{ min: 0, max: config.yearlyNet }"
+                    type="number"
+                  />
+
+                  <FInput
+                    v-model="config.yearlyCashSavings"
+                    readonly
+                    label="Yearly savings"
+                    placeholder="5000"
+                    icon="tabler:currency-euro"
+                    type="number"
+                  />
+                </div>
+              </FTabPanel>
+
+              <FTabPanel
+                desc="Your government pension parameters"
+              >
+                <div grid grid-cols-3 gap-x-4 gap-y-6>
+                  <FInput
+                    v-model="config.dobString"
+                    label="Birth date"
+                    placeholder="10.12.1999."
+                    type="date"
+                  />
+
+                  <FInput
+                    v-model="config.pensionCalculations.retirementAge"
+                    label="Retirement age"
+                    placeholder="65"
+                    type="number"
+                    :input-props="{ min: 10, max: 120 }"
+                  />
+
+                  <FInput
+                    v-model="config.age"
+                    label="Current age"
+                    placeholder="65"
+                    type="number"
+                    readonly
+                    :input-props="{ min: 1, max: 120 }"
+                  />
+
+                  <FInput
+                    v-model="config.pensionCalculations.pensionAccessibilityAge"
+                    label="Pension accessability age"
+                    placeholder="55"
+                    type="number"
+                    :input-props="{ min: 20, max: 120 }"
+                  />
+                </div>
+              </FTabPanel>
+            </TabPanels>
+          </TabGroup>
         </div>
       </div>
     </LayoutSectionWrapper>
