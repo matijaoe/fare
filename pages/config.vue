@@ -2,10 +2,14 @@
 import { TabGroup, TabList, TabPanels } from '@headlessui/vue'
 
 const config = useFireConfig()
+const { userId } = await useAuth()
+const { data: user } = useUser(userId)
 </script>
 
 <template>
   <LayoutPage>
+    <pre>id: {{ userId }}</pre>
+    <pre>user: {{ user }}</pre>
     <LayoutSectionWrapper>
       <!-- Tabs -->
       <TabGroup>

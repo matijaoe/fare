@@ -1,8 +1,4 @@
 <script lang="ts" setup>
-onMounted(() => setBreadcrumbs([
-  { label: 'Transactions', href: useRoute().path },
-]))
-
 const { monthQuery } = toRefs(useDateRangeStore())
 const { data, isLoading } = useTransactions(monthQuery)
 

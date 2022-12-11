@@ -1,8 +1,4 @@
 <script lang="ts" setup>
-onMounted(() => setBreadcrumbs([
-  { label: 'Dashboard', href: { name: 'index' } },
-]))
-
 const {
   isLoading: isNetWorthLoading,
   formattedNetWorth,
@@ -55,9 +51,11 @@ const { investmentAccountsCount, formattedAverageAnnualRate, isAccountsLoading: 
             :loading="isNetWorthLoading"
             :balance="formattedCashBalance"
           />
-          <div v-if="(!isNetWorthLoading && cashAccountsCount > 0)">
-            {{ cashAccountsCount }} accounts
-          </div>
+          <TransitionFade>
+            <div v-if="(!isNetWorthLoading && cashAccountsCount > 0)">
+              {{ cashAccountsCount }} accounts
+            </div>
+          </TransitionFade>
           <div mt-auto>
             <div mt-6>
               <NuxtLink class="underline" :to="{ name: 'accounts' }">
@@ -73,9 +71,11 @@ const { investmentAccountsCount, formattedAverageAnnualRate, isAccountsLoading: 
             :loading="isNetWorthLoading"
             :balance="formattedInvestmentsBalance"
           />
-          <div v-if="(!isNetWorthLoading && investmentAccountsCount > 0)">
-            {{ investmentAccountsCount }} accounts
-          </div>
+          <TransitionFade>
+            <div v-if="(!isNetWorthLoading && investmentAccountsCount > 0)">
+              {{ investmentAccountsCount }} accounts
+            </div>
+          </TransitionFade>
 
           <div mt-auto>
             <div mt-6>

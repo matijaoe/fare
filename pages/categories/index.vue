@@ -1,12 +1,5 @@
 <script lang="ts" setup>
-import { Category } from '@prisma/client'
-import { get } from '@vueuse/core'
-import type { CategoryWithCount } from '~~/models/resources'
 import { useCategoryModal } from '~~/store/modal/category-modal.store'
-
-onMounted(() => setBreadcrumbs([
-  { label: 'Categories', href: useRoute().path },
-]))
 
 const categoryModal = useCategoryModal()
 const { monthQuery, isAllTime } = toRefs(useDateRangeStore())

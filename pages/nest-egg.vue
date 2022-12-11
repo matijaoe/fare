@@ -2,10 +2,6 @@
 import { InvestmentType } from '@prisma/client'
 import AccountCardInvestment from '~~/components/Account/AccountCardInvestment.vue'
 
-onMounted(() => setBreadcrumbs([
-  { label: 'Nest egg', href: { name: useRoute().name ?? '🥺' } },
-]))
-
 const { isAllTime } = toRefs(useDateRangeStore())
 
 const {

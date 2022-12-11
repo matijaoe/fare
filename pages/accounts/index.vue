@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 import type { CashAccountWithBalance, CashAccountWithTotals } from '~~/models/resources'
 
-onMounted(() => setBreadcrumbs([
-  { label: 'Accounts', href: { name: useRoute().name ?? '🥺' } },
-]))
-
 const cashAccountModal = useCashAccountModal()
 
 const { monthQuery, isAllTime } = toRefs(useDateRangeStore())

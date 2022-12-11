@@ -53,10 +53,10 @@ model User {
   image         String?
 
   currency                String?   @default("EUR")
-  monthlyIncome           Float?
-  monthlyExpenditure      Float?
-  monthlyInvestment       Float?
-  safeWithdrawalRate      Float?
+  yearlyIncome            Float?
+  yearlyExpenditure       Float?
+  yearlyInvestment        Float?
+  safeWithdrawalRate      Decimal?  @db.Decimal(4, 2)
   birthDate               DateTime?
   retirementAge           Int?
   pensionAccessabilityAge Int?

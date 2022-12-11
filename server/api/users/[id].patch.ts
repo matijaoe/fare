@@ -1,23 +1,25 @@
 import type { Prisma } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
-import { readParams, sendCustomError, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
+import { readParams, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 
 export default defineEventHandler(async (event) => {
-  // const userId = readUserId(event)
+  const userId = readUserId(event)
 
-  // if (!userId) {
-  //   return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
-  // }
+  if (!userId) {
+    return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
+  }
 
   const where = readParams<Prisma.UserWhereUniqueInput>(event)
+  const data = await readBody<Prisma.UserUncheckedUpdateInput>(event)
 
   try {
-    const user = await db.user.findFirst({
+    const user = await db.user.update({
       where: {
         ...where,
-        // id: userId,
+        id: userId,
       },
+      data,
     })
 
     if (!user) {
