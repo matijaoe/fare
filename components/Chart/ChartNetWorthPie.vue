@@ -43,10 +43,7 @@ const chartOptions = computed(() => ({
       mode: 'index',
       position: 'nearest',
       callbacks: {
-        label: (ctx: any) => {
-          console.log('ctx :>> ', ctx)
-          return formatCurrency(ctx.parsed)
-        },
+        label: (ctx: any) => formatCurrency(ctx.parsed),
       },
     },
     legend: props.hasLegend ? { position: 'bottom' } : false,

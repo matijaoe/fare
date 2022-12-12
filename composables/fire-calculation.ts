@@ -8,7 +8,7 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
     isBalanceLoading,
   } = useBalanceCash()
 
-  const fireConfig = useFireConfig()
+  const fireConfigStore = useFireConfigStore()
   const {
     balance: investmentsBalance,
     averageAnnualRate: annualRate,
@@ -17,7 +17,7 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
   const { netWorth } = useNetWorth()
 
   const netWorthGoal = computed(() => {
-    const { safeWithdrawalRate, yearlyExpenditure } = fireConfig.fiCalculations
+    const { safeWithdrawalRate, yearlyExpenditure } = fireConfigStore.fiConfig
 
     if (!safeWithdrawalRate || !yearlyExpenditure) {
       return null
@@ -36,7 +36,7 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
   })
 
   const getCompoundedNestEgg = (months: number) => {
-    const yearlyInvestment = fireConfig.fiCalculations.yearlyInvestment ?? 0
+    const yearlyInvestment = fireConfigStore.fiConfig.yearlyInvestment ?? 0
     const monthlyContribution = yearlyInvestment / 12
 
     const compoundedNestEgg = calcCompoundInterestWithMonthlyContributions({
@@ -50,14 +50,14 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
   }
 
   const getCompoundedNetWorth = (months: number) => {
-    const { yearlyCashSavings } = fireConfig
+    const { yearlyCashSavings } = fireConfigStore
     const monthlySavings = yearlyCashSavings / 12
 
     const compoundedNestEgg = getCompoundedNestEgg(months)
     const totalCash = cashBalance.value + (monthlySavings * months)
     const total = compoundedNestEgg + totalCash
 
-    const yearlyInvestment = fireConfig.fiCalculations.yearlyInvestment ?? 0
+    const yearlyInvestment = fireConfigStore.fiConfig.yearlyInvestment ?? 0
     const monthlyContribution = yearlyInvestment / 12
 
     const earnedPureInterest = compoundedNestEgg - investmentsBalance.value - (monthlyContribution * months)
@@ -94,8 +94,10 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
       return null
     }
 
+    const { birthDate } = fireConfigStore.generalConfig
+
     const fiDate = addMonths(new Date(), timeToNetWorthGoal.value)
-    const fiAge = new Date(fiDate).getFullYear() - new Date(fireConfig.pensionCalculations.birthDate).getFullYear()
+    const fiAge = birthDate ? new Date(fiDate).getFullYear() - new Date(birthDate).getFullYear() : null
 
     return {
       date: fiDate,
@@ -110,10 +112,8 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
 
   const yearCount = computed(() => _yearCount?.value ?? 0)
 
-  // TODO: something aint right
   const compoundedNetWorthForNextYears = computed(() => {
     const years = isDefined(timeToNetWorthGoal) ? monthsToYears(timeToNetWorthGoal.value) + 1 : yearCount.value
-    // TODO: dont use year count but use timeToNetWorthGoal
     return [...Array.from({ length: 1 + years + yearCount.value }, (_, i) => {
       const months = i * 12
       return months

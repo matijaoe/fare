@@ -3,37 +3,37 @@ import { differenceInYears, format, parse } from 'date-fns'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { set } from '@vueuse/core'
 
-type FiCalculations = Pick<User, 'yearlyIncome' | 'yearlyExpenditure' | 'yearlyInvestment' | 'safeWithdrawalRate'>
-type PensionCalculations = Pick<User, 'birthDate' | 'retirementAge' | 'pensionAccessibilityAge'>
+type FiConfig = Pick<User, 'yearlyIncome' | 'yearlyExpenditure' | 'yearlyInvestment' | 'safeWithdrawalRate'>
+type GeneralConfig = Pick<User, 'birthDate' | 'retirementAge' | 'pensionAccessibilityAge'>
 
-export const useFireConfig = defineStore('fire-configuration', () => {
+export const useFireConfigStore = defineStore('fire-config', () => {
   const userId = ref<string>()
   const setUserId = (id: string) => set(userId, id)
 
   const { data: user } = useUser(userId)
 
-  const fiCalculations: FiCalculations = reactive({
+  const fiConfig: FiConfig = reactive({
     yearlyIncome: null,
     yearlyExpenditure: null,
     yearlyInvestment: null, // net - savings
     safeWithdrawalRate: null,
   })
 
-  const pensionCalculations: PensionCalculations = reactive({
+  const generalConfig: GeneralConfig = reactive({
     birthDate: null,
     retirementAge: null,
     pensionAccessibilityAge: null,
   })
 
   const yearlyCashSavings = computed(() => {
-    const income = fiCalculations.yearlyIncome ?? 0
-    const expenditure = fiCalculations.yearlyExpenditure ?? 0
-    const investments = fiCalculations.yearlyInvestment ?? 0
+    const income = fiConfig.yearlyIncome ?? 0
+    const expenditure = fiConfig.yearlyExpenditure ?? 0
+    const investments = fiConfig.yearlyInvestment ?? 0
     return income - expenditure - investments
   })
 
   const yearlyNet = computed(() => {
-    const { yearlyIncome, yearlyExpenditure } = fiCalculations
+    const { yearlyIncome, yearlyExpenditure } = fiConfig
     if (!yearlyIncome || !yearlyExpenditure) {
       return 0
     }
@@ -46,9 +46,9 @@ export const useFireConfig = defineStore('fire-configuration', () => {
   }
 
   const dobString = computed({
-    get: () => pensionCalculations.birthDate != null ? format(pensionCalculations.birthDate, 'yyyy-MM-dd') : null,
+    get: () => generalConfig.birthDate != null ? format(new Date(generalConfig.birthDate), 'yyyy-MM-dd') : null,
     set: (value: string | null | undefined) => {
-      pensionCalculations.birthDate = value ? new Date(value) : null
+      generalConfig.birthDate = value ? new Date(value) : null
     },
   })
 
@@ -57,34 +57,32 @@ export const useFireConfig = defineStore('fire-configuration', () => {
     return isDefined(dobString) ? calculateAge(dobString.value) : null
   })
 
-  const all = computed(() => ({ ...fiCalculations, ...pensionCalculations }))
+  const all = computed(() => ({ ...fiConfig, ...generalConfig }))
 
   whenever(user, (val) => {
-    console.log('user changed', val)
-    const fiKeys = ['yearlyIncome', 'yearlyExpenditure', 'yearlyInvestment', 'safeWithdrawalRate'] as (keyof FiCalculations)[]
+    const fiKeys = ['yearlyIncome', 'yearlyExpenditure', 'yearlyInvestment', 'safeWithdrawalRate'] as (keyof FiConfig)[]
     fiKeys.forEach((key) => {
-      fiCalculations[key] = val[key]
+      fiConfig[key] = val[key]
     })
 
-    const pensionKeys = ['birthDate', 'retirementAge', 'pensionAccessibilityAge'] as (keyof PensionCalculations)[]
+    const pensionKeys = ['birthDate', 'retirementAge', 'pensionAccessibilityAge'] as (keyof GeneralConfig)[]
     pensionKeys.forEach((key) => {
       const value = val[key]
-      pensionCalculations[key] = val[key]
+      generalConfig[key] = value
     })
-  })
+  }, { immediate: true })
 
   const hasChanged = computed(() => {
     return Object.keys(all.value).some((key) => {
       const value = all.value?.[key]
       const same = value !== user.value?.[key]
-      console.log(same, key, value, user.value?.[key])
       return same
     })
   })
 
   return {
-    pensionCalculations,
-    fiCalculations,
+    generalConfig,
+    fiConfig,
     age,
     dobString,
     yearlyCashSavings,
@@ -96,5 +94,5 @@ export const useFireConfig = defineStore('fire-configuration', () => {
 })
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useFireConfig, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useFireConfigStore, import.meta.hot))
 }

@@ -16,7 +16,7 @@ const account = $computed(() => props.cashAccount.account)
 const totals = $computed(() => props.totals)
 
 const formattedBalance = props?.balance != null ? useCurrencyFormat(props.balance) : null
-const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : null
+const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'exceptZero' }) : null
 const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income) : null
 const formattedExpense = totals?.expense != null ? useCurrencyFormat(totals.expense) : null
 

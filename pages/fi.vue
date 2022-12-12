@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { TabGroup } from '@headlessui/vue'
-import { useQueryClient } from '@tanstack/vue-query'
 import type { ChartDataset } from 'chart.js'
 import { addYears, format } from 'date-fns'
 import { monthsToYearsAndMonthsString } from '../utils'
@@ -21,7 +20,7 @@ const yearCountInputValue = computed<string>({
   },
 })
 
-const config = useFireConfig()
+const config = useFireConfigStore()
 const { userId } = await useAuth()
 const { mutate: updateUser, isLoading: isUpdateLoading } = useUserUpdate(userId)
 
@@ -89,10 +88,10 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
         v-if="(timeToNetWorthGoal && fiDate)"
         flex flex-col items-center
       >
-        <!--  - {{ format(fiDate.date, 'MMM yyyy') }} -->
         You can achieve Financial Independence in
         <span font-bold text-4xl mt-2>{{ monthsToYearsAndMonthsString(timeToNetWorthGoal) }}</span>
-        <span font-semibold text-xl mt-1>by the age of {{ fiDate.age }}</span>
+
+        <span v-if="fiDate.age" font-semibold text-xl mt-1>by the age of {{ fiDate.age }}</span>
       </div>
 
       <div max-w="1000px" mx-auto>
@@ -128,10 +127,10 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
           <TabGroup>
             <TabList flex-1 flex gap-2 pb-3 border="b-2" border-base>
               <FTab>
-                FIRE
+                Financial
               </FTab>
               <FTab>
-                Pension
+                General
               </FTab>
               <FButton
                 v-if="config.hasChanged"
@@ -145,12 +144,10 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
             </TabList>
 
             <TabPanels v-if="config" as="div" max-w-4xl>
-              <FTabPanel
-                desc="Fine tune your FIRE plan"
-              >
+              <FTabPanel desc="Fine tune your FIRE plan">
                 <div grid grid-cols-3 gap-x-4 gap-y-6>
                   <FInput
-                    v-model="config.fiCalculations.yearlyIncome"
+                    v-model="config.fiConfig.yearlyIncome"
                     label="Yearly income"
                     placeholder="3500"
                     icon="tabler:currency-euro"
@@ -158,7 +155,7 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
                   />
 
                   <FInput
-                    v-model="config.fiCalculations.yearlyExpenditure"
+                    v-model="config.fiConfig.yearlyExpenditure"
                     label="Yearly expenditure"
                     placeholder="2250"
                     icon="tabler:currency-euro"
@@ -169,13 +166,12 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
                     v-model="config.yearlyNet"
                     readonly
                     label="Yearly net"
-                    placeholder="5000"
                     icon="tabler:currency-euro"
                     type="number"
                   />
 
                   <FInput
-                    v-model="config.fiCalculations.safeWithdrawalRate"
+                    v-model="config.fiConfig.safeWithdrawalRate"
                     label="Safe withdrawal rate"
                     placeholder="4%"
                     icon="tabler:percentage"
@@ -184,7 +180,7 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
                   />
 
                   <FInput
-                    v-model="config.fiCalculations.yearlyInvestment"
+                    v-model="config.fiConfig.yearlyInvestment"
                     label="Yearly investments"
                     placeholder="2250"
                     icon="tabler:currency-euro"
@@ -196,16 +192,13 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
                     v-model="config.yearlyCashSavings"
                     readonly
                     label="Yearly savings"
-                    placeholder="5000"
                     icon="tabler:currency-euro"
                     type="number"
                   />
                 </div>
               </FTabPanel>
 
-              <FTabPanel
-                desc="Your government pension parameters"
-              >
+              <FTabPanel desc="Your government pension parameters">
                 <div grid grid-cols-3 gap-x-4 gap-y-6>
                   <FInput
                     v-model="config.dobString"
@@ -215,7 +208,7 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
                   />
 
                   <FInput
-                    v-model="config.pensionCalculations.retirementAge"
+                    v-model="config.generalConfig.retirementAge"
                     label="Retirement age"
                     placeholder="65"
                     type="number"
@@ -225,14 +218,13 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
                   <FInput
                     v-model="config.age"
                     label="Current age"
-                    placeholder="65"
                     type="number"
                     readonly
                     :input-props="{ min: 1, max: 120 }"
                   />
 
                   <FInput
-                    v-model="config.pensionCalculations.pensionAccessibilityAge"
+                    v-model="config.generalConfig.pensionAccessibilityAge"
                     label="Pension accessability age"
                     placeholder="55"
                     type="number"

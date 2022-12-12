@@ -28,7 +28,7 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
       name: zod.string({ invalid_type_error: 'Name should be a string' }).trim().min(1, { message: 'Name is too short' }).max(24, { message: 'Name is too long' }).optional(),
       description: zod.null().optional().or(zod.string()),
       categoryId: zod.null().optional().or(zod.string()),
-      amount: zod.number({ required_error: 'Amount is required' }).min(0.01, { message: 'Amount must be greater than 0' }),
+      amount: zod.number({ required_error: 'Amount is required', invalid_type_error: 'Amount is required' }).min(0.01, { message: 'Amount must be greater than 0' }),
       // TODO: dates suck!
       date: zod.date({ required_error: 'Date is required', invalid_type_error: 'Date is required' }),
     }))

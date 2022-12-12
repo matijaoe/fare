@@ -125,34 +125,43 @@ const { investmentAccountsCount, formattedAverageAnnualRate, isAccountsLoading: 
         </FCard>
 
         <FCard white row-span-2 flex flex-col gap-2>
-          <div flex flex-col items-start>
-            You can achieve Financial Independence in
-            <div font-bold text-4xl mt-2>
-              <FSkeleton v-if="isTimeToLoading" class="w-40 h-40px" />
-              <span
-                v-else-if="timeToNetWorthGoal"
-              >
-                {{ monthsToYearsAndMonthsString(timeToNetWorthGoal) }}
-              </span>
+          <template v-if="fiDate">
+            <div flex flex-col items-start>
+              You can achieve Financial Independence in
+              <div font-bold text-3xl mt-2>
+                <FSkeleton v-if="isTimeToLoading" class="w-40 h-36px" />
+                <span v-else-if="timeToNetWorthGoal">
+                  {{ monthsToYearsAndMonthsString(timeToNetWorthGoal) }}
+                </span>
+              </div>
+
+              <div font-semibold text-lg mt-2>
+                <FSkeleton v-if="isTimeToLoading" class="w-30 h-28px" />
+                <span v-else-if="fiDate.age">
+                  by the age of {{ fiDate.age }}
+                </span>
+              </div>
             </div>
 
-            <div font-semibold text-lg mt-2>
-              <FSkeleton v-if="isTimeToLoading" class="w-30 h-28px" />
-              <span
-                v-else-if="fiDate"
-              >
-                by the age of {{ fiDate.age }}
-              </span>
+            <div mt-auto>
+              <div mt-6>
+                <NuxtLink class="underline" :to="{ name: 'fi' }">
+                  Explore FI
+                </NuxtLink>
+              </div>
             </div>
-          </div>
+          </template>
 
-          <div mt-auto>
-            <div mt-6>
-              <NuxtLink class="underline" :to="{ name: 'fi' }">
-                Explore FI
-              </NuxtLink>
+          <template v-else>
+            <p>Your Financial Independence not known</p>
+            <div mt-auto>
+              <div mt-6>
+                <NuxtLink class="underline" :to="{ name: 'fi' }">
+                  Configure your parameters.
+                </NuxtLink>
+              </div>
             </div>
-          </div>
+          </template>
         </FCard>
       </div>
     </div>
