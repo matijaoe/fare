@@ -29,6 +29,7 @@ const { investmentAccountsCount, formattedAverageAnnualRate, isAccountsLoading: 
         <div flex justify-center align-center>
           <ClientOnly>
             <ChartNetWorthPie
+              total-data
               :height="300"
               :has-legend="false"
             />

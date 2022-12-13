@@ -3,6 +3,7 @@ const props = withDefaults(defineProps<{
   height: number
   responsive?: boolean
   hasLegend?: boolean
+  totalData?: boolean
 }>(), {
   height: 400,
   responsive: false,
@@ -50,13 +51,13 @@ const chartOptions = computed(() => ({
   },
 }))
 
-const showMonthly = computed(() => !isCurrentMonth.value && !isAllTime.value)
+const showTotal = computed(() => props.totalData || isCurrentMonth.value || isAllTime.value)
 </script>
 
 <template>
   <pie-chart
     :height="height"
-    :chart-data="showMonthly ? chartDataMonthly : chartData"
+    :chart-data="showTotal ? chartData : chartDataMonthly"
     :chart-options="chartOptions"
   />
 </template>
