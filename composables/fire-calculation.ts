@@ -6,7 +6,7 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
   const {
     balance: cashBalance,
     isBalanceLoading,
-  } = useBalanceCash()
+  } = $(useBalanceCash())
 
   const fireConfigStore = useFireConfigStore()
   const {
@@ -54,7 +54,7 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
     const monthlySavings = yearlyCashSavings / 12
 
     const compoundedNestEgg = getCompoundedNestEgg(months)
-    const totalCash = cashBalance.value + (monthlySavings * months)
+    const totalCash = cashBalance + (monthlySavings * months)
     const total = compoundedNestEgg + totalCash
 
     const yearlyInvestment = fireConfigStore.fiConfig.yearlyInvestment ?? 0
@@ -105,7 +105,7 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
   })
 
   const isTimeToLoading = computed(() => {
-    return isBalanceLoading.value || !isDefined(timeToNetWorthGoal) || !isDefined(netWorthGoal)
+    return isBalanceLoading || !isDefined(timeToNetWorthGoal) || !isDefined(netWorthGoal)
   })
 
   const yearCount = computed(() => _yearCount?.value ?? 0)

@@ -10,7 +10,6 @@ type ActionType = 'create' | 'edit'
 
 export const useTransactionModal = defineStore('modal-transaction', () => {
   // Modal type
-
   const modalType = ref<ActionType>('create')
   const isEdit = computed(() => modalType.value === 'edit')
   const isCreate = computed(() => modalType.value === 'create')
@@ -117,11 +116,8 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
 
   const launchNew = (transactionType?: TransactionType) => {
     set(modalType, 'create')
-
     form.setFieldValue('type', transactionType ?? 'Expense')
-
     // TODO: set opening month view on date picker to current month
-
     set(open, true)
   }
 
