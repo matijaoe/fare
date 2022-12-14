@@ -9,7 +9,7 @@ import { formatDate, formatPercentage } from '~~/utils'
 type Props = {
   investmentAccount: InvestmentAccountWithAccount
   balanceLoading?: boolean
-  // TODO: all time is wrong, leaves things as is
+  // TODO: all time leaves things as is
   allTime?: boolean
   balances: Record<string, InvestmentEntry>
 }

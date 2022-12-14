@@ -18,7 +18,6 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
   // Values
   const transactionId = ref<string>()
 
-  // TODO:use zod instead of manually validating
   const validationSchema = toFormValidator(
     zod.object({
       type: zod.nativeEnum(TransactionType, { required_error: 'Type is required' }),
@@ -29,12 +28,10 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
       description: zod.null().optional().or(zod.string()),
       categoryId: zod.null().optional().or(zod.string()),
       amount: zod.number({ required_error: 'Amount is required', invalid_type_error: 'Amount is required' }).min(0.01, { message: 'Amount must be greater than 0' }),
-      // TODO: dates suck!
       date: zod.date({ required_error: 'Date is required', invalid_type_error: 'Date is required' }),
     }))
 
   // TODO: handle from and to account via reactive validation schema
-
   const form = useForm<{
     type: TransactionType
     fromAccountId: string | null
@@ -129,10 +126,7 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
   }
 
   const reset = () => {
-    // resetForm()
     form.resetForm()
-    // TODO: is this needed
-    // set(modalType, 'create')
     set(transactionId, undefined)
   }
 

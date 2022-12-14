@@ -13,8 +13,6 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
     <Sidebar :class="[sidebarWidth]" z-200 />
 
     <div :class="{ 'md:ml-240px': sidebar.isOpen }">
-      <!-- TODO: decide how to incorporate header, and do we even need it for desktop -->
-      <!-- Maybe have only breadcrumbs in a thin line -->
       <!-- <Header :class="[headerWidth]" z-100 /> -->
       <DateSwitchHeader
         :class="[headerWidth]"

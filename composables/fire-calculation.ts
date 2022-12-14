@@ -76,7 +76,6 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
     }
 
     // TODO: reuse already calculated values
-
     for (let i = 0; ; i++) {
       const months = i
       const nwData = getCompoundedNetWorth(months)
@@ -105,7 +104,6 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
     }
   })
 
-  // TODO: could be forever loading if null - should be done with state
   const isTimeToLoading = computed(() => {
     return isBalanceLoading.value || !isDefined(timeToNetWorthGoal) || !isDefined(netWorthGoal)
   })
