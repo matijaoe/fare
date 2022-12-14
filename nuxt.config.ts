@@ -37,9 +37,6 @@ export default defineNuxtConfig({
       comments: false,
     },
   },
-  vite: {
-    plugins: [],
-  },
   css: [
     '~/assets/styles/floating-vue.css',
   ],
@@ -53,8 +50,7 @@ export default defineNuxtConfig({
     layoutTransition: { name: 'layout', mode: 'out-in' },
   },
   auth: {
-    isEnabled: true,
-    origin: 'http://localhost:3000',
-    basePath: '/api/auth',
+    origin: process.env.ORIGIN,
+    enableGlobalAppMiddleware: true,
   },
 })

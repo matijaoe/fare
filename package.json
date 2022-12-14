@@ -36,7 +36,7 @@
     "@mermaid-js/mermaid-cli": "^9.2.2",
     "@nuxtjs/color-mode": "^3.2.0",
     "@pinia/nuxt": "^0.4.6",
-    "@sidebase/nuxt-auth": "0.2.1",
+    "@sidebase/nuxt-auth": "0.3.0",
     "@tanstack/vue-query": "^4.20.2",
     "@unocss/nuxt": "^0.47.6",
     "@vueuse/nuxt": "^9.6.0",
