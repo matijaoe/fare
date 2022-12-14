@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 definePageMeta({
   layout: 'auth',
+  auth: false,
 })
 
 const { signIn, getProviders, isAuthenticated } = await useAuth()
