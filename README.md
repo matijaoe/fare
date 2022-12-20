@@ -46,8 +46,10 @@ Make sure to install the dependencies:
 ```bash
 # pnpm (recommended)
 pnpm install
+
 # yarn
 yarn install
+
 # npm
 npm install
 ```
