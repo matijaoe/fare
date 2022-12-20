@@ -4,7 +4,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { set } from '@vueuse/core'
 
 type FiConfig = Pick<User, 'yearlyIncome' | 'yearlyExpenditure' | 'yearlyInvestment' | 'safeWithdrawalRate'>
-type GeneralConfig = Pick<User, 'birthDate' | 'retirementAge' | 'pensionAccessibilityAge'>
+type GeneralConfig = Pick<User, 'birthDate' | 'pensionAccessibilityAge'>
 
 export const useFireConfigStore = defineStore('fire-config', () => {
   const userId = ref<string>()
@@ -21,7 +21,6 @@ export const useFireConfigStore = defineStore('fire-config', () => {
 
   const generalConfig: GeneralConfig = reactive({
     birthDate: null,
-    retirementAge: null,
     pensionAccessibilityAge: null,
   })
 
@@ -65,7 +64,7 @@ export const useFireConfigStore = defineStore('fire-config', () => {
       fiConfig[key] = val[key]
     })
 
-    const pensionKeys = ['birthDate', 'retirementAge', 'pensionAccessibilityAge'] as (keyof GeneralConfig)[]
+    const pensionKeys = ['birthDate', 'pensionAccessibilityAge'] as (keyof GeneralConfig)[]
     pensionKeys.forEach((key) => {
       const value = val[key]
       generalConfig[key] = value

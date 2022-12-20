@@ -42,8 +42,8 @@ export default defineNuxtConfig({
   ],
   imports: {
     dirs: [
-      'composables/**', // Scan all nested directories
-      'store/**', // Scan all nested directories
+      'composables/**',
+      'store/**',
     ],
   },
   app: {

@@ -12,6 +12,7 @@ const {
   formattedInvestmentsBalance: formattedInvestmentsBalanceMonthly,
 } = useNetWorthMonthly()
 
+const { data  } = await useFetch('')
 // TODO: add more content
 // percentage of growth?
 // table of predicted net worth?

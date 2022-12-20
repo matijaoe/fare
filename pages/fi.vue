@@ -201,18 +201,18 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
               <FTabPanel desc="Your government pension parameters">
                 <div grid grid-cols-3 gap-x-4 gap-y-6>
                   <FInput
+                    v-model="config.generalConfig.pensionAccessibilityAge"
+                    label="Pension accessability age"
+                    placeholder="55"
+                    type="number"
+                    :input-props="{ min: 20, max: 120 }"
+                  />
+
+                  <FInput
                     v-model="config.dobString"
                     label="Birth date"
                     placeholder="10.12.1999."
                     type="date"
-                  />
-
-                  <FInput
-                    v-model="config.generalConfig.retirementAge"
-                    label="Retirement age"
-                    placeholder="65"
-                    type="number"
-                    :input-props="{ min: 10, max: 120 }"
                   />
 
                   <FInput
@@ -221,14 +221,6 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
                     type="number"
                     readonly
                     :input-props="{ min: 1, max: 120 }"
-                  />
-
-                  <FInput
-                    v-model="config.generalConfig.pensionAccessibilityAge"
-                    label="Pension accessability age"
-                    placeholder="55"
-                    type="number"
-                    :input-props="{ min: 20, max: 120 }"
                   />
                 </div>
               </FTabPanel>

@@ -9,6 +9,14 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
+generator docs {
+  provider = "node node_modules/prisma-docs-generator"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
 model Account {
   id                       String  @id @default(cuid())
   userId                   String
@@ -58,7 +66,6 @@ model User {
   yearlyInvestment        Float?
   safeWithdrawalRate      Float?
   birthDate               DateTime?
-  retirementAge           Int?
   pensionAccessibilityAge Int?
 
   // opposite relations

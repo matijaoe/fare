@@ -154,7 +154,7 @@ const { investmentAccountsCount, formattedAverageAnnualRate, isAccountsLoading: 
           </template>
 
           <template v-else>
-            <p>Your Financial Independence not known</p>
+            <p>Your Financial Independence date is unknown.</p>
             <div mt-auto>
               <div mt-6>
                 <NuxtLink class="underline" :to="{ name: 'fi' }">

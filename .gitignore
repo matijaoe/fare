@@ -5,6 +5,4 @@ dist
 .nuxt
 .env
 .vercel
-prisma/docs
-plan.md
 .DS_STORE

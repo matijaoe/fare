@@ -41,8 +41,6 @@ watchEffect(() => {
 body {
   accent-color: black;
 }
-/* scrollbar-gutter: stable; */
-/* TODO: what is css property for scrollbar to be over content so that it doesnt shift on overflow change? */
 
 html.dark {
   color-scheme: dark;

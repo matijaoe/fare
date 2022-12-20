@@ -34,7 +34,7 @@
 - [UnoCSS](https://github.com/unocss/unocss)
 - [Headless UI](https://headlessui.com/)
 - [Pinia](https://pinia.vuejs.org/)
-- [Charts.js](https://www.chartjs.org/)
+- [Chart.js](https://www.chartjs.org/)
 - [Prisma](https://www.prisma.io/)
 - [PlanetScale](https://planetscale.com/)
 
@@ -44,19 +44,19 @@
 Make sure to install the dependencies:
 
 ```bash
+# pnpm (recommended)
+pnpm install
 # yarn
 yarn install
 # npm
 npm install
-# pnpm
-pnpm install --shamefully-hoist
 ```
 
 ## Development Server
 
-Start the development server on http://localhost:3000
+Start the development server on [localhost:3000](http://localhost:3000)
 
-```bash
+```zsh
 pnpm run dev
 ```
 
@@ -64,14 +64,13 @@ pnpm run dev
 
 Build the application for production:
 
-```bash
+```zsh
 pnpm run build
 ```
 
 Locally preview production build:
 
-```bash
+```zsh
 pnpm run preview
 ```
 
-Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.

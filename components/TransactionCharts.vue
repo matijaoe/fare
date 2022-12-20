@@ -37,10 +37,6 @@ const datasetArrExpenseIncomeNetHidden = $computed<ChartDataset[]>(() => ([
   { ...datasets.net, hidden: true },
 ]))
 
-const pieDataset = computed(() => ({
-  backgroundColor: Object.values(datasets).map(dataset => dataset.backgroundColor),
-}))
-
 const monthCountOptions = [
   { value: 3, label: '3 mo' },
   { value: 6, label: '6 mo' },
@@ -120,6 +116,7 @@ const isCustom = $computed(() => !monthCountOptions.map(({ value }) => value).in
         type="bar"
         flex-1
         w-full
+        :labels="labels"
         :datasets="[datasets.net]"
       />
     </div>
