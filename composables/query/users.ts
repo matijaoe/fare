@@ -22,10 +22,7 @@ export const useUserUpdate = (id: MaybeRef<string | undefined>) => {
   return useMutation(
     (data: Prisma.UserUncheckedUpdateInput) => $fetch<User>(`/api/users/${unref(id)}`, {
       method: 'PATCH',
-      body: {
-        ...data,
-        id: unref(id),
-      },
+      body: { ...data, id: unref(id) },
     }),
     {
       onSuccess: () => {

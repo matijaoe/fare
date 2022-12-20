@@ -1,14 +1,12 @@
 import type { User } from '@prisma/client'
 import { differenceInYears, format, parse } from 'date-fns'
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { set } from '@vueuse/core'
 
 type FiConfig = Pick<User, 'yearlyIncome' | 'yearlyExpenditure' | 'yearlyInvestment' | 'safeWithdrawalRate'>
 type GeneralConfig = Pick<User, 'birthDate' | 'pensionAccessibilityAge'>
 
 export const useFireConfigStore = defineStore('fire-config', () => {
-  const userId = ref<string>()
-  const setUserId = (id: string) => set(userId, id)
+  const { userId } = useAuth()
 
   const { data: user } = useUser(userId)
 
@@ -86,7 +84,6 @@ export const useFireConfigStore = defineStore('fire-config', () => {
     dobString,
     yearlyCashSavings,
     yearlyNet,
-    setUserId,
     hasChanged,
     all,
   }

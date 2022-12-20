@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import { TabGroup } from '@headlessui/vue'
+import { TabGroup, TabList, TabPanels } from '@headlessui/vue'
 import type { ChartDataset } from 'chart.js'
 import { addYears, format } from 'date-fns'
 import { monthsToYearsAndMonthsString } from '../utils'
 
 const yearCount = ref(0)
-// add boolean for toggling for continuos contributions
 
 const yearCountInputValue = computed<string>({
   get: () => yearCount.value.toString(),
@@ -96,7 +95,7 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
 
       <div max-w="1000px" mx-auto>
         <ChartNetWorth
-          :height="220"
+          :height="180"
           :labels="labels"
           :datasets="[datasets.total, datasets.cash, datasets.investments]"
         />
