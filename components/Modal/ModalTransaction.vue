@@ -2,7 +2,7 @@
 import { RadioGroup, RadioGroupOption } from '@headlessui/vue'
 import type { Prisma } from '@prisma/client'
 import { get, set } from '@vueuse/core'
-import { format, isDate } from 'date-fns'
+import { format } from 'date-fns'
 import type { CashAccountWithAccount } from '~~/models/resources'
 import type { SelectItem } from '~~/models/ui/select'
 
@@ -19,29 +19,29 @@ const { mutate: deleteTransaction, isLoading: isDeleteLoading, isError: isErrorD
 const hasError = computed(() => get(isErrorCreate) || get(isErrorUpdate) || get(isErrorDelete))
 
 const createTransactionHandler = async (values: Prisma.TransactionCreateWithoutUserInput) => {
-  const userId = (await useAuth()).userId.value as string | undefined
+  const { userId } = $(useAuth())
   if (userId) {
     createTransaction({ ...values, userId }, {
-      onSuccess: () => modal.hide(),
+      onSuccess: modal.hide,
     })
   }
 }
 
 const editTransactionHandler = async (values: Prisma.TransactionUncheckedUpdateInput) => {
-  const userId = (await useAuth()).userId.value as string | undefined
+  const { userId } = $(useAuth())
 
   if (userId) {
     updateTransaction({ ...values, userId }, {
-      onSuccess: () => modal.hide(),
+      onSuccess: modal.hide,
     })
   }
 }
 
 const deleteTransactionHandler = async () => {
-  const userId = (await useAuth()).userId.value as string | undefined
+  const { userId } = $(useAuth())
   if (userId) {
     deleteTransaction({ userId }, {
-      onSuccess: () => modal.hide(),
+      onSuccess: modal.hide,
     })
   }
 }
@@ -104,7 +104,7 @@ onLongPress(
 
 const shownDate = computed({
   get: () => form.values.date ? format(new Date(form.values.date), 'yyyy-MM-dd') : null,
-  set: (val: string | null) => form.setFieldValue('date', val ? new Date(val) : null),
+  set: (val: string | null) => val ? form.setFieldValue('date', new Date(val)) : null,
 })
 
 const transactionTypeOptions = [
@@ -287,7 +287,6 @@ const transactionTypeOptions = [
               :loading="isUpdateLoading"
               :disabled="!modal.formValidBasedOnAccountIds"
             >
-              <!-- :disabled="!modal.formValid" -->
               Edit
             </FButton>
             <FButton
@@ -297,7 +296,6 @@ const transactionTypeOptions = [
               :loading="isCreateLoading"
               :disabled="!modal.formValidBasedOnAccountIds"
             >
-              <!-- :disabled="!modal.formValid" -->
               Create
             </FButton>
           </div>

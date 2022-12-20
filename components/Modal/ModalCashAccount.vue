@@ -18,27 +18,27 @@ const { allIcons: icons } = useIcons()
 const { colorOptions: colors } = useAppColors()
 
 const createAccountHandler = async (values: Prisma.MoneyAccountCreateWithoutUserInput) => {
-  const userId = (await useAuth()).userId.value as string | undefined
+  const { userId } = $(useAuth())
 
   if (userId) {
     createAccount({ ...values, userId }, {
-      onSuccess: () => modal.hide(),
+      onSuccess: modal.hide,
     })
   }
 }
 
 const editAccountHandler = async (values: Prisma.MoneyAccountUncheckedUpdateWithoutUserInput) => {
-  const userId = (await useAuth()).userId.value as string | undefined
+  const { userId } = $(useAuth())
 
   if (userId) {
     updateAccount({ ...values, userId }, {
-      onSuccess: () => modal.hide(),
+      onSuccess: modal.hide,
     })
   }
 }
 
 const deleteAccountHandler = async () => {
-  const userId = (await useAuth()).userId.value as string | undefined
+  const { userId } = $(useAuth())
 
   if (userId) {
     deleteAccount({ userId }, {

@@ -19,7 +19,7 @@ const { categoryIcons: icons } = useIcons()
 const { colorOptions: colors } = useAppColors()
 
 const createCategoryHandler = async (values: Prisma.CategoryCreateWithoutUserInput) => {
-  const userId = (await useAuth()).userId.value as string | undefined
+  const { userId } = $(useAuth())
 
   if (userId) {
     createCategory({ ...values, userId }, {
@@ -29,7 +29,7 @@ const createCategoryHandler = async (values: Prisma.CategoryCreateWithoutUserInp
 }
 
 const editCategoryHandler = async (values: Prisma.CategoryUncheckedUpdateWithoutUserInput) => {
-  const userId = (await useAuth()).userId.value as string | undefined
+  const { userId } = $(useAuth())
 
   if (userId) {
     updateCategory({ ...values, userId }, {
@@ -39,7 +39,7 @@ const editCategoryHandler = async (values: Prisma.CategoryUncheckedUpdateWithout
 }
 
 const deleteCategoryHandler = async () => {
-  const userId = (await useAuth()).userId.value as string | undefined
+  const { userId } = $(useAuth())
 
   if (userId) {
     deleteCategory({ userId }, {

@@ -4,7 +4,7 @@ definePageMeta({
   auth: false,
 })
 
-const { signIn, getProviders, isAuthenticated } = await useAuth()
+const { signIn, getProviders, isAuthenticated } = useAuth()
 const providers = await getProviders()
 
 const signInHandler = async (provider: string) => {

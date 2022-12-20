@@ -2,7 +2,7 @@
 const { smDown } = useBreakpoints()
 const { isDark, toggleDark } = useTheme()
 
-const { user, signOut } = await useAuth()
+const { user, signOut } = useAuth()
 
 const signOutHandler = async () => {
   // dont reload page, manually navigate

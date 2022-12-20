@@ -11,10 +11,10 @@ useHead({
 setupShortcuts()
 
 const fireConfigStore = useFireConfigStore()
-const { userId } = await useAuth()
+const { userId } = $(useAuth())
 watchEffect(() => {
-  if (userId.value) {
-    fireConfigStore.setUserId(userId.value)
+  if (userId) {
+    fireConfigStore.setUserId(userId)
   }
 })
 </script>

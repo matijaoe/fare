@@ -21,7 +21,7 @@ const yearCountInputValue = computed<string>({
 })
 
 const config = useFireConfigStore()
-const { userId } = await useAuth()
+const { userId } = useAuth()
 const { mutate: updateUser, isLoading: isUpdateLoading } = useUserUpdate(userId)
 
 const updateUserHandler = () => {

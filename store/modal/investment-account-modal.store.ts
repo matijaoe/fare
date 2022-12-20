@@ -102,7 +102,6 @@ export const useInvestmentAccountModal = defineStore('modal-investment-account',
     // Value for edit
     accountId: _accountId,
     investmentAccountId: _investmentAccountId,
-    // Select item value
     // Form
     form,
     reset,

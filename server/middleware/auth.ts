@@ -8,8 +8,7 @@ export default defineEventHandler(async (event) => {
   if (!isAuthRequest) {
     const session = await getServerSession(event)
     if (session?.user) {
-      // only work correctly in GET requests
-      // and then it must be handled so that userId is not undefined, which would return everything
+      // only works in GET requests...
       event.context.userId = session.user.id
     }
   }

@@ -23,7 +23,7 @@ const createAccountHandler = async (values: Prisma.MoneyAccountUncheckedCreateWi
   const { description, expectedRateOfReturn, type, ...accountData } = values
 
   const investmentAccountData = { description, expectedRateOfReturn, type }
-  const userId = (await useAuth()).userId.value as string | undefined
+  const { userId } = $(useAuth())
 
   if (userId) {
     const account = { ...accountData, userId }
@@ -34,7 +34,7 @@ const createAccountHandler = async (values: Prisma.MoneyAccountUncheckedCreateWi
 }
 
 const editAccountHandler = async (values: Prisma.MoneyAccountUncheckedUpdateWithoutUserInput & Prisma.InvestmentAccountUncheckedUpdateInput) => {
-  const userId = (await useAuth()).userId.value as string | undefined
+  const { userId } = $(useAuth())
   const { description, expectedRateOfReturn, type, ...accountData } = values
   const investmentAccountData = { description, expectedRateOfReturn, type }
   const account = { ...accountData, userId }
@@ -47,7 +47,7 @@ const editAccountHandler = async (values: Prisma.MoneyAccountUncheckedUpdateWith
 }
 
 const deleteAccountHandler = async () => {
-  const userId = (await useAuth()).userId.value as string | undefined
+  const { userId } = $(useAuth())
 
   if (userId) {
     deleteAccount({ userId }, {

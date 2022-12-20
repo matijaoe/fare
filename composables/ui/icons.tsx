@@ -39,7 +39,6 @@ export const useIcons = () => {
     { label: '', value: 'tabler:bus' },
     { label: '', value: 'tabler:bus-stop' },
     { label: '', value: 'tabler:power' },
-    { label: '', value: 'tabler:music' },
     { label: '', value: 'tabler:carrot' },
     { label: '', value: 'tabler:apple' },
     { label: '', value: 'tabler:baguette' },
