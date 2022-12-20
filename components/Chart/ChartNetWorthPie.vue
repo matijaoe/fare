@@ -57,7 +57,7 @@ const showTotal = computed(() => props.totalData || isCurrentMonth.value || isAl
 <template>
   <pie-chart
     :height="height"
-    :chart-data="showTotal ? chartData : chartDataMonthly"
-    :chart-options="chartOptions"
+    :data="showTotal ? chartData : chartDataMonthly"
+    :options="chartOptions"
   />
 </template>

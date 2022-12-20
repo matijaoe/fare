@@ -65,7 +65,7 @@ const lineBarOptions: ChartOptions = {
 <template>
   <line-chart
     :height="height"
-    :chart-options="lineBarOptions"
-    :chart-data="data"
+    :options="lineBarOptions"
+    :data="data"
   />
 </template>

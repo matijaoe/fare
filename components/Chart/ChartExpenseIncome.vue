@@ -63,14 +63,14 @@ const lineBarOptions: ChartOptions = {
     <bar-chart
       v-if="type === 'bar'"
       :height="height"
-      :chart-options="lineBarOptions"
-      :chart-data="data"
+      :options="lineBarOptions"
+      :data="data"
     />
     <line-chart
       v-if="type === 'line'"
       :height="height "
-      :chart-options="lineBarOptions"
-      :chart-data="data"
+      :options="lineBarOptions"
+      :data="data"
     />
   </div>
 </template>

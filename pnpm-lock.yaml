@@ -30,7 +30,7 @@ specifiers:
   prisma-erd-generator: ^1.2.4
   typescript: ^4.9.4
   vee-validate: ^4.7.3
-  vue-chartjs: ^4.1.2
+  vue-chartjs: ^5.1.0
   zod: 3.20.2
 
 dependencies:
@@ -46,7 +46,7 @@ dependencies:
   floating-vue: 2.0.0-beta.20
   http-status-codes: 2.2.0
   vee-validate: 4.7.3
-  vue-chartjs: 4.1.2_chart.js@4.1.1
+  vue-chartjs: 5.1.0_chart.js@4.1.1
   zod: 3.20.2
 
 devDependencies:
@@ -7941,10 +7941,10 @@ packages:
       ufo: 1.0.1
     dev: true
 
-  /vue-chartjs/4.1.2_chart.js@4.1.1:
-    resolution: {integrity: sha512-QSggYjeFv/L4jFSBQpX8NzrAvX0B+Ha6nDgxkTG8tEXxYOOTwKI4phRLe+B4f+REnkmg7hgPY24R0cixZJyXBg==}
+  /vue-chartjs/5.1.0_chart.js@4.1.1:
+    resolution: {integrity: sha512-O/VllsyZn1NzRJAYEbpgfbk/N+EB1nCHLsc/ullPNWuU2YRHxgF5SS8OwWc0K2IfVZNMw94Bp6HUqi2svDQzrQ==}
     peerDependencies:
-      chart.js: ^3.7.0
+      chart.js: ^4.1.1
       vue: ^3.0.0-0 || ^2.6.0
     dependencies:
       chart.js: 4.1.1
