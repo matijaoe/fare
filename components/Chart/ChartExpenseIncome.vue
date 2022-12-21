@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
   height?: number
 }>(), {
   type: 'line',
-  height: 250,
+  height: 180,
 })
 
 const buildDataset = (_dataset: ChartDataset[]): ChartData => ({

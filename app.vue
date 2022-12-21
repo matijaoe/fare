@@ -12,7 +12,7 @@ setupShortcuts()
 </script>
 
 <template>
-  <NuxtLoadingIndicator :height="2" />
+  <NuxtLoadingIndicator :height="4" />
 
   <ModalGlobalModals />
 
@@ -38,4 +38,3 @@ html.dark {
   color-scheme: dark;
 }
 </style>
-
