@@ -12,8 +12,8 @@ const categoryModal = useCategoryModal()
 
 const { bg50, borderClr3, color9, bg3 } = useAppColors(category.color)
 
-const formattedTotalNet = totals?.totalNet != null ? useCurrencyFormat(totals.totalNet) : null
-const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'always' }) : null
+const formattedTotalNet = totals?.totalNet != null ? useCurrencyFormat(totals.totalNet, { signDisplay: 'exceptZero' }) : null
+const formattedNet = totals?.net != null ? useCurrencyFormat(totals.net, { signDisplay: 'exceptZero' }) : null
 const formattedIncome = totals?.income != null ? useCurrencyFormat(totals.income) : null
 const formattedExpense = totals?.expense != null ? useCurrencyFormat(totals.expense) : null
 
