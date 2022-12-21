@@ -2,8 +2,6 @@
 
 > Application for tracking personal finances and attaining financial independence
 
-&nbsp;
-
 
 ## ✨ Features
 - detailed personal finance tracking
@@ -13,6 +11,7 @@
 - dark mode
 - 🔜 *more info coming soon*
 
+&nbsp;
 
 👀 _sneak peek_
 
