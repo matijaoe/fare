@@ -37,12 +37,12 @@ dependencies:
   '@headlessui/vue': 1.7.7
   '@next-auth/prisma-adapter': 1.0.5_@prisma+client@4.8.0
   '@prisma/client': 4.8.0_prisma@4.8.0
-  '@types/chart.js': 2.9.37
   '@vee-validate/zod': 4.7.3_f2btg7zmr5jfq4gp3vvwlannri
   chart.js: 4.1.1
   date-fns: 2.29.3
   floating-vue: 2.0.0-beta.20
   http-status-codes: 2.2.0
+  mobile-detect: 1.4.5
   vee-validate: 4.7.3
   vue-chartjs: 5.1.0_chart.js@4.1.1
   zod: 3.20.2
@@ -54,10 +54,10 @@ devDependencies:
   '@pinia/nuxt': 0.4.6_typescript@4.9.4
   '@sidebase/nuxt-auth': 0.3.0
   '@tanstack/vue-query': 4.20.5
+  '@types/chart.js': 2.9.37
   '@unocss/nuxt': 0.48.0
   '@vueuse/nuxt': 9.8.2_nuxt@3.0.0
   eslint: 8.30.0
-  mobile-detect: 1.4.5
   nuxt: 3.0.0_lzzuuodtsqwxnvqeq4g4likcqa
   nuxt-icon: 0.1.8
   pinia: 2.0.28_typescript@4.9.4
@@ -1326,7 +1326,7 @@ packages:
     resolution: {integrity: sha512-9bosRfHhkXxKYfrw94EmyDQcdjMaQPkU1fH2tDxu8DWXxf1mjzWQAV4laJF51ZbC2ycYwNDvIm1rGez8Bug0vg==}
     dependencies:
       moment: 2.29.4
-    dev: false
+    dev: true
 
   /@types/cross-spawn/6.0.2:
     resolution: {integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==}
@@ -5357,11 +5357,11 @@ packages:
 
   /mobile-detect/1.4.5:
     resolution: {integrity: sha512-yc0LhH6tItlvfLBugVUEtgawwFU2sIe+cSdmRJJCTMZ5GEJyLxNyC/NIOAOGk67Fa8GNpOttO3Xz/1bHpXFD/g==}
-    dev: true
+    dev: false
 
   /moment/2.29.4:
     resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
-    dev: false
+    dev: true
 
   /mri/1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
