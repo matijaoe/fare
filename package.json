@@ -35,7 +35,7 @@
     "@pinia/nuxt": "^0.4.6",
     "@sidebase/nuxt-auth": "0.3.0",
     "@tanstack/vue-query": "^4.20.5",
-    "@unocss/nuxt": "^0.47.6",
+    "@unocss/nuxt": "^0.48.0",
     "@vueuse/nuxt": "^9.8.2",
     "eslint": "^8.30.0",
     "mobile-detect": "^1.4.5",
