@@ -9,7 +9,6 @@ export default defineNuxtConfig({
   ],
   experimental: {
     reactivityTransform: true,
-    viteNode: false,
   },
   unocss: {
     uno: true,

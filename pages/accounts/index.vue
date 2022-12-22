@@ -63,6 +63,7 @@ const unifiedAccounts = computed(() => {
         :loading="isAccountsLoading"
         :has-accounts="!!unifiedAccounts?.length"
       >
+        <!-- TODO: fade transition -->
         <AccountCardCash
           v-for="account in unifiedAccounts"
           :key="account"
