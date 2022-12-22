@@ -108,8 +108,8 @@ const shownDate = computed({
 })
 
 const transactionTypeOptions = [
-  { label: 'Income', value: 'Income', checkedClass: 'bg-emerald-2 text-emerald-8', icon: 'tabler:arrow-up-right' },
-  { label: 'Expense', value: 'Expense', checkedClass: 'bg-rose-2 text-rose-8', icon: 'tabler:arrow-down-left' },
+  { label: 'Income', value: 'Income', checkedClass: 'bg-emerald-2 text-emerald-8', icon: 'tabler:arrow-down-left' },
+  { label: 'Expense', value: 'Expense', checkedClass: 'bg-rose-2 text-rose-8', icon: 'tabler:arrow-up-right' },
   { label: 'Transfer', value: 'Transfer', checkedClass: 'bg-indigo-2 text-indigo-8', icon: 'tabler:arrows-exchange' },
 ]
 </script>
