@@ -30,9 +30,17 @@ export const useTransactionFilters = (_transactions: Ref<TransactionWithCategory
   }
 
   // Transactions
-  const filteredTransactions = computed(() => get(_transactions)?.filter(search) ?? [])
-  const transactions = computed(() => get(filteredTransactions))
+  const transactions = ref<TransactionWithCategoryAndCashAccount[]>()
   const hasTransactions = computed(() => get(transactions)?.length)
+
+  watch(_transactions, () => {
+    set(transactions, get(_transactions))
+  }, { immediate: true })
+
+  watchDebounced(searchQuery, () => {
+    const filtered = get(_transactions)?.filter(search)
+    set(transactions, filtered)
+  }, { debounce: 250, maxWait: 1000 })
 
   return {
     transactions,
