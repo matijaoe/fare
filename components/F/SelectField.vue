@@ -166,14 +166,15 @@ const disabledStyle = computed(() => 'disabled:(bg-zinc-1 dark:bg-zinc-9/50 bord
         leave-to-class="opacity-0"
       >
         <ListboxOptions
+          v-memo="[items]"
           z-100
           bg="base"
           w-full
           absolute
           :class="[widthStyle]"
-          py-1
-          outline="none focus:none"
-          border="2 t-0 rounded-b-md" border-base
+          py-1 outline="none focus:none"
+          border="2 t-0 rounded-b-md"
+          border-base
           max-h="sm:!193px"
           overflow-y="auto"
         >
