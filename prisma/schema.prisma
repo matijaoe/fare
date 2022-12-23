@@ -99,7 +99,7 @@ enum TransactionType {
 model Transaction {
   id            String          @id @default(cuid())
   type          TransactionType
-  name          String
+  name          String?
   description   String?
   amount        Float
   date          DateTime        @default(now())

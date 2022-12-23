@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import type { InputHTMLAttributes } from 'vue'
 
 type Props = {
-  modelValue?: string | number | null | undefined
+  modelValue?: string | number | null
   type?: string
   icon?: string
   iconPlacement?: 'left' | 'right'
@@ -23,10 +23,10 @@ type Props = {
 }
 
 type Emits = {
-  (e: 'input', value?: string | number | undefined | null): void
+  (e: 'input', value?: string | number | null): void
   (e: 'focus'): void
   (e: 'blur'): void
-  (e: 'update:modelValue', value?: string | number | null | undefined): void
+  (e: 'update:modelValue', value?: string | number | null): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -106,7 +106,7 @@ const inputEl = ref<HTMLInputElement>()
 
 const value = computed({
   get: () => props.modelValue ?? '',
-  set: (val: string | number | null | undefined) => {
+  set: (val: string | number | null) => {
     if (props.type === 'number') {
       const valueAsNumber = inputEl.value?.valueAsNumber
       if (!isNumber(valueAsNumber)) {

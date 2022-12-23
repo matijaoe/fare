@@ -23,7 +23,7 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
       // TODO: must be required but should be based off Type
       fromAccountId: zod.any().optional(),
       toAccountId: zod.any().optional(),
-      name: zod.string({ invalid_type_error: 'Name should be a string' }).trim().min(1, { message: 'Name is too short' }).max(24, { message: 'Name is too long' }).optional(),
+      name: zod.null().optional().or(zod.string({ invalid_type_error: 'Name should be a string' }).trim().max(24, { message: 'Name is too long' })),
       description: zod.null().optional().or(zod.string()),
       categoryId: zod.null().optional().or(zod.string()),
       amount: zod.number({ required_error: 'Amount is required', invalid_type_error: 'Amount is required' }).min(0.01, { message: 'Amount must be greater than 0' }),
@@ -35,7 +35,7 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     type: TransactionType
     fromAccountId: string | null
     toAccountId: string | null
-    name: string
+    name: string | null
     description: string | null | undefined
     categoryId: string | null
     amount: number
