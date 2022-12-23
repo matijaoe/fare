@@ -167,7 +167,7 @@ const modalConfig = computed(() => ({
           </template>
           <template #option="{ item }">
             <div flex items-center gap-4 justify-between>
-              <Icon v-memo="item.value" :name="item.value" />
+              <Icon :name="item.value" />
               <p opacity-40 text-sm line-clamp-1>
                 {{ (item.value as string).split(':').at(-1) }}
               </p>

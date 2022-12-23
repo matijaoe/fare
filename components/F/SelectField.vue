@@ -165,57 +165,59 @@ const disabledStyle = computed(() => 'disabled:(bg-zinc-1 dark:bg-zinc-9/50 bord
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <ListboxOptions
-          v-memo="[items]"
-          z-100
-          bg="base"
-          w-full
-          absolute
-          :class="[widthStyle]"
-          py-1 outline="none focus:none"
-          border="2 t-0 rounded-b-md"
-          border-base
-          max-h="sm:!193px"
-          overflow-y="auto"
-        >
-          <ListboxOption
-            v-for="item in items"
-            v-slot="{ active, selected }"
-            :key="item.value"
-            :value="item"
-            as="template"
-            :disabled="item.disabled"
+        <div v-show="open">
+          <ListboxOptions
+            static
+            z-100
+            bg="base"
+            w-full
+            absolute
+            :class="[widthStyle]"
+            py-1 outline="none focus:none"
+            border="2 t-0 rounded-b-md"
+            border-base
+            max-h="sm:!193px"
+            overflow-y="auto"
           >
-            <li
-              w-full
-              text="zinc-7 dark:zinc-3"
-              p="y-2 x-4"
-              relative
-              class="relative cursor-default select-none"
-              :class="[
-                active && !(selected || isSelected(item)) ? 'bg-zinc-1 dark:bg-zinc-8/50 color-base' : '',
-                selected || isSelected(item) ? 'bg-zinc-2/40 dark:bg-zinc-8 color-base pr-12' : '',
-                item.disabled ? '!text-zinc-3 !dark:text-zinc-7' : '',
-              ]"
+            <ListboxOption
+              v-for="item in items"
+              v-slot="{ active, selected }"
+              :key="item.value"
+              :value="item"
+              as="template"
+              :disabled="item.disabled"
             >
-              <slot name="option" :item="item" :selected="selected || isSelected(item)">
-                <span class="block truncate">
-                  {{ item.label }}
-                </span>
-              </slot>
-              <span
-                v-if="selected || isSelected(item)"
-                pr-4
-                text-color-base
-                absolute
-                pos="inset-y-0 right-0"
-                class="flex items-center"
+              <li
+                w-full
+                text="zinc-7 dark:zinc-3"
+                p="y-2 x-4"
+                relative
+                class="relative cursor-default select-none"
+                :class="[
+                  active && !(selected || isSelected(item)) ? 'bg-zinc-1 dark:bg-zinc-8/50 color-base' : '',
+                  selected || isSelected(item) ? 'bg-zinc-2/40 dark:bg-zinc-8 color-base pr-12' : '',
+                  item.disabled ? '!text-zinc-3 !dark:text-zinc-7' : '',
+                ]"
               >
-                <Icon name="tabler:check" />
-              </span>
-            </li>
-          </ListboxOption>
-        </ListboxOptions>
+                <slot name="option" :item="item" :selected="selected || isSelected(item)">
+                  <span class="block truncate">
+                    {{ item.label }}
+                  </span>
+                </slot>
+                <span
+                  v-if="selected || isSelected(item)"
+                  pr-4
+                  text-color-base
+                  absolute
+                  pos="inset-y-0 right-0"
+                  class="flex items-center"
+                >
+                  <Icon name="tabler:check" />
+                </span>
+              </li>
+            </ListboxOption>
+          </ListboxOptions>
+        </div>
       </Transition>
     </Listbox>
   </FInputWrapper>
