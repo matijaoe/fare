@@ -36,7 +36,7 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     fromAccountId: string | null
     toAccountId: string | null
     name: string | null
-    description: string | null | undefined
+    description: string | null
     categoryId: string | null
     amount: number
     date: Date
