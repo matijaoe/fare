@@ -44,7 +44,6 @@ const sections = computed(() => ([
 
 <template>
   <LayoutPage>
-    <pre bg-blue-1>{{ accountsWithMonthlyBalances }}</pre>
     <div flex items-center gap-8>
       <BalanceShownWrapper>
         <template #current>
