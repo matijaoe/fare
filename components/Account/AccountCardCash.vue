@@ -56,6 +56,9 @@ const isHovered = useElementHover(card)
             <span v-else-if="balance">
               {{ formattedBalance }}
             </span>
+            <span v-else>
+              {{ formatCurrency(0) }}
+            </span>
           </div>
         </FTooltip>
         <FTooltip mx-auto placement="right" :content="allTime ? 'All-time net' : 'Monthly net'">

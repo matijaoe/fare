@@ -19,9 +19,9 @@ defineProps<{
       <slot />
     </template>
 
-    <AccountCardEmpty v-else>
+    <FCardEmpty v-else>
       Nothing here yet
-    </AccountCardEmpty>
+    </FCardEmpty>
   </div>
 </template>
 

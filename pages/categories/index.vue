@@ -31,14 +31,30 @@ const shownCategories = computed(() => {
       </template>
 
       <div grid lg:grid-cols-2 gap-3>
-        <CategoryCard
-          v-for="category in shownCategories"
-          :key="category"
-          :category="category"
-          :totals="category.totals"
-          :all-time="isAllTime"
-          :totals-loading="isTotalsLoading"
-        />
+        <template v-if="shownCategories?.length">
+          <CategoryCard
+            v-for="category in shownCategories"
+            :key="category"
+            :category="category"
+            :totals="category.totals"
+            :all-time="isAllTime"
+            :totals-loading="isTotalsLoading"
+          />
+        </template>
+
+        <FCardEmpty v-else>
+          <p>No categories yet</p>
+
+          <div flex gap-2 items-center mt-4>
+            <FButton
+              to="/transactions"
+              variant="primary"
+              @click="categoryModal.launch()"
+            >
+              Add your first category
+            </FButton>
+          </div>
+        </FCardEmpty>
       </div>
     </LayoutSectionWrapper>
   </LayoutPage>

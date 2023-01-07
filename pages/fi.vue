@@ -4,7 +4,7 @@ import type { ChartDataset } from 'chart.js'
 import { addYears, format } from 'date-fns'
 import { monthsToYearsAndMonthsString } from '../utils'
 
-const yearCount = ref(0)
+const yearCount = ref(3)
 
 const yearCountInputValue = computed<string>({
   get: () => yearCount.value.toString(),
@@ -80,37 +80,72 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
 <template>
   <LayoutPage>
     <LayoutSectionWrapper
-      v-if="isYearsCalculated"
       flex flex-col gap-4
     >
-      <div
-        v-if="(timeToNetWorthGoal && fiDate)"
-        flex flex-col items-center
-      >
-        You can achieve Financial Independence in
-        <span font-bold text-4xl mt-2>{{ monthsToYearsAndMonthsString(timeToNetWorthGoal) }}</span>
+      <template v-if="isYearsCalculated">
+        <div
+          v-if="(timeToNetWorthGoal && fiDate)"
+          flex flex-col items-center
+          mb-14
+        >
+          You can achieve Financial Independence in
+          <span font-bold text-4xl mt-2>{{ monthsToYearsAndMonthsString(timeToNetWorthGoal) }}</span>
 
-        <span v-if="fiDate.age" font-semibold text-xl mt-1>by the age of {{ fiDate.age }}</span>
-      </div>
-
-      <div max-w="1000px" mx-auto>
-        <ChartNetWorth
-          :height="180"
-          :labels="labels"
-          :datasets="[datasets.total, datasets.cash, datasets.investments]"
-        />
-      </div>
-
-      <div flex gap-8 pt-14>
-        <div flex-1 flex flex-col gap-4 max-w-xl>
-          <BalanceNetWorthFutureCard
-            v-for="values in compoundedValues"
-            :key="values.months"
-            :data="values"
-          />
+          <span v-if="fiDate.age" font-semibold text-xl mt-1>by the age of {{ fiDate.age }}</span>
         </div>
 
-        <div flex-1>
+        <div max-w="1000px" mx-auto>
+          <ChartNetWorth
+            :height="180"
+            :labels="labels"
+            :datasets="[datasets.total, datasets.cash, datasets.investments]"
+          />
+        </div>
+      </template>
+
+      <div grid lg:grid-cols-2 gap-8>
+        <template v-if="isYearsCalculated">
+          <div flex-1 flex flex-col gap-4 max-w-xl>
+            <BalanceNetWorthFutureCard
+              v-for="values in compoundedValues"
+              :key="values.months"
+              :data="values"
+            />
+          </div>
+        </template>
+
+        <div v-else>
+          <FCardEmpty>
+            <p> Nothing to calculate yet.</p>
+
+            <p>Add some accounts and transactions first.</p>
+
+            <div flex gap-2 items-center mt-4>
+              <FButton
+                variant="primary"
+                @click="navigateTo('/accounts')"
+              >
+                Add accounts
+              </FButton>
+
+              <FButton
+                variant="secondary"
+                @click="navigateTo('/nest-egg')"
+              >
+                Set up investments
+              </FButton>
+
+              <FButton
+                variant="secondary"
+                @click="navigateTo('/activity')"
+              >
+                Add transactions
+              </FButton>
+            </div>
+          </FCardEmpty>
+        </div>
+
+        <div flex-1 space-y-3>
           <div space-y-1>
             <BasicLabel>Net worth goal</BasicLabel>
             <div v-if="netWorthGoal != null" font-display text-5xl font-medium>
@@ -121,7 +156,9 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
             </p>
           </div>
 
-          <input v-model="yearCountInputValue" py-4 w-full type="range" :step="1" :max="30" :min="3">
+          <template v-if="isYearsCalculated">
+            <input v-model="yearCountInputValue" py-1 w-full type="range" :step="1" :max="30" :min="3">
+          </template>
 
           <TabGroup>
             <TabList flex-1 flex gap-2 pb-3 border="b-2" border-base>

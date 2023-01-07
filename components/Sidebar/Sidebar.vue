@@ -84,6 +84,14 @@ const {
           >
             {{ formattedNetWorth }}
           </p>
+          <p
+            v-else
+            text-3xl
+            font-display
+            font-medium
+          >
+            {{ formatCurrency(0) }}
+          </p>
         </div>
       </div>
 

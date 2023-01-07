@@ -4,13 +4,17 @@ const {
   formattedNetWorth,
   formattedCashBalance,
   formattedInvestmentsBalance,
+  netWorth,
 } = useNetWorth()
 const {
   isLoading: isNetWorthLoadingMonthly,
   formattedNetWorth: formattedNetWorthMonthly,
   formattedCashBalance: formattedCashBalanceMonthly,
   formattedInvestmentsBalance: formattedInvestmentsBalanceMonthly,
+  netWorth: netWorthMonthly,
 } = useNetWorthMonthly()
+
+const { isAllTime, isCurrentMonth } = toRefs(useDateRangeStore())
 
 // TODO: add more content
 // percentage of growth?
@@ -44,7 +48,7 @@ const {
       </BalanceShownWrapper>
     </div>
 
-    <LayoutSectionWrapper title="Pie chart">
+    <LayoutSectionWrapper v-if="isAllTime ? netWorth : netWorthMonthly" title="Pie chart">
       <ChartNetWorthPie />
     </LayoutSectionWrapper>
   </LayoutPage>
