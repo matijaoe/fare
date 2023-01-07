@@ -6,17 +6,17 @@ import { db } from '~~/lib/db'
 
 export default NuxtAuthHandler({
   adapter: PrismaAdapter(db),
-  secret: process.env.NUXT_SECRET,
+  secret: useRuntimeConfig().authSecret,
   providers: [
     // @ts-expect-error Import is exported on .default during SSR, so we need to call it this way. May be fixed via Vite at some point
     GithubProvider.default({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      clientId: useRuntimeConfig().githubClientId,
+      clientSecret: useRuntimeConfig().githubClientSecret,
     }),
     // @ts-expect-error Import is exported on .default during SSR, so we need to call it this way. May be fixed via Vite at some point
     GoogleProvider.default({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: useRuntimeConfig().googleClientId,
+      clientSecret: useRuntimeConfig().googleClientSecret,
     }),
   ],
   pages: {
