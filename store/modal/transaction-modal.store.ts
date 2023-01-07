@@ -1,9 +1,9 @@
-import { TransactionType } from '@prisma/client'
 import { toFormValidator } from '@vee-validate/zod'
 import { set } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import * as zod from 'zod'
+import type { TransactionType } from '~~/models/enums'
 import type { TransactionWithCategoryAndCashAccount } from '~~/models/resources'
 
 type ActionType = 'create' | 'edit'
@@ -19,7 +19,7 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
 
   const validationSchema = toFormValidator(
     zod.object({
-      type: zod.nativeEnum(TransactionType, { required_error: 'Type is required' }),
+      type: zod.any({ required_error: 'Type is required' }),
       // TODO: must be required but should be based off Type
       fromAccountId: zod.any().optional(),
       toAccountId: zod.any().optional(),

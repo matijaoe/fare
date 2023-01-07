@@ -28,4 +28,3 @@ const textSize = computed(() => {
     <slot />
   </p>
 </template>
-

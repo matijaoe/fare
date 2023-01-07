@@ -38,4 +38,3 @@ defineProps<{
     </div>
   </section>
 </template>
-

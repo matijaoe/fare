@@ -1,4 +1,4 @@
-import type { InvestmentType } from '@prisma/client'
+import type { InvestmentType } from '~~/models/enums'
 
 export const useNestEgg = () => {
   const { monthQuery } = toRefs(useDateRangeStore())

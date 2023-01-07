@@ -38,4 +38,3 @@ const sizeStyle = computed(() => {
     <span v-if="!minimal">FARE</span>
   </div>
 </template>
-

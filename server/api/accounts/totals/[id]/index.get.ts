@@ -1,5 +1,5 @@
-import type { TransactionType } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
+import type { TransactionType } from '~~/models/enums'
 import { db } from '~~/lib/db'
 import type { AccountTotalType, GroupedAccount } from '~~/models/resources'
 import { getDateRange, readParams, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
@@ -120,4 +120,3 @@ export default defineEventHandler(async (event) => {
     sendInternalError(event, err)
   }
 })
-

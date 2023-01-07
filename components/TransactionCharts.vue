@@ -122,4 +122,3 @@ const isCustom = $computed(() => !monthCountOptions.map(({ value }) => value).in
     </div>
   </div>
 </template>
-

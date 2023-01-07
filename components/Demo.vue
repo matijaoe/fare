@@ -278,4 +278,3 @@ const selectedPerson = ref<SelectItemDefault | null>()
     </div>
   </div>
 </template>
-

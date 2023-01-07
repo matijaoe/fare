@@ -142,4 +142,3 @@ const transactionTooltip = computed(() => {
     </div>
   </div>
 </template>
-

@@ -136,11 +136,6 @@ model MoneyAccount {
   @@index([userId])
 }
 
-enum CashAccountType {
-  Cash
-  Savings
-}
-
 model CashAccount {
   id        String @id @default(cuid())
   accountId String @unique

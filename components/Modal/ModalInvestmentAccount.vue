@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Prisma } from '@prisma/client'
-import { InvestmentType } from '@prisma/client'
 import { get, set } from '@vueuse/core'
+import type { InvestmentType } from '~~/models/enums'
 
 const modal = useInvestmentAccountModal()
 
@@ -108,11 +108,11 @@ const modalConfig = computed(() => ({
   panelClass: 'w-full !sm:min-w-xl',
 }))
 
-const typeOptions = [
-  { label: 'Stocks', value: InvestmentType.Stocks, icon: 'tabler:chart-line' },
-  { label: 'Crypto', value: InvestmentType.Crypto, icon: 'tabler:coin-bitcoin' },
-  { label: 'Property', value: InvestmentType.Property, icon: 'tabler:building-community' },
-  { label: 'Other', value: InvestmentType.Other, icon: 'tabler:square-asterisk' },
+const typeOptions: { label: InvestmentType; value: string; icon: string }[] = [
+  { label: 'Stocks', value: 'Stocks', icon: 'tabler:chart-line' },
+  { label: 'Crypto', value: 'Crypto', icon: 'tabler:coin-bitcoin' },
+  { label: 'Property', value: 'Property', icon: 'tabler:building-community' },
+  { label: 'Other', value: 'Other', icon: 'tabler:square-asterisk' },
 ]
 </script>
 

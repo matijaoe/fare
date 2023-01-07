@@ -136,4 +136,3 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
     isTimeToLoading,
   }
 }
-

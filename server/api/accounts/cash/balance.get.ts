@@ -1,6 +1,6 @@
-import type { TransactionType } from '@prisma/client'
 import { isAfter } from 'date-fns'
 import { StatusCodes } from 'http-status-codes'
+import type { TransactionType } from '~~/models/enums'
 import { db } from '~~/lib/db'
 import { getDateRange, readUserId, sendCustomError, sendInternalError } from '~~/server/utils'
 

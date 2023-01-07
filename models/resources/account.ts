@@ -30,4 +30,3 @@ export type GroupedAccount = (Prisma.PickArray<Prisma.TransactionGroupByOutputTy
     amount: number | null
   }
 })
-

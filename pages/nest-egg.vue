@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { InvestmentType } from '@prisma/client'
+import type { InvestmentType } from '~~/models/enums'
 import AccountCardInvestment from '~~/components/Account/AccountCardInvestment.vue'
 
 const { isAllTime } = toRefs(useDateRangeStore())
@@ -18,24 +18,24 @@ const {
 
 const modal = useInvestmentAccountModal()
 
-const sections = computed(() => ([
+const sections = computed<{ type: InvestmentType; title: string; desc: string }[]>(() => ([
   {
-    type: InvestmentType.Stocks,
+    type: 'Stocks',
     title: 'Stocks, ETF\'s & bonds',
     desc: 'Actively tracked investment accounts',
   },
   {
-    type: InvestmentType.Crypto,
+    type: 'Crypto',
     title: 'Crypto',
     desc: 'Actively tracked crypto accounts',
   },
   {
-    type: InvestmentType.Property,
+    type: 'Property',
     title: 'Property',
     desc: 'All of your properties',
   },
   {
-    type: InvestmentType.Other,
+    type: 'Other',
     title: 'Miscellaneous',
     desc: 'All of your miscellaneous investments',
   },

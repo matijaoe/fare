@@ -1,5 +1,6 @@
-import type { MoneyAccount, Transaction, TransactionType } from '@prisma/client'
+import type { MoneyAccount, Transaction } from '@prisma/client'
 import type { CategoryWithCount } from './category'
+import type { TransactionType } from '~~/models/enums'
 
 export type TransactionWithCategoryAndCashAccount = Transaction &
 { category?: CategoryWithCount } &

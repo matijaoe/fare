@@ -69,4 +69,3 @@ const sharedClasses = 'filter-saturate-70'
     </div>
   </div>
 </template>
-

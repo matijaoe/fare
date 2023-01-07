@@ -57,4 +57,3 @@ const emits = {
     </template>
   </FInput>
 </template>
-

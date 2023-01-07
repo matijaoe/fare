@@ -1,6 +1,6 @@
-import type { TransactionType } from '@prisma/client'
 import { format, isThisYear } from 'date-fns'
 import type { Ref } from 'vue'
+import type { TransactionType } from '~~/models/enums'
 import type { TransactionTotalMonthlyObject } from '~~/models/resources'
 
 export const useMonthlyTotals = (totals: Ref<TransactionTotalMonthlyObject | undefined>, monthCount: Ref<number>) => {

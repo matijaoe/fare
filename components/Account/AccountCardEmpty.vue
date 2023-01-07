@@ -13,4 +13,3 @@ const { isDark } = useTheme()
     </slot>
   </FCard>
 </template>
-

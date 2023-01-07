@@ -1,4 +1,5 @@
-import type { Prisma, TransactionType } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
+import type { TransactionType } from '~~/models/enums'
 
 type TypeRuleset = Record<TransactionType, {
   fromAccountId: boolean

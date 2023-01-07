@@ -117,4 +117,3 @@ const isSlot = (name: 'left' | 'right') => {
     </slot>
   </button>
 </template>
-

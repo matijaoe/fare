@@ -1,5 +1,5 @@
-import type { TransactionType } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
+import type { TransactionType } from '~~/models/enums'
 import { db } from '~~/lib/db'
 import type { CategoryTotalType, GroupedCategory } from '~~/models/resources'
 import { getDateRange, readParams, readUserId, sendCustomError } from '~~/server/utils'

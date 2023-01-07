@@ -41,4 +41,3 @@ const handleNavClick = () => {
     </NuxtLink>
   </li>
 </template>
-

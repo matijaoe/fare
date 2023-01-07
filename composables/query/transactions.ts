@@ -105,4 +105,3 @@ export const useTransactionTotalMonthly = () => useQuery(
   keysTransactions.totals(),
   () => $fetch<TransactionTotalMonthlyObject>('/api/transactions/totals/monthly'),
 )
-
