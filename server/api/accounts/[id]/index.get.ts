@@ -17,7 +17,6 @@ export default defineEventHandler(async (event) => {
 
     return user
   } catch (err: unknown) {
-    console.error(err)
     sendInternalError(event, err)
   }
 })

@@ -12,9 +12,7 @@ export default defineEventHandler((event) => {
   }
 
   const accountInclude: Prisma.CashAccountArgs = {
-    include: {
-      account: true,
-    },
+    include: { account: true },
   }
 
   try {
@@ -33,7 +31,6 @@ export default defineEventHandler((event) => {
       },
     })
   } catch (err) {
-    console.error(err)
     sendInternalError(event, err)
   }
 })

@@ -1,6 +1,5 @@
 import type { CompatibilityEvent, H3Event } from 'h3'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
-
 import type { Prisma } from '@prisma/client'
 import { endOfMonth, isDate, isThisMonth, startOfMonth } from 'date-fns'
 
@@ -38,6 +37,7 @@ export const sendInternalError = (
       originalError,
     },
   })
+
   sendError(event, error)
 }
 
@@ -53,19 +53,17 @@ export const readUserId = (event: H3Event): string | undefined => event.context?
 export const getDateRange = (event: H3Event) => {
   const { month: monthQuery } = getQuery(event) as { month?: string }
 
-  // is date is not working as it should
   const hasDefinedMonth = !!monthQuery && isDate(new Date(monthQuery))
 
   const monthAsDate = hasDefinedMonth ? new Date(monthQuery) : null
-
   const monthStart = monthAsDate ? startOfMonth(monthAsDate) : null
   const monthEnd = monthAsDate ? endOfMonth(monthAsDate) : null
+
+  const isCurrentMonth = monthAsDate ? isThisMonth(monthAsDate) : false
 
   const prismaRangeQuery: Prisma.DateTimeFilter | undefined = monthStart && monthEnd
     ? { gte: monthStart, lte: monthEnd }
     : undefined
-
-  const isCurrentMonth = monthAsDate ? isThisMonth(monthAsDate) : false
 
   return {
     monthQuery, // 2022-11

@@ -23,7 +23,6 @@ export default defineEventHandler(async (event) => {
     setResStatus(event, StatusCodes.CREATED)
     return updated
   } catch (err: unknown) {
-    console.error(err)
     sendInternalError(event, err)
   }
 })

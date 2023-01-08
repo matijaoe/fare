@@ -6,7 +6,6 @@ export const useDateRangeStore = defineStore('date-range', () => {
   const now = $(useNow())
 
   const formatType = {
-    full: 'yyyy-MM-dd',
     monthYear: 'MMM yy',
     yearMonth: 'yyyy-MM',
     month: 'MMMM',
@@ -24,16 +23,14 @@ export const useDateRangeStore = defineStore('date-range', () => {
     setAllTime(false)
   }
 
-  const isLatestMonth = computed(() => isSameMonth(get(selectedMonth), now))
-
+  const monthQuery = computed(() => !get(isAllTime) ? format(get(selectedMonth), formatType.yearMonth) : undefined)
   const formattedDate = computed(() => {
     const date = get(selectedMonth)
     return format(date, isThisYear(date) ? formatType.month : formatType.monthYear)
   })
 
+  const isLatestMonth = computed(() => isSameMonth(get(selectedMonth), now))
   const isCurrentMonth = computed(() => isThisMonth(get(selectedMonth)))
-
-  const monthQuery = computed(() => !get(isAllTime) ? format(get(selectedMonth), formatType.yearMonth) : undefined)
 
   return {
     selectedMonth,
@@ -42,10 +39,10 @@ export const useDateRangeStore = defineStore('date-range', () => {
     setPreviousMonth,
     setToToday,
     setNextMonth,
-    isLatestMonth,
     formattedDate,
-    isCurrentMonth,
     monthQuery,
+    isLatestMonth,
+    isCurrentMonth,
   }
 })
 

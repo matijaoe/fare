@@ -41,7 +41,6 @@ export default defineEventHandler(async (event) => {
       monthQuery,
     }
   } catch (err: unknown) {
-    console.error(err)
     sendInternalError(event, err)
   }
 })
