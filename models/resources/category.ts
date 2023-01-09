@@ -5,7 +5,7 @@ const initalTotal = { income: 0, expense: 0, net: 0, totalNet: 0 }
 
 export type CategoryWithCount = Category & { _count: Prisma.CategoryCountOutputType }
 
-// TRansaction should include nested stuff like accounts, but ideally without category
+// Transaction should include nested stuff like accounts, but ideally without category
 export type CategoryWithTransactions = Category & { transactions: TransactionWithCategoryAndCashAccount[] }
 
 export type CategoryTotalType = keyof typeof initalTotal

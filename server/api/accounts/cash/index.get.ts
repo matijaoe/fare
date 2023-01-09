@@ -34,7 +34,6 @@ export default defineEventHandler(async (event) => {
       },
     })
   } catch (err) {
-    console.error(err)
     sendInternalError(event, err)
   }
 })

@@ -45,7 +45,6 @@ export default defineEventHandler(async (event) => {
 
     return resultAccounts
   } catch (err) {
-    console.error(err)
     sendInternalError(event, err)
   }
 })

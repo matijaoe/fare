@@ -15,9 +15,6 @@ export const useTransactionFilters = (_transactions: Ref<TransactionWithCategory
   const search = (transaction: TransactionWithCategoryAndCashAccount) => {
     const match = (str?: string | null) => !!str?.toLowerCase().includes(searchQuery.value.toLowerCase())
 
-    // TODO: filter callbacks should be passed as option in props
-    // as well as the transaction object type as a generic, to not include everything in same request
-    // ie. dont need nested includes of category on category-id page
     const matchName = match(transaction.name)
     const matchDescription = match(transaction?.description)
     const matchCategory = match(transaction.category?.name)

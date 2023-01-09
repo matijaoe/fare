@@ -33,7 +33,6 @@ export default defineEventHandler(async (event) => {
 
     return res
   } catch (err: unknown) {
-    console.error(err)
     sendInternalError(event, err)
   }
 })

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 const { monthQuery } = toRefs(useDateRangeStore())
 const { data, isLoading } = useTransactions(monthQuery)
-
 const { transactions, searchQuery } = useTransactionFilters(data)
 </script>
 
@@ -15,8 +14,7 @@ const { transactions, searchQuery } = useTransactionFilters(data)
         icon="tabler:search"
         clearable
         input-class="rounded-none !bg-white !dark:bg-zinc-9 !py-5"
-        border="b-2"
-        border-base
+        border="base b-2"
       />
       <TransactionList
         :transactions="transactions"

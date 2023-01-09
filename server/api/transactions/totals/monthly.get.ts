@@ -31,7 +31,6 @@ export default defineEventHandler(async (event) => {
 
     return groupBy(totals, 'type') as TransactionTotalMonthlyObject
   } catch (err) {
-    console.error(err)
     sendInternalError(event, err)
   }
 })

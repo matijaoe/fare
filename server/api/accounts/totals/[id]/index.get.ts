@@ -116,7 +116,6 @@ export default defineEventHandler(async (event) => {
 
     return singleCashAccountWithTotals
   } catch (err) {
-    console.error(err)
     sendInternalError(event, err)
   }
 })

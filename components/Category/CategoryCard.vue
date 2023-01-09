@@ -8,8 +8,8 @@ const { category, totals } = defineProps<{
   allTime?: boolean
 }>()
 
+const { isDark } = useTheme()
 const categoryModal = useCategoryModal()
-
 const { bg50, borderClr3, color9, bg3 } = useAppColors(category.color)
 
 const formattedTotalNet = totals?.totalNet != null ? useCurrencyFormat(totals.totalNet, { signDisplay: 'exceptZero' }) : null
@@ -19,8 +19,6 @@ const formattedExpense = totals?.expense != null ? useCurrencyFormat(totals.expe
 
 const card = ref<HTMLElement>()
 const isHovered = useElementHover(card)
-
-const { isDark } = useTheme()
 </script>
 
 <template>
@@ -51,7 +49,7 @@ const { isDark } = useTheme()
         </div>
       </NuxtLink>
 
-      <transition-fade>
+      <TransitionFade>
         <p
           v-if="!totalsLoading"
           ml-auto
@@ -61,7 +59,7 @@ const { isDark } = useTheme()
         >
           {{ allTime ? formattedTotalNet : formattedNet }}
         </p>
-      </transition-fade>
+      </TransitionFade>
     </div>
 
     <div flex items-end justify-between p-6>

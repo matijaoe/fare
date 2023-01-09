@@ -36,7 +36,11 @@ export const useTransactions = (month: Ref<string | undefined>) =>
 export const useTransactionCreate = () => {
   const qc = useQueryClient()
 
-  return useMutation((body: Prisma.TransactionUncheckedCreateInput) => $fetch<Transaction>('/api/transactions', { method: 'POST', body }), {
+  return useMutation((body: Prisma.TransactionUncheckedCreateInput) =>
+    $fetch<Transaction>('/api/transactions', {
+      method: 'POST',
+      body,
+    }), {
     onSuccess: async () => {
       await Promise.allSettled([
         qc.invalidateQueries(keysTransactions.all),

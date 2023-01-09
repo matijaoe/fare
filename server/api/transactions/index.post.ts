@@ -12,14 +12,11 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const entry = await db.transaction.create({
-      data,
-    })
+    const entry = await db.transaction.create({ data })
 
     setResStatus(event, StatusCodes.CREATED)
     return entry
   } catch (err: unknown) {
-    console.error(err)
     sendInternalError(event, err)
   }
 })
