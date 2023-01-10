@@ -7,11 +7,11 @@
     "generate": "nuxi generate",
     "preview": "node .output/server/index.mjs",
     "lint": "eslint .",
+    "format": "eslint . --fix",
     "postinstall": "nuxi prepare",
     "studio": "npx prisma studio",
     "db:generate": "npx prisma generate",
-    "db:push": "npx prisma db push",
-    "docs": "npx prisma-docs-generator serve"
+    "db:push": "npx prisma db push"
   },
   "dependencies": {
     "@fontsource/iosevka": "^4.5.4",
@@ -43,7 +43,6 @@
     "nuxt-icon": "^0.1.8",
     "pinia": "^2.0.28",
     "prisma": "^4.8.1",
-    "prisma-docs-generator": "^0.5.0",
     "prisma-erd-generator": "^1.2.4",
     "typescript": "^4.9.4"
   }

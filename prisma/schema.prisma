@@ -8,10 +8,6 @@ datasource db {
   relationMode = "prisma"
 }
 
-generator docs {
-  provider = "node node_modules/prisma-docs-generator"
-}
-
 generator erd {
   provider = "prisma-erd-generator"
 }
