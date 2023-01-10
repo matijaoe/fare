@@ -134,14 +134,10 @@ const emits = {
 defineExpose({
   inputEl,
 })
-
-// TODO: clear button on hover
-const inputWrapper = ref<HTMLDivElement>()
-const isHovered = useElementHover(inputWrapper)
 </script>
 
 <template>
-  <FInputWrapper v-bind="wrapperProps" ref="inputWrapper" font-sans>
+  <FInputWrapper v-bind="wrapperProps" font-sans>
     <div relative>
       <div
         v-if="isSlot('left')"

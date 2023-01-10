@@ -49,7 +49,6 @@ const items = [
       name: 'fi',
     },
   },
-  // TODO: milestones
 ]
 </script>
 

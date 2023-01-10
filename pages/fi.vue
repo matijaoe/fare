@@ -75,6 +75,8 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
     order: 2,
   },
 }))
+
+// TODO: milestones
 </script>
 
 <template>
