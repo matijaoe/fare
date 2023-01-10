@@ -25,7 +25,6 @@ export default defineEventHandler(async (event) => {
     }
 
     setResStatus(event, StatusCodes.OK)
-
     return res
   } catch (err: unknown) {
     sendInternalError(event, err)
