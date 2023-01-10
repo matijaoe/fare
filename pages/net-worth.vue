@@ -16,7 +16,7 @@ const {
 
 const { isAllTime, isCurrentMonth } = toRefs(useDateRangeStore())
 
-// TODO: add more content
+// TODO: ideas
 // percentage of growth?
 // table of predicted net worth?
 </script>

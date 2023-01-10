@@ -49,7 +49,6 @@ export const useFireConfigStore = defineStore('fire-config', () => {
     },
   })
 
-  // TODO: how is it calculating age when no age is defined?
   const age = computed(() => {
     return isDefined(dobString) ? calculateAge(dobString.value) : null
   })

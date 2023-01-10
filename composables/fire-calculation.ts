@@ -75,7 +75,6 @@ export const useFireCalculation = (_yearCount?: Ref<number>) => {
       return null
     }
 
-    // TODO: reuse already calculated values
     for (let i = 0; ; i++) {
       const months = i
       const nwData = getCompoundedNetWorth(months)
