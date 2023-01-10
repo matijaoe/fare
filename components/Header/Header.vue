@@ -7,6 +7,7 @@ const sidebar = useSidebar()
     fixed top-0 h-50px
     flex justify-between items-center
     border="b-2" border-base
+    bg-base
     class="color-base-lighter"
   >
     <HeaderLogo />
@@ -15,7 +16,7 @@ const sidebar = useSidebar()
       <FBreadcrumbs pl-8 />
     </ClientOnly>
 
-    <HeaderSearch border="r-2" border-base ml-auto />
+    <!-- <HeaderSearch border="r-2" border-base ml-auto /> -->
 
     <button
       grid content-center

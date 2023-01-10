@@ -5,10 +5,10 @@ const showMonthly = computed(() => !isCurrentMonth.value && !isAllTime.value)
 </script>
 
 <template>
-  <div flex items-center gap-8>
+  <div flex flex-col md:flex-row md:items-center gap-5 md:gap-8>
     <slot name="current" />
 
-    <div v-if="showMonthly" pl-8 border="l-2 zinc-2 dark:zinc-8">
+    <div v-if="showMonthly" md:pl-8 md:border="l-2 zinc-2 dark:zinc-8">
       <slot name="old" />
     </div>
   </div>

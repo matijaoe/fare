@@ -16,7 +16,7 @@ const { investmentAccountsCount, formattedAverageAnnualRate, isAccountsLoading: 
 
 <template>
   <LayoutPage>
-    <div grid grid-cols-3 gap-4>
+    <div grid md:grid-cols-3 gap-4>
       <FCard white flex flex-col gap-6>
         <BalanceNetWorth
           label="Net worth"

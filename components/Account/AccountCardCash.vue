@@ -30,7 +30,7 @@ const isHovered = useElementHover(card)
     white
     paddingless
     neobrutal
-    aspect="2/1 sm:4/3"
+    aspect="4/3"
     flex="~ col"
     relative overflow-hidden
   >

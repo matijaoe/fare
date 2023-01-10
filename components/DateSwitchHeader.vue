@@ -11,7 +11,7 @@ const {
 </script>
 
 <template>
-  <div grid="~ cols-[100px_1fr_100px]" w-full>
+  <div grid="~ cols-[100px_1fr_100px]" w-full bg-base>
     <div w-fit flex gap-2>
       <template v-if="!isAllTime">
         <FTooltip v-if="!isAllTime" content="Previous month" placement="top">

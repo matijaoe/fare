@@ -194,7 +194,7 @@ const typeOptions: { label: InvestmentType; value: string; icon: string }[] = [
         />
       </div>
 
-      <div flex gap-3>
+      <div flex flex-col md:flex-row gap-3>
         <FSelectField
           v-model:value="form.values.color"
           :invalid="!!form.errors.color"

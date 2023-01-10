@@ -120,7 +120,7 @@ const modalConfig = computed(() => ({
         :error="form.errors.name"
       />
 
-      <div flex gap-3>
+      <div flex flex-col md:flex-row gap-3>
         <FSelectField
           v-model:value="form.values.color"
           :items="colors"
