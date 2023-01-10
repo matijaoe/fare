@@ -59,6 +59,7 @@ whenever(cashAccount, () => setBreadcrumbs([
         border="b-2" border-base
       />
       <TransactionList
+        v-if="transactions"
         :transactions="transactions"
         :loading="isTransactionsLoading"
       />

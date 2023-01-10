@@ -17,6 +17,7 @@ const { transactions, searchQuery } = useTransactionFilters(data)
         border="base b-2"
       />
       <TransactionList
+        v-if="transactions"
         :transactions="transactions"
         :loading="isLoading"
       />

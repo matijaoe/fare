@@ -1,11 +1,10 @@
 <script setup lang="ts">
-const { smDown } = useBreakpoints()
 const { isDark, toggleDark } = useTheme()
 
 const { user, signOut } = useAuth()
 
 const signOutHandler = async () => {
-  // dont reload page, manually navigate
+  // don't reload page, manually navigate
   await signOut({ redirect: false })
   navigateTo({ name: 'login' })
 }
@@ -33,9 +32,7 @@ const signOutHandler = async () => {
         variant="secondary"
         size="lg"
         circle
-        :class="{
-          '!p-4': smDown,
-        }"
+        class="lt-sm:!p-4"
         icon-only
         @click="toggleDark()"
       >
@@ -50,7 +47,7 @@ const signOutHandler = async () => {
           variant="secondary"
           size="lg"
           circle
-          :class="{ '!p-4': smDown }"
+          class="lt-sm:!p-4"
           icon-only
         >
           <template #icon>
@@ -64,9 +61,7 @@ const signOutHandler = async () => {
         variant="secondary"
         size="lg"
         circle
-        :class="{
-          '!p-4': smDown,
-        }"
+        class="lt-sm:!p-4"
         icon-only
         @click="signOutHandler"
       >

@@ -16,18 +16,12 @@ const useShortcuts = (shortcuts: ShortcutsDefinitions) => {
 }
 
 export const setupShortcuts = () => {
-  const sidebar = useSidebar()
-
   const { toggleDark } = useTheme()
 
   const shortcuts = {
     theme: {
       key: 'cmd+j',
       handler: toggleDark,
-    },
-    sidebar: {
-      key: 'cmd+b',
-      handler: sidebar.toggle,
     },
   }
 

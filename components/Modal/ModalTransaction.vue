@@ -146,7 +146,7 @@ const transactionTypeOptions = [
             class="focus:outline-none"
           >
             <div
-              p-6 font-display text-xl
+              p-6 font-display text-base md:text-xl
               border="2 rounded-md"
               aspect="5/3"
               grid place-content-center
@@ -162,7 +162,7 @@ const transactionTypeOptions = [
         </div>
       </RadioGroup>
 
-      <div grid grid-cols-2 gap-3>
+      <div grid md:grid-cols-2 gap-3>
         <div mt-4 flex flex-col gap-3>
           <FSelectField
             v-if="modal.isExpense || modal.isTransfer"

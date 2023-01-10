@@ -4,31 +4,32 @@ const sidebar = useSidebar()
 const sidebarWidth = computed(() => 'w-screen md:w-240px')
 const headerWidth = computed(() => sidebar.isOpen ? 'sm:(w-[calc(100vw-240px)])' : 'w-screen')
 
-// TODO: weird small scroll on list page
-const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
+const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-50px-60px)] md:h-[calc(100vh-50px)]')
+const mainContentWrapperMargin = computed(() => 'mt-[calc(50px+60px)] md:mt-60px')
 </script>
 
 <template>
   <div>
-    <Sidebar :class="[sidebarWidth]" z-200 />
+    <Sidebar
+      z-200
+      :class="[sidebarWidth, { 'lt-md:hidden': !sidebar.isOpen }]"
+    />
 
-    <div :class="{ 'md:ml-240px': sidebar.isOpen }">
-      <!-- <Header :class="[headerWidth]" z-100 /> -->
+    <div class="md:ml-240px">
+      <Header :class="[headerWidth]" z-100 />
+
       <DateSwitchHeader
         :class="[headerWidth]"
         z-100
         pos="fixed top-0 right-0"
-        p="x-6 y-2"
+        p="x-3 md:x-6 y-2"
         border="b-2"
         border-base
-        class="bg-base"
+        class="mt-[50px] md:mt-0"
       />
 
-      <div
-        mt="60px"
-        overflow-y-auto
-      >
-        <main mx-auto :class="[mainContentWrapperHeight]">
+      <div overflow-y-auto>
+        <main mx-auto :class="[mainContentWrapperHeight, mainContentWrapperMargin]">
           <slot />
         </main>
       </div>

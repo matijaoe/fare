@@ -7,15 +7,20 @@ const sidebar = useSidebar()
     fixed top-0 h-50px
     flex justify-between items-center
     border="b-2" border-base
+    bg-base
     class="color-base-lighter"
   >
-    <HeaderLogo />
+    <HeaderLogo
+      class="hidden lt-sm:flex"
+      :class="{ flex: !sidebar.isOpen }"
+    />
 
     <ClientOnly>
       <FBreadcrumbs pl-8 />
     </ClientOnly>
 
-    <HeaderSearch border="r-2" border-base ml-auto />
+    <!-- TODO: not used -->
+    <HeaderSearch v-if="false" border="r-2" border-base ml-auto />
 
     <button
       grid content-center

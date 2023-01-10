@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = withDefaults(defineProps<{
-  height: number
+  height?: number
   responsive?: boolean
   hasLegend?: boolean
   totalData?: boolean

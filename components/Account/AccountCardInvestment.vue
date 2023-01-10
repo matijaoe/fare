@@ -103,7 +103,7 @@ const formatLastUpdatedDate = (date: Date) => formatDate(date, {
   <FCard
     ref="card"
     white
-    aspect="2/1 sm:4/3"
+    aspect="4/3"
     paddingless
     neobrutal
     flex="~ col"
