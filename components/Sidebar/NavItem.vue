@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { NavItemModel } from '~/models/ui'
-
 const { item } = defineProps<{
   item: NavItemModel
 }>()
@@ -14,7 +13,9 @@ const isActiveRoute = $computed(() => route.name === item.route.name)
 const isActive = $computed(() => isActiveRoute || isParentRoute)
 
 const handleNavClick = () => {
-  return mdDown ? sidebar.close() : ''
+  if (mdDown) {
+    sidebar.close()
+  }
 }
 </script>
 

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 const sidebar = useSidebar()
-const { mdDown } = useBreakpoints()
 
 const {
   isLoading: isNetWorthLoading,
@@ -21,7 +20,6 @@ const {
     border="r-0 md:r-2"
     border-base
     flex="~ col gap-6"
-    :class="{ '!hidden': !sidebar.isOpen }"
   >
     <div
       flex
@@ -34,7 +32,8 @@ const {
         <FLogo size="lg" />
       </NuxtLink>
       <button
-        v-if="mdDown"
+        lt-md:block
+        hidden
         grid
         content-center
         p-2

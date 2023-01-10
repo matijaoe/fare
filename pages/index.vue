@@ -6,7 +6,7 @@ const {
   formattedInvestmentsBalance,
 } = useNetWorth()
 
-const { netWorthGoal, timeToNetWorthGoal, fiDate, isTimeToLoading } = $(useFireCalculation())
+const { timeToNetWorthGoal, fiDate, isTimeToLoading } = $(useFireCalculation())
 
 const { data: cashAccounts } = useCashAccounts()
 const cashAccountsCount = computed(() => cashAccounts.value?.length ?? 0)
@@ -16,7 +16,7 @@ const { investmentAccountsCount, formattedAverageAnnualRate, isAccountsLoading: 
 
 <template>
   <LayoutPage>
-    <div grid md:grid-cols-3 gap-4>
+    <div grid lg:grid-cols-2 xl:grid-cols-3 gap-4>
       <FCard white flex flex-col gap-6>
         <BalanceNetWorth
           label="Net worth"
@@ -26,11 +26,11 @@ const { investmentAccountsCount, formattedAverageAnnualRate, isAccountsLoading: 
           :investments="formattedInvestmentsBalance"
         />
 
-        <div flex justify-center align-center>
+        <div flex justify-start lg:justify-center align-center lg:px-5 class="lt-md:(w-full max-w-[250px])">
           <ClientOnly>
             <ChartNetWorthPie
               total-data
-              :height="300"
+              responsive
               :has-legend="false"
             />
           </ClientOnly>
@@ -88,7 +88,7 @@ const { investmentAccountsCount, formattedAverageAnnualRate, isAccountsLoading: 
         </FCard>
       </div>
 
-      <div grid grid-rows-4 gap-4>
+      <div grid grid-rows-4 gap-4 lg:col-span-2 xl:col-span-1>
         <FCard white flex flex-col gap-2>
           <div flex items-start justify-between>
             <FSkeleton v-if="isAvgAnnualRateLoading" class="w-28 h-40px" />

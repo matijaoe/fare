@@ -47,6 +47,7 @@ const formattedIncome = useCurrencyFormat(income)
         border-base
       />
       <TransactionList
+        v-if="transactions"
         :transactions="transactions"
         :loading="isTransactionsLoading"
       />

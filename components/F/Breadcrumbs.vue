@@ -2,19 +2,16 @@
 const store = useBreadcrumbs()
 
 const sidebar = useSidebar()
-const { smDown } = $(useBreakpoints())
-
-const handledSidebar = computed(() => smDown || !sidebar.isOpen)
 </script>
 
 <template>
   <div
     mr-auto h-full
     font="mono"
-    class="hidden md:flex"
+    class="hidden md:flex lt-sm:border-l-2 border-base ml-5"
     items-center gap-2
     :class="[{
-      'border-l-2 border-base ml-5': handledSidebar,
+      'lt-sm:border-l-2 border-base ml-5': !sidebar.isOpen,
     }]"
   >
     <template v-if="store.crumbs?.length">

@@ -8,7 +8,9 @@ useHead({
   ],
 })
 
-setupShortcuts()
+onMounted(() => {
+  setupShortcuts()
+})
 </script>
 
 <template>
