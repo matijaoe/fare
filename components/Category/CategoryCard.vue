@@ -86,7 +86,7 @@ const isHovered = useElementHover(card)
             <BasicLabel size="xs">
               Spent
             </BasicLabel>
-            <div text-xl min-w-18 flex justify-end>
+            <div text-xl min-w-18 flex>
               <TransitionFade>
                 <FSkeleton v-if="totalsLoading" variant="lighter" w-full h="28px" />
                 <span

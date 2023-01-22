@@ -15,6 +15,8 @@ const shownCategories = computed(() => {
     return { ...category, totals }
   }) ?? []
 })
+
+const deviceStore = useDeviceStore()
 </script>
 
 <template>
@@ -26,7 +28,7 @@ const shownCategories = computed(() => {
           icon-placement="left"
           @click="categoryModal.launch()"
         >
-          Create category
+          {{ deviceStore.isMobileOrTablet ? 'Create' : 'Create category' }}
         </FButton>
       </template>
 
