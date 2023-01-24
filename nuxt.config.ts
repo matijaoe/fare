@@ -9,6 +9,7 @@ export default defineNuxtConfig({
   ],
   experimental: {
     reactivityTransform: true,
+    payloadExtraction: false,
   },
   unocss: {
     uno: true,
@@ -48,5 +49,6 @@ export default defineNuxtConfig({
     githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
     googleClientId: process.env.GOOGLE_CLIENT_ID,
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    databaseUrl: process.env.DATABASE_URL,
   },
 })
