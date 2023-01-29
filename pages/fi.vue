@@ -3,6 +3,7 @@ import { TabGroup, TabList, TabPanels } from '@headlessui/vue'
 import type { ChartDataset } from 'chart.js'
 import { addYears, format } from 'date-fns'
 import { monthsToYearsAndMonthsString } from '../utils'
+import TransitionFade from '~~/components/Transition/TransitionFade.vue'
 
 const yearCount = ref(3)
 
@@ -32,7 +33,7 @@ const updateUserHandler = () => {
   )
 }
 
-const { compoundedNetWorthForNextYears: compoundedValues, netWorthGoal, timeToNetWorthGoal, fiDate } = $(useFireCalculation(yearCount))
+const { compoundedNetWorthForNextYears: compoundedValues, netWorthGoal, timeToNetWorthGoal, fiDate, isTimeToLoading } = $(useFireCalculation(yearCount))
 
 const isYearsCalculated = computed(() => {
   return compoundedValues?.every(
@@ -81,11 +82,10 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
     <LayoutSectionWrapper
       flex flex-col gap-4
     >
-      <template v-if="isYearsCalculated">
+      <div v-if="isYearsCalculated" mb-10>
         <div
           v-if="(timeToNetWorthGoal && fiDate)"
-          flex flex-col items-center
-          mb-14
+          flex flex-col items-center mb-6
         >
           You can achieve Financial Independence in
           <span font-bold text-4xl mt-2>{{ monthsToYearsAndMonthsString(timeToNetWorthGoal) }}</span>
@@ -100,7 +100,7 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
             :datasets="[datasets.total, datasets.cash, datasets.investments]"
           />
         </div>
-      </template>
+      </div>
 
       <div grid lg:grid-cols-2 gap-8>
         <template v-if="isYearsCalculated">
@@ -112,6 +112,10 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
             />
           </div>
         </template>
+        <div v-else-if="isTimeToLoading" text-center py-10 flex items-center justify-center gap-3>
+          <span>Loading</span>
+          <FLoader />
+        </div>
 
         <div v-else>
           <FCardEmpty>
@@ -144,13 +148,13 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
           </FCardEmpty>
         </div>
 
-        <div flex-1 space-y-3>
+        <div flex-1 space-y-3 ml-auto>
           <div space-y-1>
             <BasicLabel>Net worth goal</BasicLabel>
             <div v-if="netWorthGoal != null" font-display text-5xl font-medium>
               {{ formatCurrency(netWorthGoal) }}
             </div>
-            <p v-else text-lg text-zinc-3>
+            <p v-else text-lg text-zinc-3 h="48px">
               Not set
             </p>
           </div>
