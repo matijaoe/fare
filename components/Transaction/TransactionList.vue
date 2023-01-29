@@ -28,7 +28,12 @@ const items = computed({
       flex="~ col"
       divide="y-2 dashed zinc-2 dark:zinc-8"
     >
-      <template v-if="hasTransactions">
+      <div v-if="loading" flex-center gap-4 min-h="244px">
+        <FLoader />
+        <p>Fetching transactions</p>
+      </div>
+
+      <template v-else-if="hasTransactions">
         <button
           v-for="item in items"
           :key="JSON.stringify(item)"
@@ -40,16 +45,8 @@ const items = computed({
       </template>
 
       <div v-else flex-center gap-4 min-h="244px">
-        <div v-if="loading" flex gap-4 items-center>
-          <FLoader />
-          <p>Fetching transactions</p>
-        </div>
-        <div
-          v-else flex gap-4 items-center
-        >
-          <Icon name="tabler:cash-banknote-off" />
-          <p>No transactions found</p>
-        </div>
+        <Icon name="tabler:cash-banknote-off" />
+        <p>No transactions found</p>
       </div>
     </div>
   </div>
