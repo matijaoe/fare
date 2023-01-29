@@ -43,7 +43,6 @@ const isYearsCalculated = computed(() => {
 const netWorthTotals = $computed(() => compoundedValues?.map(year => year.total ?? 0) ?? [])
 const cashTotals = $computed(() => compoundedValues?.map(year => year.totalCash ?? 0) ?? [])
 const nestEggTotals = $computed(() => compoundedValues?.map(year => year.compoundedNestEgg ?? 0) ?? [])
-const interestEarnedTotals = $computed(() => compoundedValues?.map(year => year.earnedPureInterest ?? 0) ?? [])
 
 const labels = $computed(() => {
   return compoundedValues?.map((v) => {
@@ -75,8 +74,6 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
     order: 2,
   },
 }))
-
-// TODO: milestones
 </script>
 
 <template>
@@ -214,7 +211,7 @@ const datasets = $computed<Record<string, ChartDataset>>(() => ({
                     placeholder="4%"
                     icon="tabler:percentage"
                     type="number"
-                    :input-props="{ min: 0, max: 100 }"
+                    :input-props="{ min: 0, max: 100, step: 0.1 }"
                   />
 
                   <FInput
