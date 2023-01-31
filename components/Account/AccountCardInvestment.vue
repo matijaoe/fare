@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { InvestmentEntry } from '@prisma/client'
 import { isNumber } from '@vueuse/core'
-import { getMonth, isSameYear, isThisYear } from 'date-fns'
+import { isBefore, isThisYear } from 'date-fns'
 import type Input from '~~/components/F/Input.vue'
 import type { InvestmentAccountWithAccount } from '~~/models/resources'
 import { formatDate, formatPercentage } from '~~/utils'
@@ -9,8 +9,6 @@ import { formatDate, formatPercentage } from '~~/utils'
 type Props = {
   investmentAccount: InvestmentAccountWithAccount
   balanceLoading?: boolean
-  // TODO: all time leaves things as is
-  allTime?: boolean
   balances: Record<string, InvestmentEntry>
 }
 
@@ -34,7 +32,7 @@ const currentBalance = computed(() => currentBalanceEntry.value?.balance)
 
 const previousBalanceEntry = computed(() => {
   const [previous] = sortedBalances.value
-    .filter(({ date }) => getMonth(new Date(date)) < getMonth(new Date(selectedMonth.value)) && isSameYear(new Date(date), selectedMonth.value))
+    .filter(({ date }) => isBefore(new Date(date), selectedMonth.value))
   return previous ?? null
 })
 const previousBalance = computed(() => previousBalanceEntry.value?.balance)
@@ -174,19 +172,6 @@ const formatLastUpdatedDate = (date: Date) => formatDate(date, {
         </div>
       </div>
     </div>
-
-    <!-- <div
-      v-if="investmentAccount.description"
-      mt-auto z-2 relative
-      flex items-center justify-center
-      text="lg"
-      p-4
-      text-zinc-4
-    >
-      <p text-sm>
-        {{ investmentAccount.description }}
-      </p>
-    </div> -->
 
     <div
       mt-auto z-2 relative

@@ -2,8 +2,6 @@
 import type { InvestmentType } from '~~/models/enums'
 import AccountCardInvestment from '~~/components/Account/AccountCardInvestment.vue'
 
-const { isAllTime } = toRefs(useDateRangeStore())
-
 const {
   formattedMonthlyBalance,
   formattedTotalBalance,
@@ -13,7 +11,6 @@ const {
   isEntriesLoading,
   getAccountsForType,
   formattedAverageAnnualRate,
-  accountsWithMonthlyBalances,
 } = useNestEgg()
 
 const modal = useInvestmentAccountModal()
@@ -108,7 +105,6 @@ const sections = computed<{ type: InvestmentType; title: string; desc: string }[
             :investment-account="account"
             :balances="account.balances"
             :balance-loading="isEntriesLoading"
-            :all-time="isAllTime"
           />
         </AccountGridSection>
       </LayoutSectionWrapper>
