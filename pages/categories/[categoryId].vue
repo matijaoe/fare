@@ -93,7 +93,7 @@ const formattedIncome = useCurrencyFormat(income)
                   class="h-40px w-50"
                 />
                 <p
-                  v-else-if="isDefined(totals)"
+                  v-else-if="formattedNet"
                   text-4xl font="display medium"
                 >
                   {{ formattedNet }}
