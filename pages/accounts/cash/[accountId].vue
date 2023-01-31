@@ -165,8 +165,8 @@ whenever(cashAccount, () => setBreadcrumbs([
           <div v-if="!isAllTime" flex items-center gap-5>
             <TransitionFade>
               <FSkeleton
-                v-if="isBalanceLoading"
-                class="h-40px w-60"
+                v-if="isBalanceLoading || isTotalsLoading"
+                class="h-40px w-45"
               />
               <p
                 v-else-if="formattedNet"
