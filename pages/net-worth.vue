@@ -14,11 +14,7 @@ const {
   netWorth: netWorthMonthly,
 } = useNetWorthMonthly()
 
-const { isAllTime, isCurrentMonth } = toRefs(useDateRangeStore())
-
-// TODO: ideas
-// percentage of growth?
-// table of predicted net worth?
+const { isAllTime } = toRefs(useDateRangeStore())
 </script>
 
 <template>

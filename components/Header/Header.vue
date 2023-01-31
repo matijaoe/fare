@@ -19,9 +19,6 @@ const sidebar = useSidebar()
       <FBreadcrumbs pl-8 />
     </ClientOnly>
 
-    <!-- TODO: not used -->
-    <HeaderSearch v-if="false" border="r-2" border-base ml-auto />
-
     <button
       grid content-center
       p="y-2.5 x-3"

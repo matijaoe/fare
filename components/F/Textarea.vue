@@ -112,10 +112,6 @@ const emits = {
 
 <template>
   <FInputWrapper v-bind="wrapperProps">
-    <!-- <template v-if="$slots.label" #label>
-      <slot name="label" />
-    </template> -->
-
     <div relative>
       <textarea
         v-bind="props"
@@ -166,13 +162,5 @@ const emits = {
         </slot>
       </div>
     </div>
-    <!--
-    <template v-if="$slots.hint" #hint>
-      <slot name="hint" />
-    </template>
-
-    <template v-if="$slots.error" #error>
-      <slot name="error" />
-    </template> -->
   </FInputWrapper>
 </template>
