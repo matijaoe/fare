@@ -2,14 +2,14 @@
 
 > Application for tracking personal finances and attaining financial independence
 
+⚠️ More info coming soon. Having issues deploying.
 
 ## ✨ Features
 - detailed personal finance tracking
 - balance and cashflow records for any time in the past
-- calculate your financial independence (early retirenment) date
+- calculate your financial independence (early retirement) date
 - first class data synchronization all throughout
 - dark mode
-- 🔜 *more info coming soon*
 
 &nbsp;
 
