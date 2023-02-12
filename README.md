@@ -2,7 +2,7 @@
 
 > Application for tracking personal finances and attaining financial independence
 
-⚠️ More info coming soon. Having issues deploying.
+    ⚠️ More info coming soon. Having issues deploying at the moment.
 
 ## ✨ Features
 - detailed personal finance tracking
@@ -69,7 +69,7 @@ npm install
 Start the development server on [localhost:3000](http://localhost:3000)
 
 ```zsh
-pnpm run dev
+pnpm dev
 ```
 
 ## Production
@@ -77,12 +77,12 @@ pnpm run dev
 Build the application for production:
 
 ```zsh
-pnpm run build
+pnpm build
 ```
 
 Locally preview production build:
 
 ```zsh
-pnpm run preview
+pnpm preview
 ```
 
