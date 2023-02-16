@@ -32,7 +32,7 @@
     "@antfu/eslint-config": "^0.35.2",
     "@nuxtjs/color-mode": "^3.2.0",
     "@pinia/nuxt": "^0.4.6",
-    "@sidebase/nuxt-auth": "0.4.1",
+    "@sidebase/nuxt-auth": "0.3.4",
     "@tanstack/vue-query": "^4.24.6",
     "@types/chart.js": "^2.9.37",
     "@unocss/nuxt": "^0.49.5",
