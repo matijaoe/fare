@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
     where: {
       userId,
       type: { not: 'Transfer' },
-      //   TODO: how to handle null categories (uncategorized?)
+      //   TODO: handle null categories (uncategorized?)
       categoryId: { not: null },
     },
   })
@@ -91,15 +91,15 @@ export default defineEventHandler(async (event) => {
 
     const totals = isForRange
       ? {
-          ...ensuredTotalsInRange,
-          net: ensuredTotalsInRange.income - ensuredTotalsInRange.expense,
-          totalNet,
-        }
+        ...ensuredTotalsInRange,
+        net: ensuredTotalsInRange.income - ensuredTotalsInRange.expense,
+        totalNet,
+      }
       : {
-          ...totalsAllTime[category.id],
-          net: totalNet,
-          totalNet,
-        }
+        ...totalsAllTime[category.id],
+        net: totalNet,
+        totalNet,
+      }
 
     return {
       ...category,

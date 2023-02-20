@@ -44,7 +44,7 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     validationSchema,
   })
 
-  // lame solution but will do for now, gotta replace with real veevalidate/zod solution
+  // TODO: temp solution, replace with real veevalidate/zod solution
   const formValidBasedOnAccountIds = computed(() => {
     const { type, fromAccountId, toAccountId } = form.values
     if (type === 'Expense') {
@@ -140,7 +140,6 @@ export const useTransactionModal = defineStore('modal-transaction', () => {
     // Form
     form,
     reset,
-    // TODO: temp solution
     formValidBasedOnAccountIds,
     // Transaction types
     isType,

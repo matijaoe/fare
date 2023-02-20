@@ -2,8 +2,6 @@
 
 > Application for tracking personal finances and attaining financial independence
 
-    ⚠️ More info coming soon. Having issues deploying at the moment.
-
 ## ✨ Features
 - detailed personal finance tracking
 - balance and cashflow records for any time in the past
@@ -12,8 +10,6 @@
 - dark mode
 
 &nbsp;
-
-👀 _sneak peek_
 
 ## [📽️ Video demo](https://drive.google.com/file/d/1lgvQVKUI6PeoW2b6FTJ8yDGYQgC3fplx/view?usp=share_link)
 
@@ -36,7 +32,6 @@
 
 
 ## 🛠️ Stack
-
 
 - [Nuxt 3](https://nuxt.com/)
 - [Vue](https://vuejs.org/)
