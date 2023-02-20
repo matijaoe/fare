@@ -31,16 +31,16 @@
   "devDependencies": {
     "@antfu/eslint-config": "^0.35.2",
     "@nuxtjs/color-mode": "^3.2.0",
-    "@pinia/nuxt": "^0.4.6",
+    "@pinia/nuxt": "^0.4.7",
     "@sidebase/nuxt-auth": "0.3.4",
-    "@tanstack/vue-query": "^4.24.6",
+    "@tanstack/vue-query": "^4.24.9",
     "@types/chart.js": "^2.9.37",
-    "@unocss/nuxt": "^0.49.5",
-    "@vueuse/nuxt": "^9.12.0",
+    "@unocss/nuxt": "^0.49.7",
+    "@vueuse/nuxt": "^9.13.0",
     "eslint": "^8.34.0",
     "nuxt": "3.2.0",
     "nuxt-icon": "^0.2.11",
-    "pinia": "^2.0.30",
+    "pinia": "^2.0.31",
     "prisma": "^4.10.1",
     "typescript": "^4.9.5"
   }
