@@ -3,7 +3,7 @@ const mainContentWrapperHeight = computed(() => 'h-[calc(100vh-60px)]')
 </script>
 
 <template>
-  <div>
+  <div h-full>
     <LayoutSectionWrapper>
       <div w-full flex="~ col xl:row 1" justify-between>
         <div
