@@ -73,9 +73,9 @@ const isHovered = useElementHover(card)
               class="filter-saturate-90"
               px-2 py-1 rounded-md
               :class="{
-                ' bg-zinc-1 text-zinc-7': totals.net === 0,
-                'bg-rose-1 text-rose-7': totals.net < 0,
-                'bg-emerald-1 text-emerald-7': totals.net > 0,
+                'bg-zinc-1 dark:bg-zinc-3/10 text-zinc-7 dark:text-zinc-4': totals.net === 0,
+                'bg-rose-1 dark:bg-rose-3/10 text-rose-7 dark:text-rose-4': totals.net < 0,
+                'bg-emerald-1 dark:bg-emerald-3/10 text-emerald-7 dark:text-emerald-4': totals.net > 0,
               }"
             >
               {{ formattedNet }}
