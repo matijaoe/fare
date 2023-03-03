@@ -7,7 +7,6 @@ export default defineEventHandler(async (event) => {
   const data = await readBody<Prisma.InvestmentEntryUncheckedCreateInput>(event)
 
   try {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_deleted, updated] = await db.$transaction([
       db.investmentEntry.deleteMany({
         where: {

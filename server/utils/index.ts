@@ -61,7 +61,7 @@ export const getDateRange = (event: H3Event) => {
 
   const isCurrentMonth = monthAsDate ? isThisMonth(monthAsDate) : false
 
-  const prismaRangeQuery: Prisma.DateTimeFilter | undefined = monthStart && monthEnd
+  const prismaRangeQuery: Prisma.DateTimeFilter | undefined = (monthStart && monthEnd)
     ? { gte: monthStart, lte: monthEnd }
     : undefined
 

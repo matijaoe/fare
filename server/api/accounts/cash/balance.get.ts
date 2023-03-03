@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
 
   const today = new Date()
 
-  const snapshotDate = !monthAsDate || isCurrentMonth || isAfter(monthEnd!, today)
+  const snapshotDate = (!monthAsDate || isCurrentMonth || isAfter(monthEnd!, today))
     ? today
     : monthEnd!
 

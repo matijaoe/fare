@@ -91,15 +91,15 @@ export default defineEventHandler(async (event) => {
 
     const totals = isForRange
       ? {
-        ...ensuredTotalsInRange,
-        net: ensuredTotalsInRange.income - ensuredTotalsInRange.expense,
-        totalNet,
-      }
+          ...ensuredTotalsInRange,
+          net: ensuredTotalsInRange.income - ensuredTotalsInRange.expense,
+          totalNet,
+        }
       : {
-        ...totalsAllTime[category.id],
-        net: totalNet,
-        totalNet,
-      }
+          ...totalsAllTime[category.id],
+          net: totalNet,
+          totalNet,
+        }
 
     return {
       ...category,
