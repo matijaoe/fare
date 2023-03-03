@@ -108,9 +108,9 @@ const shownDate = computed({
 })
 
 const transactionTypeOptions = [
-  { label: 'Income', value: 'Income', checkedClass: 'bg-emerald-2 text-emerald-8', icon: 'tabler:arrow-down-left' },
-  { label: 'Expense', value: 'Expense', checkedClass: 'bg-rose-2 text-rose-8', icon: 'tabler:arrow-up-right' },
-  { label: 'Transfer', value: 'Transfer', checkedClass: 'bg-indigo-2 text-indigo-8', icon: 'tabler:arrows-exchange' },
+  { label: 'Income', value: 'Income', checkedClass: 'bg-emerald-2 text-emerald-8 dark:(bg-emerald-4/20 text-emerald-4)', icon: 'tabler:arrow-down-left' },
+  { label: 'Expense', value: 'Expense', checkedClass: 'bg-rose-2 text-rose-8 dark:(bg-rose-4/20 text-rose-4)', icon: 'tabler:arrow-up-right' },
+  { label: 'Transfer', value: 'Transfer', checkedClass: 'bg-indigo-2 text-indigo-8 dark:(bg-indigo-4/20 text-indigo-4)', icon: 'tabler:arrows-exchange' },
 ]
 </script>
 
@@ -151,7 +151,7 @@ const transactionTypeOptions = [
               aspect="5/3"
               grid place-content-center
               relative overflow-hidden
-              :class="checked ? [option.checkedClass, 'border-current'] : 'bg-transparent hover:bg-zinc-1 border-base text-zinc-7'"
+              :class="checked ? [option.checkedClass, 'border-current'] : 'bg-transparent hover:bg-zinc-1 border-base text-zinc-7 dark:(text-zinc-4g) dark:hover:(bg-zinc-8/40)'"
             >
               <Icon
                 :name="option.icon" absolute opacity-4 text-8xl class="top-50% left-50% translate--50%"

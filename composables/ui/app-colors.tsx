@@ -131,43 +131,43 @@ export const useAppColors = (color?: Ref<string | undefined | null> | ComputedRe
   const color9 = computed(() => {
     switch (unref(color)) {
       case 'red':
-        return 'text-red-9'
+        return 'text-red-9 dark:text-red-4'
       case 'orange':
-        return 'text-orange-9'
+        return 'text-orange-9 dark:text-orange-4'
       case 'amber':
-        return 'text-amber-9'
+        return 'text-amber-9 dark:text-amber-4'
       case 'yellow':
-        return 'text-yellow-9'
+        return 'text-yellow-9 dark:text-yellow-4'
       case 'lime':
-        return 'text-lime-9'
+        return 'text-lime-9 dark:text-lime-4'
       case 'green':
-        return 'text-green-9'
+        return 'text-green-9 dark:text-green-4'
       case 'emerald':
-        return 'text-emerald-9'
+        return 'text-emerald-9 dark:text-emerald-4'
       case 'teal':
-        return 'text-teal-9'
+        return 'text-teal-9 dark:text-teal-4'
       case 'cyan':
-        return 'text-cyan-9'
+        return 'text-cyan-9 dark:text-cyan-4'
       case 'sky':
-        return 'text-sky-9'
+        return 'text-sky-9 dark:text-sky-4'
       case 'blue':
-        return 'text-blue-9'
+        return 'text-blue-9 dark:text-blue-4'
       case 'indigo':
-        return 'text-indigo-9'
+        return 'text-indigo-9 dark:text-indigo-4'
       case 'violet':
-        return 'text-violet-9'
+        return 'text-violet-9 dark:text-violet-4'
       case 'purple':
-        return 'text-purple-9'
+        return 'text-purple-9 dark:text-purple-4'
       case 'fuchsia':
-        return 'text-fuchsia-9'
+        return 'text-fuchsia-9 dark:text-fuchsia-4'
       case 'pink':
-        return 'text-pink-9'
+        return 'text-pink-9 dark:text-pink-4'
       case 'rose':
-        return 'text-rose-9'
+        return 'text-rose-9 dark:text-rose-4'
       case 'gray':
-        return 'text-gray-9'
+        return 'text-gray-9 dark:text-gray-4'
       default:
-        return 'text-zinc-9'
+        return 'text-zinc-9 dark:text-zinc-4'
     }
   })
 
@@ -518,43 +518,43 @@ export const useAppColors = (color?: Ref<string | undefined | null> | ComputedRe
   const bg1 = computed(() => {
     switch (unref(color)) {
       case 'red':
-        return 'bg-red-1 dark:(bg-red-4 filter-saturate-40)'
+        return 'bg-red-1 dark:(bg-red-4/20 filter-saturate-40)'
       case 'orange':
-        return 'bg-orange-1 dark:(bg-orange-4 filter-saturate-40)'
+        return 'bg-orange-1 dark:(bg-orange-4/20 filter-saturate-40)'
       case 'amber':
-        return 'bg-amber-1 dark:(bg-amber-4 filter-saturate-40)'
+        return 'bg-amber-1 dark:(bg-amber-4/20 filter-saturate-40)'
       case 'yellow':
-        return 'bg-yellow-1 dark:(bg-yellow-4 filter-saturate-40)'
+        return 'bg-yellow-1 dark:(bg-yellow-4/20 filter-saturate-40)'
       case 'lime':
-        return 'bg-lime-1 dark:(bg-lime-4 filter-saturate-40)'
+        return 'bg-lime-1 dark:(bg-lime-4/20 filter-saturate-40)'
       case 'green':
-        return 'bg-green-1 dark:(bg-green-4 filter-saturate-40)'
+        return 'bg-green-1 dark:(bg-green-4/20 filter-saturate-40)'
       case 'emerald':
-        return 'bg-emerald-1 dark:(bg-emerald-4 filter-saturate-40)'
+        return 'bg-emerald-1 dark:(bg-emerald-4/20 filter-saturate-40)'
       case 'teal':
-        return 'bg-teal-1 dark:(bg-teal-4 filter-saturate-40)'
+        return 'bg-teal-1 dark:(bg-teal-4/20 filter-saturate-40)'
       case 'cyan':
-        return 'bg-cyan-1 dark:(bg-cyan-4 filter-saturate-40)'
+        return 'bg-cyan-1 dark:(bg-cyan-4/20 filter-saturate-40)'
       case 'sky':
-        return 'bg-sky-1 dark:(bg-sky-4 filter-saturate-40)'
+        return 'bg-sky-1 dark:(bg-sky-4/20 filter-saturate-40)'
       case 'blue':
-        return 'bg-blue-1 dark:(bg-blue-4 filter-saturate-40)'
+        return 'bg-blue-1 dark:(bg-blue-4/20 filter-saturate-40)'
       case 'indigo':
-        return 'bg-indigo-1 dark:(bg-indigo-4 filter-saturate-40)'
+        return 'bg-indigo-1 dark:(bg-indigo-4/20 filter-saturate-40)'
       case 'violet':
-        return 'bg-violet-1 dark:(bg-violet-4 filter-saturate-40)'
+        return 'bg-violet-1 dark:(bg-violet-4/20 filter-saturate-40)'
       case 'purple':
-        return 'bg-purple-1 dark:(bg-purple-4 filter-saturate-40)'
+        return 'bg-purple-1 dark:(bg-purple-4/20 filter-saturate-40)'
       case 'fuchsia':
-        return 'bg-fuchsia-1 dark:(bg-fuchsia-4 filter-saturate-40)'
+        return 'bg-fuchsia-1 dark:(bg-fuchsia-4/20 filter-saturate-40)'
       case 'pink':
-        return 'bg-pink-1 dark:(bg-pink-4 filter-saturate-40)'
+        return 'bg-pink-1 dark:(bg-pink-4/20 filter-saturate-40)'
       case 'rose':
-        return 'bg-rose-1 dark:(bg-rose-4 filter-saturate-40)'
+        return 'bg-rose-1 dark:(bg-rose-4/20 filter-saturate-40)'
       case 'gray':
-        return 'bg-gray-1 dark:(bg-gray-4 filter-saturate-40)'
+        return 'bg-gray-1 dark:(bg-gray-4/20 filter-saturate-40)'
       default:
-        return 'bg-zinc-1 dark:(bg-zinc-4 filter-saturate-40)'
+        return 'bg-zinc-1 dark:(bg-zinc-4/20 filter-saturate-40)'
     }
   })
 

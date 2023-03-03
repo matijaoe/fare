@@ -20,9 +20,9 @@ const formattedIncome = useCurrencyFormat(income)
         text-2xl p-4 rounded-full
         ring="2 offset-2 dark:(0 offset-0)"
         :class="{
-          'bg-zinc-2 ring-zinc-8 dark:text-zinc-9 dark:filter-saturate-70': isLoading || net === 0,
-          'bg-emerald-4 ring-emerald-2 !ring-offset--1 !ring-5 dark:text-white dark:filter-saturate-70': net > 0,
-          'bg-rose-4 ring-rose-2 !ring-offset--1 !ring-5 dark:text-white dark:filter-saturate-70': net < 0,
+          'bg-zinc-2 ring-zinc-8 dark:text-zinc-9 dark:bg-zinc-4/20 dark:!ring-offset-0': isLoading || net === 0,
+          'bg-emerald-4 ring-emerald-2 !ring-offset--1 !ring-5 dark:text-white dark:bg-emerald-4/20 dark:!ring-offset-0': net > 0,
+          'bg-rose-4 ring-rose-2 !ring-offset--1 !ring-5 dark:text-white dark:bg-rose-4/20 dark:!ring-offset-0': net < 0,
         }"
       >
         <FLoader v-if="isLoading" />
@@ -65,8 +65,8 @@ const formattedIncome = useCurrencyFormat(income)
           </div>
 
           <div
-            bg-emerald-2 text-emerald-9
-            ring="2 offset 2 current"
+            class="bg-emerald-2 text-emerald-9 dark:bg-emerald-3/20 dark:text-emerald-3"
+            ring="2 offset-2 current dark:(offset-0)"
             flex-center flex-shrink-0
             p-2 rounded-full aspect-square
           >
@@ -85,8 +85,8 @@ const formattedIncome = useCurrencyFormat(income)
           </div>
 
           <div
-            bg-rose-2 text-rose-9
-            ring="2 offset 2 current"
+            class=" bg-rose-2 text-rose-9 dark:bg-rose-3/20 dark:text-rose-3"
+            ring="2 offset 2 current dark:offset-0"
             flex-center flex-shrink-0
             p-2 rounded-full aspect-square
           >
