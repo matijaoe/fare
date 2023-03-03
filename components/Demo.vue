@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SelectItem, SelectItemDefault } from '~~/models/ui'
+import type { SelectItemDefault } from '~~/models/ui'
 
 const loading = ref(false)
 const toggleLoading = useToggle(loading)

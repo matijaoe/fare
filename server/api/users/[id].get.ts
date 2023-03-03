@@ -4,8 +4,8 @@ import { readParams, sendCustomError, sendInternalError } from '~~/server/utils'
 import { db } from '~~/lib/db'
 
 export default defineEventHandler(async (event) => {
+  // TODO
   // const userId = readUserId(event)
-
   // if (!userId) {
   //   return sendCustomError(event, StatusCodes.UNAUTHORIZED, 'No userId')
   // }

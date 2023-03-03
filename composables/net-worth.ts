@@ -45,11 +45,9 @@ export const useNetWorthMonthly = () => {
 
   return {
     isLoading,
-    // formatted
     formattedNetWorth,
     formattedCashBalance,
     formattedInvestmentsBalance,
-    // raw
     cashBalance,
     investmentsBalance,
     netWorth,

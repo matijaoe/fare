@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+useHead({
+  title: 'Activity',
+})
+
 const { monthQuery } = toRefs(useDateRangeStore())
 const { data, isLoading } = useTransactions(monthQuery)
 const { transactions, searchQuery } = useTransactionFilters(data)

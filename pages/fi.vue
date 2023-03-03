@@ -3,7 +3,10 @@ import { TabGroup, TabList, TabPanels } from '@headlessui/vue'
 import type { ChartDataset } from 'chart.js'
 import { addYears, format } from 'date-fns'
 import { monthsToYearsAndMonthsString } from '../utils'
-import TransitionFade from '~~/components/Transition/TransitionFade.vue'
+
+useHead({
+  title: 'FI',
+})
 
 const yearCount = ref(3)
 

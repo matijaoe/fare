@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+useHead({
+  title: 'Dashboard',
+})
+
 const {
   isLoading: isNetWorthLoading,
   formattedNetWorth,

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 const route = useRoute()
-
 const categoryId = route.params.categoryId as string
 
 const { monthQuery } = toRefs(useDateRangeStore())

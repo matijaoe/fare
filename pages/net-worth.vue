@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+useHead({
+  title: 'Net Worth',
+})
+
 const {
   isLoading: isNetWorthLoading,
   formattedNetWorth,

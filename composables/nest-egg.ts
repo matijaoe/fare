@@ -58,10 +58,8 @@ export const useNestEgg = () => {
     isMonthlyBalanceLoading,
     isAccountsLoading,
     isEntriesLoading,
-    // stuff
     accountsWithMonthlyBalances,
     getAccountsForType,
-    // for config
     averageAnnualRate,
     averageMonthlyRate,
     formattedAverageAnnualRate,

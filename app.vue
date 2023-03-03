@@ -3,6 +3,7 @@ import '@fontsource/iosevka'
 
 useHead({
   title: 'FARE',
+  titleTemplate: '%s | FARE',
   link: [
     { rel: 'icon', href: 'https://favicones.vercel.app/api/fluent-emoji-flat:hand-with-index-finger-and-thumb-crossed-medium-light' },
   ],

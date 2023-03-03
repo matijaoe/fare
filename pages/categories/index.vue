@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { useCategoryModal } from '~~/store/modal/category-modal.store'
 
+useHead({
+  title: 'Categories',
+})
+
 const categoryModal = useCategoryModal()
 const { monthQuery, isAllTime } = toRefs(useDateRangeStore())
 

@@ -2,6 +2,10 @@
 import type { InvestmentType } from '~~/models/enums'
 import AccountCardInvestment from '~~/components/Account/AccountCardInvestment.vue'
 
+useHead({
+  title: 'Nest Egg',
+})
+
 const {
   formattedMonthlyBalance,
   formattedTotalBalance,

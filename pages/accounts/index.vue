@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import type { CashAccountWithBalance, CashAccountWithTotals } from '~~/models/resources'
 
+useHead({
+  title: 'Accounts',
+})
+
 const cashAccountModal = useCashAccountModal()
 
 const { monthQuery, isAllTime } = toRefs(useDateRangeStore())

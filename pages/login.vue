@@ -4,6 +4,10 @@ definePageMeta({
   auth: false,
 })
 
+useHead({
+  title: 'Login',
+})
+
 const { signIn, getProviders, isAuthenticated } = useAuth()
 const providers = await getProviders()
 
