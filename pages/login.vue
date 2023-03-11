@@ -36,7 +36,7 @@ whenever(isAuthenticated, () => {
 <template>
   <div class="auth-wrapper" />
   <div z-2 flex flex-col items-center flex-1 py-10>
-    <FLogo class="z-2" size="lg" darker />
+    <FLogo class="z-2 !text-zinc-9" size="lg" darker />
 
     <div
       v-if="providers"
@@ -64,7 +64,7 @@ whenever(isAuthenticated, () => {
       </div>
     </div>
 
-    <p font-medium text-2xl mt-auto>
+    <p font-medium text-2xl mt-auto text-zinc-9>
       Plan for your future, today.
     </p>
   </div>
