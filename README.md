@@ -11,7 +11,7 @@
 
 &nbsp;
 
-## [📽️ Video demo](https://drive.google.com/file/d/15wkuFIvCjfg-rfZm0Jxr3bnCPU8-GzcQ/view?usp=sharing)
+## [📽️ Video demo](https://drive.proton.me/urls/YDDCVW88MC#X3t7AXzFATDf)
 
 ![image](https://user-images.githubusercontent.com/46557266/209006464-3c145f1f-9c7e-4636-bbde-05b4c1eb0969.png)
 ![image](https://user-images.githubusercontent.com/46557266/209006448-15a74861-0de2-46b2-8e82-a90c70425c3d.png)
